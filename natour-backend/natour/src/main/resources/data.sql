@@ -1,0 +1,1 @@
+INSERT INTO CT_USERS(ID, USERNAME, PASSWORD, EMAIL) VALUES(1, 'jsocket', 'password', 'jsocket@example.com');
