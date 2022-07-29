@@ -9,16 +9,20 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
+import androidx.navigation.NavController
+import androidx.navigation.findNavController
 import com.example.natour.R
-import com.example.natour.databinding.LoginFragmentBinding
+import com.example.natour.databinding.FragmentLoginBinding
 import com.example.natour.signin.login.util.Credentials
 import com.example.natour.signin.login.viewmodels.LoginViewModel
 import com.example.natour.signin.login.thirdparty.GoogleLogin
+import com.example.natour.signup.registration.fragments.RegistrationFragment
 
 class LoginFragment : Fragment() {
 
-    private lateinit var binding: LoginFragmentBinding
+    private lateinit var binding: FragmentLoginBinding
     private val viewModel: LoginViewModel by viewModels()
+
 
     private lateinit var googleLogin : GoogleLogin
 
@@ -28,9 +32,11 @@ class LoginFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = DataBindingUtil.inflate(inflater, R.layout.login_fragment, container, false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_login, container, false)
 
         googleLogin = GoogleLogin(requireActivity())
+
+
 
         return binding.root
     }
@@ -41,8 +47,16 @@ class LoginFragment : Fragment() {
         binding.loginFragment = this
         binding.lifecycleOwner = viewLifecycleOwner
 
+        setupSignUpText()
         setupSignIn()
         setupSignInWithGoogle()
+    }
+
+    private fun setupSignUpText(){
+        binding.signUpText.setOnClickListener {
+            val action = LoginFragmentDirections.actionLoginFragmentToRegistrationFragment()
+            view?.findNavController()?.navigate(action)
+        }
     }
 
     private fun setupSignIn() {
@@ -94,4 +108,6 @@ class LoginFragment : Fragment() {
             binding.passwordTextInputEditText.text = null
         }
     }
+
+
 }
