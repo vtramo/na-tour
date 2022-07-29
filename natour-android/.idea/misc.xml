@@ -7,6 +7,10 @@
         <entry key="..\:/NaTour/natour-android/app/src/main/res/layout/activity_main.xml" value="0.38697916666666665" />
         <entry key="..\:/NaTour/natour-android/app/src/main/res/layout/fragment_login.xml" value="0.25" />
         <entry key="..\:/NaTour/natour-android/app/src/main/res/layout/login_fragment.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.28306159420289856" />
+        <entry key="app/src/main/res/layout/fragment_registration.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/login_fragment.xml" value="0.28306159420289856" />
+        <entry key="app/src/main/res/layout/registration_fragment.xml" value="0.34479166666666666" />
       </map>
     </option>
   </component>
