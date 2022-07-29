@@ -12,14 +12,14 @@ import com.natour.natour.services.user.ApplicationUserService;
 public class ApplicationUserServiceImpl implements ApplicationUserService {
 
     @Autowired
-    private KeyCloakAdminService keyCloakAdminApiService;
+    private KeyCloakAdminService keyCloakAdminService;
 
     @Autowired
     private ApplicationUserRepository applicationUserRepository;
 
     @Override
     public ApplicationUser save(ApplicationUser user) {
-        keyCloakAdminApiService.saveUser(user.getUsername(), user.getPassword());
+        keyCloakAdminService.saveUser(user.getUsername(), user.getPassword());
         return applicationUserRepository.save(user);
     }
 

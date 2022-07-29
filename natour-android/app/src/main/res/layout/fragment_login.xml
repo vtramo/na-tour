@@ -69,7 +69,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/default_padding"
             android:layout_marginEnd="@dimen/default_padding"
-            android:text="Sign-in"
+            android:text="Signin"
             app:layout_constraintTop_toBottomOf="@+id/password_text_input_layout"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -85,13 +85,30 @@
             android:layout_marginTop="16dp"
             android:layout_marginStart="@dimen/default_padding"
             android:layout_marginEnd="@dimen/default_padding"
+            android:backgroundTint="#003865"
             android:text="Sign in with Google"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             android:onClick="@{() -> loginFragment.onSignInWithGoogle()}"
             />
 
+        <!-- Facebook Button -->
+        <Button
+            android:id="@+id/sign_in_facebook_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/sign_in_google_button"
+            android:layout_marginTop="16dp"
+            android:layout_marginStart="@dimen/default_padding"
+            android:layout_marginEnd="@dimen/default_padding"
+            android:text="Sign in with Facebook"
+            android:backgroundTint="@color/com_facebook_blue"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:onClick="@{() -> loginFragment.onSignInWithFacebook()}"
+            />
 
+        <!-- Sign up -->
         <TextView
             android:id="@+id/sign_up_text"
             android:layout_width="wrap_content"
@@ -101,8 +118,9 @@
             android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/sign_in_google_button" />
-
+            app:layout_constraintTop_toBottomOf="@+id/sign_in_facebook_button"
+            android:onClick="@{() -> loginFragment.onSignUp()}"
+            />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

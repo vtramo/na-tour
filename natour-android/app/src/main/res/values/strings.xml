@@ -1,9 +1,12 @@
 <resources>
     <string name="app_name">NaTour</string>
+
+    <!-- Server ID Google -->
     <string name="server_client_id">470319492727-viq0pqpsdd33d6vr4vsdc78cusco9g9l.apps.googleusercontent.com</string>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="inserisci_nome">Inserisci nome</string>
+    <string name="insert_name">Insert your name</string>
     <string name="create_a_new_profile">Create a new profile</string>
     <string name="first_name">First name</string>
     <string name="last_name">Last name</string>
@@ -12,5 +15,11 @@
     <string name="password">Password</string>
     <string name="confirm_password">Confirm Password</string>
     <string name="register">Register</string>
+
+    <!-- Facebook app -->
+    <string name="facebook_app_id">5367159293399780</string>
+    <string name="fb_login_protocol_scheme">fb5367159293399780</string>
+    <string name="facebook_client_token">aa1508129fd7442dc307ed975eb35cc1</string>
+
 
 </resources>

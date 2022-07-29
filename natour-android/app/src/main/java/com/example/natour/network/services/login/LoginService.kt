@@ -1,5 +1,6 @@
 package com.example.natour.network.services.login
 
+import com.example.natour.model.AuthenticationResponse
 import com.example.natour.network.Converters
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -27,7 +28,19 @@ object LoginService {
         suspend fun login(
             @Field("username") username: String,
             @Field("password") password: String
-        ): Boolean
+        ): AuthenticationResponse
+
+        @FormUrlEncoded
+        @POST("/login/google")
+        suspend fun loginWithGoogle(
+            @Field("authenticationCode") authenticationCode: String
+        ): AuthenticationResponse
+
+        @FormUrlEncoded
+        @POST("/login/facebook")
+        suspend fun loginWithFacebook(
+            @Field("accessToken") accessToken: String
+        ): AuthenticationResponse
     }
 
     val retrofitService: LoginApiService by lazy {

@@ -1,7 +1,6 @@
 package com.example.natour
 
 import android.app.Application
-import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.annotation.StringRes
@@ -13,7 +12,6 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var navController: NavController
 
-
     companion object {
         private lateinit var context: Application
         fun getString(@StringRes id: Int) = context.getString(id)
@@ -24,12 +22,16 @@ class MainActivity : AppCompatActivity() {
         context = application
         setContentView(R.layout.activity_main)
 
-        val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment_container) as NavHostFragment
+        val navHostFragment = supportFragmentManager
+            .findFragmentById(R.id.nav_host_fragment_container) as NavHostFragment
         navController = navHostFragment.navController
         setupActionBarWithNavController(navController)
     }
 
-//    override fun onSupportNavigateUp(): Boolean {
-//        return navController.navigateUp() || super.onSupportNavigateUp()
-//    }
+    /**
+     * Enables back button support. Simply navigates one element up on the stack.
+     */
+    override fun onSupportNavigateUp(): Boolean {
+        return navController.navigateUp() || super.onSupportNavigateUp()
+    }
 }

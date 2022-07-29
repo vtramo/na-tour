@@ -1,7 +1,4 @@
-package com.natour.natour.services.authentication.google;
-
-import java.util.List;
-import java.util.Map;
+package com.natour.natour.services.authentication.google.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,11 +7,9 @@ import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken.Payload;
 
 import com.natour.natour.model.ApplicationUser;
-import com.natour.natour.model.AuthenticationResponse;
-import com.natour.natour.model.Token;
-import com.natour.natour.services.authentication.GoogleAuthenticationService;
-import com.natour.natour.services.authentication.jwt.TokenGeneratorService;
-import com.natour.natour.services.authentication.jwt.TokenScope;
+import com.natour.natour.services.authentication.google.GoogleAuthenticationService;
+import com.natour.natour.services.authentication.google.token.GoogleAuthCodeService;
+import com.natour.natour.services.authentication.google.token.GoogleTokenValidatorService;
 import com.natour.natour.services.user.ApplicationUserService;
 
 import lombok.extern.java.Log;
@@ -25,35 +20,26 @@ public class GoogleAuthenticationServiceImpl implements GoogleAuthenticationServ
     
     @Autowired
     private GoogleAuthCodeService googleAuthenticationCodeService;
-    @Autowired
-    private GoogleTokenValidatorService googleTokenValidatorService;
 
     @Autowired
-    private TokenGeneratorService tokenGeneratorService;
+    private GoogleTokenValidatorService googleTokenValidatorService;
 
     @Autowired
     private ApplicationUserService applicationUserService;
 
     @Override
-    public AuthenticationResponse loginGoogle(String authCode) {
+    public ApplicationUser authenticate(String authCode) {
         GoogleIdToken googleIdToken = googleAuthenticationCodeService.getIdToken(authCode);
         verifyGoogleIdToken(googleIdToken);
 
-        log.info("Google ID Token is valid, authcode: " + authCode);
-
         Payload googlePayload = googleIdToken.getPayload();
-        ApplicationUser user = saveUserIfNotExist(googlePayload);
-
-        Token appToken = generateTokenApp(googlePayload);
-
-        log.info("Login with google was successful: " + user);
-        return new AuthenticationResponse(true, user, appToken);
+        return saveUserIfNotExist(googlePayload);
     }
 
     private void verifyGoogleIdToken(GoogleIdToken googleIdToken) {
         if (!googleTokenValidatorService.validateToken(googleIdToken)) {
             log.warning("Google ID Token is invalid: " + googleIdToken);
-            throw new IllegalArgumentException("Google ID Token is invalid.");
+            throw new RuntimeException();
         }
     }
 
@@ -76,12 +62,5 @@ public class GoogleAuthenticationServiceImpl implements GoogleAuthenticationServ
             googlePayload.getEmail(),
             googlePayload.get("sub").toString()
         );
-    }
-
-    private Token generateTokenApp(Payload googlePayload) {
-        return tokenGeneratorService.generateToken(Map.of(
-            "username", List.of(googlePayload.getEmail()),
-            "password", List.of(googlePayload.get("sub").toString())
-        ), TokenScope.USER);
     }
 }

@@ -6,16 +6,15 @@ import java.util.Map;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
+import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.natour.natour.exceptions.KeyCloakTokenRequestException;
 import com.natour.natour.model.Token;
 import com.natour.natour.services.authentication.jwt.TokenGeneratorService;
 import com.natour.natour.services.authentication.jwt.TokenScope;
@@ -98,10 +97,9 @@ public class KeyCloakTokenGeneratorService implements TokenGeneratorService {
                 request,
                 KeyCloakToken.class
             );
-        } finally {
-            if (response.getStatusCode() != HttpStatus.OK) {
-                KeyCloakTokenRequestException.throwException(response, scope);
-            }
+        } catch (RestClientException e) {
+            log.warning("KeyCloakTokenRequest error. Scope: " + scope + " " + e.getLocalizedMessage());
+            throw new RuntimeException();
         }
         return response;
     }

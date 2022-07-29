@@ -1,42 +1,43 @@
 package com.example.natour.signin.login.fragments
 
 import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import com.example.natour.R
 import com.example.natour.databinding.FragmentLoginBinding
-import com.example.natour.signin.login.util.Credentials
-import com.example.natour.signin.login.viewmodels.LoginViewModel
+import com.example.natour.model.Credentials
+import com.example.natour.signin.login.thirdparty.FacebookLogin
 import com.example.natour.signin.login.thirdparty.GoogleLogin
-import com.example.natour.signup.registration.fragments.RegistrationFragment
+import com.example.natour.signin.login.viewmodels.LoginViewModel
 
 class LoginFragment : Fragment() {
 
     private lateinit var binding: FragmentLoginBinding
-    private val viewModel: LoginViewModel by viewModels()
-
+    private val loginViewModel: LoginViewModel by viewModels()
 
     private lateinit var googleLogin : GoogleLogin
+    private lateinit var facebookLogin: FacebookLogin
 
     private val credentials = Credentials()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        val fragmentActivity = requireActivity()
+        googleLogin = GoogleLogin(fragmentActivity)
+        facebookLogin = FacebookLogin(fragmentActivity)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_login, container, false)
-
-        googleLogin = GoogleLogin(requireActivity())
-
-
 
         return binding.root
     }
@@ -47,22 +48,15 @@ class LoginFragment : Fragment() {
         binding.loginFragment = this
         binding.lifecycleOwner = viewLifecycleOwner
 
-        setupSignUpText()
         setupSignIn()
         setupSignInWithGoogle()
-    }
-
-    private fun setupSignUpText(){
-        binding.signUpText.setOnClickListener {
-            val action = LoginFragmentDirections.actionLoginFragmentToRegistrationFragment()
-            view?.findNavController()?.navigate(action)
-        }
+        setupSignInWithFacebook()
     }
 
     private fun setupSignIn() {
-        viewModel.loginHasSucceeded.observe(viewLifecycleOwner) { loginHasSucceeded ->
-            setErrorTextField(!loginHasSucceeded)
-            if (loginHasSucceeded) {
+        loginViewModel.isAuthenticated.observe(viewLifecycleOwner) { isAuthenticated ->
+            setErrorTextField(!isAuthenticated)
+            if (isAuthenticated) {
                 // TODO: go to the next fragment
                 Toast.makeText(context, "LOGIN SUCCESSFULLY", Toast.LENGTH_SHORT).show()
             }
@@ -70,10 +64,19 @@ class LoginFragment : Fragment() {
     }
 
     private fun setupSignInWithGoogle() {
-        googleLogin.succeeded.observe(viewLifecycleOwner) { loginWithGoogleHasSucceeded ->
-            if (loginWithGoogleHasSucceeded) {
-                viewModel.credentials = googleLogin.credentials
-                viewModel.attemptsToLogin()
+        googleLogin.isAuthenticated.observe(viewLifecycleOwner) { isAuthenticatedWithGoogle ->
+            if (isAuthenticatedWithGoogle) {
+                loginViewModel.authcodeGoogle = googleLogin.authcode
+                loginViewModel.loginWithGoogle()
+            }
+        }
+    }
+
+    private fun setupSignInWithFacebook() {
+        facebookLogin.isAuthenticated.observe(viewLifecycleOwner) { isAuthenticatedWithFacebook ->
+            if (isAuthenticatedWithFacebook) {
+                loginViewModel.accessTokenFacebok = facebookLogin.accessToken
+                loginViewModel.loginWithFacebook()
             }
         }
     }
@@ -82,15 +85,24 @@ class LoginFragment : Fragment() {
         credentials.username = binding.usernameTextInputEditText.text.toString()
         credentials.password = binding.passwordTextInputEditText.text.toString()
 
-        if (areCorrectCredentials()) viewModel.attemptsToLogin()
+        if (areCorrectCredentials()) loginViewModel.login()
     }
 
     fun onSignInWithGoogle() {
         googleLogin.launch()
     }
 
+    fun onSignInWithFacebook() {
+        facebookLogin.launch()
+    }
+
+    fun onSignUp(){
+        val action = LoginFragmentDirections.actionLoginFragmentToRegistrationFragment()
+        view?.findNavController()?.navigate(action)
+    }
+
     private fun areCorrectCredentials(): Boolean {
-        val areCorrectCredentials = viewModel.areCorrectCredentials(credentials)
+        val areCorrectCredentials = loginViewModel.areCorrectCredentials(credentials)
         setErrorTextField(!areCorrectCredentials)
         return areCorrectCredentials
     }
@@ -109,5 +121,9 @@ class LoginFragment : Fragment() {
         }
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        // destroy binding
+    }
 
 }

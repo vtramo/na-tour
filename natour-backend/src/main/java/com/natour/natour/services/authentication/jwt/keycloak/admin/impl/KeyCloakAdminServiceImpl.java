@@ -24,12 +24,13 @@ import com.natour.natour.services.authentication.jwt.keycloak.KeyCloakTokenGener
 import com.natour.natour.services.authentication.jwt.keycloak.admin.KeyCloakAdminService;
 
 import lombok.Data;
+import lombok.extern.java.Log;
 
+@Log
 @Service
 public class KeyCloakAdminServiceImpl implements KeyCloakAdminService {
 
     private static final String URL_SAVE_USER = "http://192.168.1.4:8180/admin/realms/master/users";
-
     private static final String CREDENTIALS_TYPE = "password";
     
     @Data
@@ -93,7 +94,8 @@ public class KeyCloakAdminServiceImpl implements KeyCloakAdminService {
         try {
             return mapper.writeValueAsString(user);   
         } catch (JsonProcessingException e) {
-            throw new RuntimeException("Conversion KeyCloakUser to JSON failed");
+            log.warning("JsonProcessing error: " + e.getLocalizedMessage());
+            throw new RuntimeException();
         }
     }
 

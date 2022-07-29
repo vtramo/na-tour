@@ -1,4 +1,4 @@
-package com.natour.natour.services.authentication.google;
+package com.natour.natour.services.authentication.google.token;
 
 import java.util.Collections;
 import org.springframework.stereotype.Service;
@@ -59,13 +59,16 @@ public class GoogleTokenValidatorService {
 
     private void logExceptionVerifyToken(Exception e) {
         log.warning("A problem occurred in verifying the Google Token " + e.getMessage());
+        throw new RuntimeException();
     }
 
     private void logInvalidToken(GoogleIdToken token) {
         log.warning("Google token is invalid: " + token);
+        throw new RuntimeException();
     }
 
     private void logInvalidToken(String token) {
         log.warning("Google token is invalid: " + token);
+        throw new RuntimeException();
     }
 }

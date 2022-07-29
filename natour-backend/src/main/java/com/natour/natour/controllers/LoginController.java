@@ -2,23 +2,18 @@ package com.natour.natour.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.natour.natour.model.AuthenticationResponse;
 import com.natour.natour.model.Credentials;
 import com.natour.natour.services.authentication.AuthenticationService;
-import com.natour.natour.services.authentication.GoogleAuthenticationService;
 
 @RestController
 public class LoginController {
 
     @Autowired
     private AuthenticationService authenticationService;
-
-    @Autowired
-    private GoogleAuthenticationService googleAuthenticationService;
 
     @PostMapping(
         path = "/login",
@@ -27,18 +22,18 @@ public class LoginController {
         try {
             return authenticationService.authenticate(credentials);
         } catch (Exception e) {
-            return new AuthenticationResponse(false, null, null);
+            return new AuthenticationResponse(false);
         }
     }
 
     @PostMapping(
         path = "/login/google",
         consumes = {MediaType.APPLICATION_FORM_URLENCODED_VALUE})
-    public AuthenticationResponse loginWithGoogle(String authCode) {
+    public AuthenticationResponse loginWithGoogle(String authenticationCode) {
         try {
-            return googleAuthenticationService.loginGoogle(authCode);
+            return authenticationService.authenticateWithGoogle(authenticationCode);
         } catch (Exception e) {
-            return new AuthenticationResponse(false, null, null);
+            return new AuthenticationResponse(false);
         }
     }
 
@@ -46,11 +41,12 @@ public class LoginController {
         path = "/login/facebook",
         consumes = {MediaType.APPLICATION_FORM_URLENCODED_VALUE}
     )
-    public AuthenticationResponse loginWithFacebook(String authCode) {
+    public AuthenticationResponse loginWithFacebook(String accessToken) {
         try {
-            return new AuthenticationResponse(true, null, null); 
+            return authenticationService.authenticateWithFacebook(accessToken);
         } catch (Exception e) {
-            return new AuthenticationResponse(false, null, null);
+            e.printStackTrace();
+            return new AuthenticationResponse(false);
         }
     }
 }

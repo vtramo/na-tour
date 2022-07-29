@@ -17,7 +17,7 @@ public class SecurityConfiguration {
         http
             .csrf().disable()
             .authorizeRequests()
-            .antMatchers("/login", "/login/google").permitAll()
+            .antMatchers("/login", "/login/google", "/login/facebook").permitAll()
             .anyRequest().authenticated()
             .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             .and().oauth2ResourceServer().jwt();

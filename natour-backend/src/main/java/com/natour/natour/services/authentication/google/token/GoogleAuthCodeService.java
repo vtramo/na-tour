@@ -1,4 +1,4 @@
-package com.natour.natour.services.authentication.google;
+package com.natour.natour.services.authentication.google.token;
 
 import org.springframework.stereotype.Service;
 
@@ -45,7 +45,7 @@ public class GoogleAuthCodeService {
             return tokenResponse.parseIdToken();
         } catch (Exception e) {
             log.warning("Google authcode token request failed: " + e.getMessage());
-            throw new RuntimeException("Google authcode token request failed.");
+            throw new RuntimeException();
         }
     }
 }

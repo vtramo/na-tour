@@ -110,6 +110,6 @@ dependencies {
     implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
     implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
 
-
-
+    // Facebook login
+    implementation 'com.facebook.android:facebook-login:latest.release'
 }
