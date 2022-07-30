@@ -151,6 +151,12 @@
 			<version>1.20.0</version>
 		</dependency>
 
+		<!-- Spring Doc -->
+		<dependency>
+			<groupId>org.springdoc</groupId>
+			<artifactId>springdoc-openapi-ui</artifactId>
+			<version>1.6.9</version>
+		</dependency>
 
 	</dependencies>
 
