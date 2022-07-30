@@ -5,8 +5,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import com.example.natour.databinding.FragmentRegistrationBinding
-import com.example.natour.signup.registration.CostantRegex
+import com.example.natour.signup.registration.ConstantRegex
 import com.google.android.material.textfield.TextInputLayout
 
 class RegistrationFragment : Fragment() {
@@ -25,58 +26,31 @@ class RegistrationFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        setupFirstnameListener()
-        setupLastnameListener()
-        setupEmailListener()
+        binding.firstNameTextInputLayout
+            .setTextVerifier(ConstantRegex.NAME_REGEX, "First name is invalid")
+        binding.lastNameTextInputLayout
+            .setTextVerifier(ConstantRegex.NAME_REGEX, "First name is invalid")
+        binding.emailTextInputLayout
+            .setTextVerifier(ConstantRegex.EMAIL_REGEX, "Email is invalid")
     }
 
-    private fun setupFirstnameListener() {
-        val firstNameTextInputLayout = binding.firstNameTextInputLayout
-        binding.firstNameTextInputEditText.setOnFocusChangeListener { _, isFocused ->
+    private fun TextInputLayout.setTextVerifier(regex: Regex, errorMessage: String) {
+        val inputEditText = editText!!
+        inputEditText.setOnFocusChangeListener { _, isFocused ->
             if (!isFocused) {
-                if (!isFocused) {
-                    validateTextInputLayoutWithRegex(
-                        firstNameTextInputLayout,
-                        CostantRegex.NAME_REGEX,
-                        "Incorrect first name"
-                    )
-                }
+                inputEditText.validateTextWithRegex(this, regex, errorMessage)
             }
         }
     }
 
-    private fun setupLastnameListener() {
-        val lastNameTextInputLayout = binding.lastNameTextInputLayout
-        binding.lastNameTextInputEditText.setOnFocusChangeListener { _, isFocused ->
-            if (!isFocused) {
-                validateTextInputLayoutWithRegex(
-                    lastNameTextInputLayout,
-                    CostantRegex.NAME_REGEX,
-                    "Incorrect last name"
-                )
-            }
-        }
-    }
-
-    private fun setupEmailListener() {
-        val emailTextInputLayout = binding.emailTextInputLayout
-        binding.emailTextInputEditText.setOnFocusChangeListener { _, isFocused ->
-            if (!isFocused) {
-                validateTextInputLayoutWithRegex(
-                    emailTextInputLayout,
-                    CostantRegex.EMAIL_REGEX,
-                    "Incorrect email")
-            }
-        }
-    }
-
-    private fun validateTextInputLayoutWithRegex(
+    private fun EditText.validateTextWithRegex(
         textInputLayout: TextInputLayout,
         regex: Regex,
         errorMessage: String
     ) {
-        val text = textInputLayout.editText!!.text
-        if (!regex.matches(text)) {
+        assert(textInputLayout.editText == this)
+
+        if (text!!.isNotBlank() && !regex.matches(text!!)) {
             textInputLayout.isErrorEnabled = true
             textInputLayout.error = errorMessage
         } else {
