@@ -6,7 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.natour.databinding.FragmentRegistrationBinding
-import com.example.natour.signup.registration.Regex
+import com.example.natour.signup.registration.CostantRegex
+import com.google.android.material.textfield.TextInputLayout
 
 class RegistrationFragment : Fragment() {
 
@@ -17,7 +18,7 @@ class RegistrationFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentRegistrationBinding.inflate(inflater,container,false);
+        _binding = FragmentRegistrationBinding.inflate(inflater, container,false)
         return binding.root
     }
 
@@ -27,57 +28,60 @@ class RegistrationFragment : Fragment() {
         setupFirstnameListener()
         setupLastnameListener()
         setupEmailListener()
-
     }
 
     private fun setupFirstnameListener() {
+        val firstNameTextInputLayout = binding.firstNameTextInputLayout
         binding.firstNameTextInputEditText.setOnFocusChangeListener { _, isFocused ->
-            if (!isFocused) validateFirstname()
-        }
-    }
-
-    private fun validateFirstname() {
-        val firstName = binding.firstNameTextInputEditText.text.toString()
-        if (!Regex.NAME_REGEX.matches(firstName)) {
-            binding.firstNameTextInputLayout.isErrorEnabled = true
-            binding.firstNameTextInputLayout.error = "Incorrect first name"
-        } else {
-            binding.firstNameTextInputLayout.isErrorEnabled = false
-            binding.firstNameTextInputLayout.error = null
+            if (!isFocused) {
+                if (!isFocused) {
+                    validateTextInputLayoutWithRegex(
+                        firstNameTextInputLayout,
+                        CostantRegex.NAME_REGEX,
+                        "Incorrect first name"
+                    )
+                }
+            }
         }
     }
 
     private fun setupLastnameListener() {
+        val lastNameTextInputLayout = binding.lastNameTextInputLayout
         binding.lastNameTextInputEditText.setOnFocusChangeListener { _, isFocused ->
-            if (!isFocused) validateLastname()
-        }
-    }
-
-    private fun validateLastname() {
-        val lastName = binding.lastNameTextInputEditText.text.toString()
-        if (!Regex.NAME_REGEX.matches(lastName)) {
-            binding.lastNameTextInputLayout.isErrorEnabled = true
-            binding.lastNameTextInputLayout.error = "Incorrect last name"
-        } else {
-            binding.lastNameTextInputLayout.isErrorEnabled = false
-            binding.lastNameTextInputLayout.error = null
+            if (!isFocused) {
+                validateTextInputLayoutWithRegex(
+                    lastNameTextInputLayout,
+                    CostantRegex.NAME_REGEX,
+                    "Incorrect last name"
+                )
+            }
         }
     }
 
     private fun setupEmailListener() {
+        val emailTextInputLayout = binding.emailTextInputLayout
         binding.emailTextInputEditText.setOnFocusChangeListener { _, isFocused ->
-            if (!isFocused) validateEmail()
+            if (!isFocused) {
+                validateTextInputLayoutWithRegex(
+                    emailTextInputLayout,
+                    CostantRegex.EMAIL_REGEX,
+                    "Incorrect email")
+            }
         }
     }
 
-    private fun validateEmail() {
-        val email = binding.emailTextInputEditText.text.toString()
-        if (!Regex.EMAIL_REGEX.matches(email)) {
-            binding.emailTextInputLayout.isErrorEnabled = true
-            binding.emailTextInputLayout.error = "Incorrect email"
+    private fun validateTextInputLayoutWithRegex(
+        textInputLayout: TextInputLayout,
+        regex: Regex,
+        errorMessage: String
+    ) {
+        val text = textInputLayout.editText!!.text
+        if (!regex.matches(text)) {
+            textInputLayout.isErrorEnabled = true
+            textInputLayout.error = errorMessage
         } else {
-            binding.emailTextInputLayout.isErrorEnabled = false
-            binding.emailTextInputLayout.error = null
+            textInputLayout.isErrorEnabled = false
+            textInputLayout.error = null
         }
     }
 
