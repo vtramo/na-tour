@@ -18,7 +18,9 @@ import com.example.natour.signin.login.viewmodels.LoginViewModel
 
 class LoginFragment : Fragment() {
 
-    private lateinit var binding: FragmentLoginBinding
+    private var _binding: FragmentLoginBinding? = null
+    private val binding get() = _binding!!
+
     private val loginViewModel: LoginViewModel by viewModels()
 
     private lateinit var googleLogin : GoogleLogin
@@ -37,7 +39,7 @@ class LoginFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_login, container, false)
+        _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_login, container, false)
 
         return binding.root
     }
@@ -123,7 +125,6 @@ class LoginFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        // destroy binding
+        _binding = null
     }
-
 }
