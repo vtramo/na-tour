@@ -8,11 +8,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import androidx.core.widget.addTextChangedListener
+import androidx.fragment.app.viewModels
 
 import com.example.natour.MainActivity
 import com.example.natour.R
 import com.example.natour.databinding.FragmentRegistrationBinding
 import com.example.natour.signup.registration.ConstantRegex
+import com.example.natour.signup.registration.viewmodels.RegistrationViewModel
 
 import com.google.android.material.textfield.TextInputLayout
 
@@ -20,6 +22,8 @@ class RegistrationFragment : Fragment() {
 
     private var _binding: FragmentRegistrationBinding? = null
     private val binding get() = _binding!!
+
+    private val registrationViewModel: RegistrationViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -32,10 +36,22 @@ class RegistrationFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        setupSignUp()
         setupTextVerifies()
         setConfirmPasswordVerifier()
 
         binding.registerButton.setOnClickListener { submitForm() }
+    }
+
+    private fun setupSignUp() {
+        registrationViewModel
+            .hasBeenRegistered.observe(viewLifecycleOwner) { hasBeenRegisteredCorrectly ->
+                if (hasBeenRegisteredCorrectly) {
+                    // TODO: go to login fragment
+                } else {
+                    showInvalidFormAlertDialog()
+                }
+            }
     }
 
     private fun setupTextVerifies() {
@@ -108,12 +124,15 @@ class RegistrationFragment : Fragment() {
 
     private fun submitForm() {
         if (isValidForm()) {
-            // TODO: send form
+            registrationViewModel.submitForm(
+                binding.firstNameTextInputEditText.text!!.toString(),
+                binding.lastNameTextInputEditText.text!!.toString(),
+                binding.usernameTextInputEditText.text!!.toString(),
+                binding.emailTextInputEditText.text!!.toString(),
+                binding.passwordTextInputEditText.text!!.toString()
+            )
         } else {
-            AlertDialog.Builder(requireContext())
-                .setTitle("Invalid Form")
-                .setPositiveButton("Okay") { _, _ -> }
-                .show()
+            showInvalidFormAlertDialog()
         }
     }
 
@@ -148,6 +167,12 @@ class RegistrationFragment : Fragment() {
     private fun isValidConfirmPassword() =
         !binding.confirmPasswordTextInputLayout.isErrorEnabled       &&
                 binding.confirmPasswordTextInputEditText.text!!.isNotBlank()
+
+    private fun showInvalidFormAlertDialog() {
+        AlertDialog.Builder(requireContext())
+            .setPositiveButton("Okay") { _, _ -> }
+            .show()
+    }
 
     override fun onDestroyView() {
         super.onDestroyView()
