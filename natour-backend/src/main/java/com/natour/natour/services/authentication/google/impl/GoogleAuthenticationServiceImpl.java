@@ -59,6 +59,8 @@ public class GoogleAuthenticationServiceImpl implements GoogleAuthenticationServ
         return new ApplicationUser(
             null,
             googlePayload.getEmail(),
+            googlePayload.get("name").toString(),
+            googlePayload.get("given_name").toString(),
             googlePayload.getEmail(),
             googlePayload.get("sub").toString()
         );
