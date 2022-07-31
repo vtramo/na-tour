@@ -2,13 +2,13 @@ package com.example.natour.network.services.login
 
 import com.example.natour.model.AuthenticationResponse
 import com.example.natour.network.Converters
+import com.example.natour.network.services.URLs
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.http.*
 
 object LoginService {
-    private const val BASE_URL = "http://192.168.56.1.nip.io:8080/"
 
     private val okHttpClient = run {
         val httpLoggingInterceptor = HttpLoggingInterceptor()
@@ -18,7 +18,7 @@ object LoginService {
 
     private val retrofit = Retrofit.Builder()
         .addConverterFactory(Converters.createConverterFactory())
-        .baseUrl(BASE_URL)
+        .baseUrl(URLs.BACKEND)
         .client(okHttpClient)
         .build()
 
