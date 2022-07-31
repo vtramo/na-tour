@@ -16,7 +16,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
-@RequestMapping("/login/")
+@RequestMapping("/login")
 @Tag(
     name = "Login Controller", 
     description = "This REST controller provides services to log in the NaTour application"

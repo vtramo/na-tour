@@ -6,8 +6,8 @@ import org.springframework.stereotype.Service;
 
 import com.natour.natour.model.ApplicationUser;
 import com.natour.natour.model.SomeSortOfUser;
-import com.natour.natour.repositories.ApplicationUserRepository;
 import com.natour.natour.services.registration.RegistrationService;
+import com.natour.natour.services.user.ApplicationUserService;
 
 import lombok.extern.java.Log;
 
@@ -16,14 +16,14 @@ import lombok.extern.java.Log;
 public class RegistrationServiceImpl implements RegistrationService {
 
     @Autowired
-    private ApplicationUserRepository applicationUserRepository;
+    private ApplicationUserService applicationUserService;
     
     @Override
     public boolean register(SomeSortOfUser user) {
         ApplicationUser appUser = new ApplicationUser();
         BeanUtils.copyProperties(user, appUser);
 
-        appUser = applicationUserRepository.save(appUser);
+        appUser = applicationUserService.save(appUser);
 
         log.info("A new user was successfully registered: " + appUser);
         return true;
