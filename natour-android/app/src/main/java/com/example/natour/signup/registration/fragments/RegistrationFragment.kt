@@ -1,5 +1,6 @@
 package com.example.natour.signup.registration.fragments
 
+import android.app.AlertDialog
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -33,6 +34,8 @@ class RegistrationFragment : Fragment() {
 
         setupTextVerifies()
         setConfirmPasswordVerifier()
+
+        binding.registerButton.setOnClickListener { submitForm() }
     }
 
     private fun setupTextVerifies() {
@@ -102,6 +105,49 @@ class RegistrationFragment : Fragment() {
                 MainActivity.getDrawable(R.drawable.ic_baseline_check_circle_24_green)
         }
     }
+
+    private fun submitForm() {
+        if (isValidForm()) {
+            // TODO: send form
+        } else {
+            AlertDialog.Builder(requireContext())
+                .setTitle("Invalid Form")
+                .setPositiveButton("Okay") { _, _ -> }
+                .show()
+        }
+    }
+
+    private fun isValidForm() =
+        isValidFirstName()      &&
+                isValidLastName()       &&
+                isValidUsername()       &&
+                isValidEmail()          &&
+                isValidPassword()       &&
+                isValidConfirmPassword()
+
+    private fun isValidFirstName() =
+        !binding.firstNameTextInputLayout.isErrorEnabled       &&
+                binding.firstNameTextInputEditText.text!!.isNotBlank()
+
+    private fun isValidLastName() =
+        !binding.lastNameTextInputLayout.isErrorEnabled        &&
+                binding.lastNameTextInputEditText.text!!.isNotBlank()
+
+    private fun isValidUsername() =
+        !binding.usernameTextInputLayout.isErrorEnabled       &&
+                binding.usernameTextInputEditText.text!!.isNotBlank()
+
+    private fun isValidEmail() =
+        !binding.emailTextInputLayout.isErrorEnabled        &&
+                binding.emailTextInputEditText.text!!.isNotBlank()
+
+    private fun isValidPassword() =
+        !binding.passwordTextInputLayout.isErrorEnabled       &&
+                binding.passwordTextInputEditText.text!!.isNotBlank()
+
+    private fun isValidConfirmPassword() =
+        !binding.confirmPasswordTextInputLayout.isErrorEnabled       &&
+                binding.confirmPasswordTextInputEditText.text!!.isNotBlank()
 
     override fun onDestroyView() {
         super.onDestroyView()
