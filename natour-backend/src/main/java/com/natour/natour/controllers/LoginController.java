@@ -26,9 +26,14 @@ public class LoginController {
     @Autowired
     private AuthenticationService authenticationService;
 
-    @PostMapping(consumes = {MediaType.APPLICATION_FORM_URLENCODED_VALUE})
+    @PostMapping(
+        consumes = {MediaType.APPLICATION_FORM_URLENCODED_VALUE},
+        produces = {MediaType.APPLICATION_JSON_VALUE})
     @ResponseStatus(code = HttpStatus.OK)
-    @Operation(summary = "Provides a JWT Token for the supplied credentials")
+    @Operation(summary = "Returns an access token, a refresh token and user information that matches "  +
+                        "the credentials provided with the 'authenticated' flag set to true "           +
+                        "(if the credentials are correct, otherwise it will return the same fields "    +
+                        "with null and the 'authenticated' flag set to false).")
     public AuthenticationResponse login(Credentials credentials) {
         try {
             return authenticationService.authenticate(credentials);
@@ -39,9 +44,13 @@ public class LoginController {
 
     @PostMapping(
         path = "google",
-        consumes = {MediaType.APPLICATION_FORM_URLENCODED_VALUE})
+        consumes = {MediaType.APPLICATION_FORM_URLENCODED_VALUE},
+        produces = {MediaType.APPLICATION_JSON_VALUE})
     @ResponseStatus(code = HttpStatus.OK)
-    @Operation(summary = "Provides a JWT Token for the supplied Google's authentication code")
+    @Operation(summary = "Returns an access token, a refresh token and user information that matches "          +
+                        "the google authentication code provided with the 'authenticated' flag set to true "    +
+                        "(if the google authentication code is correct, otherwise it will return the same "    +
+                        "fields with null and the 'authenticated' flag set to false).")
     public AuthenticationResponse loginWithGoogle(String authenticationCode) {
         try {
             return authenticationService.authenticateWithGoogle(authenticationCode);
@@ -52,10 +61,14 @@ public class LoginController {
 
     @PostMapping(
         path = "facebook",
-        consumes = {MediaType.APPLICATION_FORM_URLENCODED_VALUE}
+        consumes = {MediaType.APPLICATION_FORM_URLENCODED_VALUE},
+        produces = {MediaType.APPLICATION_JSON_VALUE}
     )
     @ResponseStatus(code = HttpStatus.OK)
-    @Operation(summary = "Provides a JWT Token for the supplied Facebook's access token")
+    @Operation(summary = "Returns an access token, a refresh token and user information that matches "      +
+                        "the facebook access token provided with the 'authenticated' flag set to true "     +
+                        "(if the the facebook access token is correct, otherwise it will return the same "  +
+                        "fields with null and the 'authenticated' flag set to false).")
     public AuthenticationResponse loginWithFacebook(String accessToken) {
         try {
             return authenticationService.authenticateWithFacebook(accessToken);
