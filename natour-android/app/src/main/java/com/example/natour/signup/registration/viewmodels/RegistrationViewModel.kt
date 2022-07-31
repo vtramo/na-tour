@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.natour.network.services.registration.RegistrationService
 import kotlinx.coroutines.Dispatchers.Default
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -21,7 +22,15 @@ class RegistrationViewModel : ViewModel() {
         password: String
     ) = viewModelScope.launch {
         val result = withContext(Default) {
-            // TODO: send request
+            RegistrationService.retrofitService.register(
+                firstName,
+                lastName,
+                username,
+                email,
+                password
+            )
         }
+        _hasBeenRegistered.value = result
     }
+
 }

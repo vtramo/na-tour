@@ -2,7 +2,6 @@ package com.example.natour.network.services.registration
 
 import com.example.natour.network.Converters
 import com.example.natour.network.services.URLs
-import com.example.natour.network.services.login.LoginService
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -27,7 +26,7 @@ object RegistrationService {
     interface RegistrationApiService {
         @FormUrlEncoded
         @POST("/registration")
-        suspend fun login(
+        suspend fun register(
             @Field("firstName") firstName: String,
             @Field("lastName") lastName: String,
             @Field("username") username: String,

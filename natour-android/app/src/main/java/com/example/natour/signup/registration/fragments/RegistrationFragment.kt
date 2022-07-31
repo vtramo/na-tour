@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.EditText
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.viewModels
+import androidx.navigation.findNavController
 
 import com.example.natour.MainActivity
 import com.example.natour.R
@@ -47,11 +48,15 @@ class RegistrationFragment : Fragment() {
         registrationViewModel
             .hasBeenRegistered.observe(viewLifecycleOwner) { hasBeenRegisteredCorrectly ->
                 if (hasBeenRegisteredCorrectly) {
-                    // TODO: go to login fragment
+                    goBackToLoginFragment()
                 } else {
                     showInvalidFormAlertDialog()
                 }
             }
+    }
+
+    private fun goBackToLoginFragment() {
+        view?.findNavController()?.navigateUp()
     }
 
     private fun setupTextVerifies() {
@@ -170,6 +175,7 @@ class RegistrationFragment : Fragment() {
 
     private fun showInvalidFormAlertDialog() {
         AlertDialog.Builder(requireContext())
+            .setTitle("Invalid form")
             .setPositiveButton("Okay") { _, _ -> }
             .show()
     }
