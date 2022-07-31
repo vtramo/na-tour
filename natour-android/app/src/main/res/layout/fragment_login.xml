@@ -16,6 +16,7 @@
         android:padding="@dimen/default_padding"
         >
 
+        <!-- Username -->
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/username_text_input_layout"
             style="@style/Widget.Unscramble.TextInputLayout.OutlinedBox"
@@ -38,6 +39,7 @@
                 tools:ignore="DuplicateClickableBoundsCheck" />
         </com.google.android.material.textfield.TextInputLayout>
 
+        <!-- Password -->
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/password_text_input_layout"
             style="@style/Widget.Unscramble.TextInputLayout.OutlinedBox"
@@ -56,10 +58,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginBottom="32dp"
-                android:inputType="textPersonName|textNoSuggestions"
+                android:inputType="textPassword"
                 android:maxLines="1" />
         </com.google.android.material.textfield.TextInputLayout>
-
 
         <!-- Sign in Button -->
         <Button
@@ -105,7 +106,7 @@
             android:backgroundTint="@color/com_facebook_blue"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
-            android:onClick="@{() -> loginFragment.onSignInWithFacebook()}"
+            android:onClick="@{() -> loginFragment.onSignUpGoToRegistrationFragment()}"
             />
 
         <!-- Sign up -->
@@ -119,7 +120,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/sign_in_facebook_button"
-            android:onClick="@{() -> loginFragment.onSignUp()}"
+            android:onClick="@{() -> loginFragment.onSignUpGoToRegistrationFragment()}"
             />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

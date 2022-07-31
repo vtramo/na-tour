@@ -1,6 +1,8 @@
 package com.example.natour.signin.login.fragments
 
+import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -28,8 +30,9 @@ class LoginFragment : Fragment() {
 
     private val credentials = Credentials()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+
         val fragmentActivity = requireActivity()
         googleLogin = GoogleLogin(fragmentActivity)
         facebookLogin = FacebookLogin(fragmentActivity)
@@ -40,7 +43,6 @@ class LoginFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_login, container, false)
-
         return binding.root
     }
 
@@ -98,7 +100,7 @@ class LoginFragment : Fragment() {
         facebookLogin.launch()
     }
 
-    fun onSignUp(){
+    fun onSignUpGoToRegistrationFragment() {
         val action = LoginFragmentDirections.actionLoginFragmentToRegistrationFragment()
         view?.findNavController()?.navigate(action)
     }

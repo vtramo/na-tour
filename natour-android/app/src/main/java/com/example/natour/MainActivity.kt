@@ -6,8 +6,6 @@ import android.os.Bundle
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.appcompat.content.res.AppCompatResources
-import androidx.appcompat.content.res.AppCompatResources.getDrawable
-import androidx.core.content.ContextCompat.getDrawable
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupActionBarWithNavController
