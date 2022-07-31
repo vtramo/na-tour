@@ -15,7 +15,7 @@ public class FacebookUser implements Serializable {
     private String firstName;
 
     @JsonProperty("last_name")
-    private String last_name;
+    private String lastName;
 
     @JsonProperty("email")
     private String email;
