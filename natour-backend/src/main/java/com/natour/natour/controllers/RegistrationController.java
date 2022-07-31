@@ -2,6 +2,7 @@ package com.natour.natour.controllers;
 
 import javax.validation.Valid;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.natour.natour.model.SomeSortOfUser;
+import com.natour.natour.services.registration.RegistrationService;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -21,6 +23,9 @@ import io.swagger.v3.oas.annotations.tags.Tag;
     description = "This REST controller provides services to register in the NaTour application"
 )
 public class RegistrationController {
+
+    @Autowired
+    private RegistrationService registrationService;
     
     @PostMapping(
         consumes = {MediaType.APPLICATION_FORM_URLENCODED_VALUE},
@@ -30,7 +35,6 @@ public class RegistrationController {
     @Operation(summary = "Register the provided user in the NaTour application and " +
                          "returns true if it has succeeded, false otherwise")
     public boolean register(@Valid SomeSortOfUser user) {
-        // TODO: Register the user
-        return true;
+        return registrationService.register(user);
     }
 }
