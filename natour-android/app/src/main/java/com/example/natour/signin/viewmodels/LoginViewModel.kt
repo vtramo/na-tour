@@ -1,4 +1,4 @@
-package com.example.natour.signin.login.viewmodels
+package com.example.natour.signin.viewmodels
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

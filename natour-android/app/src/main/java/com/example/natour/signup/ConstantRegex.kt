@@ -1,4 +1,4 @@
-package com.example.natour.signup.registration
+package com.example.natour.signup
 
 import android.util.Patterns
 

@@ -1,8 +1,7 @@
-package com.example.natour.signin.login.fragments
+package com.example.natour.signin.fragments
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,9 +13,9 @@ import androidx.navigation.findNavController
 import com.example.natour.R
 import com.example.natour.databinding.FragmentLoginBinding
 import com.example.natour.model.Credentials
-import com.example.natour.signin.login.thirdparty.FacebookLogin
-import com.example.natour.signin.login.thirdparty.GoogleLogin
-import com.example.natour.signin.login.viewmodels.LoginViewModel
+import com.example.natour.signin.thirdparty.FacebookLogin
+import com.example.natour.signin.thirdparty.GoogleLogin
+import com.example.natour.signin.viewmodels.LoginViewModel
 
 class LoginFragment : Fragment() {
 

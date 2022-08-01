@@ -1,4 +1,4 @@
-package com.example.natour.signin.mainuser
+package com.example.natour.user
 
 object MainUser {
     private var _id = Int.MIN_VALUE

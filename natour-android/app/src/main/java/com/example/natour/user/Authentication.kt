@@ -1,4 +1,4 @@
-package com.example.natour.signin.mainuser
+package com.example.natour.user
 
 enum class Authentication {
     NONE, DEFAULT, GOOGLE, FACEBOOK
