@@ -106,7 +106,7 @@
             android:backgroundTint="@color/com_facebook_blue"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
-            android:onClick="@{() -> loginFragment.onSignUpGoToRegistrationFragment()}"
+            android:onClick="@{() -> loginFragment.onSignInWithFacebook()}"
             />
 
         <!-- Sign up -->
