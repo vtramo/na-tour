@@ -1,6 +1,8 @@
 package com.example.natour.signin.login.fragments
 
+import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,7 +20,9 @@ import com.example.natour.signin.login.viewmodels.LoginViewModel
 
 class LoginFragment : Fragment() {
 
-    private lateinit var binding: FragmentLoginBinding
+    private var _binding: FragmentLoginBinding? = null
+    private val binding get() = _binding!!
+
     private val loginViewModel: LoginViewModel by viewModels()
 
     private lateinit var googleLogin : GoogleLogin
@@ -26,8 +30,9 @@ class LoginFragment : Fragment() {
 
     private val credentials = Credentials()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+
         val fragmentActivity = requireActivity()
         googleLogin = GoogleLogin(fragmentActivity)
         facebookLogin = FacebookLogin(fragmentActivity)
@@ -37,8 +42,7 @@ class LoginFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_login, container, false)
-
+        _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_login, container, false)
         return binding.root
     }
 
@@ -96,7 +100,7 @@ class LoginFragment : Fragment() {
         facebookLogin.launch()
     }
 
-    fun onSignUp(){
+    fun onSignUpGoToRegistrationFragment() {
         val action = LoginFragmentDirections.actionLoginFragmentToRegistrationFragment()
         view?.findNavController()?.navigate(action)
     }
@@ -123,7 +127,6 @@ class LoginFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        // destroy binding
+        _binding = null
     }
-
 }

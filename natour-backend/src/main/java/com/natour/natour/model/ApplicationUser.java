@@ -26,6 +26,12 @@ public class ApplicationUser {
     private String username;
 
     @NonNull
+    private String firstName;
+
+    @NonNull
+    private String lastName;
+
+    @NonNull
     @Email
     private String email;
 

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".signup.registration.fragments.RegistrationFragment">
 
     <LinearLayout
@@ -11,6 +12,7 @@
         android:layout_marginTop="32dp"
         >
 
+        <!-- Create a new profile -->
         <TextView
             android:id="@+id/create_a_new_profile_textView"
             android:layout_width="wrap_content"
@@ -24,59 +26,50 @@
             android:id="@+id/registration_scroll_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:fillViewport="true"
             android:orientation="vertical"
             android:padding="16dp"
-            tools:ignore="SpeakableTextPresentCheck"
-            android:fillViewport="true"
-            >
+            tools:ignore="SpeakableTextPresentCheck">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
                 android:gravity="center"
-                >
+                android:orientation="vertical">
 
+                <!-- First name -->
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/firstName_textField"
+                    android:id="@+id/first_name_text_input_layout"
                     style="@style/Widget.Unscramble.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="40dp"
-                    android:hint="@string/first_name">
+                    app:errorIconDrawable="@drawable/ic_error"
+                    android:hint="@string/first_name"
+                    app:endIconMode="custom">
 
                     <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/first_name_text_input_edit_text"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:inputType="text"
-                        android:maxLines="1" />
+                        android:maxLines="1"
+                        />
                 </com.google.android.material.textfield.TextInputLayout>
 
+                <!-- Last name -->
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/lastName_textField"
+                    android:id="@+id/last_name_text_input_layout"
                     style="@style/Widget.Unscramble.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
-                    android:hint="@string/last_name">
+                    app:errorIconDrawable="@drawable/ic_error"
+                    android:hint="@string/last_name"
+                    app:endIconMode="custom">
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:inputType="text"
-                        android:maxLines="1" />
-
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/username_textField"
-                    style="@style/Widget.Unscramble.TextInputLayout.OutlinedBox"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:hint="@string/username">
-
-                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/last_name_text_input_edit_text"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:inputType="text"
@@ -84,15 +77,41 @@
 
                 </com.google.android.material.textfield.TextInputLayout>
 
+                <!-- Username -->
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/email_textField"
+                    android:id="@+id/username_text_input_layout"
                     style="@style/Widget.Unscramble.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
+                    app:errorIconDrawable="@drawable/ic_error"
+                    android:hint="@string/username"
+                    app:counterEnabled="true"
+                    app:endIconMode="custom"
+                    app:counterMaxLength="16">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/username_text_input_edit_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:inputType="text"
+                        android:maxLines="1" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <!-- Email -->
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/email_text_input_layout"
+                    style="@style/Widget.Unscramble.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:errorIconDrawable="@drawable/ic_error"
+                    android:layout_marginTop="20dp"
+                    app:endIconMode="custom"
                     android:hint="@string/email">
 
                     <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/email_text_input_edit_text"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:inputType="text"
@@ -100,44 +119,54 @@
 
                 </com.google.android.material.textfield.TextInputLayout>
 
+                <!-- Password -->
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/password_textField"
+                    android:id="@+id/password_text_input_layout"
                     style="@style/Widget.Unscramble.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
-                    android:hint="@string/password">
+                    app:errorIconDrawable="@drawable/ic_error"
+                    android:hint="@string/password"
+                    app:passwordToggleEnabled="true">
 
                     <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/password_text_input_edit_text"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:inputType="text"
+                        android:inputType="textPassword"
                         android:maxLines="1" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
+                <!-- Confirm password -->
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/confirm_password_textField"
+                    android:id="@+id/confirm_password_text_input_layout"
                     style="@style/Widget.Unscramble.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    app:errorIconDrawable="@drawable/ic_error"
+                    app:endIconMode="custom"
                     android:layout_marginTop="20dp"
                     android:hint="@string/confirm_password">
 
                     <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/confirm_password_text_input_edit_text"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:inputType="text"
+                        android:inputType="textPassword"
+                        app:endIconMode="custom"
                         android:maxLines="1" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
+                <!-- Register Button -->
                 <Button
+                    android:id="@+id/register_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="25dp"
-                    android:text="@string/register"
-                    />
+                    android:text="@string/register" />
 
             </LinearLayout>
 

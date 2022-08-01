@@ -3,7 +3,9 @@ package com.example.natour
 import android.app.Application
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupActionBarWithNavController
@@ -14,7 +16,9 @@ class MainActivity : AppCompatActivity() {
 
     companion object {
         private lateinit var context: Application
+
         fun getString(@StringRes id: Int) = context.getString(id)
+        fun getDrawable(@DrawableRes id: Int) = AppCompatResources.getDrawable(context, id)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

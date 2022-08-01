@@ -18,7 +18,7 @@ import lombok.extern.java.Log;
 public class FacebookApiGraphServiceImpl implements FacebookApiGraphService {
 
     private static final String URL_GRAPH_API = "https://graph.facebook.com/";
-    private static final String USER_DETAILS = "fields=id,name,email";
+    private static final String USER_DETAILS = "fields=id,first_name,last_name,email";
 
     private RestTemplate restTemplate;
     public FacebookApiGraphServiceImpl(RestTemplateBuilder restTemplateBuilder) {
@@ -51,6 +51,8 @@ public class FacebookApiGraphServiceImpl implements FacebookApiGraphService {
         return new ApplicationUser(
             null, 
             fbUser.getEmail(),
+            fbUser.getFirstName(),
+            fbUser.getLastName(),
             fbUser.getEmail(), 
             fbUser.getId()
         );

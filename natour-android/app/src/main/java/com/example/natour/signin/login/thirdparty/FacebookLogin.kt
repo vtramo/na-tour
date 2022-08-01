@@ -16,10 +16,16 @@ class FacebookLogin(private val activity: FragmentActivity) {
     companion object {
         private const val FACEBOOK_TAG = "Facebook Login"
         private val PERMISSIONS = listOf("public_profile", "email")
-        val callBackManager = CallbackManager.Factory.create()
+        private val callBackManager = CallbackManager.Factory.create()
     }
 
     private val loginManager = LoginManager.getInstance()
+
+    private var _accessToken = ""
+    val accessToken get() = _accessToken
+
+    private var _isAuthenticated = MutableLiveData<Boolean>()
+    val isAuthenticated: LiveData<Boolean> = _isAuthenticated
 
     init {
         loginManager.registerCallback(callBackManager,
@@ -40,12 +46,6 @@ class FacebookLogin(private val activity: FragmentActivity) {
             }
         )
     }
-
-    private var _accessToken = ""
-    val accessToken get() = _accessToken
-
-    private var _isAuthenticated = MutableLiveData<Boolean>()
-    val isAuthenticated: LiveData<Boolean> = _isAuthenticated
 
     fun launch() {
         val currentAccessToken = AccessToken.getCurrentAccessToken()

@@ -1,14 +1,15 @@
-package com.example.natour.network.services.login
+package com.example.natour.network.services.registration
 
-import com.example.natour.model.AuthenticationResponse
 import com.example.natour.network.Converters
 import com.example.natour.network.services.URLs
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
-import retrofit2.http.*
+import retrofit2.http.Field
+import retrofit2.http.FormUrlEncoded
+import retrofit2.http.POST
 
-object LoginService {
+object RegistrationService {
 
     private val okHttpClient = run {
         val httpLoggingInterceptor = HttpLoggingInterceptor()
@@ -22,28 +23,19 @@ object LoginService {
         .client(okHttpClient)
         .build()
 
-    interface LoginApiService {
+    interface RegistrationApiService {
         @FormUrlEncoded
-        @POST("/login")
-        suspend fun login(
+        @POST("/registration")
+        suspend fun register(
+            @Field("firstName") firstName: String,
+            @Field("lastName") lastName: String,
             @Field("username") username: String,
+            @Field("email") email: String,
             @Field("password") password: String
-        ): AuthenticationResponse
-
-        @FormUrlEncoded
-        @POST("/login/google")
-        suspend fun loginWithGoogle(
-            @Field("authenticationCode") authenticationCode: String
-        ): AuthenticationResponse
-
-        @FormUrlEncoded
-        @POST("/login/facebook")
-        suspend fun loginWithFacebook(
-            @Field("accessToken") accessToken: String
-        ): AuthenticationResponse
+        ): Boolean
     }
 
-    val retrofitService: LoginApiService by lazy {
-        retrofit.create(LoginApiService::class.java)
+    val retrofitService: RegistrationApiService by lazy {
+        retrofit.create(RegistrationApiService::class.java)
     }
 }
