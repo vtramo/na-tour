@@ -1,4 +1,4 @@
-package com.example.natour.network
+package com.example.natour.data.sources.network
 
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory

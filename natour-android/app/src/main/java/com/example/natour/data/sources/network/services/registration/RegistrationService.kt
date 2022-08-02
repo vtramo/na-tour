@@ -1,7 +1,7 @@
-package com.example.natour.network.services.registration
+package com.example.natour.data.sources.network.services.registration
 
-import com.example.natour.network.Converters
-import com.example.natour.network.services.URLs
+import com.example.natour.data.sources.network.Converters
+import com.example.natour.data.sources.network.services.URLs
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -22,18 +22,6 @@ object RegistrationService {
         .baseUrl(URLs.BACKEND)
         .client(okHttpClient)
         .build()
-
-    interface RegistrationApiService {
-        @FormUrlEncoded
-        @POST("/registration")
-        suspend fun register(
-            @Field("firstName") firstName: String,
-            @Field("lastName") lastName: String,
-            @Field("username") username: String,
-            @Field("email") email: String,
-            @Field("password") password: String
-        ): Boolean
-    }
 
     val retrofitService: RegistrationApiService by lazy {
         retrofit.create(RegistrationApiService::class.java)

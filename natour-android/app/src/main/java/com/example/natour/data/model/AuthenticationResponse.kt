@@ -1,4 +1,4 @@
-package com.example.natour.model
+package com.example.natour.data.model
 
 import com.squareup.moshi.Json
 
