@@ -27,4 +27,9 @@ public class ApplicationUserServiceImpl implements ApplicationUserService {
     public ApplicationUser findByUsername(String username) {
         return applicationUserRepository.findByUsername(username);
     }
+
+    @Override
+    public boolean existsByUsername(String username) {
+        return applicationUserRepository.existsByUsername(username);
+    }
 }
