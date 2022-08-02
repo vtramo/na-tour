@@ -2,12 +2,12 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".signin.fragments.LoginFragment">
+    tools:context=".presentation.signin.fragments.LoginFragment">
 
     <data>
         <variable
             name="loginFragment"
-            type="com.example.natour.signin.fragments.LoginFragment" />
+            type="com.example.natour.presentation.signin.fragments.LoginFragment" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -45,8 +45,8 @@
             style="@style/Widget.Unscramble.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/enter_your_password"
             android:layout_marginTop="32dp"
+            android:hint="@string/enter_your_password"
             app:errorIconDrawable="@drawable/ic_error"
             app:helperTextTextAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
             app:layout_constraintTop_toBottomOf="@+id/username_text_input_layout"
@@ -57,9 +57,9 @@
                 android:id="@+id/password_text_input_edit_text"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginBottom="32dp"
-                android:inputType="textPassword"
-                android:maxLines="1" />
+                android:inputType="textPersonName|textNoSuggestions"
+                android:maxLines="1"
+                tools:ignore="DuplicateClickableBoundsCheck" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <!-- Sign in Button -->
@@ -70,6 +70,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/default_padding"
             android:layout_marginEnd="@dimen/default_padding"
+            android:layout_marginTop="32dp"
             android:text="@string/signin"
             app:layout_constraintTop_toBottomOf="@+id/password_text_input_layout"
             app:layout_constraintStart_toStartOf="parent"
