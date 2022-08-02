@@ -1,4 +1,4 @@
-package com.example.natour.signup.fragments
+package com.example.natour.presentation.signup.fragments
 
 import android.app.AlertDialog
 import android.os.Bundle
@@ -14,11 +14,13 @@ import androidx.navigation.findNavController
 import com.example.natour.MainActivity
 import com.example.natour.R
 import com.example.natour.databinding.FragmentRegistrationBinding
-import com.example.natour.signup.ConstantRegex
-import com.example.natour.signup.viewmodels.RegistrationViewModel
+import com.example.natour.presentation.signup.ConstantRegex
+import com.example.natour.presentation.signup.viewmodels.RegistrationViewModel
 
 import com.google.android.material.textfield.TextInputLayout
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class RegistrationFragment : Fragment() {
 
     private var _binding: FragmentRegistrationBinding? = null
@@ -119,7 +121,7 @@ class RegistrationFragment : Fragment() {
         if (password != confirmPassword) {
             confirmPasswordTextInputLayout.isErrorEnabled = true
             confirmPasswordTextInputLayout.error = "The password is not the same"
-        } else {
+        } else if (password.isNotBlank()) {
             confirmPasswordTextInputLayout.isErrorEnabled = false
             confirmPasswordTextInputLayout.error = null
             confirmPasswordTextInputLayout.endIconDrawable =

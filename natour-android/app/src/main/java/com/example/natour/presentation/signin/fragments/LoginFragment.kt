@@ -1,4 +1,4 @@
-package com.example.natour.signin.fragments
+package com.example.natour.presentation.signin.fragments
 
 import android.content.Context
 import android.os.Bundle
@@ -12,11 +12,13 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import com.example.natour.R
 import com.example.natour.databinding.FragmentLoginBinding
-import com.example.natour.model.Credentials
-import com.example.natour.signin.thirdparty.FacebookLogin
-import com.example.natour.signin.thirdparty.GoogleLogin
-import com.example.natour.signin.viewmodels.LoginViewModel
+import com.example.natour.data.model.Credentials
+import com.example.natour.presentation.signin.thirdparty.FacebookLogin
+import com.example.natour.presentation.signin.thirdparty.GoogleLogin
+import com.example.natour.presentation.signin.viewmodels.LoginViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class LoginFragment : Fragment() {
 
     private var _binding: FragmentLoginBinding? = null
@@ -78,7 +80,7 @@ class LoginFragment : Fragment() {
     private fun setupSignInWithFacebook() {
         facebookLogin.isAuthenticated.observe(viewLifecycleOwner) { isAuthenticatedWithFacebook ->
             if (isAuthenticatedWithFacebook) {
-                loginViewModel.accessTokenFacebok = facebookLogin.accessToken
+                loginViewModel.accessTokenFacebook = facebookLogin.accessToken
                 loginViewModel.loginWithFacebook()
             }
         }

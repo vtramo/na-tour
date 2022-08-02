@@ -1,4 +1,4 @@
-package com.example.natour.signin.thirdparty
+package com.example.natour.presentation.signin.thirdparty
 
 import android.util.Log
 import androidx.fragment.app.FragmentActivity
