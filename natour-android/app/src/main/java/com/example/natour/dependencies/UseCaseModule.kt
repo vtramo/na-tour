@@ -2,6 +2,7 @@ package com.example.natour.dependencies
 
 import com.example.natour.data.repositories.UserRepository
 import com.example.natour.domain.LogInUserUseCase
+import com.example.natour.domain.RegistrationUserUseCase
 import com.example.natour.user.MainUser
 import dagger.Module
 import dagger.Provides
@@ -23,4 +24,9 @@ object UseCaseModule {
     @Provides
     @Singleton
     fun provideMainUser(): MainUser = MainUser
+
+    @Provides
+    @Singleton
+    fun provideRegistrationUserCase(userRepository: UserRepository) =
+        RegistrationUserUseCase(userRepository)
 }

@@ -39,4 +39,7 @@ class UserRepositoryImpl(private val userRemoteDataSource: UserRemoteDataSource)
             firstName, lastName, username, email, password
         )
     }
+
+    override suspend fun existsByUsername(username: String) =
+        userRemoteDataSource.existsByUsername(username)
 }

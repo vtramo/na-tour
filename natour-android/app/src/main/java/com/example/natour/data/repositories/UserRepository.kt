@@ -18,4 +18,6 @@ interface UserRepository {
         email: String,
         password: String
     )
+
+    suspend fun existsByUsername(username: String): Boolean
 }

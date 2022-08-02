@@ -55,6 +55,15 @@ class RegistrationFragment : Fragment() {
                     showInvalidFormAlertDialog()
                 }
             }
+
+        registrationViewModel
+            .userExists.observe(viewLifecycleOwner) { userExists ->
+                if (userExists) {
+                    binding.usernameTextInputLayout.isErrorEnabled = true
+                    binding.usernameTextInputLayout.error = "This username already exists"
+                    showInvalidFormAlertDialog("This username already exists")
+                }
+            }
     }
 
     private fun goBackToLoginFragment() {
@@ -175,9 +184,10 @@ class RegistrationFragment : Fragment() {
         !binding.confirmPasswordTextInputLayout.isErrorEnabled       &&
                 binding.confirmPasswordTextInputEditText.text!!.isNotBlank()
 
-    private fun showInvalidFormAlertDialog() {
+    private fun showInvalidFormAlertDialog(message: String = "") {
         AlertDialog.Builder(requireContext())
             .setTitle("Invalid form")
+            .setMessage(message)
             .setPositiveButton("Okay") { _, _ -> }
             .show()
     }

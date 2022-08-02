@@ -14,4 +14,6 @@ interface UserRemoteDataSource {
         email: String,
         password: String
     ): Boolean
+
+    suspend fun existsByUsername(username: String): Boolean
 }

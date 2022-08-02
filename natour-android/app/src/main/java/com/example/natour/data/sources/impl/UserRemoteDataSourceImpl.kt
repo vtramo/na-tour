@@ -37,4 +37,8 @@ class UserRemoteDataSourceImpl(
     ): Boolean = withContext(ioDispatcher) {
         registerApiService.register(firstName, lastName, username, email, password)
     }
+
+    override suspend fun existsByUsername(username: String): Boolean = withContext(ioDispatcher) {
+        registerApiService.existsByUsername(username)
+    }
 }

@@ -14,4 +14,8 @@ interface RegistrationApiService {
         @Field("email") email: String,
         @Field("password") password: String
     ): Boolean
+
+    @FormUrlEncoded
+    @POST("/registration/user")
+    suspend fun existsByUsername(@Field("username") username: String): Boolean
 }
