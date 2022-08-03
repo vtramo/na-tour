@@ -50,4 +50,6 @@ object MainUser {
         details = Details()
         token   = Token()
     }
+
+    override fun toString() = "$details"
 }
