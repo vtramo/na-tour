@@ -6,12 +6,12 @@
     android:id="@+id/nav_graph">
     <fragment
         android:id="@+id/registrationFragment"
-        android:name="com.example.natour.presentation.signup.fragments.RegistrationFragment"
+        android:name="com.example.natour.ui.signup.fragments.RegistrationFragment"
         android:label="fragment_registration"
         tools:layout="@layout/fragment_registration" />
     <fragment
         android:id="@+id/loginFragment"
-        android:name="com.example.natour.presentation.signin.fragments.LoginFragment"
+        android:name="com.example.natour.ui.signin.fragments.LoginFragment"
         android:label="fragment_login"
         tools:layout="@layout/fragment_login" >
         <action
@@ -26,7 +26,7 @@
     </fragment>
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.example.natour.presentation.home.fragments.HomeFragment"
+        android:name="com.example.natour.ui.home.fragments.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" >
         <action

@@ -1,4 +1,4 @@
-package com.example.natour.user
+package com.example.natour.data.sources.user
 
 import com.example.natour.data.model.AuthenticationResponse
 import java.lang.IllegalArgumentException

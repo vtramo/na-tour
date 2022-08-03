@@ -1,10 +1,9 @@
-package com.example.natour.presentation.signup.viewmodels
+package com.example.natour.ui.signup.viewmodels
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.natour.domain.RegistrationUserUseCase
-import com.example.natour.data.model.RegistrationResult
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -14,7 +13,7 @@ class RegistrationViewModel @Inject constructor(
     private val registrationUserUseCase: RegistrationUserUseCase
 ) : ViewModel() {
 
-    val hasBeenRegistered: LiveData<RegistrationResult> = registrationUserUseCase.hasBeenRegistered
+    val hasBeenRegistered: LiveData<Boolean> = registrationUserUseCase.hasBeenRegistered
     val userExists: LiveData<Boolean> = registrationUserUseCase.userExists
 
     fun submitForm(

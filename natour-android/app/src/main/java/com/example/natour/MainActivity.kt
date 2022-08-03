@@ -12,10 +12,10 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
-import com.example.natour.presentation.AuthenticationViewModel
-import com.example.natour.presentation.signin.viewmodels.ThirdPartyLoginViewModel
-import com.example.natour.presentation.signin.thirdparty.FacebookLogin
-import com.example.natour.presentation.signin.thirdparty.GoogleLogin
+import com.example.natour.ui.AuthenticationViewModel
+import com.example.natour.ui.signin.viewmodels.ThirdPartyLoginViewModel
+import com.example.natour.ui.signin.thirdparty.FacebookLogin
+import com.example.natour.ui.signin.thirdparty.GoogleLogin
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

@@ -1,6 +1,6 @@
-package com.example.natour.data.model
+package com.example.natour.ui.signin.thirdparty
 
-enum class AuthenticationResult {
+enum class AuthenticationThirdPartyResult {
     AUTHENTICATED, NOT_AUTHENTICATED, RESET;
 
     operator fun not() = (this == NOT_AUTHENTICATED)

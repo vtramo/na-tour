@@ -2,11 +2,11 @@ package com.example.natour.data.sources.impl
 
 import android.content.Context
 import com.example.natour.data.model.AuthenticationResponse
-import com.example.natour.data.sources.MainUserFileStore
+import com.example.natour.data.sources.MainUserFileStoreDataSource
 import java.io.ObjectInputStream
 import java.io.ObjectOutputStream
 
-class MainUserFileStoreImpl(private val context: Context) : MainUserFileStore {
+class MainUserFileStoreDataSourceImpl(private val context: Context) : MainUserFileStoreDataSource {
 
     private companion object {
         const val USER_FILE = "user"
@@ -17,16 +17,16 @@ class MainUserFileStoreImpl(private val context: Context) : MainUserFileStore {
         return fileList.contains(USER_FILE)
     }
 
-    override fun save(authenticationResponse: AuthenticationResponse) {
+    override fun save(authenticationResponse: AuthenticationResponse) : Boolean {
         val fileOutputStream = context.openFileOutput(USER_FILE, Context.MODE_PRIVATE)
         val objectOutputStream = ObjectOutputStream(fileOutputStream)
         objectOutputStream.writeObject(authenticationResponse)
         objectOutputStream.close()
         fileOutputStream.close()
+        return true
     }
 
-    override fun clear() =
-        context.deleteFile(USER_FILE)
+    override fun clear() = context.deleteFile(USER_FILE)
 
     override fun load(): AuthenticationResponse {
         val fileInputStream = context.openFileInput(USER_FILE)

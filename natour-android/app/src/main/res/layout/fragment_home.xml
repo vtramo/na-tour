@@ -6,23 +6,23 @@
     <data>
         <variable
             name="authenticationViewModel"
-            type="com.example.natour.presentation.AuthenticationViewModel" />
+            type="com.example.natour.ui.AuthenticationViewModel" />
 
         <variable
             name="homeFragment"
-            type="com.example.natour.presentation.home.fragments.HomeFragment" />
+            type="com.example.natour.ui.home.fragments.HomeFragment" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".presentation.home.fragments.HomeFragment">
+        tools:context=".ui.home.fragments.HomeFragment">
 
         <TextView
             android:id="@+id/user_text_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:mainUser="@{authenticationViewModel.mainUser.INSTANCE}"
+            android:text="@{authenticationViewModel.mainUser.INSTANCE.toString()}"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintRight_toRightOf="parent"

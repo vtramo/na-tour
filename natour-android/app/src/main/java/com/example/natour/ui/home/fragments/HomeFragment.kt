@@ -1,7 +1,6 @@
-package com.example.natour.presentation.home.fragments
+package com.example.natour.ui.home.fragments
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -11,7 +10,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.findNavController
 import com.example.natour.R
 import com.example.natour.databinding.FragmentHomeBinding
-import com.example.natour.presentation.AuthenticationViewModel
+import com.example.natour.ui.AuthenticationViewModel
 
 class HomeFragment : Fragment() {
 
@@ -37,7 +36,6 @@ class HomeFragment : Fragment() {
     }
 
     fun onLogout() {
-        Log.i("LOGOUT", "LOGOUT")
         sharedAuthenticationViewModel.logout()
         goToLoginFragment()
     }

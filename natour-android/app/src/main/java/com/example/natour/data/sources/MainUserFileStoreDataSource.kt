@@ -2,9 +2,9 @@ package com.example.natour.data.sources
 
 import com.example.natour.data.model.AuthenticationResponse
 
-interface MainUserFileStore {
+interface MainUserFileStoreDataSource {
     fun isAlreadyLoggedIn(): Boolean
-    fun save(authenticationResponse: AuthenticationResponse)
+    fun save(authenticationResponse: AuthenticationResponse): Boolean
     fun clear(): Boolean
     fun load(): AuthenticationResponse
 }

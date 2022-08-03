@@ -2,12 +2,12 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".presentation.signin.fragments.LoginFragment">
+    tools:context=".ui.signin.fragments.LoginFragment">
 
     <data>
         <variable
             name="loginFragment"
-            type="com.example.natour.presentation.signin.fragments.LoginFragment" />
+            type="com.example.natour.ui.signin.fragments.LoginFragment" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

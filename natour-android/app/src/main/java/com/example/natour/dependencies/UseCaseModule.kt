@@ -7,22 +7,21 @@ import com.example.natour.domain.RegistrationUserUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.components.ViewModelComponent
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
 @Module
-@InstallIn(SingletonComponent::class)
+@InstallIn(ViewModelComponent::class)
 object UseCaseModule {
 
     @Provides
-    @Singleton
-    fun provideLogInUserCase(
+    fun provideLogInUserUseCase(
         authenticatedUserRepository: AuthenticatedUserRepository,
         mainUserRepository: MainUserRepository
     ): LogInUserUseCase = LogInUserUseCase(authenticatedUserRepository, mainUserRepository)
 
     @Provides
-    @Singleton
     fun provideRegistrationUserCase(authenticatedUserRepository: AuthenticatedUserRepository) =
         RegistrationUserUseCase(authenticatedUserRepository)
 }

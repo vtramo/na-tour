@@ -1,4 +1,4 @@
-package com.example.natour.presentation.signin.fragments
+package com.example.natour.ui.signin.fragments
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -13,9 +13,9 @@ import androidx.navigation.findNavController
 import com.example.natour.R
 import com.example.natour.databinding.FragmentLoginBinding
 import com.example.natour.data.model.Credentials
-import com.example.natour.presentation.signin.viewmodels.ThirdPartyLoginViewModel
-import com.example.natour.presentation.signin.viewmodels.LoginViewModel
-import com.example.natour.data.model.AuthenticationResult
+import com.example.natour.ui.signin.viewmodels.ThirdPartyLoginViewModel
+import com.example.natour.ui.signin.viewmodels.LoginViewModel
+import com.example.natour.ui.signin.thirdparty.AuthenticationThirdPartyResult
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -52,7 +52,7 @@ class LoginFragment : Fragment() {
     private fun setupSignIn() {
         loginViewModel.isAuthenticated.observe(viewLifecycleOwner) { isAuthenticated ->
             setErrorTextField(!isAuthenticated)
-            if (isAuthenticated == AuthenticationResult.AUTHENTICATED) {
+            if (isAuthenticated) {
                 Toast.makeText(context, "LOGIN SUCCESSFULLY", Toast.LENGTH_SHORT).show()
                 goToHomeFragment()
             }
@@ -67,7 +67,7 @@ class LoginFragment : Fragment() {
     private fun setupSignInWithGoogle() {
         thirdPartyLoginViewModel
             .isAuthenticatedWithGoogle.observe(viewLifecycleOwner) { isAuthenticatedWithGoogle ->
-                if (isAuthenticatedWithGoogle == AuthenticationResult.AUTHENTICATED) {
+                if (isAuthenticatedWithGoogle == AuthenticationThirdPartyResult.AUTHENTICATED) {
                     loginViewModel.authcodeGoogle = thirdPartyLoginViewModel.googleAuthCode
                     loginViewModel.loginWithGoogle()
                 }
@@ -77,7 +77,7 @@ class LoginFragment : Fragment() {
     private fun setupSignInWithFacebook() {
         thirdPartyLoginViewModel
             .isAuthenticatedWithFacebook.observe(viewLifecycleOwner) { isAuthenticatedWithFacebook ->
-                if (isAuthenticatedWithFacebook == AuthenticationResult.AUTHENTICATED) {
+                if (isAuthenticatedWithFacebook == AuthenticationThirdPartyResult.AUTHENTICATED) {
                     loginViewModel.accessTokenFacebook = thirdPartyLoginViewModel.fbAccessToken
                     loginViewModel.loginWithFacebook()
                 }

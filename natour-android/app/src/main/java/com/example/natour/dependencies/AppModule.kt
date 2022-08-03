@@ -2,7 +2,7 @@ package com.example.natour.dependencies
 
 import android.content.Context
 import com.example.natour.MainActivity
-import com.example.natour.user.MainUser
+import com.example.natour.data.sources.user.MainUser
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

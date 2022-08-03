@@ -4,9 +4,9 @@ import com.example.natour.data.repositories.AuthenticatedUserRepository
 import com.example.natour.data.repositories.MainUserRepository
 import com.example.natour.data.repositories.impl.AuthenticatedUserRepositoryImpl
 import com.example.natour.data.repositories.impl.MainUserRepositoryImpl
-import com.example.natour.data.sources.MainUserFileStore
+import com.example.natour.data.sources.MainUserFileStoreDataSource
 import com.example.natour.data.sources.UserRemoteDataSource
-import com.example.natour.user.MainUser
+import com.example.natour.data.sources.user.MainUser
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -26,7 +26,7 @@ object RepositoryModule {
     @Provides
     @Singleton
     fun provideMainUserRepository(
-        mainUserFileStore: MainUserFileStore,
+        mainUserFileStoreDataSource: MainUserFileStoreDataSource,
         mainUserObject: MainUser
-    ) : MainUserRepository = MainUserRepositoryImpl(mainUserFileStore, mainUserObject)
+    ) : MainUserRepository = MainUserRepositoryImpl(mainUserFileStoreDataSource, mainUserObject)
 }
