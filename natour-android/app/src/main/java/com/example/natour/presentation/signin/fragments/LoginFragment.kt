@@ -1,6 +1,5 @@
 package com.example.natour.presentation.signin.fragments
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,14 +7,15 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import com.example.natour.R
 import com.example.natour.databinding.FragmentLoginBinding
 import com.example.natour.data.model.Credentials
-import com.example.natour.presentation.signin.thirdparty.FacebookLogin
-import com.example.natour.presentation.signin.thirdparty.GoogleLogin
+import com.example.natour.presentation.signin.viewmodels.ThirdPartyLoginViewModel
 import com.example.natour.presentation.signin.viewmodels.LoginViewModel
+import com.example.natour.data.model.AuthenticationResult
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -25,25 +25,20 @@ class LoginFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val loginViewModel: LoginViewModel by viewModels()
-
-    private lateinit var googleLogin : GoogleLogin
-    private lateinit var facebookLogin: FacebookLogin
+    private val thirdPartyLoginViewModel: ThirdPartyLoginViewModel by activityViewModels()
 
     private val credentials = Credentials()
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-
-        val fragmentActivity = requireActivity()
-        googleLogin = GoogleLogin(fragmentActivity)
-        facebookLogin = FacebookLogin(fragmentActivity)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_login, container, false)
+
+        setupSignIn()
+        setupSignInWithGoogle()
+        setupSignInWithFacebook()
+
         return binding.root
     }
 
@@ -52,37 +47,40 @@ class LoginFragment : Fragment() {
 
         binding.loginFragment = this
         binding.lifecycleOwner = viewLifecycleOwner
-
-        setupSignIn()
-        setupSignInWithGoogle()
-        setupSignInWithFacebook()
     }
 
     private fun setupSignIn() {
         loginViewModel.isAuthenticated.observe(viewLifecycleOwner) { isAuthenticated ->
             setErrorTextField(!isAuthenticated)
-            if (isAuthenticated) {
-                // TODO: go to the next fragment
+            if (isAuthenticated == AuthenticationResult.AUTHENTICATED) {
                 Toast.makeText(context, "LOGIN SUCCESSFULLY", Toast.LENGTH_SHORT).show()
+                goToHomeFragment()
             }
         }
     }
 
+    private fun goToHomeFragment() {
+        val action = LoginFragmentDirections.actionLoginFragmentToHomeFragment()
+        view?.findNavController()?.navigate(action)
+    }
+
     private fun setupSignInWithGoogle() {
-        googleLogin.isAuthenticated.observe(viewLifecycleOwner) { isAuthenticatedWithGoogle ->
-            if (isAuthenticatedWithGoogle) {
-                loginViewModel.authcodeGoogle = googleLogin.authcode
-                loginViewModel.loginWithGoogle()
-            }
+        thirdPartyLoginViewModel
+            .isAuthenticatedWithGoogle.observe(viewLifecycleOwner) { isAuthenticatedWithGoogle ->
+                if (isAuthenticatedWithGoogle == AuthenticationResult.AUTHENTICATED) {
+                    loginViewModel.authcodeGoogle = thirdPartyLoginViewModel.googleAuthCode
+                    loginViewModel.loginWithGoogle()
+                }
         }
     }
 
     private fun setupSignInWithFacebook() {
-        facebookLogin.isAuthenticated.observe(viewLifecycleOwner) { isAuthenticatedWithFacebook ->
-            if (isAuthenticatedWithFacebook) {
-                loginViewModel.accessTokenFacebook = facebookLogin.accessToken
-                loginViewModel.loginWithFacebook()
-            }
+        thirdPartyLoginViewModel
+            .isAuthenticatedWithFacebook.observe(viewLifecycleOwner) { isAuthenticatedWithFacebook ->
+                if (isAuthenticatedWithFacebook == AuthenticationResult.AUTHENTICATED) {
+                    loginViewModel.accessTokenFacebook = thirdPartyLoginViewModel.fbAccessToken
+                    loginViewModel.loginWithFacebook()
+                }
         }
     }
 
@@ -90,15 +88,18 @@ class LoginFragment : Fragment() {
         credentials.username = binding.usernameTextInputEditText.text.toString()
         credentials.password = binding.passwordTextInputEditText.text.toString()
 
-        if (areCorrectCredentials()) loginViewModel.login()
+        if (areCorrectCredentials()) {
+            loginViewModel.credentials = credentials
+            loginViewModel.login()
+        }
     }
 
     fun onSignInWithGoogle() {
-        googleLogin.launch()
+        thirdPartyLoginViewModel.googleLogin.launch()
     }
 
     fun onSignInWithFacebook() {
-        facebookLogin.launch()
+        thirdPartyLoginViewModel.facebookLogin.launch()
     }
 
     fun onSignUpGoToRegistrationFragment() {
@@ -107,7 +108,8 @@ class LoginFragment : Fragment() {
     }
 
     private fun areCorrectCredentials(): Boolean {
-        val areCorrectCredentials = loginViewModel.areCorrectCredentials(credentials)
+        val areCorrectCredentials =
+            credentials.username.isNotBlank() && credentials.password.isNotBlank()
         setErrorTextField(!areCorrectCredentials)
         return areCorrectCredentials
     }
@@ -116,8 +118,8 @@ class LoginFragment : Fragment() {
         if (error) {
             binding.usernameTextInputLayout.isErrorEnabled = true
             binding.passwordTextInputLayout.isErrorEnabled = true
-            binding.usernameTextInputLayout.error = "Incorrent Credentials"
-            binding.passwordTextInputLayout.error = "Incorrent Credentials"
+            binding.usernameTextInputLayout.error = "Incorrect credentials"
+            binding.passwordTextInputLayout.error = "Incorrect credentials"
         } else {
             binding.usernameTextInputLayout.isErrorEnabled = false
             binding.passwordTextInputLayout.isErrorEnabled = false

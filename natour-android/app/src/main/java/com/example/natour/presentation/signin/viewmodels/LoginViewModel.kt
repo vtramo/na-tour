@@ -3,6 +3,7 @@ package com.example.natour.presentation.signin.viewmodels
 import androidx.lifecycle.*
 import com.example.natour.data.model.Credentials
 import com.example.natour.domain.LogInUserUseCase
+import com.example.natour.data.model.AuthenticationResult
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -25,23 +26,12 @@ class LoginViewModel @Inject constructor(
         get() = _authcodeGoogle
         set(value) { _authcodeGoogle = value }
 
-    private var _accessTokenFacebok = ""
+    private var _accessTokenFacebook = ""
     var accessTokenFacebook
-        get() = _accessTokenFacebok
-        set(value) { _accessTokenFacebok = value }
+        get() = _accessTokenFacebook
+        set(value) { _accessTokenFacebook = value }
 
-    val isAuthenticated: LiveData<Boolean> = logInUserUseCase.isAuthenticated
-
-    fun areCorrectCredentials(credentials: Credentials): Boolean {
-        val areCorrectCredentials =
-            checkUsername(credentials.username) && checkPassword(credentials.password)
-        if (areCorrectCredentials) this.credentials = credentials
-        return areCorrectCredentials
-    }
-
-    // TODO: Implement check username and check password (for default login in)
-    private fun checkUsername(username: String) = true
-    private fun checkPassword(password: String) = true
+    val isAuthenticated: LiveData<AuthenticationResult> = logInUserUseCase.isAuthenticated
 
     fun login() = viewModelScope.launch {
         logInUserUseCase.login(_credentials.username, _credentials.password)
@@ -52,6 +42,6 @@ class LoginViewModel @Inject constructor(
     }
 
     fun loginWithFacebook() = viewModelScope.launch {
-        logInUserUseCase.loginWithFacebook(_accessTokenFacebok)
+        logInUserUseCase.loginWithFacebook(_accessTokenFacebook)
     }
 }

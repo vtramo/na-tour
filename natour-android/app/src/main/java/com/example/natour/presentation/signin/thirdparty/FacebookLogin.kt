@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.example.natour.data.model.AuthenticationResult
 import com.facebook.AccessToken
 import com.facebook.CallbackManager
 import com.facebook.FacebookCallback
@@ -24,24 +25,26 @@ class FacebookLogin(private val activity: FragmentActivity) {
     private var _accessToken = ""
     val accessToken get() = _accessToken
 
-    private var _isAuthenticated = MutableLiveData<Boolean>()
-    val isAuthenticated: LiveData<Boolean> = _isAuthenticated
+    private var _isAuthenticated = MutableLiveData<AuthenticationResult>()
+    val isAuthenticated: LiveData<AuthenticationResult> = _isAuthenticated
 
     init {
         loginManager.registerCallback(callBackManager,
             object : FacebookCallback<LoginResult> {
                 override fun onCancel() {
                     Log.i(FACEBOOK_TAG, "cancelled")
+                    updateAuthenticationResult(false)
                 }
 
                 override fun onError(error: FacebookException) {
                     Log.e(FACEBOOK_TAG, "error $error")
+                    updateAuthenticationResult(false)
                 }
 
                 override fun onSuccess(result: LoginResult) {
                     Log.i(FACEBOOK_TAG, result.accessToken.token)
                     _accessToken = result.accessToken.toString()
-                    _isAuthenticated.value = true
+                    updateAuthenticationResult(true)
                 }
             }
         )
@@ -53,9 +56,18 @@ class FacebookLogin(private val activity: FragmentActivity) {
 
         if (isLoggedIn) {
             _accessToken = currentAccessToken!!.token
-            _isAuthenticated.value = true
+            updateAuthenticationResult(true)
         } else {
             loginManager.logInWithReadPermissions(activity, PERMISSIONS)
+        }
+    }
+
+    private fun updateAuthenticationResult(isAuthenticated: Boolean) {
+        if (isAuthenticated) {
+            _isAuthenticated.value = AuthenticationResult.AUTHENTICATED
+            _isAuthenticated.value = AuthenticationResult.RESET
+        } else {
+            _isAuthenticated.value = AuthenticationResult.NOT_AUTHENTICATED
         }
     }
 }
