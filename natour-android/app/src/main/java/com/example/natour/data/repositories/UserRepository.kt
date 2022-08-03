@@ -2,7 +2,7 @@ package com.example.natour.data.repositories
 
 import com.example.natour.data.model.AuthenticationResponse
 
-interface AuthenticatedUserRepository {
+interface UserRepository {
 
     suspend fun login(username: String, password: String) : AuthenticationResponse
     suspend fun loginWithGoogle(authenticationCode: String) : AuthenticationResponse

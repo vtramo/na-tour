@@ -2,10 +2,10 @@ package com.example.natour.domain
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.example.natour.data.repositories.AuthenticatedUserRepository
+import com.example.natour.data.repositories.UserRepository
 import kotlinx.coroutines.coroutineScope
 
-class RegistrationUserUseCase(private val authenticatedUserRepository: AuthenticatedUserRepository) {
+class RegistrationUserUseCase(private val userRepository: UserRepository) {
 
     private val _hasBeenRegistered = MutableLiveData<Boolean>()
     val hasBeenRegistered: LiveData<Boolean> = _hasBeenRegistered
@@ -17,11 +17,11 @@ class RegistrationUserUseCase(private val authenticatedUserRepository: Authentic
         firstName: String, lastName: String,
         username: String, password: String, email: String
     ) = coroutineScope {
-        if (authenticatedUserRepository.existsByUsername(username)) {
+        if (userRepository.existsByUsername(username)) {
             _userExists.value = true
         } else {
             _hasBeenRegistered.value =
-                authenticatedUserRepository.register(firstName, lastName, username, email, password)
+                userRepository.register(firstName, lastName, username, email, password)
         }
     }
 }

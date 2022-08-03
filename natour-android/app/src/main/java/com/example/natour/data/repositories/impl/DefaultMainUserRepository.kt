@@ -9,7 +9,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.withContext
 
-class MainUserRepositoryImpl(
+class DefaultMainUserRepository(
     private val mainUserDataSource: MainUserDataSource,
     private val mainUserObject: MainUser,
     private val defaultDispatcher: CoroutineDispatcher = Dispatchers.Default
@@ -32,14 +32,12 @@ class MainUserRepositoryImpl(
     }
 
     override fun load() = flow {
-        withContext(defaultDispatcher) {
-            if (mainUserDataSource.isAlreadyLoggedIn()) {
-                val authentication = mainUserDataSource.load()
-                mainUserObject.set(authentication)
-                emit(mainUserObject)
-            } else {
-                emit(null)
-            }
+        if (mainUserDataSource.isAlreadyLoggedIn()) {
+            val authentication = mainUserDataSource.load()
+            mainUserObject.set(authentication)
+            emit(mainUserObject)
+        } else {
+            emit(null)
         }
     }
 }

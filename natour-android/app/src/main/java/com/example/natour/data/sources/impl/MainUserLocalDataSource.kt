@@ -6,7 +6,7 @@ import com.example.natour.data.sources.MainUserDataSource
 import java.io.ObjectInputStream
 import java.io.ObjectOutputStream
 
-class MainUserLocalDataSourceImpl(
+class MainUserLocalDataSource(
     private val context: Context,
 ) : MainUserDataSource {
 

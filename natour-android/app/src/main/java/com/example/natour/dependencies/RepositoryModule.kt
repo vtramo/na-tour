@@ -1,12 +1,18 @@
 package com.example.natour.dependencies
 
-import com.example.natour.data.repositories.AuthenticatedUserRepository
+import com.example.natour.data.repositories.UserRepository
 import com.example.natour.data.repositories.MainUserRepository
-import com.example.natour.data.repositories.impl.AuthenticatedUserRepositoryImpl
-import com.example.natour.data.repositories.impl.MainUserRepositoryImpl
+import com.example.natour.data.repositories.impl.DefaultUserRepository
+import com.example.natour.data.repositories.impl.DefaultMainUserRepository
 import com.example.natour.data.sources.MainUserDataSource
 import com.example.natour.data.sources.UserDataSource
 import com.example.natour.data.MainUser
+import com.example.natour.data.repositories.LoginRepository
+import com.example.natour.data.repositories.RegistrationRepository
+import com.example.natour.data.repositories.impl.DefaultLoginRepository
+import com.example.natour.data.repositories.impl.DefaultRegistrationRepository
+import com.example.natour.data.sources.LoginDataSource
+import com.example.natour.data.sources.RegistrationDataSource
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -21,12 +27,26 @@ object RepositoryModule {
     @Singleton
     fun provideUserRepository(
         userDataSource: UserDataSource,
-    ) : AuthenticatedUserRepository = AuthenticatedUserRepositoryImpl(userDataSource)
+        loginRepository: LoginRepository,
+        registrationRepository: RegistrationRepository
+    ) : UserRepository = DefaultUserRepository(loginRepository, registrationRepository, userDataSource)
 
     @Provides
     @Singleton
     fun provideMainUserRepository(
         mainUserDataSource: MainUserDataSource,
         mainUserObject: MainUser
-    ) : MainUserRepository = MainUserRepositoryImpl(mainUserDataSource, mainUserObject)
+    ) : MainUserRepository = DefaultMainUserRepository(mainUserDataSource, mainUserObject)
+
+    @Provides
+    @Singleton
+    fun provideLoginRepository(
+        loginDataSource: LoginDataSource
+    ) : LoginRepository = DefaultLoginRepository(loginDataSource)
+
+    @Provides
+    @Singleton
+    fun provideRegistrationRepository(
+        registrationDataSource: RegistrationDataSource
+    ) : RegistrationRepository = DefaultRegistrationRepository(registrationDataSource)
 }

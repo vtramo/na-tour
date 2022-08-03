@@ -1,6 +1,6 @@
 package com.example.natour.dependencies
 
-import com.example.natour.data.repositories.AuthenticatedUserRepository
+import com.example.natour.data.repositories.UserRepository
 import com.example.natour.data.repositories.MainUserRepository
 import com.example.natour.domain.LogInUserUseCase
 import com.example.natour.domain.RegistrationUserUseCase
@@ -8,8 +8,6 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ViewModelComponent
-import dagger.hilt.components.SingletonComponent
-import javax.inject.Singleton
 
 @Module
 @InstallIn(ViewModelComponent::class)
@@ -17,11 +15,11 @@ object UseCaseModule {
 
     @Provides
     fun provideLogInUserUseCase(
-        authenticatedUserRepository: AuthenticatedUserRepository,
+        userRepository: UserRepository,
         mainUserRepository: MainUserRepository
-    ): LogInUserUseCase = LogInUserUseCase(authenticatedUserRepository, mainUserRepository)
+    ): LogInUserUseCase = LogInUserUseCase(userRepository, mainUserRepository)
 
     @Provides
-    fun provideRegistrationUserCase(authenticatedUserRepository: AuthenticatedUserRepository) =
-        RegistrationUserUseCase(authenticatedUserRepository)
+    fun provideRegistrationUserCase(userRepository: UserRepository) =
+        RegistrationUserUseCase(userRepository)
 }

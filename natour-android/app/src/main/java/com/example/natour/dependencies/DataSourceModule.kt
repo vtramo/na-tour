@@ -1,10 +1,14 @@
 package com.example.natour.dependencies
 
 import android.content.Context
+import com.example.natour.data.sources.LoginDataSource
 import com.example.natour.data.sources.MainUserDataSource
+import com.example.natour.data.sources.RegistrationDataSource
 import com.example.natour.data.sources.UserDataSource
-import com.example.natour.data.sources.impl.MainUserLocalDataSourceImpl
-import com.example.natour.data.sources.impl.UserRemoteDataSourceImpl
+import com.example.natour.data.sources.impl.LoginRemoteDataSource
+import com.example.natour.data.sources.impl.MainUserLocalDataSource
+import com.example.natour.data.sources.impl.RegistrationRemoteDataSource
+import com.example.natour.data.sources.impl.UserRemoteDataSource
 import com.example.natour.data.sources.network.services.login.LoginApiService
 import com.example.natour.data.sources.network.services.registration.RegistrationApiService
 import dagger.Module
@@ -19,13 +23,24 @@ object DataSourceModule {
 
     @Provides
     @Singleton
-    fun provideUserRemoteDataSource(
-        loginApi: LoginApiService,
+    fun provideUserDataSource(
         registrationApi: RegistrationApiService
-    ) : UserDataSource = UserRemoteDataSourceImpl(loginApi, registrationApi)
+    ) : UserDataSource = UserRemoteDataSource(registrationApi)
 
     @Provides
     @Singleton
-    fun provideMainUserLocalDataSource(context: Context) : MainUserDataSource =
-        MainUserLocalDataSourceImpl(context)
+    fun provideMainUserDataSource(context: Context) : MainUserDataSource =
+        MainUserLocalDataSource(context)
+
+    @Provides
+    @Singleton
+    fun provideLoginDataSource(
+        loginApiService: LoginApiService
+    ): LoginDataSource = LoginRemoteDataSource(loginApiService)
+
+    @Provides
+    @Singleton
+    fun provideRegistrationDataSource(
+        registrationApiService: RegistrationApiService
+    ): RegistrationDataSource = RegistrationRemoteDataSource(registrationApiService)
 }
