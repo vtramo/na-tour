@@ -33,7 +33,7 @@ class LogInUserUseCase(
         if (authenticationResponse.authenticated) saveLocalMainUser(authenticationResponse)
     }
 
-    private fun saveLocalMainUser(authentication: AuthenticationResponse) {
+    private suspend fun saveLocalMainUser(authentication: AuthenticationResponse) {
         mainUserRepository.save(authentication)
         _isAuthenticated.value = true
     }

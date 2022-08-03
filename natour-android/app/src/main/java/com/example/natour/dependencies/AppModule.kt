@@ -2,7 +2,7 @@ package com.example.natour.dependencies
 
 import android.content.Context
 import com.example.natour.MainActivity
-import com.example.natour.data.sources.user.MainUser
+import com.example.natour.data.MainUser
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -16,7 +16,7 @@ import javax.inject.Singleton
 object AppModule {
     @Provides
     @Singleton
-    fun provideCoroutineDispatcher() : CoroutineDispatcher = Dispatchers.Default
+    fun provideDefaultCoroutineDispatcher() : CoroutineDispatcher = Dispatchers.Default
 
     @Provides
     @Singleton

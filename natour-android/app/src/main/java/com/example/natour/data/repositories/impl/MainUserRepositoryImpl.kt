@@ -2,35 +2,44 @@ package com.example.natour.data.repositories.impl
 
 import com.example.natour.data.model.AuthenticationResponse
 import com.example.natour.data.repositories.MainUserRepository
-import com.example.natour.data.sources.MainUserFileStoreDataSource
-import com.example.natour.data.sources.user.MainUser
-import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.flow.MutableSharedFlow
+import com.example.natour.data.sources.MainUserDataSource
+import com.example.natour.data.MainUser
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.withContext
 
 class MainUserRepositoryImpl(
-    private val mainUserFileStoreDataSource: MainUserFileStoreDataSource,
-    private val mainUserObject: MainUser
+    private val mainUserDataSource: MainUserDataSource,
+    private val mainUserObject: MainUser,
+    private val defaultDispatcher: CoroutineDispatcher = Dispatchers.Default
 ) : MainUserRepository {
 
-    override fun isAlreadyLoggedIn(): Boolean = mainUserFileStoreDataSource.isAlreadyLoggedIn()
-
-    override fun save(authenticationResponse: AuthenticationResponse): Boolean {
-        mainUserObject.set(authenticationResponse)
-        mainUserFileStoreDataSource.clear()
-        return mainUserFileStoreDataSource.save(authenticationResponse)
+    override suspend fun isAlreadyLoggedIn(): Boolean = withContext(defaultDispatcher) {
+        mainUserDataSource.isAlreadyLoggedIn()
     }
 
-    override fun clear(): Boolean {
+    override suspend fun save(authenticationResponse: AuthenticationResponse): Boolean =
+        withContext(defaultDispatcher) {
+            mainUserObject.set(authenticationResponse)
+            mainUserDataSource.clear()
+            mainUserDataSource.save(authenticationResponse)
+        }
+
+    override suspend fun clear(): Boolean = withContext(defaultDispatcher) {
         mainUserObject.clear()
-        return mainUserFileStoreDataSource.clear()
+        mainUserDataSource.clear()
     }
 
-    override suspend fun load() = coroutineScope {
-        flow {
-            val authentication = mainUserFileStoreDataSource.load()
-            mainUserObject.set(authentication)
-            emit(mainUserObject)
+    override fun load() = flow {
+        withContext(defaultDispatcher) {
+            if (mainUserDataSource.isAlreadyLoggedIn()) {
+                val authentication = mainUserDataSource.load()
+                mainUserObject.set(authentication)
+                emit(mainUserObject)
+            } else {
+                emit(null)
+            }
         }
     }
 }

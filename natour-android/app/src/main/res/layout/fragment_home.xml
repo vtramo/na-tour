@@ -6,7 +6,7 @@
     <data>
         <variable
             name="authenticationViewModel"
-            type="com.example.natour.ui.AuthenticationViewModel" />
+            type="com.example.natour.ui.MainUserViewModel" />
 
         <variable
             name="homeFragment"

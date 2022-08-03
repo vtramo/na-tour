@@ -1,12 +1,10 @@
-package com.example.natour.data.repositories
+package com.example.natour.data.sources
 
 import com.example.natour.data.model.AuthenticationResponse
-import com.example.natour.data.MainUser
-import kotlinx.coroutines.flow.Flow
 
-interface MainUserRepository {
+interface MainUserDataSource {
     suspend fun isAlreadyLoggedIn(): Boolean
     suspend fun save(authenticationResponse: AuthenticationResponse): Boolean
-    fun load(): Flow<MainUser?>
     suspend fun clear(): Boolean
+    suspend fun load(): AuthenticationResponse
 }

@@ -10,14 +10,14 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.findNavController
 import com.example.natour.R
 import com.example.natour.databinding.FragmentHomeBinding
-import com.example.natour.ui.AuthenticationViewModel
+import com.example.natour.ui.MainUserViewModel
 
 class HomeFragment : Fragment() {
 
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
 
-    private val sharedAuthenticationViewModel: AuthenticationViewModel by activityViewModels()
+    private val sharedMainUserViewModel: MainUserViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -30,13 +30,13 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.authenticationViewModel = sharedAuthenticationViewModel
+        binding.authenticationViewModel = sharedMainUserViewModel
         binding.homeFragment = this
         binding.lifecycleOwner = viewLifecycleOwner
     }
 
     fun onLogout() {
-        sharedAuthenticationViewModel.logout()
+        sharedMainUserViewModel.logout()
         goToLoginFragment()
     }
 

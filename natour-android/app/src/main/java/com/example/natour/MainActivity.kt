@@ -12,7 +12,7 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
-import com.example.natour.ui.AuthenticationViewModel
+import com.example.natour.ui.MainUserViewModel
 import com.example.natour.ui.signin.viewmodels.ThirdPartyLoginViewModel
 import com.example.natour.ui.signin.thirdparty.FacebookLogin
 import com.example.natour.ui.signin.thirdparty.GoogleLogin
@@ -21,7 +21,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
-    private val sharedAuthenticationViewModel: AuthenticationViewModel by viewModels()
+    private val mainUserViewModel: MainUserViewModel by viewModels()
     private lateinit var thirdPartyLoginViewModel: ThirdPartyLoginViewModel
 
     private lateinit var navController: NavController
@@ -38,8 +38,18 @@ class MainActivity : AppCompatActivity() {
         context = application
         setContentView(R.layout.activity_main)
 
+        loadMainUser()
         setupThirdPartyLoginViewModel()
-        setupNavComponent()
+    }
+
+    private fun loadMainUser() {
+        mainUserViewModel.mainUser.observe(this) { mainUser ->
+            setupNavComponent(
+                startDestination = if (mainUser != null) R.id.homeFragment else R.id.loginFragment
+            )
+            mainUserViewModel.mainUser.removeObservers(this)
+        }
+        mainUserViewModel.loadMainUser()
     }
 
     private fun setupThirdPartyLoginViewModel() {
@@ -52,13 +62,12 @@ class MainActivity : AppCompatActivity() {
         )[ThirdPartyLoginViewModel::class.java]
     }
 
-    private fun setupNavComponent() {
+    private fun setupNavComponent(startDestination: Int) {
         val navHostFragment = supportFragmentManager
             .findFragmentById(R.id.nav_host_fragment_container) as NavHostFragment
         val inflater = navHostFragment.navController.navInflater
 
         val graph = inflater.inflate(R.navigation.nav_graph)
-        val startDestination = determinesStartDestinationNavGraph()
         graph.setStartDestination(startDestination)
 
         navController = navHostFragment.navController
@@ -67,14 +76,6 @@ class MainActivity : AppCompatActivity() {
         val appBarConfiguration = AppBarConfiguration(setOf(R.id.homeFragment, R.id.loginFragment))
         setupActionBarWithNavController(navController, appBarConfiguration)
     }
-
-    private fun determinesStartDestinationNavGraph() : Int =
-        if (sharedAuthenticationViewModel.isAlreadyLoggedIn()) {
-            sharedAuthenticationViewModel.loadMainUser()
-            R.id.homeFragment
-        } else {
-            R.id.loginFragment
-        }
 
     override fun onSupportNavigateUp(): Boolean {
         return navController.navigateUp() || super.onSupportNavigateUp()

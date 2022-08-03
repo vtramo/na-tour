@@ -1,32 +1,23 @@
 package com.example.natour.data.sources.impl
 
 import com.example.natour.data.model.AuthenticationResponse
-import com.example.natour.data.sources.UserRemoteDataSource
+import com.example.natour.data.sources.UserDataSource
 import com.example.natour.data.sources.network.services.login.LoginApiService
 import com.example.natour.data.sources.network.services.registration.RegistrationApiService
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.withContext
 
 class UserRemoteDataSourceImpl(
     private val loginApiService: LoginApiService,
     private val registerApiService: RegistrationApiService,
-    private val ioDispatcher: CoroutineDispatcher
-) : UserRemoteDataSource {
+) : UserDataSource {
 
     override suspend fun login(username: String, password: String): AuthenticationResponse =
-        withContext(ioDispatcher) {
-            loginApiService.login(username, password)
-        }
+        loginApiService.login(username, password)
 
     override suspend fun loginWithGoogle(authenticationCode: String): AuthenticationResponse =
-        withContext(ioDispatcher) {
-            loginApiService.loginWithGoogle(authenticationCode)
-        }
+        loginApiService.loginWithGoogle(authenticationCode)
 
     override suspend fun loginWithFacebook(accessToken: String): AuthenticationResponse =
-        withContext(ioDispatcher) {
-            loginApiService.loginWithFacebook(accessToken)
-        }
+        loginApiService.loginWithFacebook(accessToken)
 
     override suspend fun register(
         firstName: String,
@@ -34,11 +25,8 @@ class UserRemoteDataSourceImpl(
         username: String,
         email: String,
         password: String
-    ): Boolean = withContext(ioDispatcher) {
-        registerApiService.register(firstName, lastName, username, email, password)
-    }
+    ): Boolean = registerApiService.register(firstName, lastName, username, email, password)
 
-    override suspend fun existsByUsername(username: String): Boolean = withContext(ioDispatcher) {
+    override suspend fun existsByUsername(username: String): Boolean =
         registerApiService.existsByUsername(username)
-    }
 }

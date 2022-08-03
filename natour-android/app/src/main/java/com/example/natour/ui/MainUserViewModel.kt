@@ -2,21 +2,18 @@ package com.example.natour.ui
 
 import androidx.lifecycle.*
 import com.example.natour.data.repositories.MainUserRepository
-import com.example.natour.data.sources.user.MainUser
+import com.example.natour.data.MainUser
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 import javax.inject.Inject
 
 @HiltViewModel
-class AuthenticationViewModel @Inject constructor(
+class MainUserViewModel @Inject constructor(
     private val mainUserRepository: MainUserRepository
 ) : ViewModel() {
 
-    private val _mainUser = MutableLiveData<MainUser>()
-    val mainUser: LiveData<MainUser> = _mainUser
-
-    fun isAlreadyLoggedIn() = mainUserRepository.isAlreadyLoggedIn()
+    private val _mainUser = MutableLiveData<MainUser?>()
+    val mainUser: LiveData<MainUser?> = _mainUser
 
     fun loadMainUser() = viewModelScope.launch {
         mainUserRepository.load().collect {
@@ -24,7 +21,7 @@ class AuthenticationViewModel @Inject constructor(
         }
     }
 
-    fun logout() {
+    fun logout() = viewModelScope.launch {
         mainUserRepository.clear()
     }
 }
