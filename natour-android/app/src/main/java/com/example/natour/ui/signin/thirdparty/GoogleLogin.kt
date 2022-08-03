@@ -1,4 +1,4 @@
-package com.example.natour.presentation.signin.thirdparty
+package com.example.natour.ui.signin.thirdparty
 
 import android.app.Activity
 import android.content.Intent
@@ -10,7 +10,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.natour.MainActivity
 import com.example.natour.R
-import com.example.natour.data.model.AuthenticationResult
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -30,8 +29,8 @@ class GoogleLogin(private val activity: FragmentActivity) {
     private var _authcode = ""
     val authcode get() = _authcode
 
-    private var _isAuthenticated = MutableLiveData<AuthenticationResult>()
-    val isAuthenticated: LiveData<AuthenticationResult> = _isAuthenticated
+    private var _isAuthenticated = MutableLiveData<AuthenticationThirdPartyResult>()
+    val isAuthenticated: LiveData<AuthenticationThirdPartyResult> = _isAuthenticated
 
     private val googleSignInLauncher =
         activity.registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
@@ -42,11 +41,11 @@ class GoogleLogin(private val activity: FragmentActivity) {
         if (result.resultCode == Activity.RESULT_OK) {
             getSignedInAccountFromIntent(result.data)?.let { googleAccount ->
                 _authcode = googleAccount.serverAuthCode!!
-                _isAuthenticated.value = AuthenticationResult.AUTHENTICATED
-                _isAuthenticated.value = AuthenticationResult.RESET
+                _isAuthenticated.value = AuthenticationThirdPartyResult.AUTHENTICATED
+                _isAuthenticated.value = AuthenticationThirdPartyResult.RESET
             }
         } else {
-            _isAuthenticated.value = AuthenticationResult.NOT_AUTHENTICATED
+            _isAuthenticated.value = AuthenticationThirdPartyResult.NOT_AUTHENTICATED
             Log.e(GOOGLE_SIGN_IN_TAG, "Result Code Activity: ${result.resultCode}")
         }
     }

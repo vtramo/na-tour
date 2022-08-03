@@ -1,13 +1,8 @@
 package com.example.natour.data.repositories
 
-import androidx.lifecycle.LiveData
 import com.example.natour.data.model.AuthenticationResponse
-import com.example.natour.data.model.AuthenticationResult
-import com.example.natour.data.model.RegistrationResult
 
 interface AuthenticatedUserRepository {
-    val isAuthenticated: LiveData<AuthenticationResult>
-    val hasBeenRegistered: LiveData<RegistrationResult>
 
     suspend fun login(username: String, password: String) : AuthenticationResponse
     suspend fun loginWithGoogle(authenticationCode: String) : AuthenticationResponse
@@ -19,7 +14,7 @@ interface AuthenticatedUserRepository {
         username: String,
         email: String,
         password: String
-    )
+    ) : Boolean
 
     suspend fun existsByUsername(username: String): Boolean
 }

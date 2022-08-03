@@ -1,10 +1,9 @@
-package com.example.natour.presentation.signin.thirdparty
+package com.example.natour.ui.signin.thirdparty
 
 import android.util.Log
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.example.natour.data.model.AuthenticationResult
 import com.facebook.AccessToken
 import com.facebook.CallbackManager
 import com.facebook.FacebookCallback
@@ -25,8 +24,8 @@ class FacebookLogin(private val activity: FragmentActivity) {
     private var _accessToken = ""
     val accessToken get() = _accessToken
 
-    private var _isAuthenticated = MutableLiveData<AuthenticationResult>()
-    val isAuthenticated: LiveData<AuthenticationResult> = _isAuthenticated
+    private var _isAuthenticated = MutableLiveData<AuthenticationThirdPartyResult>()
+    val isAuthenticated: LiveData<AuthenticationThirdPartyResult> = _isAuthenticated
 
     init {
         loginManager.registerCallback(callBackManager,
@@ -64,10 +63,10 @@ class FacebookLogin(private val activity: FragmentActivity) {
 
     private fun updateAuthenticationResult(isAuthenticated: Boolean) {
         if (isAuthenticated) {
-            _isAuthenticated.value = AuthenticationResult.AUTHENTICATED
-            _isAuthenticated.value = AuthenticationResult.RESET
+            _isAuthenticated.value = AuthenticationThirdPartyResult.AUTHENTICATED
+            _isAuthenticated.value = AuthenticationThirdPartyResult.RESET
         } else {
-            _isAuthenticated.value = AuthenticationResult.NOT_AUTHENTICATED
+            _isAuthenticated.value = AuthenticationThirdPartyResult.NOT_AUTHENTICATED
         }
     }
 }
