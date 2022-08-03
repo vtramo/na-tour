@@ -4,14 +4,15 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.natour.data.repositories.AuthenticatedUserRepository
 import com.example.natour.data.repositories.UserRepository
-import com.example.natour.domain.RegistrationUserUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class RegistrationViewModel @Inject constructor(
+    private val authenticatedUserRepository: AuthenticatedUserRepository,
     private val userRepository: UserRepository
 ) : ViewModel() {
 
@@ -32,7 +33,7 @@ class RegistrationViewModel @Inject constructor(
                 _userExists.value = true
             } else {
                 _hasBeenRegistered.value =
-                    userRepository.register(firstName, lastName, username, email, password)
+                    authenticatedUserRepository.register(firstName, lastName, username, email, password)
             }
         }
 }

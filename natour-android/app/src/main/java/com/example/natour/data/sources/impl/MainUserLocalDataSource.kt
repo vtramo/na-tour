@@ -1,6 +1,7 @@
 package com.example.natour.data.sources.impl
 
 import android.content.Context
+import com.example.natour.data.model.AuthenticatedUser
 import com.example.natour.data.model.AuthenticationResponse
 import com.example.natour.data.sources.MainUserDataSource
 import java.io.ObjectInputStream
@@ -19,10 +20,10 @@ class MainUserLocalDataSource(
         return fileList.contains(USER_FILE)
     }
 
-    override suspend fun save(authenticationResponse: AuthenticationResponse) : Boolean {
+    override suspend fun save(authenticatedUser: AuthenticatedUser) : Boolean {
         val fileOutputStream = context.openFileOutput(USER_FILE, Context.MODE_PRIVATE)
         val objectOutputStream = ObjectOutputStream(fileOutputStream)
-        objectOutputStream.writeObject(authenticationResponse)
+        objectOutputStream.writeObject(authenticatedUser)
         objectOutputStream.close()
         fileOutputStream.close()
         return true
@@ -30,10 +31,10 @@ class MainUserLocalDataSource(
 
     override suspend fun clear() = context.deleteFile(USER_FILE)
 
-    override suspend fun load(): AuthenticationResponse {
+    override suspend fun load(): AuthenticatedUser {
         val fileInputStream = context.openFileInput(USER_FILE)
         val objectInputStream = ObjectInputStream(fileInputStream)
-        val authentication = objectInputStream.readObject() as AuthenticationResponse
+        val authentication = objectInputStream.readObject() as AuthenticatedUser
         fileInputStream.close()
         objectInputStream.close()
         return authentication

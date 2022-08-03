@@ -8,7 +8,7 @@ import kotlinx.coroutines.withContext
 
 class DefaultRegistrationRepository(
     private val registrationDataSource: RegistrationDataSource,
-    private val defaultDispatcher: CoroutineDispatcher = Dispatchers.Default
+    private val defaultDispatcher: CoroutineDispatcher = Dispatchers.IO
 ) : RegistrationRepository {
 
     override suspend fun register(

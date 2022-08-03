@@ -1,4 +1,4 @@
-package com.example.natour.data.sources.network.services.registration
+package com.example.natour.data.sources.network
 
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
@@ -14,8 +14,4 @@ interface RegistrationApiService {
         @Field("email") email: String,
         @Field("password") password: String
     ): Boolean
-
-    @FormUrlEncoded
-    @POST("/registration/user")
-    suspend fun existsByUsername(@Field("username") username: String): Boolean
 }

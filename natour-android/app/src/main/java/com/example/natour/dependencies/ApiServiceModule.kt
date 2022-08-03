@@ -1,9 +1,11 @@
 package com.example.natour.dependencies
 
-import com.example.natour.data.sources.network.services.login.LoginApiService
-import com.example.natour.data.sources.network.services.login.LoginService
-import com.example.natour.data.sources.network.services.registration.RegistrationApiService
-import com.example.natour.data.sources.network.services.registration.RegistrationService
+import com.example.natour.data.sources.network.LoginApiService
+import com.example.natour.data.sources.network.services.LoginService
+import com.example.natour.data.sources.network.RegistrationApiService
+import com.example.natour.data.sources.network.UserApiService
+import com.example.natour.data.sources.network.services.RegistrationService
+import com.example.natour.data.sources.network.services.UserService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -20,5 +22,10 @@ object ApiServiceModule {
 
     @Provides
     @Singleton
-    fun provideRegistrationApiService() : RegistrationApiService = RegistrationService.retrofitService
+    fun provideRegistrationApiService() : RegistrationApiService =
+        RegistrationService.retrofitService
+
+    @Provides
+    @Singleton
+    fun provideUserApiService() : UserApiService = UserService.retrofitService
 }

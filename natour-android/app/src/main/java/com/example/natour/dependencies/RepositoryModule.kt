@@ -1,16 +1,10 @@
 package com.example.natour.dependencies
 
-import com.example.natour.data.repositories.UserRepository
-import com.example.natour.data.repositories.MainUserRepository
-import com.example.natour.data.repositories.impl.DefaultUserRepository
-import com.example.natour.data.repositories.impl.DefaultMainUserRepository
 import com.example.natour.data.sources.MainUserDataSource
 import com.example.natour.data.sources.UserDataSource
 import com.example.natour.data.MainUser
-import com.example.natour.data.repositories.LoginRepository
-import com.example.natour.data.repositories.RegistrationRepository
-import com.example.natour.data.repositories.impl.DefaultLoginRepository
-import com.example.natour.data.repositories.impl.DefaultRegistrationRepository
+import com.example.natour.data.repositories.*
+import com.example.natour.data.repositories.impl.*
 import com.example.natour.data.sources.LoginDataSource
 import com.example.natour.data.sources.RegistrationDataSource
 import dagger.Module
@@ -25,11 +19,10 @@ object RepositoryModule {
 
     @Provides
     @Singleton
-    fun provideUserRepository(
-        userDataSource: UserDataSource,
+    fun provideAuthenticatedUserRepository(
         loginRepository: LoginRepository,
         registrationRepository: RegistrationRepository
-    ) : UserRepository = DefaultUserRepository(loginRepository, registrationRepository, userDataSource)
+    ) : AuthenticatedUserRepository = DefaultAuthenticatedUserRepository(loginRepository, registrationRepository)
 
     @Provides
     @Singleton
@@ -50,4 +43,10 @@ object RepositoryModule {
     fun provideRegistrationRepository(
         registrationDataSource: RegistrationDataSource
     ) : RegistrationRepository = DefaultRegistrationRepository(registrationDataSource)
+
+    @Provides
+    @Singleton
+    fun provideUserRepository(
+        userDataSource: UserDataSource
+    ): UserRepository = DefaultUserRepository(userDataSource)
 }

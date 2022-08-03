@@ -9,8 +9,9 @@ import com.example.natour.data.sources.impl.LoginRemoteDataSource
 import com.example.natour.data.sources.impl.MainUserLocalDataSource
 import com.example.natour.data.sources.impl.RegistrationRemoteDataSource
 import com.example.natour.data.sources.impl.UserRemoteDataSource
-import com.example.natour.data.sources.network.services.login.LoginApiService
-import com.example.natour.data.sources.network.services.registration.RegistrationApiService
+import com.example.natour.data.sources.network.LoginApiService
+import com.example.natour.data.sources.network.RegistrationApiService
+import com.example.natour.data.sources.network.UserApiService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -24,8 +25,8 @@ object DataSourceModule {
     @Provides
     @Singleton
     fun provideUserDataSource(
-        registrationApi: RegistrationApiService
-    ) : UserDataSource = UserRemoteDataSource(registrationApi)
+        userApiService: UserApiService
+    ) : UserDataSource = UserRemoteDataSource(userApiService)
 
     @Provides
     @Singleton

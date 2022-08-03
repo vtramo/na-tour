@@ -1,4 +1,4 @@
-package com.example.natour.data.sources.network.services.login
+package com.example.natour.data.sources.network
 
 import com.example.natour.data.model.AuthenticationResponse
 import retrofit2.http.Field

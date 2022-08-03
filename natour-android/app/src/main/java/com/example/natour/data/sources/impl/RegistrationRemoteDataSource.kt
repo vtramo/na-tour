@@ -1,7 +1,7 @@
 package com.example.natour.data.sources.impl
 
 import com.example.natour.data.sources.RegistrationDataSource
-import com.example.natour.data.sources.network.services.registration.RegistrationApiService
+import com.example.natour.data.sources.network.RegistrationApiService
 
 class RegistrationRemoteDataSource(
     private val registerApiService: RegistrationApiService

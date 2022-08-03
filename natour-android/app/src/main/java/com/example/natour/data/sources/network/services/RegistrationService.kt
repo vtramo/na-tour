@@ -1,14 +1,13 @@
-package com.example.natour.data.sources.network.services.login
+package com.example.natour.data.sources.network.services
 
-import com.example.natour.data.model.AuthenticationResponse
-import com.example.natour.data.sources.network.Converters
-import com.example.natour.data.sources.network.services.URLs
+import com.example.natour.data.sources.network.util.Converters
+import com.example.natour.data.sources.network.RegistrationApiService
+import com.example.natour.data.sources.network.util.URLs
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
-import retrofit2.http.*
 
-object LoginService {
+object RegistrationService {
 
     private val okHttpClient = run {
         val httpLoggingInterceptor = HttpLoggingInterceptor()
@@ -22,7 +21,7 @@ object LoginService {
         .client(okHttpClient)
         .build()
 
-    val retrofitService: LoginApiService by lazy {
-        retrofit.create(LoginApiService::class.java)
+    val retrofitService: RegistrationApiService by lazy {
+        retrofit.create(RegistrationApiService::class.java)
     }
 }

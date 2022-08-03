@@ -16,10 +16,6 @@ import javax.inject.Singleton
 object AppModule {
     @Provides
     @Singleton
-    fun provideDefaultCoroutineDispatcher() : CoroutineDispatcher = Dispatchers.Default
-
-    @Provides
-    @Singleton
     fun provideMainUserObject(): MainUser = MainUser
 
     @Provides

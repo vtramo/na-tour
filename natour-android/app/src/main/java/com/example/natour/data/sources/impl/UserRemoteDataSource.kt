@@ -1,14 +1,12 @@
 package com.example.natour.data.sources.impl
 
 import com.example.natour.data.sources.UserDataSource
-import com.example.natour.data.sources.network.services.registration.RegistrationApiService
+import com.example.natour.data.sources.network.UserApiService
 
-// TODO: change end point
 class UserRemoteDataSource(
-    private val registerApiService: RegistrationApiService,
+    private val userApiService: UserApiService
 ) : UserDataSource {
 
     override suspend fun existsByUsername(username: String): Boolean =
-        registerApiService.existsByUsername(username)
-
+        userApiService.existsByUsername(username)
 }

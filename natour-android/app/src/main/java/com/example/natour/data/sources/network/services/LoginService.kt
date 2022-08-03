@@ -1,15 +1,13 @@
-package com.example.natour.data.sources.network.services.registration
+package com.example.natour.data.sources.network.services
 
-import com.example.natour.data.sources.network.Converters
-import com.example.natour.data.sources.network.services.URLs
+import com.example.natour.data.sources.network.util.Converters
+import com.example.natour.data.sources.network.LoginApiService
+import com.example.natour.data.sources.network.util.URLs
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
-import retrofit2.http.Field
-import retrofit2.http.FormUrlEncoded
-import retrofit2.http.POST
 
-object RegistrationService {
+object LoginService {
 
     private val okHttpClient = run {
         val httpLoggingInterceptor = HttpLoggingInterceptor()
@@ -23,7 +21,7 @@ object RegistrationService {
         .client(okHttpClient)
         .build()
 
-    val retrofitService: RegistrationApiService by lazy {
-        retrofit.create(RegistrationApiService::class.java)
+    val retrofitService: LoginApiService by lazy {
+        retrofit.create(LoginApiService::class.java)
     }
 }

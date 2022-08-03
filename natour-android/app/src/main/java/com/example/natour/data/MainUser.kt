@@ -1,5 +1,6 @@
 package com.example.natour.data
 
+import com.example.natour.data.model.AuthenticatedUser
 import com.example.natour.data.model.AuthenticationResponse
 import java.lang.IllegalArgumentException
 
@@ -28,21 +29,18 @@ object MainUser {
     val accessToken     get() = token.accessToken
     val refreshToken    get() = token.refreshToken
 
-    fun set(authentication: AuthenticationResponse) {
-        if (!authentication.authenticated)
-            throw IllegalArgumentException("Authentication object must be authenticated!")
-
+    fun set(authenticatedUser: AuthenticatedUser) {
         with(details) {
-            id          = authentication.id!!
-            username    = authentication.username!!
-            firstName   = authentication.firstName!!
-            lastName    = authentication.lastName!!
-            email       = authentication.email!!
+            id          = authenticatedUser.id
+            username    = authenticatedUser.username
+            firstName   = authenticatedUser.firstName
+            lastName    = authenticatedUser.lastName
+            email       = authenticatedUser.email
         }
 
         with(token) {
-            accessToken     = authentication.accessToken!!
-            refreshToken    = authentication.refreshToken!!
+            accessToken = authenticatedUser.accessToken
+            refreshToken = authenticatedUser.refreshToken
         }
     }
 
