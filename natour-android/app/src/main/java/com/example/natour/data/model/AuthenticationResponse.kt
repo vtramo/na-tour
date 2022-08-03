@@ -1,6 +1,7 @@
 package com.example.natour.data.model
 
 import com.squareup.moshi.Json
+import java.io.Serializable
 
 data class AuthenticationResponse(
     val authenticated: Boolean,
@@ -11,5 +12,5 @@ data class AuthenticationResponse(
     val email: String?,
     @Json(name="access_token") val accessToken: String?,
     @Json(name="refresh_token") val refreshToken: String?
-)
+) : Serializable
 
