@@ -4,4 +4,5 @@ import com.natour.natour.model.SomeSortOfUser;
 
 public interface RegistrationService {
     boolean register(SomeSortOfUser user);
+    boolean existsByUsername(String username);
 }

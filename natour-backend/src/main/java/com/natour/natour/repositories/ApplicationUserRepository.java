@@ -9,4 +9,5 @@ import com.natour.natour.model.ApplicationUser;
 public interface ApplicationUserRepository extends CrudRepository<ApplicationUser, Long> {
 
     ApplicationUser findByUsername(String username);
+    boolean existsByUsername(String username);
 }

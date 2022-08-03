@@ -28,4 +28,9 @@ public class RegistrationServiceImpl implements RegistrationService {
         log.info("A new user was successfully registered: " + appUser);
         return true;
     }
+
+    @Override
+    public boolean existsByUsername(String username) {
+        return applicationUserService.existsByUsername(username);
+    }
 }
