@@ -8,7 +8,7 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 object Converters {
 
     /* A modern JSON library for Kotlin and Java */
-    val moshi = Moshi.Builder()
+    private val moshi = Moshi.Builder()
         .add(KotlinJsonAdapterFactory())
         .build()
 
