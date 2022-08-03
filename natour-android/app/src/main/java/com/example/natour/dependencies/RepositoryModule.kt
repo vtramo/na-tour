@@ -41,8 +41,9 @@ object RepositoryModule {
     @Provides
     @Singleton
     fun provideLoginRepository(
-        loginDataSource: LoginDataSource
-    ) : LoginRepository = DefaultLoginRepository(loginDataSource)
+        loginDataSource: LoginDataSource,
+        mainUserRepository: MainUserRepository
+    ) : LoginRepository = DefaultLoginRepository(loginDataSource, mainUserRepository)
 
     @Provides
     @Singleton

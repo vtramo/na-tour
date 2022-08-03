@@ -2,6 +2,8 @@ package com.example.natour.ui.signin.viewmodels
 
 import androidx.lifecycle.*
 import com.example.natour.data.model.Credentials
+import com.example.natour.data.repositories.MainUserRepository
+import com.example.natour.data.repositories.UserRepository
 import com.example.natour.domain.LogInUserUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -9,7 +11,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(
-    private val logInUserUseCase: LogInUserUseCase
+    private val userRepository: UserRepository
 ) : ViewModel() {
 
     private val _credentials = Credentials()
@@ -30,17 +32,21 @@ class LoginViewModel @Inject constructor(
         get() = _accessTokenFacebook
         set(value) { _accessTokenFacebook = value }
 
-    val isAuthenticated: LiveData<Boolean> = logInUserUseCase.isAuthenticated
+    private val _isAuthenticated = MutableLiveData<Boolean>()
+    val isAuthenticated: LiveData<Boolean> = _isAuthenticated
 
     fun login() = viewModelScope.launch {
-        logInUserUseCase.login(_credentials.username, _credentials.password)
+        val authentication = userRepository.login(_credentials.username, _credentials.password)
+        _isAuthenticated.value = authentication.authenticated
     }
 
     fun loginWithGoogle() = viewModelScope.launch {
-        logInUserUseCase.loginWithGoogle(_authcodeGoogle)
+        val authentication = userRepository.loginWithGoogle(_authcodeGoogle)
+        _isAuthenticated.value = authentication.authenticated
     }
 
     fun loginWithFacebook() = viewModelScope.launch {
-        logInUserUseCase.loginWithFacebook(_accessTokenFacebook)
+        val authentication = userRepository.loginWithFacebook(_accessTokenFacebook)
+        _isAuthenticated.value = authentication.authenticated
     }
 }

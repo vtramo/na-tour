@@ -17,19 +17,16 @@ class LogInUserUseCase(
 
     suspend fun login(username: String, password: String) = coroutineScope {
         val authenticationResponse = userRepository.login(username, password)
-
         if (authenticationResponse.authenticated) saveLocalMainUser(authenticationResponse)
     }
 
     suspend fun loginWithGoogle(authenticationCode: String) = coroutineScope {
         val authenticationResponse = userRepository.loginWithGoogle(authenticationCode)
-
         if (authenticationResponse.authenticated) saveLocalMainUser(authenticationResponse)
     }
 
     suspend fun loginWithFacebook(accessToken: String) = coroutineScope {
         val authenticationResponse = userRepository.loginWithFacebook(accessToken)
-
         if (authenticationResponse.authenticated) saveLocalMainUser(authenticationResponse)
     }
 
