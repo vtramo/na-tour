@@ -1,8 +1,10 @@
 package com.example.natour.ui.signup.viewmodels
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.natour.data.repositories.UserRepository
 import com.example.natour.domain.RegistrationUserUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -10,11 +12,14 @@ import javax.inject.Inject
 
 @HiltViewModel
 class RegistrationViewModel @Inject constructor(
-    private val registrationUserUseCase: RegistrationUserUseCase
+    private val userRepository: UserRepository
 ) : ViewModel() {
 
-    val hasBeenRegistered: LiveData<Boolean> = registrationUserUseCase.hasBeenRegistered
-    val userExists: LiveData<Boolean> = registrationUserUseCase.userExists
+    private val _hasBeenRegistered = MutableLiveData<Boolean>()
+    val hasBeenRegistered: LiveData<Boolean> = _hasBeenRegistered
+
+    private val _userExists = MutableLiveData<Boolean>()
+    val userExists: LiveData<Boolean> get() = _userExists
 
     fun submitForm(
         firstName: String,
@@ -23,6 +28,11 @@ class RegistrationViewModel @Inject constructor(
         email: String,
         password: String
     ) = viewModelScope.launch {
-        registrationUserUseCase.register(firstName, lastName, username, password, email)
-    }
+            if (userRepository.existsByUsername(username)) {
+                _userExists.value = true
+            } else {
+                _hasBeenRegistered.value =
+                    userRepository.register(firstName, lastName, username, email, password)
+            }
+        }
 }

@@ -2,9 +2,7 @@ package com.example.natour.ui.signin.viewmodels
 
 import androidx.lifecycle.*
 import com.example.natour.data.model.Credentials
-import com.example.natour.data.repositories.MainUserRepository
 import com.example.natour.data.repositories.UserRepository
-import com.example.natour.domain.LogInUserUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
