@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
+import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
@@ -16,6 +17,7 @@ import com.example.natour.R
 import com.example.natour.databinding.FragmentRegistrationBinding
 import com.example.natour.presentation.signup.ConstantRegex
 import com.example.natour.presentation.signup.viewmodels.RegistrationViewModel
+import com.example.natour.data.model.RegistrationResult
 
 import com.google.android.material.textfield.TextInputLayout
 import dagger.hilt.android.AndroidEntryPoint
@@ -42,6 +44,7 @@ class RegistrationFragment : Fragment() {
         setupSignUp()
         setupTextVerifies()
         setConfirmPasswordVerifier()
+        setupErrorHandlingUserAlreadyExists()
 
         binding.registerButton.setOnClickListener { submitForm() }
     }
@@ -49,13 +52,16 @@ class RegistrationFragment : Fragment() {
     private fun setupSignUp() {
         registrationViewModel
             .hasBeenRegistered.observe(viewLifecycleOwner) { hasBeenRegisteredCorrectly ->
-                if (hasBeenRegisteredCorrectly) {
-                    goBackToLoginFragment()
-                } else {
+                if (!hasBeenRegisteredCorrectly) {
                     showInvalidFormAlertDialog()
+                } else if (hasBeenRegisteredCorrectly == RegistrationResult.REGISTERED) {
+                    Toast.makeText(context, "SUCCESSFULLY REGISTERED", Toast.LENGTH_SHORT).show()
+                    goBackToLoginFragment()
                 }
             }
+    }
 
+    private fun setupErrorHandlingUserAlreadyExists() {
         registrationViewModel
             .userExists.observe(viewLifecycleOwner) { userExists ->
                 if (userExists) {
