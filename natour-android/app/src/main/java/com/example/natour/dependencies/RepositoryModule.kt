@@ -1,8 +1,12 @@
 package com.example.natour.dependencies
 
-import com.example.natour.data.repositories.UserRepository
-import com.example.natour.data.repositories.impl.UserRepositoryImpl
+import com.example.natour.data.repositories.AuthenticatedUserRepository
+import com.example.natour.data.repositories.MainUserRepository
+import com.example.natour.data.repositories.impl.AuthenticatedUserRepositoryImpl
+import com.example.natour.data.repositories.impl.MainUserRepositoryImpl
+import com.example.natour.data.sources.MainUserFileStore
 import com.example.natour.data.sources.UserRemoteDataSource
+import com.example.natour.user.MainUser
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -16,6 +20,13 @@ object RepositoryModule {
     @Provides
     @Singleton
     fun provideUserRepository(
-        userRemoteDataSource: UserRemoteDataSource
-    ) : UserRepository = UserRepositoryImpl(userRemoteDataSource)
+        userRemoteDataSource: UserRemoteDataSource,
+    ) : AuthenticatedUserRepository = AuthenticatedUserRepositoryImpl(userRemoteDataSource)
+
+    @Provides
+    @Singleton
+    fun provideMainUserRepository(
+        mainUserFileStore: MainUserFileStore,
+        mainUserObject: MainUser
+    ) : MainUserRepository = MainUserRepositoryImpl(mainUserFileStore, mainUserObject)
 }
