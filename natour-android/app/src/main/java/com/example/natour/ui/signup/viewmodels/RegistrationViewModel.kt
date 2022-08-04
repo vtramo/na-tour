@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.natour.data.repositories.AuthenticatedUserRepository
-import com.example.natour.data.repositories.UserRepository
+import com.example.natour.exceptions.UsernameAlreadyExistsException
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -13,7 +13,6 @@ import javax.inject.Inject
 @HiltViewModel
 class RegistrationViewModel @Inject constructor(
     private val authenticatedUserRepository: AuthenticatedUserRepository,
-    private val userRepository: UserRepository
 ) : ViewModel() {
 
     private val _hasBeenRegistered = MutableLiveData<Boolean>()
@@ -29,11 +28,16 @@ class RegistrationViewModel @Inject constructor(
         email: String,
         password: String
     ) = viewModelScope.launch {
-            if (userRepository.existsByUsername(username)) {
+            val result =
+                authenticatedUserRepository.register(firstName, lastName, username, email, password)
+
+            if (usernameAlreadyExists(result)) {
                 _userExists.value = true
             } else {
-                _hasBeenRegistered.value =
-                    authenticatedUserRepository.register(firstName, lastName, username, email, password)
+                _hasBeenRegistered.value = result.getOrNull()
             }
         }
+
+    private fun usernameAlreadyExists(result: Result<*>) =
+        result.isFailure && result.exceptionOrNull() is UsernameAlreadyExistsException
 }

@@ -21,8 +21,10 @@ object RepositoryModule {
     @Singleton
     fun provideAuthenticatedUserRepository(
         loginRepository: LoginRepository,
-        registrationRepository: RegistrationRepository
-    ) : AuthenticatedUserRepository = DefaultAuthenticatedUserRepository(loginRepository, registrationRepository)
+        registrationRepository: RegistrationRepository,
+        userRepository: UserRepository
+    ) : AuthenticatedUserRepository =
+        DefaultAuthenticatedUserRepository(loginRepository, registrationRepository, userRepository)
 
     @Provides
     @Singleton

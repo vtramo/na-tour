@@ -14,5 +14,5 @@ interface AuthenticatedUserRepository {
         username: String,
         email: String,
         password: String
-    ) : Boolean
+    ) : Result<Boolean>
 }
