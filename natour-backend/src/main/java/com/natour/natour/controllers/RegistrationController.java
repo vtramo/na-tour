@@ -37,15 +37,4 @@ public class RegistrationController {
     public boolean register(@Valid SomeSortOfUser user) {
         return registrationService.register(user);
     }
-
-    @PostMapping(
-        path = "/user",
-        consumes = {MediaType.APPLICATION_FORM_URLENCODED_VALUE},
-        produces = {MediaType.APPLICATION_JSON_VALUE}
-    )
-    @ResponseStatus(HttpStatus.OK)
-    @Operation(summary = "Returns true if the provided username already exists")
-    public boolean existsByUsername(String username) {
-        return registrationService.existsByUsername(username);
-    }
 }
