@@ -1,4 +1,4 @@
-package com.example.natour.ui.home.fragments
+package com.example.natour.ui.home
 
 import android.os.Bundle
 import android.view.*
@@ -43,6 +43,27 @@ class HomeFragment : Fragment() {
         binding.authenticationViewModel = sharedMainUserViewModel
         binding.homeFragment = this
         binding.lifecycleOwner = viewLifecycleOwner
+    }
+
+    @Deprecated("Deprecated in Java",
+        ReplaceWith(
+        "super.onOptionsItemSelected(item)",
+        "androidx.fragment.app.Fragment"
+        )
+    )
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when(item.itemId) {
+            R.id.action_add_route -> {
+                goToRouteCreationFragment()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+    private fun goToRouteCreationFragment() {
+        val action = HomeFragmentDirections.actionHomeFragmentToRouteCreationFragment()
+        view?.findNavController()?.navigate(action)
     }
 
     fun onLogout() {
