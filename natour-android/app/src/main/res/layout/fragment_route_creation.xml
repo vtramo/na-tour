@@ -22,13 +22,13 @@
             android:padding="@dimen/default_padding"
             >
 
+            <!-- Add a route -->
             <TextView
                 android:id="@+id/add_route_text_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/add_a_route"
                 android:textSize="28sp"
-                android:layout_marginTop="16dp"
                 android:textColor="@color/black"
                 android:textStyle="bold"
                 />
@@ -139,18 +139,111 @@
                 android:hint="@string/description"
                 android:autofillHints="" />
 
-            <!-- Google Map -->
-            <fragment
-                android:id="@+id/map"
-                android:name="com.example.natour.ui.route.SupportMapFragmentWrapper"
+            <!-- Route starting position -->
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="500dp"
-                android:layout_marginTop="24dp"
-                app:cameraTilt="30"
-                app:cameraZoom="20"
-                app:uiRotateGestures="true"
-                app:uiZoomControls="true"
-                tools:ignore="FragmentTagUsage" />
+                android:layout_height="wrap_content"
+                android:layout_margin="24dp"
+                >
+
+                <!-- Select starting point of the route -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/select_starting_point_of_the_route"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="@id/lat_lng_linear_layout"
+                    app:layout_constraintEnd_toEndOf="@id/lat_lng_linear_layout"
+                    android:textColor="@color/black"
+                    />
+
+                <!-- Latitude/Longitude/Button -->
+                <LinearLayout
+                    android:id="@+id/lat_lng_linear_layout"
+                    android:layout_marginTop="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/map"
+                    app:layout_constraintEnd_toEndOf="@+id/map"
+                    >
+
+                    <!-- Latitude/Longitude -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal"
+                        android:baselineAligned="false">
+
+                        <!-- Latitude -->
+                        <com.google.android.material.textfield.TextInputLayout
+                            style="@style/Widget.Unscramble.TextInputLayout.OutlinedBox"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:padding="5dp"
+                            android:hint="@string/latitude"
+                            app:errorIconDrawable="@drawable/ic_error"
+                            android:layout_marginTop="16dp"
+                            app:helperTextTextAppearance="@style/TextAppearance.MaterialComponents.Subtitle1">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:inputType="number"
+                                android:maxLines="1"
+                                tools:ignore="DuplicateClickableBoundsCheck" />
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <!-- Longitude -->
+                        <com.google.android.material.textfield.TextInputLayout
+                            style="@style/Widget.Unscramble.TextInputLayout.OutlinedBox"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:padding="5dp"
+                            android:hint="@string/longitude"
+                            app:errorIconDrawable="@drawable/ic_error"
+                            android:layout_marginTop="16dp"
+                            app:helperTextTextAppearance="@style/TextAppearance.MaterialComponents.Subtitle1">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:inputType="number"
+                                android:maxLines="1"
+                                tools:ignore="DuplicateClickableBoundsCheck" />
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                    </LinearLayout>
+
+                    <!-- Go Button -->
+                    <Button
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/go"/>
+
+                </LinearLayout>
+
+                <!-- Google Map -->
+                <fragment
+                    app:layout_constraintTop_toBottomOf="@id/lat_lng_linear_layout"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:id="@+id/map"
+                    android:name="com.example.natour.ui.route.SupportMapFragmentWrapper"
+                    android:layout_width="match_parent"
+                    android:layout_height="500dp"
+                    app:cameraTilt="30"
+                    app:cameraZoom="20"
+                    app:uiRotateGestures="true"
+                    app:uiZoomControls="true"
+                    tools:ignore="FragmentTagUsage" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
         </LinearLayout>
 

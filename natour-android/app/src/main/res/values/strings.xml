@@ -32,6 +32,10 @@
     <string name="enter_route_name">Enter route name</string>
     <string name="select_a_level_of_difficulty">Select a level of difficulty</string>
     <string name="description">Description</string>
+    <string name="select_starting_point_of_the_route">Select starting point of the route</string>
+    <string name="longitude">Longitude</string>
+    <string name="latitude">Latitude</string>
+    <string name="go">GO</string>
 
     <!-- Route Creation -->
     <string-array name="listDifficulties">
