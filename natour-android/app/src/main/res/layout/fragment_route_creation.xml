@@ -55,30 +55,59 @@
 
             <!-- Duration -->
             <LinearLayout
-                android:id="@+id/duration_picker_linear_layout"
-                android:layout_width="match_parent"
-                android:layout_height="100dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                app:layout_constraintTop_toBottomOf="@id/route_name_text_input_layout"
-                android:layout_marginTop="16dp">
+                android:layout_marginTop="16dp"
+                >
 
-                <NumberPicker
-                    android:layout_width="0dp"
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.Unscramble.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_marginHorizontal="12dp"/>
+                    app:helperTextTextAppearance="@style/TextAppearance.MaterialComponents.Subtitle1">
 
-                <NumberPicker
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_marginHorizontal="12dp"/>
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:inputType="numberDecimal"
+                        android:maxLines="1"
+                        tools:ignore="DuplicateClickableBoundsCheck" />
 
-                <NumberPicker
-                    android:layout_width="0dp"
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.Unscramble.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="12dp"
-                    android:layout_weight="1" />
+                    app:helperTextTextAppearance="@style/TextAppearance.MaterialComponents.Subtitle1">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:inputType="numberDecimal"
+                        android:maxLines="1"
+                        tools:ignore="DuplicateClickableBoundsCheck" />
+
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.Unscramble.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:helperTextTextAppearance="@style/TextAppearance.MaterialComponents.Subtitle1">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:inputType="numberDecimal"
+                        android:maxLines="1"
+                        tools:ignore="DuplicateClickableBoundsCheck" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
             </LinearLayout>
 
             <!-- Difficulty -->
@@ -97,6 +126,18 @@
                     android:inputType="none"
                     tools:ignore="DuplicateClickableBoundsCheck,LabelFor" />
             </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- Description -->
+            <EditText
+                android:id="@+id/edit_text"
+                android:layout_width="match_parent"
+                style="@style/Widget.Unscramble.TextInputLayout.OutlinedBox"
+                android:layout_marginTop="16dp"
+                android:layout_height="150dp"
+                android:inputType="text|textMultiLine"
+                android:gravity="top"
+                android:hint="@string/description"
+                android:autofillHints="" />
 
             <!-- Google Map -->
             <fragment

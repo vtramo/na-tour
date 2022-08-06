@@ -31,6 +31,7 @@
     <string name="add_a_route">Add a route</string>
     <string name="enter_route_name">Enter route name</string>
     <string name="select_a_level_of_difficulty">Select a level of difficulty</string>
+    <string name="description">Description</string>
 
     <!-- Route Creation -->
     <string-array name="listDifficulties">

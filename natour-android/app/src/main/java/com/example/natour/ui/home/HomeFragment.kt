@@ -15,8 +15,9 @@ class HomeFragment : Fragment() {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
 
-    private val sharedMainUserViewModel: MainUserViewModel by activityViewModels()
+    private val mainUserViewModel: MainUserViewModel by activityViewModels()
 
+    @Suppress("DEPRECATION")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
@@ -40,7 +41,7 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.authenticationViewModel = sharedMainUserViewModel
+        binding.authenticationViewModel = mainUserViewModel
         binding.homeFragment = this
         binding.lifecycleOwner = viewLifecycleOwner
     }
@@ -51,6 +52,7 @@ class HomeFragment : Fragment() {
         "androidx.fragment.app.Fragment"
         )
     )
+    @Suppress("DEPRECATION")
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when(item.itemId) {
             R.id.action_add_route -> {
@@ -67,7 +69,7 @@ class HomeFragment : Fragment() {
     }
 
     fun onLogout() {
-        sharedMainUserViewModel.logout()
+        mainUserViewModel.logout()
         goToLoginFragment()
     }
 
