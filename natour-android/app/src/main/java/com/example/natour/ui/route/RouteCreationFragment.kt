@@ -5,6 +5,7 @@ import android.annotation.SuppressLint
 import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -14,6 +15,7 @@ import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import com.example.natour.R
 import com.example.natour.databinding.FragmentRouteCreationBinding
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -42,11 +44,16 @@ class RouteCreationFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         binding.lifecycleOwner = viewLifecycleOwner
         binding.routeCreationFragment = this
-
+        setupCustomBackToolbar()
         setupRouteDifficultyDropDownList()
+    }
+
+    private fun setupCustomBackToolbar(){
+          val toolbar = binding.customToolbarRouteCreation
+        toolbar.setNavigationIcon(R.drawable.back_button_icon)
+        toolbar.setNavigationOnClickListener { findNavController().popBackStack() }
     }
 
     private fun setupRouteDifficultyDropDownList() {
