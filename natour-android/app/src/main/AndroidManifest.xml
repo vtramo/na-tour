@@ -44,6 +44,9 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyCCgr39_3YU1gO3B0Pcel9lv99nNPodAkg" />
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
 
         <activity
             android:name="com.facebook.CustomTabActivity"

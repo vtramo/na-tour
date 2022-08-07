@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 
 import com.example.natour.MainActivity
 import com.example.natour.R
@@ -41,8 +42,14 @@ class RegistrationFragment : Fragment() {
         setupTextVerifies()
         setConfirmPasswordVerifier()
         setupErrorHandlingUserAlreadyExists()
-
+        setupCustomToolbar()
         binding.registerButton.setOnClickListener { submitForm() }
+    }
+
+    private fun setupCustomToolbar(){
+        val toolbar = binding.customToolbarRegistration
+        toolbar.setNavigationIcon(R.drawable.back_button_icon)
+        toolbar.setNavigationOnClickListener { findNavController().popBackStack() }
     }
 
     private fun setupSignUp() {

@@ -24,6 +24,11 @@
             android:padding="@dimen/default_padding"
             >
 
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/custom_toolbar_route_creation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
             <!-- Add a route -->
             <TextView
                 android:id="@+id/add_route_text_view"

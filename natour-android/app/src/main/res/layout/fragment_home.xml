@@ -15,6 +15,77 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/custom_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageButton
+                    android:id="@+id/send_message_icon"
+                    style="@style/Widget.AppCompat.Button.Borderless"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_alignParentStart="true"
+                    android:src="@drawable/send_message_icon" />
+
+                <ImageButton
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginRight="20dp"
+                    android:src="@drawable/plus_icon"
+                    android:layout_alignParentEnd="true"
+                    style="@style/Widget.AppCompat.Button.Borderless"
+                    android:onClick="@{() -> homeFragment.goToRouteCreationFragment()}"
+                    />
+
+
+            </RelativeLayout>
+
+
+        </androidx.appcompat.widget.Toolbar>
+
+        <TextView
+            android:id="@+id/explore_new_trails_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/montserrat_semibold"
+            android:text="@string/explore_new_trails"
+            android:textColor="#000000"
+            android:textSize="34sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/custom_toolbar" />
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recicler_view_home"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:scrollbars="vertical"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/explore_new_trails_label"
+
+            />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!-- Logout Button -->
+    <!--<androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".ui.home.HomeFragment">
 
@@ -40,5 +111,5 @@
 
 
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>-->
 </layout>

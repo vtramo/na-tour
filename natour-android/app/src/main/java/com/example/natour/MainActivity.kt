@@ -3,13 +3,17 @@ package com.example.natour
 import android.app.Application
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.LinearLayout
+import android.widget.Toolbar
 import androidx.activity.viewModels
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.example.natour.ui.MainUserViewModel
@@ -37,10 +41,13 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         context = application
         setContentView(R.layout.activity_main)
-
+        supportActionBar?.hide()
         loadMainUser()
         setupThirdPartyLoginViewModel()
     }
+
+
+
 
     private fun loadMainUser() {
         mainUserViewModel.mainUser.observe(this) { mainUser ->
