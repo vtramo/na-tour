@@ -36,6 +36,8 @@
     <string name="longitude">Longitude</string>
     <string name="latitude">Latitude</string>
     <string name="go">GO</string>
+    <string name="confirm">Confirm</string>
+    <string name="how_do_you_want_to_add_a_route">How do you want to add a route?</string>
 
     <!-- Route Creation -->
     <string-array name="listDifficulties">

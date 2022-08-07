@@ -132,6 +132,9 @@ dependencies {
 
     // Google Maps
     implementation 'com.google.android.gms:play-services-maps:18.1.0'
+
+    // GPX Library Parser
+    implementation 'com.github.ticofab:android-gpx-parser:2.2.0'
 }
 
 
