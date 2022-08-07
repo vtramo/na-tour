@@ -7,6 +7,8 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.findNavController
 import com.example.natour.R
+import com.example.natour.data.adapter.ItemAdapter
+import com.example.natour.data.sources.Datasource
 import com.example.natour.databinding.FragmentHomeBinding
 import com.example.natour.ui.MainUserViewModel
 
@@ -20,21 +22,19 @@ class HomeFragment : Fragment() {
     @Suppress("DEPRECATION")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setHasOptionsMenu(true)
     }
 
-    @Deprecated("Deprecated in Java",
-        ReplaceWith("inflater.inflate(R.menu.home_menu, menu)", "com.example.natour.R")
-    )
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.home_menu, menu)
-    }
+//    @Deprecated("Deprecated in Java",
+//        ReplaceWith("inflater.inflate(R.menu.home_menu, menu)", "com.example.natour.R")
+//    )
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false)
+        _binding = FragmentHomeBinding.inflate(inflater,container, false)
+        setRecyclerView()
         return binding.root
     }
 
@@ -46,24 +46,27 @@ class HomeFragment : Fragment() {
         binding.lifecycleOwner = viewLifecycleOwner
     }
 
-    @Deprecated("Deprecated in Java",
-        ReplaceWith(
-        "super.onOptionsItemSelected(item)",
-        "androidx.fragment.app.Fragment"
-        )
-    )
-    @Suppress("DEPRECATION")
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when(item.itemId) {
-            R.id.action_add_route -> {
-                goToRouteCreationFragment()
-                true
-            }
-            else -> super.onOptionsItemSelected(item)
-        }
+//    @Deprecated("Deprecated in Java",
+//        ReplaceWith(
+//        "super.onOptionsItemSelected(item)",
+//        "androidx.fragment.app.Fragment"
+//        )
+//    )
+
+
+    private fun setToolbar(){
+        val toolbar = view?.findViewById<android.widget.Toolbar>(R.id.custom_toolbar)
+        activity?.setActionBar(toolbar)
+        activity?.actionBar?.setTitle("")
     }
 
-    private fun goToRouteCreationFragment() {
+    private fun setRecyclerView(){
+        val myDataset = Datasource().loadTrails()
+        val recyclerView = binding.reciclerViewHome
+        recyclerView.adapter = ItemAdapter(myDataset)
+    }
+
+    fun goToRouteCreationFragment() {
         val action = HomeFragmentDirections.actionHomeFragmentToRouteCreationFragment()
         view?.findNavController()?.navigate(action)
     }
