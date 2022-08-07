@@ -1,14 +1,19 @@
-package com.example.natour.ui.route
+package com.example.natour.ui.route.fragments
 
+import android.Manifest
+import android.annotation.SuppressLint
+import android.content.pm.PackageManager
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
 import com.example.natour.R
 import com.example.natour.databinding.FragmentRouteTrackingCreationBinding
+import com.example.natour.ui.route.RouteCreationViewModel
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -60,6 +65,7 @@ class RouteTrackingCreationFragment : Fragment(), OnMapReadyCallback {
 
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
+        enableMyLocation()
 
         mPolyline = mMap.addPolyline(
             PolylineOptions()
@@ -103,6 +109,12 @@ class RouteTrackingCreationFragment : Fragment(), OnMapReadyCallback {
         }
     }
 
+    fun onConfirmButtonClick() {
+        assert(!mPolyline.hasZeroPoints())
+        mRouteCreationViewModel.listOfRoutePoints =
+            mPolyline.points.map { Pair(it.latitude, it.longitude) }
+    }
+
     private fun Polyline.hasZeroPoints() = points.size == 0
     private fun Polyline.hasOnlyOnePoint() = points.size == 1
 
@@ -139,4 +151,19 @@ class RouteTrackingCreationFragment : Fragment(), OnMapReadyCallback {
             )
         )
     }
+
+    @SuppressLint("MissingPermission")
+    private fun enableMyLocation() {
+        if (locationPermissionsAreGranted())
+            mMap.isMyLocationEnabled = true
+    }
+
+    private fun locationPermissionsAreGranted() =
+        ContextCompat.checkSelfPermission(
+            requireContext(),
+            Manifest.permission.ACCESS_FINE_LOCATION
+        ) == PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(
+            requireContext(),
+            Manifest.permission.ACCESS_COARSE_LOCATION
+        ) == PackageManager.PERMISSION_GRANTED
 }

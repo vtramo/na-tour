@@ -41,7 +41,7 @@
     </fragment>
     <fragment
         android:id="@+id/routeCreationFragment"
-        android:name="com.example.natour.ui.route.RouteCreationFragment"
+        android:name="com.example.natour.ui.route.fragments.RouteCreationFragment"
         android:label="RouteCreationFragment" >
         <action
             android:id="@+id/action_routeCreationFragment_to_routeTypeCreationFragment"
@@ -49,7 +49,7 @@
     </fragment>
     <fragment
         android:id="@+id/routeTypeCreationFragment"
-        android:name="com.example.natour.ui.route.RouteTypeCreationFragment"
+        android:name="com.example.natour.ui.route.fragments.RouteTypeCreationFragment"
         android:label="fragment_route_type_creation"
         tools:layout="@layout/fragment_route_type_creation" >
         <action
@@ -61,10 +61,10 @@
     </fragment>
     <fragment
         android:id="@+id/routeDisplayCreationFragment"
-        android:name="com.example.natour.ui.route.RouteDisplayCreationFragment"
+        android:name="com.example.natour.ui.route.fragments.RouteDisplayCreationFragment"
         android:label="routeDisplayCreationFragment" />
     <fragment
         android:id="@+id/routeTrackingCreationFragment"
-        android:name="com.example.natour.ui.route.RouteTrackingCreationFragment"
+        android:name="com.example.natour.ui.route.fragments.RouteTrackingCreationFragment"
         android:label="RouteTrackingCreationFragment" />
 </navigation>

@@ -1,4 +1,4 @@
-package com.example.natour.ui.route
+package com.example.natour.ui.route.fragments
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -9,6 +9,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
 import com.example.natour.R
 import com.example.natour.databinding.FragmentRouteDisplayCreationBinding
+import com.example.natour.ui.route.RouteCreationViewModel
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -66,20 +67,7 @@ class RouteDisplayCreationFragment : Fragment(), OnMapReadyCallback {
         addMarkerOnMap(mListOfRoutePoints.last(), "Destination of the route")
         drawRouteOnMap()
 
-/*        val firstPoint = mListOfRoutePoints.first()
-        mMap.animateCamera(
-            CameraUpdateFactory.newCameraPosition(
-                CameraPosition.Builder()
-                    .target(LatLng(firstPoint.latitude, firstPoint.longitude))
-                    .zoom(10F)
-                    .build()
-            )
-        )*/
-
-        val builder = LatLngBounds.Builder()
-        mListOfRoutePoints.forEach { point -> builder.include(point) }
-        val bounds = builder.build()
-        mMap.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds, 50))
+        mMap.animateCameraOnRoute()
     }
 
     private fun addMarkerOnMap(point: LatLng, title: String) {
@@ -100,5 +88,16 @@ class RouteDisplayCreationFragment : Fragment(), OnMapReadyCallback {
                 .startCap(RoundCap())
                 .endCap(RoundCap())
         )
+    }
+
+    private fun GoogleMap.animateCameraOnRoute() {
+        val builder = LatLngBounds.Builder()
+        mListOfRoutePoints.forEach { point -> builder.include(point) }
+        val bounds = builder.build()
+        animateCamera(CameraUpdateFactory.newLatLngBounds(bounds, 50))
+    }
+
+    fun onConfirmButtonClick() {
+
     }
 }
