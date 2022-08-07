@@ -39,6 +39,10 @@
     <string name="confirm">Confirm</string>
     <string name="how_do_you_want_to_add_a_route">How do you want to add a route?</string>
 
+    <!-- Home -->
+    <string name="explore_new_trails">Explore new trails</string>
+    <string name="card_cover">Card Cover</string>
+
     <!-- Route Creation -->
     <string-array name="listDifficulties">
         <item>A</item>
