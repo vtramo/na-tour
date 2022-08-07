@@ -41,8 +41,13 @@ class RegistrationFragment : Fragment() {
         setupTextVerifies()
         setConfirmPasswordVerifier()
         setupErrorHandlingUserAlreadyExists()
-
+        setupCustomToolbar()
         binding.registerButton.setOnClickListener { submitForm() }
+    }
+
+    private fun setupCustomToolbar(){
+        val toolbar = binding.customToolbarRegistration
+        toolbar.setNavigationIcon(R.drawable.back_button_icon)
     }
 
     private fun setupSignUp() {
