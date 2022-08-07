@@ -38,6 +38,8 @@
     <string name="go">GO</string>
     <string name="confirm">Confirm</string>
     <string name="how_do_you_want_to_add_a_route">How do you want to add a route?</string>
+    <string name="choose_a_starting_point">Choose a starting point</string>
+    <string name="draw_the_route_on_the_map">Draw the route on the map</string>
 
     <!-- Home -->
     <string name="explore_new_trails">Explore new trails</string>

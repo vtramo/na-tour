@@ -12,7 +12,9 @@
         <entry key="..\:/NaTour/natour-android/app/src/main/res/layout/fragment_login.xml" value="0.1" />
         <entry key="..\:/NaTour/natour-android/app/src/main/res/layout/fragment_registration.xml" value="0.1" />
         <entry key="..\:/NaTour/natour-android/app/src/main/res/layout/fragment_route_creation.xml" value="0.25" />
+        <entry key="..\:/NaTour/natour-android/app/src/main/res/layout/fragment_route_display_creation.xml" value="0.2444078947368421" />
         <entry key="..\:/NaTour/natour-android/app/src/main/res/layout/fragment_route_map_creation.xml" value="0.2444078947368421" />
+        <entry key="..\:/NaTour/natour-android/app/src/main/res/layout/fragment_route_tracking_creation.xml" value="0.22" />
         <entry key="..\:/NaTour/natour-android/app/src/main/res/layout/fragment_route_type_creation.xml" value="0.13352272727272727" />
         <entry key="..\:/NaTour/natour-android/app/src/main/res/layout/login_fragment.xml" value="0.1" />
         <entry key="..\:/NaTour/natour-android/app/src/main/res/menu/home_menu.xml" value="0.38697916666666665" />
