@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="routeTypeCreationFragment"
+            type="com.example.natour.ui.route.RouteTypeCreationFragment" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/text_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:text="@string/how_do_you_want_to_add_a_route"
+            android:textSize="42sp"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:layout_marginTop="60dp"
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/text_view"
+            android:orientation="horizontal"
+            android:padding="50dp"
+            >
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="335dp"
+                android:layout_marginEnd="30dp"
+                android:layout_weight="1"
+                android:src="@drawable/maps"
+                app:layout_constraintTop_toBottomOf="@+id/text_view"
+                tools:ignore="ContentDescription"
+                />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="335dp"
+                android:layout_marginStart="20dp"
+                android:layout_weight="1"
+                android:src="@drawable/gpx_file_format_symbol"
+                app:layout_constraintTop_toBottomOf="@+id/text_view"
+                android:onClick="@{() -> routeTypeCreationFragment.onGpxFileClick()}"
+                tools:ignore="ContentDescription" />
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
