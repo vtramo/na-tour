@@ -6,7 +6,7 @@
     <data>
         <variable
             name="routeTypeCreationFragment"
-            type="com.example.natour.ui.route.RouteTypeCreationFragment" />
+            type="com.example.natour.ui.route.fragments.RouteTypeCreationFragment" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
