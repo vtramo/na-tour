@@ -11,6 +11,10 @@
         android:orientation="vertical"
         android:layout_marginTop="32dp"
         >
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/custom_toolbar_registration"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
         <!-- Create a new profile -->
         <TextView
