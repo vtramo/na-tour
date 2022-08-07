@@ -95,7 +95,7 @@ class RouteDisplayCreationFragment : Fragment(), OnMapReadyCallback {
             PolylineOptions()
                 .addAll(mListOfRoutePoints)
                 .color(android.graphics.Color.RED)
-                .pattern(listOf(Dash(50f)))
+                .pattern(listOf(Dash(50f), Gap(20f)))
                 .jointType(JointType.ROUND)
                 .startCap(RoundCap())
                 .endCap(RoundCap())
