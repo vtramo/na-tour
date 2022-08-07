@@ -20,12 +20,30 @@
     <string name="facebook_app_id">5367159293399780</string>
     <string name="fb_login_protocol_scheme">fb5367159293399780</string>
     <string name="facebook_client_token">aa1508129fd7442dc307ed975eb35cc1</string>
+
+    <!-- Sign in / Sign up -->
     <string name="enter_your_username">Enter your username</string>
     <string name="sign_in_with_google">Sign in with Google</string>
     <string name="sign_in_with_facebook">Sign in with Facebook</string>
     <string name="not_registered_yet_sign_up_now">Not registered yet? Sign up now!</string>
     <string name="signin">Signin</string>
     <string name="enter_your_password">Enter your password</string>
+    <string name="add_a_route">Add a route</string>
+    <string name="enter_route_name">Enter route name</string>
+    <string name="select_a_level_of_difficulty">Select a level of difficulty</string>
+    <string name="description">Description</string>
+    <string name="select_starting_point_of_the_route">Select starting point of the route</string>
+    <string name="longitude">Longitude</string>
+    <string name="latitude">Latitude</string>
+    <string name="go">GO</string>
+    <string name="confirm">Confirm</string>
+    <string name="how_do_you_want_to_add_a_route">How do you want to add a route?</string>
 
+    <!-- Route Creation -->
+    <string-array name="listDifficulties">
+        <item>A</item>
+        <item>B</item>
+        <item>C</item>
+    </string-array>
 
 </resources>

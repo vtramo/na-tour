@@ -1,4 +1,4 @@
-package com.example.natour.ui.signup.fragments
+package com.example.natour.ui.signup
 
 import android.app.AlertDialog
 import android.os.Bundle
@@ -13,7 +13,6 @@ import androidx.navigation.findNavController
 import com.example.natour.MainActivity
 import com.example.natour.R
 import com.example.natour.databinding.FragmentRegistrationBinding
-import com.example.natour.ui.signup.ConstantRegex
 import com.example.natour.ui.signup.viewmodels.RegistrationViewModel
 
 import com.google.android.material.textfield.TextInputLayout

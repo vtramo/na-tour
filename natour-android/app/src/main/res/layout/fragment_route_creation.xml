@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="routeCreationFragment"
+            type="com.example.natour.ui.route.RouteCreationFragment" />
+    </data>
+
+    <ScrollView
+        android:id="@+id/scroll_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fillViewport="true"
+        android:orientation="vertical"
+        tools:ignore="SpeakableTextPresentCheck">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/default_padding"
+            >
+
+            <!-- Add a route -->
+            <TextView
+                android:id="@+id/add_route_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/add_a_route"
+                android:textSize="28sp"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                />
+
+            <!-- Route name -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/route_name_text_input_layout"
+                style="@style/Widget.Unscramble.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/enter_route_name"
+                app:errorIconDrawable="@drawable/ic_error"
+                android:layout_marginTop="16dp"
+                app:helperTextTextAppearance="@style/TextAppearance.MaterialComponents.Subtitle1">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/route_name_text_input_edit_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="textPersonName|textNoSuggestions"
+                    android:maxLines="1"
+                    tools:ignore="DuplicateClickableBoundsCheck" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- Duration -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="16dp"
+                >
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.Unscramble.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:helperTextTextAppearance="@style/TextAppearance.MaterialComponents.Subtitle1">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:inputType="numberDecimal"
+                        android:maxLines="1"
+                        tools:ignore="DuplicateClickableBoundsCheck" />
+
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.Unscramble.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:helperTextTextAppearance="@style/TextAppearance.MaterialComponents.Subtitle1">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:inputType="numberDecimal"
+                        android:maxLines="1"
+                        tools:ignore="DuplicateClickableBoundsCheck" />
+
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.Unscramble.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:helperTextTextAppearance="@style/TextAppearance.MaterialComponents.Subtitle1">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:inputType="numberDecimal"
+                        android:maxLines="1"
+                        tools:ignore="DuplicateClickableBoundsCheck" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </LinearLayout>
+
+            <!-- Difficulty -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/difficulty_text_input_layout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/select_a_level_of_difficulty"
+                android:layout_marginTop="16dp">
+
+                <AutoCompleteTextView
+                    android:id="@+id/difficulty_auto_complete_text_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="none"
+                    tools:ignore="DuplicateClickableBoundsCheck,LabelFor" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- Description -->
+            <EditText
+                android:id="@+id/edit_text"
+                android:layout_width="match_parent"
+                style="@style/Widget.Unscramble.TextInputLayout.OutlinedBox"
+                android:layout_marginTop="16dp"
+                android:layout_height="150dp"
+                android:inputType="text|textMultiLine"
+                android:gravity="top"
+                android:hint="@string/description"
+                android:autofillHints="" />
+
+            <!-- Confirm Button -->
+            <Button
+                android:id="@+id/confirm_button"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@string/confirm"
+                android:onClick="@{() -> routeCreationFragment.goToRouteTypeCreationFragment()}"
+                />
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</layout>

@@ -10,7 +10,7 @@
         app:showAsAction="ifRoom"/>
 
     <item
-        android:id="@+id/action_plus"
+        android:id="@+id/action_add_route"
         android:icon="@drawable/ic_add"
         android:title=""
         app:showAsAction="ifRoom"/>

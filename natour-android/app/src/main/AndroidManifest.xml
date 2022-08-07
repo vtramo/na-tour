@@ -4,6 +4,8 @@
     package="com.example.natour">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
 
     <application
         android:name=".NaTour"
@@ -37,6 +39,11 @@
             android:configChanges=
                 "keyboard|keyboardHidden|screenLayout|screenSize|orientation"
             android:label="@string/app_name" />
+
+        <!-- Google Maps -->
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyCCgr39_3YU1gO3B0Pcel9lv99nNPodAkg" />
 
         <activity
             android:name="com.facebook.CustomTabActivity"

@@ -1,4 +1,4 @@
-package com.example.natour.ui.signin.fragments
+package com.example.natour.ui.signin
 
 import android.os.Bundle
 import android.view.LayoutInflater
