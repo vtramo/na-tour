@@ -1,4 +1,4 @@
-package com.natour.natour.model;
+package com.natour.natour.model.dto;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Pattern;

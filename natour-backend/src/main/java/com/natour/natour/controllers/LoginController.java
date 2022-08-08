@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.natour.natour.model.AuthenticationResponse;
-import com.natour.natour.model.Credentials;
+import com.natour.natour.model.dto.AuthenticationResponse;
+import com.natour.natour.model.dto.Credentials;
 import com.natour.natour.services.authentication.AuthenticationService;
 
 import io.swagger.v3.oas.annotations.Operation;

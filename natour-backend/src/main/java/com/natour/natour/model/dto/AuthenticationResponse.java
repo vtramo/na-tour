@@ -1,8 +1,9 @@
-package com.natour.natour.model;
+package com.natour.natour.model.dto;
 
 import org.springframework.lang.Nullable;
 
 import com.fasterxml.jackson.annotation.JsonUnwrapped;
+import com.natour.natour.model.Token;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -15,7 +16,7 @@ public class AuthenticationResponse {
 
     @Nullable
     @JsonUnwrapped
-    private ApplicationUser user;
+    private UserDetails user;
 
     @Nullable
     @JsonUnwrapped

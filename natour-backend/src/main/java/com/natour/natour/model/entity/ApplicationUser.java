@@ -1,9 +1,12 @@
-package com.natour.natour.model;
+package com.natour.natour.model.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
+
+import java.util.LinkedList;
+import java.util.List;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -38,4 +41,23 @@ public class ApplicationUser {
     @NonNull
     @JsonIgnore
     private String password;
+
+    @OneToMany(mappedBy="owner")
+    private List<Trail> trails = new LinkedList<>();
+
+    public ApplicationUser(
+        Long id,
+        String username,
+        String firstName,
+        String lastName,
+        String email,
+        String password
+    ) {
+        this.id = id;
+        this.username = username;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.password = password;
+    }
 }
