@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="routeTrackingCreationFragment"
+            type="com.example.natour.ui.route.fragments.RouteTrackingCreationFragment" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/hint_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/choose_a_starting_point"
+            android:textColor="@color/black"
+            android:gravity="center"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            />
+
+
+        <!-- Google Map -->
+        <FrameLayout
+            android:paddingHorizontal="16dp"
+            android:paddingTop="16dp"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            android:layout_weight="2"
+            >
+
+            <fragment
+                android:id="@+id/map"
+                android:name="com.google.android.gms.maps.SupportMapFragment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:cameraTilt="30"
+                app:uiRotateGestures="true"
+                app:uiZoomControls="true"
+                tools:ignore="FragmentTagUsage" />
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:id="@+id/controls_linear_layout"
+                android:layout_width="match_parent"
+                android:gravity="center"
+                android:layout_height="wrap_content">
+
+                    <ImageButton
+                        android:id="@+id/start_position_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:onClick="@{() -> routeTrackingCreationFragment.onStartPositionButtonClick()}"
+                        android:src="@drawable/ic_baseline_room_24"
+                        tools:ignore="ContentDescription,SpeakableTextPresentCheck" />
+
+                    <ImageButton
+                        android:id="@+id/delete_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:onClick="@{() -> routeTrackingCreationFragment.onDeleteButtonClick()}"
+                        android:src="@drawable/ic_baseline_delete_24"
+                        tools:ignore="ContentDescription,SpeakableTextPresentCheck" />
+
+                    <ImageButton
+                        android:id="@+id/undo_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:onClick="@{() -> routeTrackingCreationFragment.onUndoButtonClick()}"
+                        android:src="@drawable/ic_baseline_undo_24"
+                        tools:ignore="ContentDescription,SpeakableTextPresentCheck" />
+
+            </LinearLayout>
+
+        </FrameLayout>
+        <Button
+            android:id="@+id/confirm_button"
+            android:layout_marginHorizontal="16dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/confirm" />
+    </LinearLayout>
+
+
+</layout>

@@ -41,7 +41,7 @@
     </fragment>
     <fragment
         android:id="@+id/routeCreationFragment"
-        android:name="com.example.natour.ui.route.RouteCreationFragment"
+        android:name="com.example.natour.ui.route.fragments.RouteCreationFragment"
         android:label="RouteCreationFragment" >
         <action
             android:id="@+id/action_routeCreationFragment_to_routeTypeCreationFragment"
@@ -49,15 +49,22 @@
     </fragment>
     <fragment
         android:id="@+id/routeTypeCreationFragment"
-        android:name="com.example.natour.ui.route.RouteTypeCreationFragment"
+        android:name="com.example.natour.ui.route.fragments.RouteTypeCreationFragment"
         android:label="fragment_route_type_creation"
         tools:layout="@layout/fragment_route_type_creation" >
         <action
-            android:id="@+id/action_routeTypeCreationFragment_to_routeMapCreationFragment"
-            app:destination="@id/routeMapCreationFragment" />
+            android:id="@+id/action_routeTypeCreationFragment_to_routeDisplayCreationFragment"
+            app:destination="@id/routeDisplayCreationFragment" />
+        <action
+            android:id="@+id/action_routeTypeCreationFragment_to_routeTrackingCreationFragment"
+            app:destination="@id/routeTrackingCreationFragment" />
     </fragment>
     <fragment
-        android:id="@+id/routeMapCreationFragment"
-        android:name="com.example.natour.ui.route.RouteDisplayCreationFragment"
-        android:label="RouteMapCreationFragment" />
+        android:id="@+id/routeDisplayCreationFragment"
+        android:name="com.example.natour.ui.route.fragments.RouteDisplayCreationFragment"
+        android:label="routeDisplayCreationFragment" />
+    <fragment
+        android:id="@+id/routeTrackingCreationFragment"
+        android:name="com.example.natour.ui.route.fragments.RouteTrackingCreationFragment"
+        android:label="RouteTrackingCreationFragment" />
 </navigation>

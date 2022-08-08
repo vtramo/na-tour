@@ -10,7 +10,7 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.route.RouteDisplayCreationFragment">
+        tools:context=".ui.route.fragments.RouteDisplayCreationFragment">
 
         <!-- Google Map -->
         <fragment
@@ -25,6 +25,12 @@
             app:uiRotateGestures="true"
             app:uiZoomControls="true"
             tools:ignore="FragmentTagUsage" />
+
+        <Button
+            android:id="@+id/confirm_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/confirm" />
 
     </FrameLayout>
 </layout>

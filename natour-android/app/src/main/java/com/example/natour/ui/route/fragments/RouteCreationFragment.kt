@@ -1,9 +1,5 @@
-package com.example.natour.ui.route
+package com.example.natour.ui.route.fragments
 
-import android.Manifest
-import android.annotation.SuppressLint
-import android.content.pm.PackageManager
-import android.location.Location
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -11,17 +7,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
-import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.example.natour.R
 import com.example.natour.databinding.FragmentRouteCreationBinding
-import com.google.android.gms.maps.CameraUpdateFactory
-import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.OnMapReadyCallback
-import com.google.android.gms.maps.model.*
+import com.example.natour.ui.route.RouteCreationViewModel
 
 class RouteCreationFragment : Fragment() {
 
@@ -71,52 +63,7 @@ class RouteCreationFragment : Fragment() {
         view?.findNavController()?.navigate(action)
     }
 
-/*    private fun startGoogleMap() {
-        val mapFragment = childFragmentManager
-            .findFragmentById(R.id.map) as SupportMapFragmentWrapper
-
-        with(mapFragment) {
-            getMapAsync(this@RouteCreationFragment)
-            setOnTouchListener {
-                binding.scrollView.requestDisallowInterceptTouchEvent(true)
-            }
-        }
-    }
-
-    override fun onMapReady(googleMap: GoogleMap) {
-        mMap = googleMap
-        enableMyLocation()
-
-        mMap.setOnMapClickListener { point ->
-            setStartPositionMarker(point.latitude, point.longitude)
-        }
-    }
-
-    private fun setStartPositionMarker(lat: Double, lng: Double) {
-        mStartPositionMarker?.remove()
-        mStartPositionMarker = mMap.addMarker(
-            MarkerOptions()
-                .position(LatLng(lat, lng))
-                .title("Starting point of the route")
-                .draggable(true)
-        )
-    }
-
-    @SuppressLint("MissingPermission")
-    private fun enableMyLocation() {
-        if (locationPermissionsAreGranted())
-            mMap.isMyLocationEnabled = true
-    }
-
-    private fun locationPermissionsAreGranted() =
-        ContextCompat.checkSelfPermission(
-            requireContext(),
-            Manifest.permission.ACCESS_FINE_LOCATION
-        ) == PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(
-            requireContext(),
-            Manifest.permission.ACCESS_COARSE_LOCATION
-        ) == PackageManager.PERMISSION_GRANTED
-
+/*
     fun onGoButtonClick() {
         val latString = binding.latitudeTextInputEditText.text.toString()
         val lngString = binding.longitudeTextInputEditText.text.toString()

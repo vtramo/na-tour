@@ -6,7 +6,7 @@
     <data>
         <variable
             name="routeTypeCreationFragment"
-            type="com.example.natour.ui.route.RouteTypeCreationFragment" />
+            type="com.example.natour.ui.route.fragments.RouteTypeCreationFragment" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -43,6 +43,7 @@
                 android:layout_weight="1"
                 android:src="@drawable/maps"
                 app:layout_constraintTop_toBottomOf="@+id/text_view"
+                android:onClick="@{() -> routeTypeCreationFragment.goToRouteTrackingCreationFragment()}"
                 tools:ignore="ContentDescription"
                 />
 

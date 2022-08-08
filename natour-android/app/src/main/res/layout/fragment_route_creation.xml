@@ -6,7 +6,7 @@
     <data>
         <variable
             name="routeCreationFragment"
-            type="com.example.natour.ui.route.RouteCreationFragment" />
+            type="com.example.natour.ui.route.fragments.RouteCreationFragment" />
     </data>
 
     <ScrollView
@@ -49,7 +49,10 @@
                 android:hint="@string/enter_route_name"
                 app:errorIconDrawable="@drawable/ic_error"
                 android:layout_marginTop="16dp"
-                app:helperTextTextAppearance="@style/TextAppearance.MaterialComponents.Subtitle1">
+                app:helperTextTextAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
+                app:helperText="Required"
+                app:helperTextTextColor="@color/red_700"
+                >
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/route_name_text_input_edit_text"
@@ -124,7 +127,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/select_a_level_of_difficulty"
-                android:layout_marginTop="16dp">
+                android:layout_marginTop="16dp"
+                app:helperText="Required"
+                app:helperTextTextColor="@color/red_700"
+                >
 
                 <AutoCompleteTextView
                     android:id="@+id/difficulty_auto_complete_text_view"
