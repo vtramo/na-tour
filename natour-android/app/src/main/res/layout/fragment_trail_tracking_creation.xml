@@ -6,7 +6,7 @@
     <data>
         <variable
             name="routeTrackingCreationFragment"
-            type="com.example.natour.ui.route.fragments.RouteTrackingCreationFragment" />
+            type="com.example.natour.ui.trail.fragments.TrailTrackingCreationFragment" />
     </data>
 
     <LinearLayout

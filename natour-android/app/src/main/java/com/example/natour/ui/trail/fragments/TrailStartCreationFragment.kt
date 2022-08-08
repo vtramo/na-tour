@@ -1,7 +1,6 @@
-package com.example.natour.ui.route.fragments
+package com.example.natour.ui.trail.fragments
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -12,15 +11,15 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.example.natour.R
-import com.example.natour.databinding.FragmentRouteCreationBinding
-import com.example.natour.ui.route.RouteCreationViewModel
+import com.example.natour.databinding.FragmentTrailStartCreationBinding
+import com.example.natour.ui.trail.TrailCreationViewModel
 
-class RouteCreationFragment : Fragment() {
+class TrailStartCreationFragment : Fragment() {
 
-    private var _binding: FragmentRouteCreationBinding? = null
+    private var _binding: FragmentTrailStartCreationBinding? = null
     private val binding get() = _binding!!
 
-    private val mRouteCreationViewModel: RouteCreationViewModel by activityViewModels()
+    private val mTrailCreationViewModel: TrailCreationViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -28,7 +27,7 @@ class RouteCreationFragment : Fragment() {
     ): View {
         _binding = DataBindingUtil.inflate(
             inflater,
-            R.layout.fragment_route_creation,
+            R.layout.fragment_trail_start_creation,
             container,
             false)
         return binding.root
@@ -57,9 +56,9 @@ class RouteCreationFragment : Fragment() {
         )
     }
 
-    fun goToRouteTypeCreationFragment() {
-        val action = RouteCreationFragmentDirections
-            .actionRouteCreationFragmentToRouteTypeCreationFragment()
+    fun goToTrailTypeCreationFragment() {
+        val action = TrailStartCreationFragmentDirections
+            .actionTrailCreationFragmentToTrailTypeCreationFragment()
         view?.findNavController()?.navigate(action)
     }
 

@@ -1,4 +1,4 @@
-package com.example.natour.ui.route.fragments
+package com.example.natour.ui.trail.fragments
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -8,20 +8,20 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
 import com.example.natour.R
-import com.example.natour.databinding.FragmentRouteDisplayCreationBinding
-import com.example.natour.ui.route.RouteCreationViewModel
+import com.example.natour.databinding.FragmentTrailDisplayCreationBinding
+import com.example.natour.ui.trail.TrailCreationViewModel
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.*
 
-class RouteDisplayCreationFragment : Fragment(), OnMapReadyCallback {
+class TrailDisplayCreationFragment : Fragment(), OnMapReadyCallback {
 
-    private var _binding: FragmentRouteDisplayCreationBinding? = null
+    private var _binding: FragmentTrailDisplayCreationBinding? = null
     private val binding get() = _binding!!
 
-    private val mRouteCreationViewModel: RouteCreationViewModel by activityViewModels()
+    private val mTrailCreationViewModel: TrailCreationViewModel by activityViewModels()
     private lateinit var mListOfRoutePoints: List<LatLng>
 
     private lateinit var mMap: GoogleMap
@@ -29,7 +29,7 @@ class RouteDisplayCreationFragment : Fragment(), OnMapReadyCallback {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        mListOfRoutePoints = mRouteCreationViewModel
+        mListOfRoutePoints = mTrailCreationViewModel
                     .listOfRoutePoints
                     .map { LatLng(it.first, it.second) }
     }
@@ -40,7 +40,7 @@ class RouteDisplayCreationFragment : Fragment(), OnMapReadyCallback {
     ): View {
         _binding = DataBindingUtil.inflate(
             inflater,
-            R.layout.fragment_route_display_creation,
+            R.layout.fragment_trail_display_creation,
             container,
             false)
         return binding.root
