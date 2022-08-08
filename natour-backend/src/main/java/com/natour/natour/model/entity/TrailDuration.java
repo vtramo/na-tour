@@ -1,4 +1,4 @@
-package com.natour.natour.model;
+package com.natour.natour.model.entity;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

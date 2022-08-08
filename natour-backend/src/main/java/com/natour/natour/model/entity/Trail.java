@@ -5,7 +5,6 @@ import java.sql.Blob;
 import javax.persistence.*;
 
 import com.natour.natour.model.TrailDifficulty;
-import com.natour.natour.model.TrailDuration;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
