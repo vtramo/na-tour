@@ -24,27 +24,28 @@
                  >
 
                 <ImageButton
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:src="@drawable/send_message_icon"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:src="@drawable/ic_send_message_40"
+                    android:rotation="-40"
                     android:layout_alignParentEnd="true"
                     android:layout_marginRight="20dp"
                     style="@style/Widget.AppCompat.Button.Borderless" />
                 <ImageButton
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:src="@drawable/back_button_icon"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:src="@drawable/ic_back_40"
                     style="@style/Widget.AppCompat.Button.Borderless"
                     />
 
                 <ImageButton
                     style="@style/Widget.AppCompat.Button.Borderless"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
                     android:layout_alignParentStart="true"
                     android:layout_alignParentEnd="true"
                     android:layout_marginRight="20dp"
-                    android:src="@drawable/download_icon" />
+                    android:src="@drawable/ic_file_download_black_40" />
 
             </RelativeLayout>
 
@@ -172,7 +173,7 @@
             android:text="Description..."
             android:layout_marginLeft="10dp"
             app:layout_constraintStart_toEndOf="@id/detailed_trail_description_label"
-            app:layout_constraintTop_toTopOf="@id/detailed_trail_description_label"
+            app:layout_constraintTop_toTopOf="@id/detailed_trail_description_label" />
         <TextView
             android:id="@+id/detailed_trail_map_label"
             android:layout_width="wrap_content"
@@ -182,7 +183,7 @@
             android:fontFamily="@font/montserrat_bold"
             android:layout_marginTop="30dp"
             app:layout_constraintTop_toBottomOf="@id/detailed_trail_description_label"
-            app:layout_constraintStart_toStartOf="@id/detailed_trail_description_label"
+            app:layout_constraintStart_toStartOf="@id/detailed_trail_description_label" />
 
 
 
