@@ -1,6 +1,6 @@
 package com.natour.natour.services.user;
 
-import com.natour.natour.model.ApplicationUser;
+import com.natour.natour.model.entity.ApplicationUser;
 
 public interface ApplicationUserService {
     ApplicationUser save(ApplicationUser user);

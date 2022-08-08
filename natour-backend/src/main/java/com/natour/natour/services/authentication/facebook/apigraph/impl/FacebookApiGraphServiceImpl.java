@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
-import com.natour.natour.model.ApplicationUser;
+import com.natour.natour.model.entity.ApplicationUser;
 import com.natour.natour.services.authentication.facebook.apigraph.FacebookApiGraphService;
 import com.natour.natour.services.authentication.facebook.objects.FacebookUser;
 import com.natour.natour.services.authentication.facebook.objects.FacebookUserId;

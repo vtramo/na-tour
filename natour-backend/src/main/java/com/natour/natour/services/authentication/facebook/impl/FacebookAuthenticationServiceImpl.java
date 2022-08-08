@@ -3,7 +3,7 @@ package com.natour.natour.services.authentication.facebook.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.natour.natour.model.ApplicationUser;
+import com.natour.natour.model.entity.ApplicationUser;
 import com.natour.natour.services.authentication.facebook.FacebookAuthenticationService;
 import com.natour.natour.services.authentication.facebook.apigraph.FacebookApiGraphService;
 import com.natour.natour.services.user.ApplicationUserService;
