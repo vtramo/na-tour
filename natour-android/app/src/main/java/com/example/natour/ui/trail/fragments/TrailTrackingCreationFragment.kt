@@ -1,4 +1,4 @@
-package com.example.natour.ui.route.fragments
+package com.example.natour.ui.trail.fragments
 
 import android.Manifest
 import android.annotation.SuppressLint
@@ -12,20 +12,20 @@ import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
 import com.example.natour.R
-import com.example.natour.databinding.FragmentRouteTrackingCreationBinding
-import com.example.natour.ui.route.RouteCreationViewModel
+import com.example.natour.databinding.FragmentTrailTrackingCreationBinding
+import com.example.natour.ui.trail.TrailCreationViewModel
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.*
 
-class RouteTrackingCreationFragment : Fragment(), OnMapReadyCallback {
+class TrailTrackingCreationFragment : Fragment(), OnMapReadyCallback {
 
-    private var _binding: FragmentRouteTrackingCreationBinding? = null
+    private var _binding: FragmentTrailTrackingCreationBinding? = null
     private val binding get() = _binding!!
 
-    private val mRouteCreationViewModel: RouteCreationViewModel by activityViewModels()
+    private val mTrailCreationViewModel: TrailCreationViewModel by activityViewModels()
     private lateinit var mPolyline: Polyline
     private lateinit var mStartingPositionMarker: Marker
 
@@ -37,7 +37,7 @@ class RouteTrackingCreationFragment : Fragment(), OnMapReadyCallback {
     ): View {
         _binding = DataBindingUtil.inflate(
             inflater,
-            R.layout.fragment_route_tracking_creation,
+            R.layout.fragment_trail_tracking_creation,
             container,
             false
         )
@@ -111,7 +111,7 @@ class RouteTrackingCreationFragment : Fragment(), OnMapReadyCallback {
 
     fun onConfirmButtonClick() {
         assert(!mPolyline.hasZeroPoints())
-        mRouteCreationViewModel.listOfRoutePoints =
+        mTrailCreationViewModel.listOfRoutePoints =
             mPolyline.points.map { Pair(it.latitude, it.longitude) }
     }
 

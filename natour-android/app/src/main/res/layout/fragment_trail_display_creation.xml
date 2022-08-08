@@ -7,10 +7,14 @@
 
     </data>
 
-    <FrameLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.route.fragments.RouteDisplayCreationFragment">
+        android:orientation="vertical"
+        tools:context=".ui.trail.fragments.TrailDisplayCreationFragment"
+        android:paddingHorizontal="16dp"
+        android:paddingTop="16dp"
+        >
 
         <!-- Google Map -->
         <fragment
@@ -20,7 +24,8 @@
             android:id="@+id/map"
             android:name="com.google.android.gms.maps.SupportMapFragment"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
             app:cameraTilt="30"
             app:uiRotateGestures="true"
             app:uiZoomControls="true"
@@ -32,5 +37,5 @@
             android:layout_height="wrap_content"
             android:text="@string/confirm" />
 
-    </FrameLayout>
+    </LinearLayout>
 </layout>

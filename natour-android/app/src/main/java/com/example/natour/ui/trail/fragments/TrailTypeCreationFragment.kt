@@ -1,4 +1,4 @@
-package com.example.natour.ui.route.fragments
+package com.example.natour.ui.trail.fragments
 
 import android.app.Activity
 import android.app.AlertDialog
@@ -15,20 +15,20 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import com.example.natour.R
-import com.example.natour.databinding.FragmentRouteTypeCreationBinding
-import com.example.natour.ui.route.RouteCreationViewModel
-import com.example.natour.ui.route.util.RouteGPXParser
+import com.example.natour.databinding.FragmentTrailTypeCreationBinding
+import com.example.natour.ui.trail.TrailCreationViewModel
+import com.example.natour.ui.trail.util.RouteGPXParser
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class RouteTypeCreationFragment : Fragment() {
+class TrailTypeCreationFragment : Fragment() {
 
-    private var _binding: FragmentRouteTypeCreationBinding? = null
+    private var _binding: FragmentTrailTypeCreationBinding? = null
     private val binding get() = _binding!!
 
-    private val mRouteCreationViewModel: RouteCreationViewModel by activityViewModels()
+    private val mTrailCreationViewModel: TrailCreationViewModel by activityViewModels()
 
     @Inject
     lateinit var mRouteGPXParser: RouteGPXParser
@@ -39,7 +39,7 @@ class RouteTypeCreationFragment : Fragment() {
     ): View {
         _binding = DataBindingUtil.inflate(
             inflater,
-            R.layout.fragment_route_type_creation,
+            R.layout.fragment_trail_type_creation,
             container,
             false)
         return binding.root
@@ -59,15 +59,15 @@ class RouteTypeCreationFragment : Fragment() {
         getGpxUriLauncher.launch(intent)
     }
 
-    fun goToRouteTrackingCreationFragment() {
-        val action = RouteTypeCreationFragmentDirections
-            .actionRouteTypeCreationFragmentToRouteTrackingCreationFragment()
+    fun goToTrailTrackingCreationFragment() {
+        val action = TrailTypeCreationFragmentDirections
+            .actionTrailTypeCreationFragmentToTrailTrackingCreationFragment()
         view?.findNavController()?.navigate(action)
     }
 
-    private fun goToRouteDisplayCreationFragment() {
-        val action = RouteTypeCreationFragmentDirections
-            .actionRouteTypeCreationFragmentToRouteDisplayCreationFragment()
+    private fun goToTrailDisplayCreationFragment() {
+        val action = TrailTypeCreationFragmentDirections
+            .actionTrailTypeCreationFragmentToTrailDisplayCreationFragment()
         view?.findNavController()?.navigate(action)
     }
 
@@ -79,24 +79,20 @@ class RouteTypeCreationFragment : Fragment() {
                 lifecycleScope.launch {
                     try {
                         val route = mRouteGPXParser.parse(gpxFileUri)
-                        mRouteCreationViewModel.listOfRoutePoints = route.listOfRoutePoints
-                        goToRouteDisplayCreationFragment()
+                        mTrailCreationViewModel.listOfRoutePoints = route.listOfRoutePoints
+                        goToTrailDisplayCreationFragment()
                     } catch (e: Exception) {
-                        showAlertDialog(
-                            title = "Error",
-                            message = "A problem occurred in loading the gpx file"
-                        )
-                        e.printStackTrace()
-                        Log.e("ERROR ROUTE GPX PARSER", e.message!!)
+                        showErrorGPXAlertDialog()
+                        Log.e("RouteGPXParser", e.message!!)
                     }
                 }
             }
         }
 
-    private fun showAlertDialog(title: String, message: String = "") {
+    private fun showErrorGPXAlertDialog() {
         AlertDialog.Builder(requireContext())
-            .setTitle(title)
-            .setMessage(message)
+            .setTitle("Error")
+            .setMessage("A problem occurred in loading the gpx file")
             .setPositiveButton("Okay") { _, _ -> }
             .show()
     }

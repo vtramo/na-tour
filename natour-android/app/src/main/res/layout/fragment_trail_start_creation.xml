@@ -6,7 +6,7 @@
     <data>
         <variable
             name="routeCreationFragment"
-            type="com.example.natour.ui.route.fragments.RouteCreationFragment" />
+            type="com.example.natour.ui.trail.fragments.TrailStartCreationFragment" />
     </data>
 
     <ScrollView
@@ -158,7 +158,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:text="@string/confirm"
-                android:onClick="@{() -> routeCreationFragment.goToRouteTypeCreationFragment()}"
+                android:onClick="@{() -> routeCreationFragment.goToTrailTypeCreationFragment()}"
                 />
 
         </LinearLayout>
