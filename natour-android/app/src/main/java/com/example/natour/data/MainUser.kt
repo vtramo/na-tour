@@ -5,7 +5,7 @@ import com.example.natour.data.model.AuthenticationResponse
 import java.lang.IllegalArgumentException
 
 object MainUser {
-    private data class Details(
+    data class Details(
         var id:         Long   = Long.MIN_VALUE,
         var username:   String = "",
         var firstName:  String = "",
@@ -13,12 +13,14 @@ object MainUser {
         var email:      String = ""
     )
 
-    private data class Token(
+    data class Token(
         var accessToken:    String = "",
         var refreshToken:   String = ""
     )
 
-    private var details = Details()
+    private var _details = Details()
+    val details     get() = _details
+
     val id          get() = details.id
     val username    get() = details.username
     val firstName   get() = details.firstName
@@ -45,7 +47,7 @@ object MainUser {
     }
 
     fun clear() {
-        details = Details()
+        _details = Details()
         token   = Token()
     }
 
