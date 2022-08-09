@@ -42,7 +42,7 @@ public class ApplicationUser {
     @JsonIgnore
     private String password;
 
-    @OneToMany(mappedBy="owner")
+    @OneToMany(mappedBy="owner", cascade=CascadeType.ALL)
     private List<Trail> trails = new LinkedList<>();
 
     public ApplicationUser(
@@ -59,5 +59,9 @@ public class ApplicationUser {
         this.lastName = lastName;
         this.email = email;
         this.password = password;
+    }
+
+    public void addTrail(@NonNull Trail trail) {
+        trails.add(trail);
     }
 }
