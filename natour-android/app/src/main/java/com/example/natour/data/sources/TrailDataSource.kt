@@ -1,15 +1,16 @@
 package com.example.natour.data.sources
 
-import com.example.natour.R
-import com.example.natour.data.model.Trail
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 
-class Datasource {
-
-    fun loadTrails(): List<Trail>{
-        return listOf<Trail>(
-            Trail("Sentiero degli Dei","Giovanni Aiello", R.drawable.trail_test_image,"Italy, Europe"),
-            Trail("Sentiero degli Dei","Vincenzo Tramo", R.drawable.trail_test_image,"Italy, Europe"),
-            Trail("Sentiero degli Dei","Vincenzo Tramo", R.drawable.trail_test_image,"Italy, Europe"))
-    }
-
+interface TrailDataSource {
+    suspend fun save(
+        idOwner: RequestBody,
+        trailName: RequestBody,
+        trailDifficulty: RequestBody,
+        trailDuration: RequestBody,
+        trailDescription: RequestBody,
+        routePoints: RequestBody,
+        image: MultipartBody.Part
+    ): Boolean
 }
