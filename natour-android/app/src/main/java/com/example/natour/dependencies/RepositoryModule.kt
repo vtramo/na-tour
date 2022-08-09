@@ -1,12 +1,9 @@
 package com.example.natour.dependencies
 
-import com.example.natour.data.sources.MainUserDataSource
-import com.example.natour.data.sources.UserDataSource
 import com.example.natour.data.MainUser
 import com.example.natour.data.repositories.*
 import com.example.natour.data.repositories.impl.*
-import com.example.natour.data.sources.LoginDataSource
-import com.example.natour.data.sources.RegistrationDataSource
+import com.example.natour.data.sources.*
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -51,4 +48,10 @@ object RepositoryModule {
     fun provideUserRepository(
         userDataSource: UserDataSource
     ): UserRepository = DefaultUserRepository(userDataSource)
+
+    @Provides
+    @Singleton
+    fun provideTrailRepository(
+        trailDataSource: TrailDataSource
+    ): TrailRepository = DefaultTrailRepository(trailDataSource)
 }

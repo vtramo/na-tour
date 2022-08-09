@@ -4,6 +4,9 @@ pluginManagement {
         google()
         mavenCentral()
     }
+
+
+
 }
 
 dependencyResolutionManagement {
