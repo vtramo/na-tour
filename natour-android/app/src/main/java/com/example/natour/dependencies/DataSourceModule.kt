@@ -1,16 +1,11 @@
 package com.example.natour.dependencies
 
 import android.content.Context
-import com.example.natour.data.sources.LoginDataSource
-import com.example.natour.data.sources.MainUserDataSource
-import com.example.natour.data.sources.RegistrationDataSource
-import com.example.natour.data.sources.UserDataSource
-import com.example.natour.data.sources.impl.LoginRemoteDataSource
-import com.example.natour.data.sources.impl.MainUserLocalDataSource
-import com.example.natour.data.sources.impl.RegistrationRemoteDataSource
-import com.example.natour.data.sources.impl.UserRemoteDataSource
+import com.example.natour.data.sources.*
+import com.example.natour.data.sources.impl.*
 import com.example.natour.data.sources.network.LoginApiService
 import com.example.natour.data.sources.network.RegistrationApiService
+import com.example.natour.data.sources.network.TrailApiService
 import com.example.natour.data.sources.network.UserApiService
 import dagger.Module
 import dagger.Provides
@@ -44,4 +39,10 @@ object DataSourceModule {
     fun provideRegistrationDataSource(
         registrationApiService: RegistrationApiService
     ): RegistrationDataSource = RegistrationRemoteDataSource(registrationApiService)
+
+    @Provides
+    @Singleton
+    fun provideTrailDataSource(
+        trailApiService: TrailApiService
+    ): TrailDataSource = TrailRemoteDataSource(trailApiService)
 }
