@@ -17,7 +17,7 @@ public class SecurityConfiguration {
         http
             .csrf().disable()
             .authorizeRequests()
-            .antMatchers("/login", "/login/*", "/swagger-ui/**", "/v3/**", "/registration", "/registration/**", "/user", "/user/**").permitAll()
+            .antMatchers("/login", "/login/*", "/swagger-ui/**", "/v3/**", "/registration", "/registration/**", "/user", "/user/**", "/trail", "/trail/*", "/actuator/*").permitAll()
             .anyRequest().authenticated()
             .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             .and().oauth2ResourceServer().jwt();
