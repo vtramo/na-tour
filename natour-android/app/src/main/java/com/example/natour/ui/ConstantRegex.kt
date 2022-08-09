@@ -1,4 +1,4 @@
-package com.example.natour.ui.signup
+package com.example.natour.ui
 
 import android.util.Patterns
 

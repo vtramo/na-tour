@@ -44,12 +44,22 @@
     <!-- Home -->
     <string name="explore_new_trails">Explore new trails</string>
     <string name="card_cover">Card Cover</string>
+    <string name="select_a_duration">Select a duration</string>
+    <string name="months">Months</string>
+    <string name="days">Days</string>
+    <string name="hours">Hours</string>
+    <string name="minutes">Minutes</string>
+    <string name="add_a_trail">Add a trail</string>
+    <string name="enter_trail_name">Enter trail name</string>
+    <string name="upload_a_photo">Upload a photo</string>
 
     <!-- Route Creation -->
     <string-array name="listDifficulties">
-        <item>A</item>
-        <item>B</item>
-        <item>C</item>
+        <item>Easiest</item>
+        <item>Easy</item>
+        <item>More difficult</item>
+        <item>Very difficult</item>
+        <item>Extremely difficult</item>
     </string-array>
 
 </resources>

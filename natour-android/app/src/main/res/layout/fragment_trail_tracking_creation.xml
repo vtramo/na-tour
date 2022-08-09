@@ -80,9 +80,11 @@
             </LinearLayout>
 
         </FrameLayout>
+
         <Button
             android:id="@+id/confirm_button"
             android:layout_marginHorizontal="16dp"
+            android:onClick="@{() -> routeTrackingCreationFragment.onConfirmButtonClick()}"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/confirm" />
