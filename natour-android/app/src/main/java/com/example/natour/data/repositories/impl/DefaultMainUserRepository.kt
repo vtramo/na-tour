@@ -31,6 +31,8 @@ class DefaultMainUserRepository(
         mainUserDataSource.clear()
     }
 
+    override fun getDetails(): MainUser.Details = mainUserObject.details
+
     override fun load() = flow {
         if (mainUserDataSource.isAlreadyLoggedIn()) {
             val authentication = mainUserDataSource.load()
