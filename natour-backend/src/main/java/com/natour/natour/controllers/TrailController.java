@@ -39,7 +39,8 @@ public class TrailController {
     private TrailService trailService;
 
     @PostMapping(
-        consumes = {"multipart/form-data"}
+        consumes = {MediaType.MULTIPART_FORM_DATA_VALUE},
+        produces = {MediaType.APPLICATION_JSON_VALUE}
     )
     @ResponseStatus(HttpStatus.CREATED)
     @Operation(summary = "Save the provided trail in the NaTour application and " +
@@ -68,7 +69,8 @@ public class TrailController {
 
     @PostMapping(
         path = "/review",
-        consumes = {MediaType.APPLICATION_JSON_VALUE}
+        consumes = {MediaType.APPLICATION_JSON_VALUE},
+        produces = {MediaType.APPLICATION_JSON_VALUE}
     )
     @ResponseStatus(HttpStatus.OK)
     @Operation(summary = "Add the provided trail review to the provided trail and " +
@@ -79,7 +81,8 @@ public class TrailController {
 
     @PostMapping(
         path = "/photo",
-        consumes = {"multipart/form-data"}
+        consumes = {MediaType.MULTIPART_FORM_DATA_VALUE},
+        produces = {MediaType.APPLICATION_JSON_VALUE}
     )
     @ResponseStatus(HttpStatus.OK)
     @Operation(summary = "Add the provided trail photo to the provided trail and " +
