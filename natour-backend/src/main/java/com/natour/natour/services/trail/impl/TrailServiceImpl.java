@@ -14,11 +14,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.natour.natour.model.TrailReviewStars;
 import com.natour.natour.model.dto.SomeSortOfTrail;
+import com.natour.natour.model.dto.SomeSortOfTrailReview;
 import com.natour.natour.model.entity.ApplicationUser;
 import com.natour.natour.model.entity.RoutePoint;
 import com.natour.natour.model.entity.Trail;
 import com.natour.natour.model.entity.TrailDuration;
+import com.natour.natour.model.entity.TrailReview;
 import com.natour.natour.repositories.TrailRepository;
 import com.natour.natour.repositories.ApplicationUserRepository;
 import com.natour.natour.services.trail.TrailService;
@@ -37,7 +40,11 @@ public class TrailServiceImpl implements TrailService {
 
     @Override
     public boolean saveTrail(SomeSortOfTrail someSortOfTrail) {
-        final ApplicationUser trailOwner = findTrailOwner(someSortOfTrail.getIdOwner());
+        final ApplicationUser trailOwner = 
+            findOwner(
+                someSortOfTrail.getIdOwner(), 
+                "Invalid user ID (trailOwner)"
+            );
         final Blob trailBlobImage = createBlobImage(someSortOfTrail.getImage());
 
         Trail trail = createTrail(someSortOfTrail, trailBlobImage, trailOwner);
@@ -78,11 +85,11 @@ public class TrailServiceImpl implements TrailService {
         }
     }
 
-    private ApplicationUser findTrailOwner(Long id) {
+    private ApplicationUser findOwner(Long id, String exceptionMessage) {
         Optional<ApplicationUser> owner = applicationUserRepository.findById(id);
         if (owner.isEmpty()) {
-            log.warning("The owner of this trail doesn't exist");
-            throw new RuntimeException("Trail owner doesn't exist");
+            log.warning(exceptionMessage);
+            throw new RuntimeException(exceptionMessage);
         }
         return owner.get();
     }
@@ -122,6 +129,45 @@ public class TrailServiceImpl implements TrailService {
         }
         log.info("null");
         return null;
+    }
+
+    @Override
+    public boolean addReview(SomeSortOfTrailReview review) {
+        final ApplicationUser owner = 
+            findOwner(
+                review.getIdOwner(), 
+                "Invalid user ID (reviewOwner)"
+            );
+        final Trail trail = 
+            findTrail(
+                review.getIdTrail(),
+                "Invalid trail ID (reviewOwner)"
+            );
+
+
+        final TrailReview trailReview = new TrailReview();
+        trailReview.setStars(review.getStars());
+        trailReview.setDescription(review.getDescription());
+        owner.addTrailReview(trailReview);
+        trail.addReview(trailReview);
+        trailReview.setOwner(owner);
+        trailReview.setTrail(trail);
+        
+        trailRepository.save(trail);
+        applicationUserRepository.save(owner);
+
+        log.info("A trail review has been successfully created: " 
+                    + trailReview.getStars());
+        return true;
+    }
+
+    private Trail findTrail(Long id, String exceptionMessage) {
+        Optional<Trail> trail = trailRepository.findById(id);
+        if (trail.isEmpty()) {
+            log.warning(exceptionMessage);
+            throw new RuntimeException(exceptionMessage);
+        }
+        return trail.get();
     }
     
 }
