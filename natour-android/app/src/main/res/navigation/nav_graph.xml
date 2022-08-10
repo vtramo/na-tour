@@ -67,4 +67,7 @@
         android:id="@+id/trailTrackingCreationFragment"
         android:name="com.example.natour.ui.trail.fragments.TrailTrackingCreationFragment"
         android:label="TrailTrackingCreationFragment" />
+    <action
+        android:id="@+id/goToHomeFragment"
+        app:destination="@id/homeFragment" />
 </navigation>

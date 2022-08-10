@@ -12,6 +12,7 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.findNavController
 import com.example.natour.R
 import com.example.natour.data.model.RoutePoint
 import com.example.natour.databinding.FragmentTrailTrackingCreationBinding
@@ -121,7 +122,7 @@ class TrailTrackingCreationFragment : Fragment(), OnMapReadyCallback {
             hasBeenCreated.observe(viewLifecycleOwner) { hasBeenCreated ->
                 if (hasBeenCreated) {
                     showTrailSuccessfullyCreatedSnackbar()
-                    // TODO: GO HOME
+                    goToHomeFragment()
                 } else {
                     showFailTrailCreationAlertDialog()
                     binding.confirmButton.isClickable = true
@@ -130,6 +131,11 @@ class TrailTrackingCreationFragment : Fragment(), OnMapReadyCallback {
             }
             saveTrail()
         }
+    }
+
+    private fun goToHomeFragment() {
+        val action = TrailTrackingCreationFragmentDirections.goToHomeFragment()
+        view?.findNavController()?.navigate(action)
     }
 
     private fun showTrailSuccessfullyCreatedSnackbar() {
