@@ -1,6 +1,7 @@
 package com.natour.natour.model.entity;
 
 import java.sql.Blob;
+import java.util.LinkedList;
 import java.util.List;
 
 import javax.persistence.*;
@@ -36,9 +37,32 @@ public class Trail {
     @OneToMany(mappedBy="trail", cascade=CascadeType.ALL)
     private List<RoutePoint> routePoints;
 
+    @OneToMany(mappedBy="trail", cascade=CascadeType.ALL)
+    private List<TrailReview> trailReviews = new LinkedList<>();
+
     @OneToOne(cascade=CascadeType.ALL)
     private TrailDuration duration;
 
     @ManyToOne(cascade=CascadeType.ALL)
     private ApplicationUser owner;
+
+    public Trail(
+        Long id,
+        String name,
+        Blob image,
+        String description,
+        TrailDifficulty difficulty,
+        List<RoutePoint> routePoints,
+        TrailDuration duration,
+        ApplicationUser owner
+    ) {
+        this.id = id;
+        this.name = name;
+        this.image = image;
+        this.description = description;
+        this.difficulty = difficulty;
+        this.routePoints = routePoints;
+        this.duration = duration;
+        this.owner = owner;
+    }
 }
