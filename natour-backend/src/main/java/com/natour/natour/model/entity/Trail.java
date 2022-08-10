@@ -40,6 +40,9 @@ public class Trail {
     @OneToMany(mappedBy="trail", cascade=CascadeType.ALL)
     private List<TrailReview> trailReviews = new LinkedList<>();
 
+    @OneToMany(mappedBy="trail", cascade=CascadeType.ALL)
+    private List<TrailPhoto> trailPhotos = new LinkedList<>();
+
     @OneToOne(cascade=CascadeType.ALL)
     private TrailDuration duration;
 
@@ -64,5 +67,13 @@ public class Trail {
         this.routePoints = routePoints;
         this.duration = duration;
         this.owner = owner;
+    }
+
+    public void addReview(TrailReview review) {
+        trailReviews.add(review);
+    }
+
+    public void addPhoto(TrailPhoto photo) {
+        trailPhotos.add(photo);
     }
 }
