@@ -9,10 +9,8 @@ import java.util.Optional;
 
 import javax.transaction.Transactional;
 
-import org.hibernate.engine.jdbc.BlobProxy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.natour.natour.model.dto.SomeSortOfTrail;
 import com.natour.natour.model.dto.SomeSortOfTrailPhoto;
@@ -28,6 +26,8 @@ import com.natour.natour.model.entity.TrailReview;
 import com.natour.natour.repositories.TrailRepository;
 import com.natour.natour.repositories.ApplicationUserRepository;
 import com.natour.natour.services.trail.TrailService;
+import com.natour.natour.util.BlobUtils;
+import com.natour.natour.util.EntityUtils;
 
 import lombok.extern.java.Log;
 
@@ -42,11 +42,15 @@ public class TrailServiceImpl implements TrailService {
 
     @Override
     public boolean saveTrail(final SomeSortOfTrail trailDto) {
-        final ApplicationUser trailOwner = findOwner(
+        final ApplicationUser trailOwner = EntityUtils.findEntityById(
+            applicationUserRepository, 
             trailDto.getIdOwner(), 
             "Invalid user ID (trailOwner)"
         );
-        final Blob trailBlobImage = createBlobImage(trailDto.getImage());
+        final Blob trailBlobImage = BlobUtils.createBlobFromMultipartFile(
+            trailDto.getImage(), 
+            "image"
+        );
 
         final Trail trail = createTrail(trailDto, trailBlobImage, trailOwner);
         trailOwner.addTrail(trail);
@@ -56,16 +60,6 @@ public class TrailServiceImpl implements TrailService {
 
         log.info("A trail has been successfully created: " + trail.getName());
         return true;
-    }
-
-    private ApplicationUser findOwner(Long id, String exceptionMessage) {
-        final Optional<ApplicationUser> owner = 
-            applicationUserRepository.findById(id);
-        if (owner.isEmpty()) {
-            log.warning(exceptionMessage);
-            throw new RuntimeException(exceptionMessage);
-        }
-        return owner.get();
     }
 
     private Trail createTrail(
@@ -105,18 +99,6 @@ public class TrailServiceImpl implements TrailService {
         );
     }
 
-    private Blob createBlobImage(final MultipartFile image) {
-        if (image.getContentType().matches("image"))
-            throw new IllegalArgumentException("The content type must be a image!");
-
-        try {
-            return BlobProxy.generateProxy(image.getBytes());
-        } catch (IOException e) {
-            log.warning("Error in creating the blob image");
-            throw new RuntimeException();
-        }
-    }
-
     // TEST METHOD !!!
     @Override
     @Transactional
@@ -139,11 +121,13 @@ public class TrailServiceImpl implements TrailService {
 
     @Override
     public boolean addReview(final SomeSortOfTrailReview trailReviewDto) {
-        final ApplicationUser owner = findOwner(
+        final ApplicationUser owner = EntityUtils.findEntityById(
+            applicationUserRepository,
             trailReviewDto.getIdOwner(), 
             "Invalid user ID (reviewOwner)"
         );
-        final Trail trail = findTrail(
+        final Trail trail = EntityUtils.findEntityById(
+            trailRepository,
             trailReviewDto.getIdTrail(),
             "Invalid trail ID (review)"
         );
@@ -164,24 +148,15 @@ public class TrailServiceImpl implements TrailService {
         return true;
     }
 
-    private Trail findTrail(Long id, String exceptionMessage) {
-        final Optional<Trail> trail = trailRepository.findById(id);
-
-        if (trail.isEmpty()) {
-            log.warning(exceptionMessage);
-            throw new RuntimeException(exceptionMessage);
-        }
-
-        return trail.get();
-    }
-
     @Override
     public boolean addPhoto(final SomeSortOfTrailPhoto trailPhotoDto) {
-        final ApplicationUser owner = findOwner(
+        final ApplicationUser owner = EntityUtils.findEntityById(
+            applicationUserRepository,
             trailPhotoDto.getIdOwner(), 
             "Invalid user ID (photoOwner)"
         );
-        final Trail trail = findTrail(
+        final Trail trail = EntityUtils.findEntityById(
+            trailRepository,
             trailPhotoDto.getIdTrail(),
             "Invalid trail ID (photo)"
         );
@@ -203,7 +178,10 @@ public class TrailServiceImpl implements TrailService {
     private TrailPhoto createTrailPhoto(final SomeSortOfTrailPhoto photoDto) {
         final TrailPhoto trailPhoto = new TrailPhoto();
 
-        final Blob trailBlobImage = createBlobImage(photoDto.getImage());
+        final Blob trailBlobImage = BlobUtils.createBlobFromMultipartFile(
+            photoDto.getImage(),
+            "image"
+        );
         trailPhoto.setImage(trailBlobImage);
 
         final Position position = new Position();
