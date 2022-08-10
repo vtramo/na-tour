@@ -45,6 +45,9 @@ public class ApplicationUser {
     @OneToMany(mappedBy="owner", cascade=CascadeType.ALL)
     private List<Trail> trails = new LinkedList<>();
 
+    @OneToMany(mappedBy="owner", cascade=CascadeType.ALL)
+    private List<TrailReview> trailReviews = new LinkedList<>();
+
     public ApplicationUser(
         Long id,
         String username,
@@ -63,5 +66,9 @@ public class ApplicationUser {
 
     public void addTrail(@NonNull Trail trail) {
         trails.add(trail);
+    }
+
+    public void addReview(TrailReview review) {
+        trailReviews.add(review);
     }
 }
