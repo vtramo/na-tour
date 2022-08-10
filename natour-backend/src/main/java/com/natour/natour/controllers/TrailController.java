@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
@@ -15,10 +16,12 @@ import org.springframework.web.multipart.MultipartFile;
 import com.natour.natour.model.dto.Duration;
 import com.natour.natour.model.dto.SomeSortOfRoutePoint;
 import com.natour.natour.model.dto.SomeSortOfTrail;
+import com.natour.natour.model.dto.SomeSortOfTrailReview;
 import com.natour.natour.services.trail.TrailService;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
 import com.natour.natour.model.TrailDifficulty;
+import com.natour.natour.model.TrailReviewStars;
 
 @RestController
 @RequestMapping("/trail")
@@ -62,6 +65,12 @@ public class TrailController {
         return trailService.saveTrail(someSortOfTrail);
     }
 
+    @PostMapping(value = "/review")
+    public boolean addReview(@RequestBody SomeSortOfTrailReview review) {
+        return trailService.addReview(review);
+    }
+
+    // TEST END-POINT
     @GetMapping(
         produces = MediaType.IMAGE_PNG_VALUE
     )
