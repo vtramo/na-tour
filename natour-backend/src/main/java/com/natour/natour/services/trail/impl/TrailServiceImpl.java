@@ -41,14 +41,14 @@ public class TrailServiceImpl implements TrailService {
     private ApplicationUserRepository applicationUserRepository;
 
     @Override
-    public boolean saveTrail(SomeSortOfTrail someSortOfTrail) {
+    public boolean saveTrail(final SomeSortOfTrail trailDto) {
         final ApplicationUser trailOwner = findOwner(
-            someSortOfTrail.getIdOwner(), 
+            trailDto.getIdOwner(), 
             "Invalid user ID (trailOwner)"
         );
-        final Blob trailBlobImage = createBlobImage(someSortOfTrail.getImage());
+        final Blob trailBlobImage = createBlobImage(trailDto.getImage());
 
-        final Trail trail = createTrail(someSortOfTrail, trailBlobImage, trailOwner);
+        final Trail trail = createTrail(trailDto, trailBlobImage, trailOwner);
         trailOwner.addTrail(trail);
 
         trailRepository.save(trail);
@@ -69,30 +69,30 @@ public class TrailServiceImpl implements TrailService {
     }
 
     private Trail createTrail(
-        SomeSortOfTrail someSortOfTrail, 
-        Blob trailBlobImage, 
-        ApplicationUser trailOwner
+        final SomeSortOfTrail trailDto, 
+        final Blob trailBlobImage, 
+        final ApplicationUser trailOwner
     ) {
         final Trail trail = new Trail(
             null,
-            someSortOfTrail.getName(),
+            trailDto.getName(),
             trailBlobImage,
-            someSortOfTrail.getDescription(),
-            someSortOfTrail.getDifficulty(),
+            trailDto.getDescription(),
+            trailDto.getDifficulty(),
             new LinkedList<RoutePoint>(),
-            new TrailDuration(someSortOfTrail.getTrailDuration()),
+            new TrailDuration(trailDto.getTrailDuration()),
             trailOwner
         );
-        addRoutePointsToTrail(trail, someSortOfTrail);
+        addRoutePointsToTrail(trail, trailDto);
         return trail;
     }
 
     private void addRoutePointsToTrail(
-        Trail trail, 
-        SomeSortOfTrail someSortOfTrail
+        final Trail trail, 
+        final SomeSortOfTrail trailDto
     ) {
         final List<RoutePoint> routePoints = trail.getRoutePoints();
-        someSortOfTrail.getRoutePoints().stream().forEach(
+        trailDto.getRoutePoints().stream().forEach(
             point -> {
                 routePoints.add(
                     new RoutePoint(
@@ -105,7 +105,7 @@ public class TrailServiceImpl implements TrailService {
         );
     }
 
-    private Blob createBlobImage(MultipartFile image) {
+    private Blob createBlobImage(final MultipartFile image) {
         if (image.getContentType().matches("image"))
             throw new IllegalArgumentException("The content type must be a image!");
 
@@ -138,19 +138,19 @@ public class TrailServiceImpl implements TrailService {
     }
 
     @Override
-    public boolean addReview(SomeSortOfTrailReview review) {
+    public boolean addReview(final SomeSortOfTrailReview trailReviewDto) {
         final ApplicationUser owner = findOwner(
-            review.getIdOwner(), 
+            trailReviewDto.getIdOwner(), 
             "Invalid user ID (reviewOwner)"
         );
         final Trail trail = findTrail(
-            review.getIdTrail(),
+            trailReviewDto.getIdTrail(),
             "Invalid trail ID (review)"
         );
 
         final TrailReview trailReview = new TrailReview();
-        trailReview.setStars(review.getStars());
-        trailReview.setDescription(review.getDescription());
+        trailReview.setStars(trailReviewDto.getStars());
+        trailReview.setDescription(trailReviewDto.getDescription());
         owner.addTrailReview(trailReview);
         trail.addReview(trailReview);
         trailReview.setOwner(owner);
@@ -166,25 +166,27 @@ public class TrailServiceImpl implements TrailService {
 
     private Trail findTrail(Long id, String exceptionMessage) {
         final Optional<Trail> trail = trailRepository.findById(id);
+
         if (trail.isEmpty()) {
             log.warning(exceptionMessage);
             throw new RuntimeException(exceptionMessage);
         }
+
         return trail.get();
     }
 
     @Override
-    public boolean addPhoto(SomeSortOfTrailPhoto someSortOfTrailPhoto) {
+    public boolean addPhoto(final SomeSortOfTrailPhoto trailPhotoDto) {
         final ApplicationUser owner = findOwner(
-            someSortOfTrailPhoto.getIdOwner(), 
+            trailPhotoDto.getIdOwner(), 
             "Invalid user ID (photoOwner)"
         );
         final Trail trail = findTrail(
-            someSortOfTrailPhoto.getIdTrail(),
+            trailPhotoDto.getIdTrail(),
             "Invalid trail ID (photo)"
         );
     
-        final TrailPhoto trailPhoto = createTrailPhoto(someSortOfTrailPhoto);
+        final TrailPhoto trailPhoto = createTrailPhoto(trailPhotoDto);
         trailPhoto.setOwner(owner);
         trailPhoto.setTrail(trail);
         owner.addTrailPhoto(trailPhoto);
@@ -198,16 +200,16 @@ public class TrailServiceImpl implements TrailService {
         return true;
     }
 
-    private TrailPhoto createTrailPhoto(SomeSortOfTrailPhoto photoDto) {
+    private TrailPhoto createTrailPhoto(final SomeSortOfTrailPhoto photoDto) {
         final TrailPhoto trailPhoto = new TrailPhoto();
 
         final Blob trailBlobImage = createBlobImage(photoDto.getImage());
         trailPhoto.setImage(trailBlobImage);
 
         final Position position = new Position();
-        final SomeSortOfPosition someSortOfPosition = photoDto.getPosition();
-        position.setLatitude(someSortOfPosition.getLatitude());
-        position.setLongitude(someSortOfPosition.getLongitude());
+        final SomeSortOfPosition positionDto = photoDto.getPosition();
+        position.setLatitude(positionDto.getLatitude());
+        position.setLongitude(positionDto.getLongitude());
         trailPhoto.setPosition(position);
 
         return trailPhoto;
