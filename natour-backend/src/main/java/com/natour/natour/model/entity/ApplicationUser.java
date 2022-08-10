@@ -45,6 +45,14 @@ public class ApplicationUser {
     @OneToMany(mappedBy="owner", cascade=CascadeType.ALL)
     private List<Trail> trails = new LinkedList<>();
 
+    @OneToMany(cascade=CascadeType.ALL)
+    @JoinTable(
+        name="NT_USERS_FAVORITE_TRAILS",
+        joinColumns={@JoinColumn(name="user_id")},
+        inverseJoinColumns={@JoinColumn(name="favorite_trail_id")}
+    )
+    private List<Trail> favoriteTrails = new LinkedList<>();
+
     @OneToMany(mappedBy="owner", cascade=CascadeType.ALL)
     private List<TrailReview> trailReviews = new LinkedList<>();
 
@@ -71,11 +79,11 @@ public class ApplicationUser {
         trails.add(trail);
     }
 
-    public void addTrailReview(TrailReview review) {
+    public void addTrailReview(@NonNull TrailReview review) {
         trailReviews.add(review);
     }
 
-    public void addTrailPhoto(TrailPhoto photo) {
+    public void addTrailPhoto(@NonNull TrailPhoto photo) {
         trailPhotos.add(photo);
     }
 }
