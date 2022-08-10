@@ -30,7 +30,7 @@ public class TrailPhoto {
     @Lob
     private Blob image;
 
-    @OneToOne
+    @OneToOne(cascade=CascadeType.ALL)
     private Position position;
 
     @ManyToOne(cascade=CascadeType.ALL)

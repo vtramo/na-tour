@@ -14,13 +14,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.natour.natour.model.TrailReviewStars;
 import com.natour.natour.model.dto.SomeSortOfTrail;
+import com.natour.natour.model.dto.SomeSortOfTrailPhoto;
 import com.natour.natour.model.dto.SomeSortOfTrailReview;
+import com.natour.natour.model.dto.SomeSortOfPosition;
 import com.natour.natour.model.entity.ApplicationUser;
+import com.natour.natour.model.entity.Position;
 import com.natour.natour.model.entity.RoutePoint;
 import com.natour.natour.model.entity.Trail;
 import com.natour.natour.model.entity.TrailDuration;
+import com.natour.natour.model.entity.TrailPhoto;
 import com.natour.natour.model.entity.TrailReview;
 import com.natour.natour.repositories.TrailRepository;
 import com.natour.natour.repositories.ApplicationUserRepository;
@@ -133,17 +136,14 @@ public class TrailServiceImpl implements TrailService {
 
     @Override
     public boolean addReview(SomeSortOfTrailReview review) {
-        final ApplicationUser owner = 
-            findOwner(
+        final ApplicationUser owner = findOwner(
                 review.getIdOwner(), 
                 "Invalid user ID (reviewOwner)"
             );
-        final Trail trail = 
-            findTrail(
+        final Trail trail = findTrail(
                 review.getIdTrail(),
-                "Invalid trail ID (reviewOwner)"
+                "Invalid trail ID (review)"
             );
-
 
         final TrailReview trailReview = new TrailReview();
         trailReview.setStars(review.getStars());
@@ -169,5 +169,45 @@ public class TrailServiceImpl implements TrailService {
         }
         return trail.get();
     }
+
+    @Override
+    public boolean addPhoto(SomeSortOfTrailPhoto someSortOfTrailPhoto) {
+        final ApplicationUser owner = findOwner(
+            someSortOfTrailPhoto.getIdOwner(), 
+            "Invalid user ID (photoOwner)"
+        );
+        final Trail trail = findTrail(
+            someSortOfTrailPhoto.getIdTrail(),
+            "Invalid trail ID (photo)"
+        );
     
+        final TrailPhoto trailPhoto = createTrailPhoto(someSortOfTrailPhoto);
+        trailPhoto.setOwner(owner);
+        trailPhoto.setTrail(trail);
+        owner.addTrailPhoto(trailPhoto);
+        trail.addPhoto(trailPhoto);
+
+        trailRepository.save(trail);
+        applicationUserRepository.save(owner);
+
+        log.info("A trail photo has been successfully created. Owner: " 
+                    + trailPhoto.getOwner().getFirstName());
+        return true;
+    }
+
+    private TrailPhoto createTrailPhoto(SomeSortOfTrailPhoto photoDto) {
+        final TrailPhoto trailPhoto = new TrailPhoto();
+
+        final Blob trailBlobImage = createBlobImage(photoDto.getImage());
+        trailPhoto.setImage(trailBlobImage);
+
+        final Position position = new Position();
+        final SomeSortOfPosition someSortOfPosition = 
+            photoDto.getPosition();
+        position.setLatitude(someSortOfPosition.getLatitude());
+        position.setLongitude(someSortOfPosition.getLongitude());
+        trailPhoto.setPosition(position);
+
+        return trailPhoto;
+    }
 }

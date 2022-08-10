@@ -14,14 +14,15 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.natour.natour.model.dto.Duration;
+import com.natour.natour.model.dto.SomeSortOfPosition;
 import com.natour.natour.model.dto.SomeSortOfRoutePoint;
 import com.natour.natour.model.dto.SomeSortOfTrail;
+import com.natour.natour.model.dto.SomeSortOfTrailPhoto;
 import com.natour.natour.model.dto.SomeSortOfTrailReview;
 import com.natour.natour.services.trail.TrailService;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
 import com.natour.natour.model.TrailDifficulty;
-import com.natour.natour.model.TrailReviewStars;
 
 @RestController
 @RequestMapping("/trail")
@@ -46,12 +47,6 @@ public class TrailController {
         @RequestPart("routePoints") List<SomeSortOfRoutePoint> routePoints,
         @RequestPart("image") MultipartFile image
     ) { 
-        System.out.println(trailDuration.getMonths());
-        System.out.println(idOwner);
-        System.out.println(trailName);
-        System.out.println(trailDifficulty);
-        System.out.println(routePoints);
-
         SomeSortOfTrail someSortOfTrail = new SomeSortOfTrail(
             idOwner,
             trailName,
@@ -65,9 +60,31 @@ public class TrailController {
         return trailService.saveTrail(someSortOfTrail);
     }
 
-    @PostMapping(value = "/review")
+    @PostMapping(
+        path = "/review",
+        consumes = {MediaType.APPLICATION_JSON_VALUE}
+    )
     public boolean addReview(@RequestBody SomeSortOfTrailReview review) {
         return trailService.addReview(review);
+    }
+
+    @PostMapping(
+        path = "/photo",
+        consumes = {"multipart/form-data"}
+    )
+    public boolean addPhoto(
+        @RequestParam("idOwner") Long idOwner,
+        @RequestParam("idTrail") Long idTrail,
+        @RequestPart("image") MultipartFile image,
+        @RequestPart("position") SomeSortOfPosition position
+    ) {
+        SomeSortOfTrailPhoto someSortOfTrailPhoto = new SomeSortOfTrailPhoto(
+            idOwner,
+            idTrail,
+            image,
+            position
+        );
+        return trailService.addPhoto(someSortOfTrailPhoto);
     }
 
     // TEST END-POINT
