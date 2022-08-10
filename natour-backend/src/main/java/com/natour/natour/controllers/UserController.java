@@ -3,6 +3,7 @@ package com.natour.natour.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -38,13 +39,27 @@ public class UserController {
         produces = {MediaType.APPLICATION_JSON_VALUE}
     )
     @ResponseStatus(HttpStatus.OK)
-    @Operation(summary = "Add the provided trail to the favorite trail list of " + 
-                                "the provided user")
+    @Operation(summary = "Adds the provided trail from the provided user's " + 
+                                "list of favorite trails")
     public boolean addFavoriteTrail(
         @PathVariable("userId") long userId,
         @RequestParam long trailId
     ) {
-        System.out.println(userId + " " + trailId);
-        return true;
+        return applicationUserService.addFavoriteTrail(userId, trailId);
+    }
+
+    @DeleteMapping(
+        path = "trail/favorite/{userId}",
+        consumes = {MediaType.ALL_VALUE},
+        produces = {MediaType.APPLICATION_JSON_VALUE}
+    )
+    @ResponseStatus(HttpStatus.OK)
+    @Operation(summary = "Removes the provided trail from the provided user's " + 
+                                "list of favorite trails")
+    public boolean removeFavoriteTrail(
+        @PathVariable("userId") long userId,
+        @RequestParam long trailId
+    ) {
+        return applicationUserService.deleteFavoriteTrail(userId, trailId);
     }
 }

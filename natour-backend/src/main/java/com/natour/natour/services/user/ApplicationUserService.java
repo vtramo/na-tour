@@ -7,4 +7,5 @@ public interface ApplicationUserService {
     ApplicationUser findByUsername(String username);
     boolean existsByUsername(String username);
     boolean addFavoriteTrail(long userId, long trailId);
+    boolean deleteFavoriteTrail(long userId, long trailId);
 }
