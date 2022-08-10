@@ -37,32 +37,61 @@ public class TrailServiceImpl implements TrailService {
 
     @Autowired
     private TrailRepository trailRepository;
-
     @Autowired
     private ApplicationUserRepository applicationUserRepository;
 
     @Override
     public boolean saveTrail(SomeSortOfTrail someSortOfTrail) {
-        final ApplicationUser trailOwner = 
-            findOwner(
-                someSortOfTrail.getIdOwner(), 
-                "Invalid user ID (trailOwner)"
-            );
+        final ApplicationUser trailOwner = findOwner(
+            someSortOfTrail.getIdOwner(), 
+            "Invalid user ID (trailOwner)"
+        );
         final Blob trailBlobImage = createBlobImage(someSortOfTrail.getImage());
 
-        Trail trail = createTrail(someSortOfTrail, trailBlobImage, trailOwner);
+        final Trail trail = createTrail(someSortOfTrail, trailBlobImage, trailOwner);
         trailOwner.addTrail(trail);
-        addRoutePointsToTrail(trail, someSortOfTrail);
-        trailRepository.save(trail);
 
+        trailRepository.save(trail);
         applicationUserRepository.save(trailOwner);
 
         log.info("A trail has been successfully created: " + trail.getName());
         return true;
     }
 
-    private void addRoutePointsToTrail(Trail trail, SomeSortOfTrail someSortOfTrail) {
-        List<RoutePoint> routePoints = trail.getRoutePoints();
+    private ApplicationUser findOwner(Long id, String exceptionMessage) {
+        final Optional<ApplicationUser> owner = 
+            applicationUserRepository.findById(id);
+        if (owner.isEmpty()) {
+            log.warning(exceptionMessage);
+            throw new RuntimeException(exceptionMessage);
+        }
+        return owner.get();
+    }
+
+    private Trail createTrail(
+        SomeSortOfTrail someSortOfTrail, 
+        Blob trailBlobImage, 
+        ApplicationUser trailOwner
+    ) {
+        final Trail trail = new Trail(
+            null,
+            someSortOfTrail.getName(),
+            trailBlobImage,
+            someSortOfTrail.getDescription(),
+            someSortOfTrail.getDifficulty(),
+            new LinkedList<RoutePoint>(),
+            new TrailDuration(someSortOfTrail.getTrailDuration()),
+            trailOwner
+        );
+        addRoutePointsToTrail(trail, someSortOfTrail);
+        return trail;
+    }
+
+    private void addRoutePointsToTrail(
+        Trail trail, 
+        SomeSortOfTrail someSortOfTrail
+    ) {
+        final List<RoutePoint> routePoints = trail.getRoutePoints();
         someSortOfTrail.getRoutePoints().stream().forEach(
             point -> {
                 routePoints.add(
@@ -88,32 +117,6 @@ public class TrailServiceImpl implements TrailService {
         }
     }
 
-    private ApplicationUser findOwner(Long id, String exceptionMessage) {
-        Optional<ApplicationUser> owner = applicationUserRepository.findById(id);
-        if (owner.isEmpty()) {
-            log.warning(exceptionMessage);
-            throw new RuntimeException(exceptionMessage);
-        }
-        return owner.get();
-    }
-
-    private Trail createTrail(
-        SomeSortOfTrail someSortOfTrail, 
-        Blob trailBlobImage, 
-        ApplicationUser trailOwner
-    ) {
-        return new Trail(
-            null,
-            someSortOfTrail.getName(),
-            trailBlobImage,
-            someSortOfTrail.getDescription(),
-            someSortOfTrail.getDifficulty(),
-            new LinkedList<RoutePoint>(),
-            new TrailDuration(someSortOfTrail.getTrailDuration()),
-            trailOwner
-        );
-    }
-
     // TEST METHOD !!!
     @Override
     @Transactional
@@ -137,13 +140,13 @@ public class TrailServiceImpl implements TrailService {
     @Override
     public boolean addReview(SomeSortOfTrailReview review) {
         final ApplicationUser owner = findOwner(
-                review.getIdOwner(), 
-                "Invalid user ID (reviewOwner)"
-            );
+            review.getIdOwner(), 
+            "Invalid user ID (reviewOwner)"
+        );
         final Trail trail = findTrail(
-                review.getIdTrail(),
-                "Invalid trail ID (review)"
-            );
+            review.getIdTrail(),
+            "Invalid trail ID (review)"
+        );
 
         final TrailReview trailReview = new TrailReview();
         trailReview.setStars(review.getStars());
@@ -162,7 +165,7 @@ public class TrailServiceImpl implements TrailService {
     }
 
     private Trail findTrail(Long id, String exceptionMessage) {
-        Optional<Trail> trail = trailRepository.findById(id);
+        final Optional<Trail> trail = trailRepository.findById(id);
         if (trail.isEmpty()) {
             log.warning(exceptionMessage);
             throw new RuntimeException(exceptionMessage);
@@ -202,8 +205,7 @@ public class TrailServiceImpl implements TrailService {
         trailPhoto.setImage(trailBlobImage);
 
         final Position position = new Position();
-        final SomeSortOfPosition someSortOfPosition = 
-            photoDto.getPosition();
+        final SomeSortOfPosition someSortOfPosition = photoDto.getPosition();
         position.setLatitude(someSortOfPosition.getLatitude());
         position.setLongitude(someSortOfPosition.getLongitude());
         trailPhoto.setPosition(position);
