@@ -1,21 +1,25 @@
 package com.natour.natour.services.trail.impl;
 
-import java.io.IOException;
 import java.sql.Blob;
-import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Optional;
+
+import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
 
+import org.hibernate.engine.jdbc.BlobProxy;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import com.natour.natour.model.dto.SomeSortOfTrail;
-import com.natour.natour.model.dto.SomeSortOfTrailPhoto;
-import com.natour.natour.model.dto.SomeSortOfTrailReview;
-import com.natour.natour.model.dto.SomeSortOfPosition;
+import com.natour.natour.model.dto.TrailRequestDto;
+import com.natour.natour.model.dto.TrailPhotoRequestDto;
+import com.natour.natour.model.dto.TrailReviewRequestDto;
+import com.natour.natour.model.dto.TrailResponseDto;
+import com.natour.natour.model.dto.PositionDto;
 import com.natour.natour.model.entity.ApplicationUser;
 import com.natour.natour.model.entity.Position;
 import com.natour.natour.model.entity.RoutePoint;
@@ -26,8 +30,8 @@ import com.natour.natour.model.entity.TrailReview;
 import com.natour.natour.repositories.TrailRepository;
 import com.natour.natour.repositories.ApplicationUserRepository;
 import com.natour.natour.services.trail.TrailService;
-import com.natour.natour.util.BlobUtils;
 import com.natour.natour.util.EntityUtils;
+import com.natour.natour.model.dto.util.TrailDtoUtils;
 
 import lombok.extern.java.Log;
 
@@ -41,16 +45,13 @@ public class TrailServiceImpl implements TrailService {
     private ApplicationUserRepository applicationUserRepository;
 
     @Override
-    public boolean saveTrail(final SomeSortOfTrail trailDto) {
+    public boolean saveTrail(final TrailRequestDto trailDto) {
         final ApplicationUser trailOwner = EntityUtils.findEntityById(
             applicationUserRepository, 
             trailDto.getIdOwner(), 
             "Invalid user ID (trailOwner)"
         );
-        final Blob trailBlobImage = BlobUtils.createBlobFromMultipartFile(
-            trailDto.getImage(), 
-            "image"
-        );
+        final Blob trailBlobImage = BlobProxy.generateProxy(trailDto.getBytesImage());
 
         final Trail trail = createTrail(trailDto, trailBlobImage, trailOwner);
         trailOwner.addTrail(trail);
@@ -63,7 +64,7 @@ public class TrailServiceImpl implements TrailService {
     }
 
     private Trail createTrail(
-        final SomeSortOfTrail trailDto, 
+        final TrailRequestDto trailDto, 
         final Blob trailBlobImage, 
         final ApplicationUser trailOwner
     ) {
@@ -83,7 +84,7 @@ public class TrailServiceImpl implements TrailService {
 
     private void addRoutePointsToTrail(
         final Trail trail, 
-        final SomeSortOfTrail trailDto
+        final TrailRequestDto trailDto
     ) {
         final List<RoutePoint> routePoints = trail.getRoutePoints();
         trailDto.getRoutePoints().stream().forEach(
@@ -99,28 +100,8 @@ public class TrailServiceImpl implements TrailService {
         );
     }
 
-    // TEST METHOD !!!
     @Override
-    @Transactional
-    public byte[] getTrail(Long id) {
-        log.info("id: " + id.toString());
-        Optional<Trail> optTrail = trailRepository.findById(id);
-        if (optTrail.isPresent()) {
-            Trail trail = optTrail.get();
-            Blob blob = trail.getImage();
-            try {
-                return blob.getBinaryStream().readAllBytes();
-            } catch (IOException | SQLException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-        }
-        log.info("null");
-        return null;
-    }
-
-    @Override
-    public boolean addReview(final SomeSortOfTrailReview trailReviewDto) {
+    public boolean addReview(final TrailReviewRequestDto trailReviewDto) {
         final ApplicationUser owner = EntityUtils.findEntityById(
             applicationUserRepository,
             trailReviewDto.getIdOwner(), 
@@ -149,7 +130,7 @@ public class TrailServiceImpl implements TrailService {
     }
 
     @Override
-    public boolean addPhoto(final SomeSortOfTrailPhoto trailPhotoDto) {
+    public boolean addPhoto(final TrailPhotoRequestDto trailPhotoDto) {
         final ApplicationUser owner = EntityUtils.findEntityById(
             applicationUserRepository,
             trailPhotoDto.getIdOwner(), 
@@ -175,21 +156,32 @@ public class TrailServiceImpl implements TrailService {
         return true;
     }
 
-    private TrailPhoto createTrailPhoto(final SomeSortOfTrailPhoto photoDto) {
+    private TrailPhoto createTrailPhoto(final TrailPhotoRequestDto photoDto) {
         final TrailPhoto trailPhoto = new TrailPhoto();
 
-        final Blob trailBlobImage = BlobUtils.createBlobFromMultipartFile(
-            photoDto.getImage(),
-            "image"
-        );
+        final Blob trailBlobImage = BlobProxy.generateProxy(photoDto.getBytesImage());
         trailPhoto.setImage(trailBlobImage);
 
         final Position position = new Position();
-        final SomeSortOfPosition positionDto = photoDto.getPosition();
+        final PositionDto positionDto = photoDto.getPosition();
         position.setLatitude(positionDto.getLatitude());
         position.setLongitude(positionDto.getLongitude());
         trailPhoto.setPosition(position);
 
         return trailPhoto;
+    }
+
+    @Override
+    @Transactional
+    public List<TrailResponseDto> getTrails(int page) {
+        if (page < 0) 
+            throw new IllegalArgumentException("Page number must be positive.");
+
+        Pageable pageable = PageRequest.of(page, 10, Sort.by("stars").descending());
+
+        return trailRepository.findAll(pageable)
+            .stream()
+            .map(TrailDtoUtils::convertTrailEntityToTrailResponseDto)
+            .collect(Collectors.toList());
     }
 }
