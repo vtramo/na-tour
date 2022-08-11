@@ -76,7 +76,7 @@ class TrailStartCreationViewModel @Inject constructor(
 
     private var _image = MutableLiveData<Drawable>(
         //MainActivity.getDrawable(R.drawable.ic_baseline_image_24)
-        MainActivity.getDrawable(R.drawable.ic_back_40)
+        MainActivity.getDrawable(R.drawable.gpx_file_format_symbol)
     )
 
     var image

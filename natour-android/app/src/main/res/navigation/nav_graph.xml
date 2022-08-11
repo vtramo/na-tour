@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/trailStartCreationFragment">
+    tools:ignore="InvalidNavigation">
     <fragment
         android:id="@+id/registrationFragment"
         android:name="com.example.natour.ui.signup.RegistrationFragment"
@@ -37,37 +37,40 @@
             app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_homeFragment_to_trailStartCreationFragment"
-            app:destination="@id/trailStartCreationFragment" />
+            app:destination="@id/trail_creation_nav_graph" />
     </fragment>
-    <fragment
-        android:id="@+id/trailStartCreationFragment"
-        android:name="com.example.natour.ui.trail.fragments.TrailStartCreationFragment"
-        android:label="TrailStartCreationFragment">
-        <action
-            android:id="@+id/action_trailCreationFragment_to_trailTypeCreationFragment"
-            app:destination="@id/trailTypeCreationFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/trailTypeCreationFragment"
-        android:name="com.example.natour.ui.trail.fragments.TrailTypeCreationFragment"
-        android:label="TrailTypeCreationFragment"
-        tools:layout="@layout/fragment_trail_type_creation">
-        <action
-            android:id="@+id/action_trailTypeCreationFragment_to_trailDisplayCreationFragment"
-            app:destination="@id/trailDisplayCreationFragment" />
-        <action
-            android:id="@+id/action_trailTypeCreationFragment_to_trailTrackingCreationFragment"
-            app:destination="@id/trailTrackingCreationFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/trailDisplayCreationFragment"
-        android:name="com.example.natour.ui.trail.fragments.TrailDisplayCreationFragment"
-        android:label="TrailDisplayCreationFragment" />
-    <fragment
-        android:id="@+id/trailTrackingCreationFragment"
-        android:name="com.example.natour.ui.trail.fragments.TrailTrackingCreationFragment"
-        android:label="TrailTrackingCreationFragment" />
     <action
         android:id="@+id/goToHomeFragment"
         app:destination="@id/homeFragment" />
+    <navigation android:id="@+id/trail_creation_nav_graph"
+        app:startDestination="@id/trailStartCreationFragment">
+        <fragment
+            android:id="@+id/trailStartCreationFragment"
+            android:name="com.example.natour.ui.trail.fragments.TrailStartCreationFragment"
+            android:label="TrailStartCreationFragment">
+            <action
+                android:id="@+id/action_trailCreationFragment_to_trailTypeCreationFragment"
+                app:destination="@id/trailTypeCreationFragment" />
+        </fragment>
+        <fragment
+            android:id="@+id/trailTypeCreationFragment"
+            android:name="com.example.natour.ui.trail.fragments.TrailTypeCreationFragment"
+            android:label="TrailTypeCreationFragment"
+            tools:layout="@layout/fragment_trail_type_creation">
+            <action
+                android:id="@+id/action_trailTypeCreationFragment_to_trailDisplayCreationFragment"
+                app:destination="@id/trailDisplayCreationFragment" />
+            <action
+                android:id="@+id/action_trailTypeCreationFragment_to_trailTrackingCreationFragment"
+                app:destination="@id/trailTrackingCreationFragment" />
+        </fragment>
+        <fragment
+            android:id="@+id/trailDisplayCreationFragment"
+            android:name="com.example.natour.ui.trail.fragments.TrailDisplayCreationFragment"
+            android:label="TrailDisplayCreationFragment" />
+        <fragment
+            android:id="@+id/trailTrackingCreationFragment"
+            android:name="com.example.natour.ui.trail.fragments.TrailTrackingCreationFragment"
+            android:label="TrailTrackingCreationFragment" />
+    </navigation>
 </navigation>

@@ -12,8 +12,10 @@ import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
+import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
+import androidx.navigation.navGraphViewModels
 import com.example.natour.R
 import com.example.natour.databinding.FragmentTrailTypeCreationBinding
 import com.example.natour.ui.trail.TrailStartCreationViewModel
@@ -28,7 +30,8 @@ class TrailTypeCreationFragment : Fragment() {
     private var _binding: FragmentTrailTypeCreationBinding? = null
     private val binding get() = _binding!!
 
-    private val mTrailStartCreationViewModel: TrailStartCreationViewModel by activityViewModels()
+    private val mTrailStartCreationViewModel: TrailStartCreationViewModel
+        by hiltNavGraphViewModels(R.id.trail_creation_nav_graph)
 
     @Inject
     lateinit var mRouteGPXParser: RouteGPXParser

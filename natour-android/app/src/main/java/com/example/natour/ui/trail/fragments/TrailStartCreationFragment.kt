@@ -16,8 +16,10 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.widget.addTextChangedListener
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
+import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.navGraphViewModels
 import com.example.natour.MainActivity
 import com.example.natour.R
 import com.example.natour.data.model.TrailDifficulty
@@ -27,13 +29,16 @@ import com.example.natour.ui.trail.TrailStartCreationViewModel
 import com.github.dhaval2404.imagepicker.ImagePicker
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class TrailStartCreationFragment : Fragment() {
 
     private var _binding: FragmentTrailStartCreationBinding? = null
     private val binding get() = _binding!!
 
-    private val mTrailStartCreationViewModel: TrailStartCreationViewModel by activityViewModels()
+    private val mTrailStartCreationViewModel: TrailStartCreationViewModel
+        by hiltNavGraphViewModels(R.id.trail_creation_nav_graph)
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
