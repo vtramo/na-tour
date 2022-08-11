@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.natour.natour.model.dto.SomeSortOfUser;
+import com.natour.natour.model.dto.UserDto;
 import com.natour.natour.services.registration.RegistrationService;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -34,7 +34,7 @@ public class RegistrationController {
     @ResponseStatus(HttpStatus.CREATED)
     @Operation(summary = "Register the provided user in the NaTour application and " +
                          "returns true if it has succeeded, false otherwise")
-    public boolean register(@Valid SomeSortOfUser user) {
+    public boolean register(@Valid UserDto user) {
         return registrationService.register(user);
     }
 }

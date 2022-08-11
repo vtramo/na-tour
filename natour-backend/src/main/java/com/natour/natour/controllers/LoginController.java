@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.natour.natour.model.dto.AuthenticationResponse;
-import com.natour.natour.model.dto.Credentials;
+import com.natour.natour.model.dto.AuthenticationResponseDto;
+import com.natour.natour.model.dto.CredentialsDto;
 import com.natour.natour.services.authentication.AuthenticationService;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -34,11 +34,11 @@ public class LoginController {
                         "the credentials provided with the 'authenticated' flag set to true "           +
                         "(if the credentials are correct, otherwise it will return the same fields "    +
                         "with null and the 'authenticated' flag set to false).")
-    public AuthenticationResponse login(Credentials credentials) {
+    public AuthenticationResponseDto login(CredentialsDto credentials) {
         try {
             return authenticationService.authenticate(credentials);
         } catch (Exception e) {
-            return new AuthenticationResponse(false);
+            return new AuthenticationResponseDto(false);
         }
     }
 
@@ -51,11 +51,11 @@ public class LoginController {
                         "the google authentication code provided with the 'authenticated' flag set to true "    +
                         "(if the google authentication code is correct, otherwise it will return the same "    +
                         "fields with null and the 'authenticated' flag set to false).")
-    public AuthenticationResponse loginWithGoogle(String authenticationCode) {
+    public AuthenticationResponseDto loginWithGoogle(String authenticationCode) {
         try {
             return authenticationService.authenticateWithGoogle(authenticationCode);
         } catch (Exception e) {
-            return new AuthenticationResponse(false);
+            return new AuthenticationResponseDto(false);
         }
     }
 
@@ -69,12 +69,12 @@ public class LoginController {
                         "the facebook access token provided with the 'authenticated' flag set to true "     +
                         "(if the the facebook access token is correct, otherwise it will return the same "  +
                         "fields with null and the 'authenticated' flag set to false).")
-    public AuthenticationResponse loginWithFacebook(String accessToken) {
+    public AuthenticationResponseDto loginWithFacebook(String accessToken) {
         try {
             return authenticationService.authenticateWithFacebook(accessToken);
         } catch (Exception e) {
             e.printStackTrace();
-            return new AuthenticationResponse(false);
+            return new AuthenticationResponseDto(false);
         }
     }
 }

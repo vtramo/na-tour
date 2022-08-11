@@ -9,7 +9,7 @@ import com.natour.natour.util.ConstantRegex;
 import lombok.Data;
 
 @Data
-public class SomeSortOfUser {
+public class UserDto {
 
     @Size(min = 1, max = 40)
     @Pattern(regexp = ConstantRegex.NAME_REGEX, message = "Invalid first name")
