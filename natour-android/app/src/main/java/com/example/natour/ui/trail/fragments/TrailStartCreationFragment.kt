@@ -15,11 +15,9 @@ import android.widget.ImageButton
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.widget.addTextChangedListener
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.activityViewModels
 import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.navGraphViewModels
 import com.example.natour.MainActivity
 import com.example.natour.R
 import com.example.natour.data.model.TrailDifficulty
@@ -110,6 +108,11 @@ class TrailStartCreationFragment : Fragment() {
 
     fun onConfirmButtonClick() {
         if (!isValidForm()) return
+        setFormToViewModelProperties()
+        goToTrailTypeCreationFragment()
+    }
+
+    fun setFormToViewModelProperties() {
         with(mTrailStartCreationViewModel) {
             with(binding) {
                 trailName   = trailNameTextInputEditText.textString()
@@ -121,7 +124,6 @@ class TrailStartCreationFragment : Fragment() {
                 image       = uploadImageButton.background
             }
         }
-        goToTrailTypeCreationFragment()
     }
 
     private fun goToTrailTypeCreationFragment() {
