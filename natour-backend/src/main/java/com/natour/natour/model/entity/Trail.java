@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.persistence.*;
 
+import com.natour.natour.model.Stars;
 import com.natour.natour.model.TrailDifficulty;
 
 import lombok.AllArgsConstructor;
@@ -40,6 +41,8 @@ public class Trail {
     @OneToMany(mappedBy="trail", cascade=CascadeType.ALL)
     private List<TrailReview> trailReviews = new LinkedList<>();
 
+    private Stars stars = Stars.ZERO;
+
     @OneToMany(mappedBy="trail", cascade=CascadeType.ALL)
     private List<TrailPhoto> trailPhotos = new LinkedList<>();
 
@@ -71,6 +74,16 @@ public class Trail {
 
     public void addReview(TrailReview review) {
         trailReviews.add(review);
+        calculateStars();
+    }
+
+    private void calculateStars() {
+        class Sum { double totalStars; }
+        Sum sum = new Sum();
+        trailReviews.stream().forEach(review -> {
+            sum.totalStars += review.getStars().ordinal();
+        });
+        stars = Stars.getStarsFromAvgReviews(sum.totalStars / trailReviews.size());
     }
 
     public void addPhoto(TrailPhoto photo) {
