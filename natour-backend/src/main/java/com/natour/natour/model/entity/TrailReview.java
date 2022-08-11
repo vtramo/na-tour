@@ -8,7 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import com.natour.natour.model.TrailReviewStars;
+import com.natour.natour.model.Stars;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -31,7 +31,7 @@ public class TrailReview {
     @ManyToOne(cascade=CascadeType.ALL)
     private Trail trail;
 
-    private TrailReviewStars stars;
+    private Stars stars;
 
     private String description;
 }
