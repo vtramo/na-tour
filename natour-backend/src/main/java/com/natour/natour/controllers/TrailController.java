@@ -80,7 +80,7 @@ public class TrailController {
         produces = {MediaType.APPLICATION_JSON_VALUE}
     )
     @ResponseStatus(HttpStatus.OK)
-    @Operation(summary = "Add the provided trail review to the provided trail and " +
+    @Operation(summary = "Adds the provided trail review to the provided trail and " +
                          "returns true if it has succeeded, false otherwise")
     public boolean addReview(@RequestBody TrailReviewRequestDto review) {
         return trailService.addReview(review);
@@ -92,7 +92,7 @@ public class TrailController {
         produces = {MediaType.APPLICATION_JSON_VALUE}
     )
     @ResponseStatus(HttpStatus.OK)
-    @Operation(summary = "Add the provided trail photo to the provided trail and " +
+    @Operation(summary = "Adds the provided trail photo to the provided trail and " +
                          "returns true if it has succeeded, false otherwise")
     public boolean addPhoto(
         @RequestParam("idOwner") Long idOwner,
@@ -119,6 +119,8 @@ public class TrailController {
         consumes = MediaType.ALL_VALUE,
         produces = MediaType.APPLICATION_JSON_VALUE
     )
+    @ResponseStatus(HttpStatus.OK)
+    @Operation(summary = "Returns a list of 10 trails from the page provided")
     public List<TrailResponseDto> getTrails(@PathVariable("page") int page) {
         return trailService.getTrails(page);
     }
