@@ -107,6 +107,7 @@ public class TrailController {
     @GetMapping(
         produces = MediaType.IMAGE_PNG_VALUE
     )
+    @Operation(summary = "Ignore this (test)")
     public byte[] getImage(@RequestParam("id") Long id) {
         return trailService.getTrail(id);
     }
