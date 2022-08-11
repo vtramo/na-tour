@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class TrailResponseDto {
-    private double idTrail;
+    private long idTrail;
     private UserDetailsDto owner;
     private String name;
     private String description;
