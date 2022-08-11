@@ -2,6 +2,7 @@ package com.example.natour.ui.trail.fragments
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.app.AlertDialog
 import android.content.pm.PackageManager
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -11,21 +12,24 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.findNavController
 import com.example.natour.R
+import com.example.natour.data.model.RoutePoint
 import com.example.natour.databinding.FragmentTrailTrackingCreationBinding
-import com.example.natour.ui.trail.TrailCreationViewModel
+import com.example.natour.ui.trail.TrailStartCreationViewModel
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.*
+import com.google.android.material.snackbar.Snackbar
 
 class TrailTrackingCreationFragment : Fragment(), OnMapReadyCallback {
 
     private var _binding: FragmentTrailTrackingCreationBinding? = null
     private val binding get() = _binding!!
 
-    private val mTrailCreationViewModel: TrailCreationViewModel by activityViewModels()
+    private val mTrailStartCreationViewModel: TrailStartCreationViewModel by activityViewModels()
     private lateinit var mPolyline: Polyline
     private lateinit var mStartingPositionMarker: Marker
 
@@ -111,8 +115,43 @@ class TrailTrackingCreationFragment : Fragment(), OnMapReadyCallback {
 
     fun onConfirmButtonClick() {
         assert(!mPolyline.hasZeroPoints())
-        mTrailCreationViewModel.listOfRoutePoints =
-            mPolyline.points.map { Pair(it.latitude, it.longitude) }
+
+        binding.confirmButton.isClickable = false
+        with(mTrailStartCreationViewModel) {
+            listOfRoutePoints = mPolyline.points.map { RoutePoint(it.latitude, it.longitude) }
+            hasBeenCreated.observe(viewLifecycleOwner) { hasBeenCreated ->
+                if (hasBeenCreated) {
+                    showTrailSuccessfullyCreatedSnackbar()
+                    goToHomeFragment()
+                } else {
+                    showFailTrailCreationAlertDialog()
+                    binding.confirmButton.isClickable = true
+                    resetLiveData()
+                }
+            }
+            saveTrail()
+        }
+    }
+
+    private fun goToHomeFragment() {
+        val action = TrailTrackingCreationFragmentDirections.goToHomeFragment()
+        view?.findNavController()?.navigate(action)
+    }
+
+    private fun showTrailSuccessfullyCreatedSnackbar() {
+        Snackbar.make(
+            requireView(),
+            "Trail successfully created",
+            Snackbar.LENGTH_SHORT
+        ).show()
+    }
+
+    private fun showFailTrailCreationAlertDialog() {
+        AlertDialog.Builder(requireContext())
+            .setTitle("Error")
+            .setMessage("A problem occurred in the creation of the trail")
+            .setPositiveButton("Okay") { _, _ -> }
+            .show()
     }
 
     private fun Polyline.hasZeroPoints() = points.size == 0

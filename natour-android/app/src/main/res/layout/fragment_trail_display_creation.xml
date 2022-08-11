@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
+        <variable
+            name="trailDisplayCreationFragment"
+            type="com.example.natour.ui.trail.fragments.TrailDisplayCreationFragment" />
     </data>
 
     <LinearLayout
@@ -35,6 +37,7 @@
             android:id="@+id/confirm_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:onClick="@{() -> trailDisplayCreationFragment.onConfirmButtonClick()}"
             android:text="@string/confirm" />
 
     </LinearLayout>

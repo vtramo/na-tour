@@ -2,6 +2,7 @@ package com.example.natour.ui.trail.util
 
 import android.content.Context
 import android.net.Uri
+import com.example.natour.data.model.RoutePoint
 import io.ticofab.androidgpxparser.parser.GPXParser
 import io.ticofab.androidgpxparser.parser.domain.Gpx
 import javax.inject.Inject
@@ -14,7 +15,7 @@ class RouteGPXParser @Inject constructor(
         const val GPX_TYPE = "application/gpx+xml"
     }
 
-    inner class Route(private val _listOfRoutePoints: List<Pair<Double, Double>>) {
+    inner class Route(private val _listOfRoutePoints: List<RoutePoint>) {
         val listOfRoutePoints
             get() = _listOfRoutePoints
     }
@@ -37,29 +38,29 @@ class RouteGPXParser @Inject constructor(
 
     private fun openInputStream(uri: Uri) = context.contentResolver.openInputStream(uri)!!
 
-    private fun getListOfRoutePointsFromParsedGpx(parsedGpx: Gpx): List<Pair<Double, Double>> {
-        val listOfRoutePoints = mutableListOf<Pair<Double, Double>>()
+    private fun getListOfRoutePointsFromParsedGpx(parsedGpx: Gpx): List<RoutePoint> {
+        val listOfRoutePoints = mutableListOf<RoutePoint>()
         listOfRoutePoints.add(getStartingPointFromParsedGpx(parsedGpx))
         listOfRoutePoints.addAll(getIntermediatePointsFromParsedGpx(parsedGpx))
         listOfRoutePoints.add(getDestinationPointFromParsedGpx(parsedGpx))
         return listOfRoutePoints
     }
 
-    private fun getStartingPointFromParsedGpx(parsedGpx: Gpx): Pair<Double, Double> =
+    private fun getStartingPointFromParsedGpx(parsedGpx: Gpx): RoutePoint =
         with(parsedGpx) {
             with(wayPoints.first()) {
-                Pair(latitude, longitude)
+                RoutePoint(latitude, longitude)
             }
         }
 
-    private fun getIntermediatePointsFromParsedGpx(parsedGpx: Gpx): List<Pair<Double, Double>> =
+    private fun getIntermediatePointsFromParsedGpx(parsedGpx: Gpx): List<RoutePoint> =
         with(parsedGpx) {
-            val listOfIntermediatePoints = mutableListOf<Pair<Double, Double>>()
+            val listOfIntermediatePoints = mutableListOf<RoutePoint>()
             tracks.forEach { track ->
                 track.trackSegments.forEach { trackSegment ->
                     trackSegment.trackPoints.forEach { trackPoint ->
                         with(trackPoint) {
-                            listOfIntermediatePoints.add(Pair(latitude, longitude))
+                            listOfIntermediatePoints.add(RoutePoint(latitude, longitude))
                         }
                     }
                 }
@@ -67,10 +68,10 @@ class RouteGPXParser @Inject constructor(
             listOfIntermediatePoints
         }
 
-    private fun getDestinationPointFromParsedGpx(parsedGpx: Gpx): Pair<Double, Double> =
+    private fun getDestinationPointFromParsedGpx(parsedGpx: Gpx): RoutePoint =
         with(parsedGpx) {
             with(wayPoints.last()) {
-                Pair(latitude, longitude)
+                RoutePoint(latitude, longitude)
             }
         }
 }

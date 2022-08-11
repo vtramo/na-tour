@@ -8,7 +8,7 @@ import kotlinx.coroutines.withContext
 
 class DefaultRegistrationRepository(
     private val registrationDataSource: RegistrationDataSource,
-    private val defaultDispatcher: CoroutineDispatcher = Dispatchers.IO
+    private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ) : RegistrationRepository {
 
     override suspend fun register(
@@ -17,7 +17,7 @@ class DefaultRegistrationRepository(
         username: String,
         email: String,
         password: String
-    ): Boolean = withContext(defaultDispatcher) {
+    ): Boolean = withContext(ioDispatcher) {
         registrationDataSource.register(firstName, lastName, username, email, password)
     }
 

@@ -9,4 +9,5 @@ interface MainUserRepository {
     suspend fun save(authenticatedUser: AuthenticatedUser): Boolean
     fun load(): Flow<MainUser?>
     suspend fun clear(): Boolean
+    fun getDetails(): MainUser.Details
 }

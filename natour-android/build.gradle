@@ -7,6 +7,7 @@ buildscript {
     dependencies {
         classpath "androidx.navigation:navigation-safe-args-gradle-plugin:$nav_version"
         classpath 'com.google.dagger:hilt-android-gradle-plugin:2.43.1'
+        classpath "org.jetbrains.kotlin:kotlin-serialization:1.7.10"
     }
 }
 
@@ -17,6 +18,7 @@ plugins {
 
     // Google Maps
     id 'com.google.android.libraries.mapsplatform.secrets-gradle-plugin' version '2.0.1' apply false
+
 }
 
 task clean(type: Delete) {

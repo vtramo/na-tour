@@ -5,8 +5,8 @@ import java.util.Objects;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.natour.natour.model.ApplicationUser;
-import com.natour.natour.model.Credentials;
+import com.natour.natour.model.dto.Credentials;
+import com.natour.natour.model.entity.ApplicationUser;
 import com.natour.natour.repositories.ApplicationUserRepository;
 import com.natour.natour.services.authentication.application.ApplicationAuthenticationService;
 

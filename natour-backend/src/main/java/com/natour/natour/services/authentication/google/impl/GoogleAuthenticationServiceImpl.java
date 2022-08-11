@@ -5,8 +5,7 @@ import org.springframework.stereotype.Service;
 
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken.Payload;
-
-import com.natour.natour.model.ApplicationUser;
+import com.natour.natour.model.entity.ApplicationUser;
 import com.natour.natour.services.authentication.google.GoogleAuthenticationService;
 import com.natour.natour.services.authentication.google.token.GoogleAuthCodeService;
 import com.natour.natour.services.authentication.google.token.GoogleTokenValidatorService;

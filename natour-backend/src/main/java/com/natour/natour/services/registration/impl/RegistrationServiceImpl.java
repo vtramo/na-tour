@@ -4,8 +4,8 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.natour.natour.model.ApplicationUser;
-import com.natour.natour.model.SomeSortOfUser;
+import com.natour.natour.model.dto.SomeSortOfUser;
+import com.natour.natour.model.entity.ApplicationUser;
 import com.natour.natour.services.registration.RegistrationService;
 import com.natour.natour.services.user.ApplicationUserService;
 
