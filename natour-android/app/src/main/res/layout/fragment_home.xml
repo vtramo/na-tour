@@ -81,14 +81,6 @@
             app:layout_constraintBottom_toBottomOf="parent"
             />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <!-- Logout Button -->
-    <!--<androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".ui.home.HomeFragment">
-
         <TextView
             android:id="@+id/user_text_view"
             android:layout_width="wrap_content"
@@ -109,7 +101,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             />
 
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-
-    </androidx.constraintlayout.widget.ConstraintLayout>-->
 </layout>

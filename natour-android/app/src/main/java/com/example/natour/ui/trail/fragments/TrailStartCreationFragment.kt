@@ -5,7 +5,6 @@ import android.app.AlertDialog
 import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -56,12 +55,11 @@ class TrailStartCreationFragment : Fragment() {
         setupCustomBackToolbar()
         setupRouteDifficultyDropDownList()
         setupTextChangedListeners()
-        Log.i("Trail difficult", TrailDifficulty.MORE_DIFFICULT.toString())
     }
 
     private fun setupCustomBackToolbar(){
         val toolbar = binding.customToolbarRouteCreation
-        toolbar.setNavigationIcon(R.drawable.back_button_icon)
+        toolbar.setNavigationIcon(R.drawable.ic_back_40)
         toolbar.setNavigationOnClickListener { findNavController().popBackStack() }
     }
 
