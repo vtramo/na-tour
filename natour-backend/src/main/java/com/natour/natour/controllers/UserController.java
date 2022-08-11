@@ -15,9 +15,15 @@ import org.springframework.web.bind.annotation.RestController;
 import com.natour.natour.services.user.ApplicationUserService;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
 @RequestMapping("/user")
+@Tag(
+    name = "User Controller", 
+    description = "This REST controller provides services to retrive/modify " +
+        "information about NaTour users."
+)
 public class UserController {
 
     @Autowired

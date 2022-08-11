@@ -63,8 +63,8 @@ public class ApplicationUserServiceImpl implements ApplicationUserService {
                         user.getUsername() + "'s favorite list");
             return true;
         }
-
         favoriteTrails.add(trail);
+
         applicationUserRepository.save(user);
         
         log.info("A new trail has been successfully added to " + 
