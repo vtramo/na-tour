@@ -32,20 +32,21 @@
                 <ImageButton
                     android:id="@+id/send_message_icon"
                     style="@style/Widget.AppCompat.Button.Borderless"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
                     android:layout_alignParentStart="true"
-                    android:src="@drawable/send_message_icon"
+                    android:src="@drawable/ic_plus_40"
                     tools:ignore="ContentDescription" />
 
                 <ImageButton
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_marginEnd="20dp"
-                    android:src="@drawable/plus_icon"
-                    android:layout_alignParentEnd="true"
                     style="@style/Widget.AppCompat.Button.Borderless"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="20dp"
                     android:onClick="@{() -> homeFragment.goToTrailStartCreationFragment()}"
+                    android:rotation="-40"
+                    android:src="@drawable/ic_send_message_40"
                     tools:ignore="ContentDescription" />
 
 
