@@ -5,7 +5,7 @@ import java.util.Objects;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.natour.natour.model.dto.Credentials;
+import com.natour.natour.model.dto.CredentialsDto;
 import com.natour.natour.model.entity.ApplicationUser;
 import com.natour.natour.repositories.ApplicationUserRepository;
 import com.natour.natour.services.authentication.application.ApplicationAuthenticationService;
@@ -20,13 +20,13 @@ public class ApplicationAuthenticationServiceImpl implements ApplicationAuthenti
     private ApplicationUserRepository applicationUserRepository;
 
     @Override
-    public ApplicationUser authenticate(Credentials credentials) {
+    public ApplicationUser authenticate(CredentialsDto credentials) {
         Objects.requireNonNull(credentials);
 
         return login(credentials);
     }
 
-    private ApplicationUser login(Credentials credentials) {
+    private ApplicationUser login(CredentialsDto credentials) {
         ApplicationUser user = 
             applicationUserRepository.findByUsername(credentials.getUsername());
 

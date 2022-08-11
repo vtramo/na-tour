@@ -3,6 +3,6 @@ package com.natour.natour.model.dto;
 import lombok.Data;
 
 @Data
-public class Credentials {
+public class CredentialsDto {
     private final String username, password;
 }

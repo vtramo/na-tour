@@ -10,19 +10,19 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class AuthenticationResponse {
+public class AuthenticationResponseDto {
 
     private final boolean isAuthenticated;
 
     @Nullable
     @JsonUnwrapped
-    private UserDetails user;
+    private UserDetailsDto user;
 
     @Nullable
     @JsonUnwrapped
     private Token token;
 
-    public AuthenticationResponse(boolean isAuthenticated) {
+    public AuthenticationResponseDto(boolean isAuthenticated) {
         this.isAuthenticated = isAuthenticated;
     }
 }

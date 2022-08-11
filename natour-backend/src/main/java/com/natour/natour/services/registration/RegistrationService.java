@@ -1,7 +1,7 @@
 package com.natour.natour.services.registration;
 
-import com.natour.natour.model.dto.SomeSortOfUser;
+import com.natour.natour.model.dto.UserDto;
 
 public interface RegistrationService {
-    boolean register(SomeSortOfUser user);
+    boolean register(UserDto user);
 }

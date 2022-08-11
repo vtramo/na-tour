@@ -7,9 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.natour.natour.model.Token;
-import com.natour.natour.model.dto.AuthenticationResponse;
-import com.natour.natour.model.dto.Credentials;
-import com.natour.natour.model.dto.UserDetails;
+import com.natour.natour.model.dto.AuthenticationResponseDto;
+import com.natour.natour.model.dto.CredentialsDto;
+import com.natour.natour.model.dto.UserDetailsDto;
 import com.natour.natour.model.entity.ApplicationUser;
 import com.natour.natour.services.authentication.AuthenticationService;
 import com.natour.natour.services.authentication.application.ApplicationAuthenticationService;
@@ -37,7 +37,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     private FacebookAuthenticationService facebookAuthenticationService;
 
     @Override
-    public AuthenticationResponse authenticate(Credentials credentials) {
+    public AuthenticationResponseDto authenticate(CredentialsDto credentials) {
         ApplicationUser appUser = 
             applicationAuthenticationService.authenticate(credentials);
         
@@ -46,14 +46,14 @@ public class AuthenticationServiceImpl implements AuthenticationService {
             credentials.getPassword()
         );
 
-        UserDetails user = new UserDetails(appUser);
+        UserDetailsDto user = new UserDetailsDto(appUser);
 
         log.info("Login was successful: " + user);
-        return new AuthenticationResponse(true, user, token);
+        return new AuthenticationResponseDto(true, user, token);
     }
 
     @Override
-    public AuthenticationResponse authenticateWithGoogle(String authenticationCode) {
+    public AuthenticationResponseDto authenticateWithGoogle(String authenticationCode) {
         ApplicationUser appUser = 
             googleAuthenticationService.authenticate(authenticationCode);
 
@@ -62,14 +62,14 @@ public class AuthenticationServiceImpl implements AuthenticationService {
             appUser.getPassword()
         );
 
-        UserDetails user = new UserDetails(appUser);
+        UserDetailsDto user = new UserDetailsDto(appUser);
 
         log.info("Login with google was successful: " + user);
-        return new AuthenticationResponse(true, user, token);
+        return new AuthenticationResponseDto(true, user, token);
     }
 
     @Override
-    public AuthenticationResponse authenticateWithFacebook(String accessToken) {
+    public AuthenticationResponseDto authenticateWithFacebook(String accessToken) {
         ApplicationUser appUser = 
             facebookAuthenticationService.authenticate(accessToken);
 
@@ -78,10 +78,10 @@ public class AuthenticationServiceImpl implements AuthenticationService {
             appUser.getPassword()
         );
 
-        UserDetails user = new UserDetails(appUser); 
+        UserDetailsDto user = new UserDetailsDto(appUser); 
 
         log.info("Login with facebook was successfull: " + user);
-        return new AuthenticationResponse(true, user, token);
+        return new AuthenticationResponseDto(true, user, token);
     }
     
     private Token generateApplicationUserToken(String username, String password) {
