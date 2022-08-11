@@ -21,7 +21,7 @@ public enum KeyCloakTokenScope {
     ADMIN(
         "admin-cli", 
         "client_credentials", 
-        "ka9gk4L603ltz36sNBL1WpAGBSzrcHNZ",
+        "bxCcwf8KjT2A9UKPV8OQixaEOYlIjYiT",
         "http://192.168.1.4:8180/realms/master/protocol/openid-connect/token");
 
     private final String clientId, grantType, clientSecret;
