@@ -55,6 +55,7 @@
     <string name="difficulty_level">Difficulty Level:</string>
     <string name="travel_time">Travel time:</string>
     <string name="description_label">Description:</string>
+    <string name="map">Map</string>
 
     <!-- Route Creation -->
     <string-array name="listDifficulties">

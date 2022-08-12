@@ -7,10 +7,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.activityViewModels
 import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
 import androidx.navigation.findNavController
-import androidx.navigation.navGraphViewModels
 import com.example.natour.R
 import com.example.natour.databinding.FragmentTrailDisplayCreationBinding
 import com.example.natour.ui.trail.TrailStartCreationViewModel
@@ -71,19 +69,20 @@ class TrailDisplayCreationFragment : Fragment(), OnMapReadyCallback {
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
 
-        addMarkerOnMap(mListOfRoutePoints.first(), "Starting point of the route")
-        addMarkerOnMap(mListOfRoutePoints.last(), "Destination of the route")
+        mMap.addMarker(
+            MarkerOptions()
+                .position(mListOfRoutePoints.first())
+                .title("Starting point of the route")
+        )!!.showInfoWindow()
+
+        mMap.addMarker(
+            MarkerOptions()
+                .position(mListOfRoutePoints.last())
+                .title("Destination of the route")
+        )
         drawRouteOnMap()
 
         mMap.animateCameraOnRoute()
-    }
-
-    private fun addMarkerOnMap(point: LatLng, title: String) {
-        mMap.addMarker(
-            MarkerOptions()
-                .position(point)
-                .title(title)
-        )
     }
 
     private fun drawRouteOnMap() {

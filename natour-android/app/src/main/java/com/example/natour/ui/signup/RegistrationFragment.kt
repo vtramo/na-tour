@@ -15,7 +15,6 @@ import com.example.natour.MainActivity
 import com.example.natour.R
 import com.example.natour.databinding.FragmentRegistrationBinding
 import com.example.natour.ui.ConstantRegex
-import com.example.natour.ui.signup.viewmodels.RegistrationViewModel
 
 import com.google.android.material.textfield.TextInputLayout
 import dagger.hilt.android.AndroidEntryPoint

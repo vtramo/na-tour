@@ -11,15 +11,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.activityViewModels
 import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
-import androidx.navigation.navGraphViewModels
 import com.example.natour.R
 import com.example.natour.databinding.FragmentTrailTypeCreationBinding
 import com.example.natour.ui.trail.TrailStartCreationViewModel
-import com.example.natour.ui.trail.util.RouteGPXParser
+import com.example.natour.ui.util.RouteGPXParser
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import javax.inject.Inject

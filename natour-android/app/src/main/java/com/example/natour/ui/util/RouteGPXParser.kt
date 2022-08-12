@@ -1,4 +1,4 @@
-package com.example.natour.ui.trail.util
+package com.example.natour.ui.util
 
 import android.content.Context
 import android.net.Uri

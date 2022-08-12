@@ -63,7 +63,7 @@
         app:startDestination="@id/homeFragment">
         <fragment
             android:id="@+id/homeFragment"
-            android:name="com.example.natour.ui.home.HomeFragment"
+            android:name="com.example.natour.ui.home.fragments.HomeFragment"
             android:label="fragment_home"
             tools:layout="@layout/fragment_home">
             <action
@@ -80,7 +80,7 @@
         </fragment>
         <fragment
             android:id="@+id/trailDetailFragment"
-            android:name="com.example.natour.ui.home.TrailDetailsFragment"
+            android:name="com.example.natour.ui.home.fragments.TrailDetailsFragment"
             android:label="fragment_trail_detail"
             tools:layout="@layout/fragment_trail_details" />
     </navigation>
