@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.natour.data.model.Trail
-import com.example.natour.databinding.CardViewBinding
+import com.example.natour.databinding.TrailCardViewBinding
 
 class TrailListAdapter(
     private val trailCardClickListener: (Trail) -> Unit
@@ -23,13 +23,14 @@ class TrailListAdapter(
     }
 
     inner class TrailCardViewHolder(
-        private val binding: CardViewBinding
+        private val binding: TrailCardViewBinding
     ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bindTrail(trail: Trail) = with(binding) {
             trailImage.setImageDrawable(trail.image)
             cardTrailName.text = trail.name
             cardOwnerName.text = trail.owner.username
+            trailStars.setImageDrawable(trail.getStarsImage())
         }
     }
 
@@ -37,7 +38,7 @@ class TrailListAdapter(
         parent: ViewGroup,
         viewType: Int
     ): TrailCardViewHolder {
-        val binding = CardViewBinding.inflate(
+        val binding = TrailCardViewBinding.inflate(
             LayoutInflater.from(parent.context),
             parent,
             false

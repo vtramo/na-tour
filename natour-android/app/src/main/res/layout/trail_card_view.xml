@@ -8,7 +8,7 @@
     </data>
 
     <LinearLayout
-        android:id="@+id/card_view"
+        android:id="@+id/card_view_linear_layout"
         android:clickable="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -16,6 +16,7 @@
         android:focusable="true">
 
         <androidx.cardview.widget.CardView
+            android:id="@+id/card_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -34,7 +35,7 @@
                 android:layout_marginBottom="10dp">
                 <!-- Trail Owner Label -->
 
-                <!-- User Icon-->
+                <!-- Username -->
                 <TextView
                     android:id="@+id/card_owner_name"
                     android:layout_width="wrap_content"
@@ -48,6 +49,7 @@
                     app:layout_constraintTop_toBottomOf="@id/card_trail_image"
                     tools:ignore="HardcodedText" />
 
+                <!-- User icon -->
                 <ImageView
                     android:id="@+id/imageView"
                     android:layout_width="20dp"
@@ -57,6 +59,17 @@
                     app:layout_constraintTop_toTopOf="@id/card_owner_name"
                     app:layout_constraintEnd_toStartOf="@id/card_owner_name"
                     app:layout_constraintTop_toBottomOf="@id/card_trail_image"
+                    tools:ignore="ContentDescription" />
+
+                <!-- Stars -->
+                <ImageView
+                    android:id="@+id/trail_stars"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    app:layout_constraintEnd_toEndOf="@id/card_trail_image"
+                    app:layout_constraintTop_toBottomOf="@id/card_owner_name"
+                    tools:src="@drawable/five_stars_image"
                     tools:ignore="ContentDescription" />
 
                 <!-- Trail Label -->

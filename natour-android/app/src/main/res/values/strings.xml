@@ -52,6 +52,9 @@
     <string name="add_a_trail">Add a trail</string>
     <string name="enter_trail_name">Enter trail name</string>
     <string name="upload_a_photo">Upload a photo</string>
+    <string name="difficulty_level">Difficulty Level:</string>
+    <string name="travel_time">Travel time:</string>
+    <string name="description_label">Description:</string>
 
     <!-- Route Creation -->
     <string-array name="listDifficulties">
