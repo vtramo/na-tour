@@ -1,6 +1,7 @@
 package com.example.natour.data.model
 
 import android.graphics.drawable.Drawable
+import android.location.Geocoder
 import com.example.natour.MainActivity
 import com.example.natour.R
 
@@ -28,4 +29,16 @@ data class Trail(
                 Stars.FIVE  -> getDrawable(R.drawable.five_stars_image)!!
             }
         }
+
+    fun getPositionDetails(): String {
+        val geocoder = Geocoder(MainActivity.context)
+        val latitude = routePoints[0].latitude
+        val longitude = routePoints[0].longitude
+        val addresses = geocoder.getFromLocation(latitude, longitude, 1)
+        return with(addresses[0]) {
+            var positionResult = if (adminArea.isNullOrBlank()) "" else "$adminArea, "
+            positionResult += countryName
+            return@with positionResult
+        }
+    }
 }

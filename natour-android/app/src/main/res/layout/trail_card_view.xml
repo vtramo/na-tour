@@ -66,7 +66,7 @@
                     android:id="@+id/trail_stars"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="20dp"
                     app:layout_constraintEnd_toEndOf="@id/card_trail_image"
                     app:layout_constraintTop_toBottomOf="@id/card_owner_name"
                     tools:src="@drawable/five_stars_image"
@@ -89,7 +89,7 @@
 
                 <!-- Country Label -->
                 <TextView
-                    android:id="@+id/card_country_name"
+                    android:id="@+id/trail_position_details"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/montserrat"

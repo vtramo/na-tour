@@ -1,7 +1,11 @@
 package com.example.natour.ui.home
 
+import android.location.Geocoder
+import android.util.Log
 import android.view.View
 import androidx.lifecycle.ViewModel
+import com.example.natour.MainActivity
+import com.example.natour.data.model.RoutePoint
 import com.example.natour.data.model.Trail
 
 class TrailDetailsViewModel : ViewModel() {
@@ -14,6 +18,7 @@ class TrailDetailsViewModel : ViewModel() {
             _numberOfReviews = "${trail.reviews.size} votes"
             _trailDuration = trail.duration.toString()
             _descriptionVisibility = if (trail.description.isBlank()) View.GONE else View.VISIBLE
+            _positionDetails = trail.getPositionDetails()
             _thisTrail = trail
         }
 
@@ -28,4 +33,7 @@ class TrailDetailsViewModel : ViewModel() {
 
     private var _descriptionVisibility: Int = View.VISIBLE
     val descriptionVisibility get() = _descriptionVisibility
+
+    private lateinit var _positionDetails: String
+    val positionDetails get() = _positionDetails
 }

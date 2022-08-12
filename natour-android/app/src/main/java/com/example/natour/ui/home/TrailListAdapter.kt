@@ -31,6 +31,7 @@ class TrailListAdapter(
             cardTrailName.text = trail.name
             cardOwnerName.text = trail.owner.username
             trailStars.setImageDrawable(trail.getStarsImage())
+            trailPositionDetails.text = trail.getPositionDetails()
         }
     }
 

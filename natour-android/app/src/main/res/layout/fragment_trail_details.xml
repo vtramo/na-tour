@@ -87,7 +87,8 @@
                 android:id="@+id/trail_country_text_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Italia, Europa"
+                android:text="@{trailDetailsViewModel.positionDetails}"
+                tools:text="Italia, Europa"
                 android:fontFamily="@font/montserrat"
                 android:textSize="15sp"
                 tools:ignore="HardcodedText" />
