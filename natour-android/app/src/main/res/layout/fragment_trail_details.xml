@@ -110,7 +110,7 @@
             android:id="@+id/detailed_trail_stars_image"
             android:layout_width="100dp"
             android:layout_height="40dp"
-            android:src="@drawable/stars_image"
+            android:src="@drawable/four_stars_image"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/detailed_trail_user_icon"
