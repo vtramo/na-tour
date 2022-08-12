@@ -1,10 +1,10 @@
 package com.natour.natour.services.authentication;
 
-import com.natour.natour.model.dto.AuthenticationResponse;
-import com.natour.natour.model.dto.Credentials;
+import com.natour.natour.model.dto.AuthenticationResponseDto;
+import com.natour.natour.model.dto.CredentialsDto;
 
 public interface AuthenticationService {
-    AuthenticationResponse authenticate(Credentials credentials);
-    AuthenticationResponse authenticateWithGoogle(String authenticationCode);
-    AuthenticationResponse authenticateWithFacebook(String accessToken);
+    AuthenticationResponseDto authenticate(CredentialsDto credentials);
+    AuthenticationResponseDto authenticateWithGoogle(String authenticationCode);
+    AuthenticationResponseDto authenticateWithFacebook(String accessToken);
 }

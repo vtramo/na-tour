@@ -11,6 +11,10 @@
         <variable
             name="homeFragment"
             type="com.example.natour.ui.home.HomeFragment" />
+
+        <variable
+            name="homeViewModel"
+            type="com.example.natour.ui.home.HomeViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -34,6 +38,7 @@
                     style="@style/Widget.AppCompat.Button.Borderless"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
+                    android:onClick="@{() -> homeFragment.goToTrailStartCreationFragment()}"
                     android:layout_alignParentStart="true"
                     android:src="@drawable/ic_plus_40"
                     tools:ignore="ContentDescription" />
@@ -44,14 +49,12 @@
                     android:layout_height="50dp"
                     android:layout_alignParentEnd="true"
                     android:layout_marginEnd="20dp"
-                    android:onClick="@{() -> homeFragment.goToTrailStartCreationFragment()}"
                     android:rotation="-40"
                     android:src="@drawable/ic_send_message_40"
                     tools:ignore="ContentDescription" />
 
 
             </RelativeLayout>
-
 
         </androidx.appcompat.widget.Toolbar>
 
@@ -70,7 +73,7 @@
             app:layout_constraintTop_toBottomOf="@id/custom_toolbar" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recicler_view_home"
+            android:id="@+id/recycler_view_home"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginTop="20dp"
@@ -80,14 +83,6 @@
             app:layout_constraintTop_toBottomOf="@id/explore_new_trails_label"
             app:layout_constraintBottom_toBottomOf="parent"
             />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <!-- Logout Button -->
-    <!--<androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".ui.home.HomeFragment">
 
         <TextView
             android:id="@+id/user_text_view"
@@ -109,7 +104,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             />
 
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-
-    </androidx.constraintlayout.widget.ConstraintLayout>-->
 </layout>

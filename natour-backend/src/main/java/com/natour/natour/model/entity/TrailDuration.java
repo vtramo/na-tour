@@ -6,7 +6,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import com.natour.natour.model.dto.Duration;
+import com.natour.natour.model.dto.DurationDto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -25,7 +25,7 @@ public class TrailDuration {
 
     private int mouths, days, hours, minutes;
 
-    public TrailDuration(Duration duration) {
+    public TrailDuration(DurationDto duration) {
         mouths = duration.getMonths();
         days = duration.getDays();
         hours = duration.getHours();

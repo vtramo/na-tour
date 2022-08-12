@@ -5,7 +5,6 @@ import android.app.AlertDialog
 import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -16,7 +15,7 @@ import android.widget.ImageButton
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.widget.addTextChangedListener
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.activityViewModels
+import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.example.natour.MainActivity
@@ -28,13 +27,16 @@ import com.example.natour.ui.trail.TrailStartCreationViewModel
 import com.github.dhaval2404.imagepicker.ImagePicker
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class TrailStartCreationFragment : Fragment() {
 
     private var _binding: FragmentTrailStartCreationBinding? = null
     private val binding get() = _binding!!
 
-    private val mTrailStartCreationViewModel: TrailStartCreationViewModel by activityViewModels()
+    private val mTrailStartCreationViewModel: TrailStartCreationViewModel
+        by hiltNavGraphViewModels(R.id.trail_creation_nav_graph)
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -50,18 +52,19 @@ class TrailStartCreationFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         binding.lifecycleOwner = viewLifecycleOwner
         binding.trailStartCreationFragment = this
         binding.trailStartCreationViewModel = mTrailStartCreationViewModel
+
         setupCustomBackToolbar()
         setupRouteDifficultyDropDownList()
         setupTextChangedListeners()
-        Log.i("Trail difficult", TrailDifficulty.MORE_DIFFICULT.toString())
     }
 
     private fun setupCustomBackToolbar(){
         val toolbar = binding.customToolbarRouteCreation
-        toolbar.setNavigationIcon(R.drawable.back_button_icon)
+        toolbar.setNavigationIcon(R.drawable.ic_back_40)
         toolbar.setNavigationOnClickListener { findNavController().popBackStack() }
     }
 
@@ -107,6 +110,11 @@ class TrailStartCreationFragment : Fragment() {
 
     fun onConfirmButtonClick() {
         if (!isValidForm()) return
+        setFormToViewModelProperties()
+        goToTrailTypeCreationFragment()
+    }
+
+    private fun setFormToViewModelProperties() {
         with(mTrailStartCreationViewModel) {
             with(binding) {
                 trailName   = trailNameTextInputEditText.textString()
@@ -118,7 +126,6 @@ class TrailStartCreationFragment : Fragment() {
                 image       = uploadImageButton.background
             }
         }
-        goToTrailTypeCreationFragment()
     }
 
     private fun goToTrailTypeCreationFragment() {

@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".ui.home.TrailDetailsFragment"
+    >
+
+    <data>
+        <variable
+            name="trailDetailsViewModel"
+            type="com.example.natour.ui.home.TrailDetailsViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <!-- Toolbar -->
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/trail_details_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <!-- TODO: WTF THIS TOOLBAR? !!!! -->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageButton
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:src="@drawable/ic_send_message_40"
+                    android:rotation="-40"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="20dp"
+                    style="@style/Widget.AppCompat.Button.Borderless"
+                    tools:ignore="ContentDescription" />
+
+                <ImageButton
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:src="@drawable/ic_back_40"
+                    style="@style/Widget.AppCompat.Button.Borderless"
+                    tools:ignore="ContentDescription" />
+
+                <ImageButton
+                    style="@style/Widget.AppCompat.Button.Borderless"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="20dp"
+                    android:src="@drawable/ic_file_download_black_40"
+                    tools:ignore="ContentDescription" />
+
+            </RelativeLayout>
+
+        </androidx.appcompat.widget.Toolbar>
+
+        <!-- Trail details head -->
+        <LinearLayout
+            android:id="@+id/trail_details_head_info_linear_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/trail_details_toolbar"
+            android:orientation="vertical"
+            android:gravity="center">
+
+            <!-- Trail name -->
+            <TextView
+                android:id="@+id/trail_name_text_view"
+                android:layout_width="wrap_content"
+                android:text="@{trailDetailsViewModel.thisTrail.name}"
+                tools:text="Sentiero degli dei"
+                android:layout_marginTop="15dp"
+                android:textSize="30sp"
+                android:fontFamily="@font/montserrat_bold"
+                android:layout_height="wrap_content" />
+
+            <!-- Country position -->
+            <TextView
+                android:id="@+id/trail_country_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{trailDetailsViewModel.positionDetails}"
+                tools:text="Italia, Europa"
+                android:fontFamily="@font/montserrat"
+                android:textSize="15sp"
+                tools:ignore="HardcodedText" />
+
+            <!-- User -->
+            <LinearLayout
+                android:id="@+id/user_linear_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_marginTop="5dp"
+                android:orientation="horizontal"
+                tools:ignore="UseCompoundDrawables">
+
+                <!-- User icon -->
+                <ImageView
+                    android:id="@+id/user_icon_image_view"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginEnd="5dp"
+                    android:src="@drawable/user_image_card"
+                    android:adjustViewBounds="true"
+                    tools:ignore="ContentDescription" />
+
+                <!-- Username -->
+                <TextView
+                    android:id="@+id/trail_owner_text_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{trailDetailsViewModel.fullName}"
+                    tools:text="toddteller"
+                    android:textSize="15sp"
+                    android:fontFamily="@font/montserrat_semibold" />
+
+            </LinearLayout>
+
+            <!-- Reviews info -->
+            <LinearLayout
+                android:id="@+id/reviews_linear_layout"
+                android:layout_width="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <!-- Stars -->
+                <ImageView
+                    android:id="@+id/trail_stars_image_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:src="@drawable/five_stars_image"
+                    android:src="@{trailDetailsViewModel.thisTrail.starsImage}"
+                    android:adjustViewBounds="true"
+                    android:scaleType="fitCenter"
+                    android:maxHeight="25dp"
+                    tools:ignore="ContentDescription" />
+
+                <!-- Number of reviews -->
+                <TextView
+                    android:id="@+id/trail_number_reviews_text_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/montserrat_italic"
+                    tools:text="15 votes"
+                    android:text="@{trailDetailsViewModel.numberOfReviews}"
+                    android:textSize="18sp"
+                    tools:ignore="HardcodedText" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <!-- Trail details -->
+        <LinearLayout
+            android:id="@+id/trail_details_linear_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginVertical="20dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/trail_details_head_info_linear_layout"
+            android:orientation="vertical">
+
+            <!-- Difficulty -->
+            <LinearLayout
+                android:id="@+id/trail_difficulty_linear_layout"
+                android:layout_marginBottom="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <!-- Difficulty Label -->
+                <TextView
+                    android:id="@+id/trail_difficulty_text_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/difficulty_level"
+                    android:fontFamily="@font/montserrat_bold" />
+
+                <!-- Difficulty text -->
+                <TextView
+                    android:id="@+id/trail_difficulty_level_text_view"
+                    android:layout_marginStart="10dp"
+                    tools:text="Easy"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{trailDetailsViewModel.thisTrail.difficulty.toString()}"
+                    android:fontFamily="@font/montserrat" />
+
+            </LinearLayout>
+
+            <!-- Travel Time -->
+            <LinearLayout
+                android:id="@+id/trail_time_linear_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:orientation="horizontal">
+
+                <!-- Travel Label -->
+                <TextView
+                    android:id="@+id/trail_time_label_text_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/travel_time"
+                    android:fontFamily="@font/montserrat_bold" />
+
+                <!-- Travel time -->
+                <TextView
+                    android:id="@+id/trail_time_text_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{trailDetailsViewModel.trailDuration}"
+                    tools:text="4h"
+                    android:fontFamily="@font/montserrat"
+                    android:layout_marginStart="10dp" />
+
+            </LinearLayout>
+
+            <!-- Description -->
+            <LinearLayout
+                android:id="@+id/trail_description_linear_layout"
+                android:visibility="@{trailDetailsViewModel.descriptionVisibility}"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <!-- Description Label -->
+                <TextView
+                    android:id="@+id/trail_description_label_text_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/description_label"
+                    android:fontFamily="@font/montserrat_bold" />
+
+                <!-- Description text -->
+                <TextView
+                    android:id="@+id/trail_description_text_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/montserrat"
+                    tools:text="Up branch to easily missed by do. Admiration considered acceptance too led one melancholy expression. Are will took form the nor true. Winding enjoyed minuter her letters evident use eat colonel. He attacks observe mr cottage inquiry am examine gravity. Are dear but near left was. Year kept on over so as this of. She steepest doubtful betrayed formerly him. Active one called uneasy our seeing see cousin tastes its. Ye am it formed indeed agreed relied piqued."
+                    android:text="@{trailDetailsViewModel.thisTrail.description}" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

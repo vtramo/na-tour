@@ -49,7 +49,7 @@ class RegistrationFragment : Fragment() {
 
     private fun setupCustomToolbar(){
         val toolbar = binding.customToolbarRegistration
-        toolbar.setNavigationIcon(R.drawable.back_button_icon)
+        toolbar.setNavigationIcon(R.drawable.ic_back_40)
         toolbar.setNavigationOnClickListener { findNavController().popBackStack() }
     }
 

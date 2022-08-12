@@ -1,15 +1,18 @@
 package com.natour.natour.services.trail;
 
-import com.natour.natour.model.dto.SomeSortOfTrail;
-import com.natour.natour.model.dto.SomeSortOfTrailPhoto;
-import com.natour.natour.model.dto.SomeSortOfTrailReview;
+import java.util.List;
+
+import com.natour.natour.model.dto.TrailRequestDto;
+import com.natour.natour.model.dto.TrailPhotoRequestDto;
+import com.natour.natour.model.dto.TrailReviewRequestDto;
+import com.natour.natour.model.dto.TrailResponseDto;
 
 public interface TrailService {
-    public boolean saveTrail(SomeSortOfTrail trail);
+    public boolean saveTrail(TrailRequestDto trail);
 
-    public byte[] getTrail(Long id);
+    public boolean addReview(TrailReviewRequestDto review);
 
-    public boolean addReview(SomeSortOfTrailReview review);
+    public boolean addPhoto(TrailPhotoRequestDto someSortOfTrailPhoto);
 
-    public boolean addPhoto(SomeSortOfTrailPhoto someSortOfTrailPhoto);
+    public List<TrailResponseDto> getTrails(int page);
 }

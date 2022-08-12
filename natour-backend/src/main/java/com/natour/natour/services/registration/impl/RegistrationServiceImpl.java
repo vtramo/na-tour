@@ -4,7 +4,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.natour.natour.model.dto.SomeSortOfUser;
+import com.natour.natour.model.dto.UserDto;
 import com.natour.natour.model.entity.ApplicationUser;
 import com.natour.natour.services.registration.RegistrationService;
 import com.natour.natour.services.user.ApplicationUserService;
@@ -19,7 +19,7 @@ public class RegistrationServiceImpl implements RegistrationService {
     private ApplicationUserService applicationUserService;
     
     @Override
-    public boolean register(SomeSortOfUser user) {
+    public boolean register(UserDto user) {
         ApplicationUser appUser = new ApplicationUser();
         BeanUtils.copyProperties(user, appUser);
 

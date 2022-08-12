@@ -4,10 +4,12 @@ import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
 import androidx.navigation.findNavController
+import androidx.navigation.navGraphViewModels
+import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView.OnScrollListener
 import com.example.natour.R
-import com.example.natour.ui.home.adapter.RouteItemAdapter
-import com.example.natour.data.sources.Datasource
 import com.example.natour.databinding.FragmentHomeBinding
 import com.example.natour.ui.MainUserViewModel
 
@@ -16,40 +18,68 @@ class HomeFragment : Fragment() {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
 
-    private val mainUserViewModel: MainUserViewModel by activityViewModels()
+    private val mMainUserViewModel: MainUserViewModel by activityViewModels()
+    private val mHomeViewModel: HomeViewModel by hiltNavGraphViewModels(R.id.home_nav_graph)
+    private val mTrailDetailsViewModel: TrailDetailsViewModel
+        by navGraphViewModels(R.id.home_nav_graph)
 
-    @Suppress("DEPRECATION")
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
+    private lateinit var mRecyclerView: RecyclerView
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentHomeBinding.inflate(inflater,container, false)
+        _binding = FragmentHomeBinding.inflate(inflater, container, false)
 
-        setupRecyclerView(inflater)
+        setupRecyclerView()
 
         return binding.root
     }
 
-    private fun setupToolbar() {
-        val toolbar = view?.findViewById<android.widget.Toolbar>(R.id.custom_toolbar)
-        activity?.setActionBar(toolbar)
-        activity?.actionBar?.title = ""
+    private fun setupRecyclerView() {
+        mRecyclerView = binding.recyclerViewHome
+        val trailListAdapter = TrailListAdapter { trailClicked ->
+            mTrailDetailsViewModel.thisTrail = trailClicked
+            goToTrailDetailsFragment()
+        }
+        mRecyclerView.adapter = trailListAdapter
+
+        addOnFinishedTrailsRecyclerViewListener()
+
+        mHomeViewModel.trails.observe(viewLifecycleOwner) { listTrails ->
+            trailListAdapter.submitList(listTrails)
+        }
     }
 
-    private fun setupRecyclerView(inflater: LayoutInflater){
-        val myDataset = Datasource().loadTrails()
-        val recyclerView = binding.reciclerViewHome
-        recyclerView.adapter = RouteItemAdapter(inflater, myDataset)
+    private fun goToTrailDetailsFragment() {
+        val action = HomeFragmentDirections.actionHomeFragmentToTrailDetailFragment()
+        view?.findNavController()?.navigate(action)
+    }
+
+    private fun addOnFinishedTrailsRecyclerViewListener() {
+        mRecyclerView.addOnScrollListener(object : OnScrollListener() {
+            private val DIRECTION_DOWN = 1
+
+            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                super.onScrollStateChanged(recyclerView, newState)
+
+                if (recyclerView.canScrollVertically(DIRECTION_DOWN)) return
+                if (mHomeViewModel.pagesAreFinished) return
+
+                loadNextTrailPage()
+            }
+        })
+    }
+
+    private fun loadNextTrailPage() {
+        mHomeViewModel.currentPage++
+        mHomeViewModel.loadTrails()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.authenticationViewModel = mainUserViewModel
+        binding.authenticationViewModel = mMainUserViewModel
         binding.homeFragment = this
         binding.lifecycleOwner = viewLifecycleOwner
     }
@@ -60,7 +90,7 @@ class HomeFragment : Fragment() {
     }
 
     fun onLogout() {
-        mainUserViewModel.logout()
+        mMainUserViewModel.logout()
         goToLoginFragment()
     }
 

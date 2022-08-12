@@ -1,7 +1,11 @@
 package com.example.natour.data.sources.impl
 
+import com.example.natour.data.model.Trail
 import com.example.natour.data.sources.TrailDataSource
 import com.example.natour.data.sources.network.TrailApiService
+import com.example.natour.data.util.toTrailModel
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 
@@ -27,4 +31,11 @@ class TrailRemoteDataSource(
             routePoints,
             image
         )
+
+    override suspend fun load(page: Int): Flow<List<Trail>> = flow {
+        val newTrails = trailApiService
+            .getTrails(page)
+            .map { trailDto -> trailDto.toTrailModel() }
+        emit(newTrails)
+    }
 }

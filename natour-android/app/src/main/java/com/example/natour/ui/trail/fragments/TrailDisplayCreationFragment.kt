@@ -8,7 +8,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
+import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
 import androidx.navigation.findNavController
+import androidx.navigation.navGraphViewModels
 import com.example.natour.R
 import com.example.natour.databinding.FragmentTrailDisplayCreationBinding
 import com.example.natour.ui.trail.TrailStartCreationViewModel
@@ -24,7 +26,9 @@ class TrailDisplayCreationFragment : Fragment(), OnMapReadyCallback {
     private var _binding: FragmentTrailDisplayCreationBinding? = null
     private val binding get() = _binding!!
 
-    private val mTrailStartCreationViewModel: TrailStartCreationViewModel by activityViewModels()
+    private val mTrailStartCreationViewModel: TrailStartCreationViewModel
+        by hiltNavGraphViewModels(R.id.trail_creation_nav_graph)
+
     private lateinit var mListOfRoutePoints: List<LatLng>
 
     private lateinit var mMap: GoogleMap

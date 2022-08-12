@@ -46,13 +46,10 @@ class MainActivity : AppCompatActivity() {
         setupThirdPartyLoginViewModel()
     }
 
-
-
-
     private fun loadMainUser() {
         mainUserViewModel.mainUser.observe(this) { mainUser ->
             setupNavComponent(
-                startDestination = if (mainUser != null) R.id.homeFragment else R.id.loginFragment
+                startDestination = if (mainUser != null) R.id.home_nav_graph else R.id.loginFragment
             )
             mainUserViewModel.mainUser.removeObservers(this)
         }
