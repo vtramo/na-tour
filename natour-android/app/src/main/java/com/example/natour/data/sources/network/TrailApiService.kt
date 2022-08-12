@@ -1,10 +1,9 @@
 package com.example.natour.data.sources.network
 
+import com.example.natour.data.dto.TrailDto
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
-import retrofit2.http.Multipart
-import retrofit2.http.POST
-import retrofit2.http.Part
+import retrofit2.http.*
 
 interface TrailApiService {
 
@@ -19,4 +18,7 @@ interface TrailApiService {
         @Part("routePoints")        routePoints: RequestBody,
         @Part                       image: MultipartBody.Part
     ): Boolean
+
+    @GET("/trail/{page}")
+    suspend fun getTrails(@Path("page") page: Int): List<TrailDto>
 }
