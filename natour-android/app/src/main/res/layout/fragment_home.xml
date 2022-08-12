@@ -11,6 +11,10 @@
         <variable
             name="homeFragment"
             type="com.example.natour.ui.home.HomeFragment" />
+
+        <variable
+            name="homeViewModel"
+            type="com.example.natour.ui.home.HomeViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -52,7 +56,6 @@
 
             </RelativeLayout>
 
-
         </androidx.appcompat.widget.Toolbar>
 
         <TextView
@@ -70,7 +73,7 @@
             app:layout_constraintTop_toBottomOf="@id/custom_toolbar" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recicler_view_home"
+            android:id="@+id/recycler_view_home"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginTop="20dp"

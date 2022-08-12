@@ -52,9 +52,11 @@ class TrailStartCreationFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         binding.lifecycleOwner = viewLifecycleOwner
         binding.trailStartCreationFragment = this
         binding.trailStartCreationViewModel = mTrailStartCreationViewModel
+
         setupCustomBackToolbar()
         setupRouteDifficultyDropDownList()
         setupTextChangedListeners()
@@ -112,7 +114,7 @@ class TrailStartCreationFragment : Fragment() {
         goToTrailTypeCreationFragment()
     }
 
-    fun setFormToViewModelProperties() {
+    private fun setFormToViewModelProperties() {
         with(mTrailStartCreationViewModel) {
             with(binding) {
                 trailName   = trailNameTextInputEditText.textString()

@@ -2,11 +2,13 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".ui.trail.fragments.TrailDetailFragment"
+    tools:context=".ui.home.TrailDetailsFragment"
     >
 
     <data>
-
+        <variable
+            name="trailDetailsViewModel"
+            type="com.example.natour.ui.home.TrailDetailsViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -61,7 +63,7 @@
         <TextView
             android:id="@+id/detailed_trail_name"
             android:layout_width="wrap_content"
-            android:text="Sentiero degli dei"
+            android:text="@{trailDetailsViewModel.thisTrail.name}"
             android:layout_marginTop="15dp"
             android:textSize="30sp"
             android:fontFamily="@font/montserrat_bold"
@@ -85,7 +87,7 @@
             android:id="@+id/detailed_trail_owner"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Giovanni Aiello"
+            android:text="@{trailDetailsViewModel.fullName}"
             android:layout_marginTop="5dp"
             app:layout_constraintTop_toBottomOf="@id/detailed_trail_country"
             app:layout_constraintStart_toStartOf="parent"
@@ -142,7 +144,7 @@
             android:id="@+id/detailed_trail_difficulty_level"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="E - ...."
+            android:text="@{trailDetailsViewModel.thisTrail.difficulty.toString()}"
             android:fontFamily="@font/montserrat"
             app:layout_constraintStart_toEndOf="@id/detailed_trail_difficulty_level_label"
             app:layout_constraintTop_toTopOf="@id/detailed_trail_difficulty_level_label"
@@ -183,7 +185,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/montserrat"
-            android:text="Description..."
+            android:text="@{trailDetailsViewModel.thisTrail.description}"
             android:layout_marginStart="10dp"
             app:layout_constraintStart_toEndOf="@id/detailed_trail_description_label"
             app:layout_constraintTop_toTopOf="@id/detailed_trail_description_label" />

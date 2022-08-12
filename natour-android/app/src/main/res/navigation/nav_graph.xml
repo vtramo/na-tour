@@ -21,27 +21,13 @@
             app:launchSingleTop="false" />
         <action
             android:id="@+id/action_loginFragment_to_homeFragment"
-            app:destination="@id/homeFragment"
+            app:destination="@id/home_nav_graph"
             app:popUpTo="@id/nav_graph"
             app:popUpToInclusive="true" />
-    </fragment>
-    <fragment
-        android:id="@+id/homeFragment"
-        android:name="com.example.natour.ui.home.HomeFragment"
-        android:label="fragment_home"
-        tools:layout="@layout/fragment_home" >
-        <action
-            android:id="@+id/action_homeFragment_to_loginFragment"
-            app:destination="@id/loginFragment"
-            app:popUpTo="@id/nav_graph"
-            app:popUpToInclusive="true" />
-        <action
-            android:id="@+id/action_homeFragment_to_trailStartCreationFragment"
-            app:destination="@id/trail_creation_nav_graph" />
     </fragment>
     <action
         android:id="@+id/goToHomeFragment"
-        app:destination="@id/homeFragment" />
+        app:destination="@id/home_nav_graph" />
     <navigation android:id="@+id/trail_creation_nav_graph"
         app:startDestination="@id/trailStartCreationFragment">
         <fragment
@@ -72,5 +58,30 @@
             android:id="@+id/trailTrackingCreationFragment"
             android:name="com.example.natour.ui.trail.fragments.TrailTrackingCreationFragment"
             android:label="TrailTrackingCreationFragment" />
+    </navigation>
+    <navigation android:id="@+id/home_nav_graph"
+        app:startDestination="@id/homeFragment">
+        <fragment
+            android:id="@+id/homeFragment"
+            android:name="com.example.natour.ui.home.HomeFragment"
+            android:label="fragment_home"
+            tools:layout="@layout/fragment_home">
+            <action
+                android:id="@+id/action_homeFragment_to_loginFragment"
+                app:destination="@id/loginFragment"
+                app:popUpTo="@id/nav_graph"
+                app:popUpToInclusive="true" />
+            <action
+                android:id="@+id/action_homeFragment_to_trailStartCreationFragment"
+                app:destination="@id/trail_creation_nav_graph" />
+            <action
+                android:id="@+id/action_homeFragment_to_trailDetailFragment"
+                app:destination="@id/trailDetailFragment" />
+        </fragment>
+        <fragment
+            android:id="@+id/trailDetailFragment"
+            android:name="com.example.natour.ui.home.TrailDetailsFragment"
+            android:label="fragment_trail_detail"
+            tools:layout="@layout/fragment_trail_details" />
     </navigation>
 </navigation>
