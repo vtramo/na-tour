@@ -1,10 +1,13 @@
 package com.example.natour.ui.home.fragments
 
+import android.graphics.Bitmap
+import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.content.res.AppCompatResources
+import androidx.fragment.app.Fragment
 import androidx.navigation.navGraphViewModels
 import com.example.natour.R
 import com.example.natour.databinding.FragmentTrailDetailsBinding
@@ -14,6 +17,7 @@ import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.model.*
+
 
 class TrailDetailsFragment : Fragment(), OnMapReadyCallback {
 
@@ -69,6 +73,7 @@ class TrailDetailsFragment : Fragment(), OnMapReadyCallback {
                 .title("Starting point of the route")
                 .snippet("HEY")
         )!!.showInfoWindow()
+
 
         mMap.addMarker(
             MarkerOptions()
