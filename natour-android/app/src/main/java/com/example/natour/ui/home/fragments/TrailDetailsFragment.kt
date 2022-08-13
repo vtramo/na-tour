@@ -1,19 +1,16 @@
 package com.example.natour.ui.home.fragments
 
 import android.app.Activity
-import android.graphics.Bitmap
-import android.graphics.drawable.BitmapDrawable
+import android.app.AlertDialog
 import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageButton
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.appcompat.content.res.AppCompatResources
 import androidx.fragment.app.Fragment
+import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
 import androidx.navigation.navGraphViewModels
 import com.example.natour.R
 import com.example.natour.data.model.Position
@@ -26,12 +23,13 @@ import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.model.*
+import com.google.android.material.snackbar.Snackbar
 
 
 class TrailDetailsFragment : Fragment(), OnMapReadyCallback {
 
     private val mTrailDetailsViewModel: TrailDetailsViewModel
-        by navGraphViewModels(R.id.home_nav_graph)
+        by hiltNavGraphViewModels(R.id.home_nav_graph)
 
     private var _binding: FragmentTrailDetailsBinding? = null
     private val binding get() = _binding!!
@@ -139,13 +137,42 @@ class TrailDetailsFragment : Fragment(), OnMapReadyCallback {
             if (result.resultCode == Activity.RESULT_OK) {
                 val imageUri = result.data!!.data!!
                 val trailPhotoDrawable = getDrawableFromImageUri(imageUri)
-                mTrailDetailsViewModel.addPhoto(trailPhotoDrawable, Position(0.0,0.0))
+                addPhoto(trailPhotoDrawable)
             }
         }
 
     private fun getDrawableFromImageUri(imageUri: Uri): Drawable {
         val inputStream = requireContext().contentResolver.openInputStream(imageUri)
         return Drawable.createFromStream(inputStream, imageUri.toString())
+    }
+
+    private fun addPhoto(trailPhotoDrawable: Drawable) {
+        with(mTrailDetailsViewModel) {
+            photoSuccessfullyAddedLiveData.observe(viewLifecycleOwner) { photoSuccessfullyAdded ->
+                if (photoSuccessfullyAdded) {
+                    showPhotoSuccessfullyAddedSnackbar()
+                } else {
+                    showFailPhotoAddedAlertDialog()
+                }
+            }
+        }
+        mTrailDetailsViewModel.addPhoto(trailPhotoDrawable, Position(0.0,0.0))
+    }
+
+    private fun showPhotoSuccessfullyAddedSnackbar() {
+        Snackbar.make(
+            requireView(),
+            "Photo successfully added",
+            Snackbar.LENGTH_SHORT
+        ).show()
+    }
+
+    private fun showFailPhotoAddedAlertDialog() {
+        AlertDialog.Builder(requireContext())
+            .setTitle("Error")
+            .setMessage("A problem occurred in adding the photo")
+            .setPositiveButton("Okay") { _, _ -> }
+            .show()
     }
 
     override fun onDestroy() {

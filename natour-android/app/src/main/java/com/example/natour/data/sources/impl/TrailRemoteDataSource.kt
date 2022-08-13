@@ -38,4 +38,17 @@ class TrailRemoteDataSource(
             .map { trailDto -> trailDto.toTrailModel() }
         emit(newTrails)
     }
+
+    override suspend fun addPhoto(
+        idOwner: RequestBody,
+        idTrail: RequestBody,
+        position: RequestBody,
+        image: MultipartBody.Part
+    ): Boolean =
+        trailApiService.addPhoto(
+            idOwner,
+            idTrail,
+            position,
+            image
+        )
 }

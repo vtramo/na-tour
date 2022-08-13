@@ -17,4 +17,11 @@ interface TrailDataSource {
     ): Boolean
 
     suspend fun load(page: Int): Flow<List<Trail>>
+
+    suspend fun addPhoto(
+        idOwner: RequestBody,
+        idTrail: RequestBody,
+        position: RequestBody,
+        image: MultipartBody.Part
+    ): Boolean
 }

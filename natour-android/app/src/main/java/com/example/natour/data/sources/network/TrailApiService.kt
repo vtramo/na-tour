@@ -21,4 +21,13 @@ interface TrailApiService {
 
     @GET("/trail/{page}")
     suspend fun getTrails(@Path("page") page: Int): List<TrailDto>
+
+    @Multipart
+    @POST("/trail/photo")
+    suspend fun addPhoto(
+        @Part("idOwner")    idOwner: RequestBody,
+        @Part("idTrail")    idTrail: RequestBody,
+        @Part("position")   position: RequestBody,
+        @Part               image: MultipartBody.Part
+    ): Boolean
 }

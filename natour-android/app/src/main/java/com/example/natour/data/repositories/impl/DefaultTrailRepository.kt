@@ -1,10 +1,7 @@
 package com.example.natour.data.repositories.impl
 
 import android.graphics.drawable.Drawable
-import com.example.natour.data.model.Duration
-import com.example.natour.data.model.RoutePoint
-import com.example.natour.data.model.Trail
-import com.example.natour.data.model.TrailDifficulty
+import com.example.natour.data.model.*
 import com.example.natour.data.repositories.TrailRepository
 import com.example.natour.data.sources.TrailDataSource
 import com.example.natour.data.util.buildImageMultipartBody
@@ -53,5 +50,26 @@ class DefaultTrailRepository(
 
     override suspend fun load(page: Int): Flow<List<Trail>> = withContext(ioDispatcher) {
         trailDataSource.load(page)
+    }
+
+    override suspend fun addPhoto(
+        idOwner: Long,
+        idTrail: Long,
+        image: Drawable,
+        position: Position
+    ): Boolean = withContext(ioDispatcher) {
+        val idOwnerRequestBody = idOwner.buildRequestBody()
+        val idTrailRequestBody = idTrail.buildRequestBody()
+        val positionRequestBody = position.buildRequestBody()
+        val imageRequestBody = image.buildRequestBody()
+
+        val imageMultipartBody = buildImageMultipartBody(imageRequestBody)
+
+        trailDataSource.addPhoto(
+            idOwnerRequestBody,
+            idTrailRequestBody,
+            positionRequestBody,
+            imageMultipartBody
+        )
     }
 }

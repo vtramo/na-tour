@@ -10,9 +10,17 @@ import com.example.natour.data.model.Position
 import com.example.natour.data.model.RoutePoint
 import com.example.natour.data.model.Trail
 import com.example.natour.data.model.TrailPhoto
+import com.example.natour.data.repositories.MainUserRepository
+import com.example.natour.data.repositories.TrailRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class TrailDetailsViewModel : ViewModel() {
+@HiltViewModel
+class TrailDetailsViewModel @Inject constructor(
+    private val trailRepository: TrailRepository,
+    private val mainUserRepository: MainUserRepository
+) : ViewModel() {
 
     private lateinit var _thisTrail: Trail
     var thisTrail
@@ -53,11 +61,18 @@ class TrailDetailsViewModel : ViewModel() {
     private var _thereAreNoPhotosVisibility = MutableLiveData(View.VISIBLE)
     val thereAreNoPhotosVisibility: LiveData<Int> get() = _thereAreNoPhotosVisibility
 
-    fun addPhoto(photo: Drawable, position: Position) = viewModelScope.launch {
-        // add photo backend
+    private var _photoSuccessfullyAddedLiveData = MutableLiveData<Boolean>()
+    val photoSuccessfullyAddedLiveData: LiveData<Boolean> get() = _photoSuccessfullyAddedLiveData
 
-        val newTrailPhoto = TrailPhoto(_thisTrail.owner, photo, position)
-        updateTrailPhotos(newTrailPhoto)
+    fun addPhoto(photo: Drawable, position: Position) = viewModelScope.launch {
+        val idOwner = mainUserRepository.getDetails().id
+        _photoSuccessfullyAddedLiveData.value = trailRepository.addPhoto(
+            idOwner, thisTrail.idTrail, photo, position
+        )
+        if (photoSuccessfullyAddedLiveData.value!!) {
+            val newTrailPhoto = TrailPhoto(_thisTrail.owner, photo, position)
+            updateTrailPhotos(newTrailPhoto)
+        }
     }
 
     private fun updateTrailPhotos(newTrailPhoto: TrailPhoto) {

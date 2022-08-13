@@ -2,6 +2,7 @@ package com.example.natour.data.util
 
 import android.graphics.drawable.Drawable
 import com.example.natour.data.model.Duration
+import com.example.natour.data.model.Position
 import com.example.natour.data.model.RoutePoint
 import com.example.natour.data.model.TrailDifficulty
 import kotlinx.serialization.encodeToString
@@ -34,4 +35,8 @@ fun TrailDifficulty.buildRequestBody() =
 
 fun List<RoutePoint>.buildRequestBody() =
     Json.encodeToString(value = this)
+        .toRequestBody("application/json".toMediaTypeOrNull())
+
+fun Position.buildRequestBody() =
+    Json.encodeToString(this)
         .toRequestBody("application/json".toMediaTypeOrNull())

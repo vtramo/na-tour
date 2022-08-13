@@ -1,10 +1,7 @@
 package com.example.natour.data.repositories
 
 import android.graphics.drawable.Drawable
-import com.example.natour.data.model.Duration
-import com.example.natour.data.model.RoutePoint
-import com.example.natour.data.model.Trail
-import com.example.natour.data.model.TrailDifficulty
+import com.example.natour.data.model.*
 import kotlinx.coroutines.flow.Flow
 
 
@@ -20,4 +17,11 @@ interface TrailRepository {
     ): Boolean
 
     suspend fun load(page: Int): Flow<List<Trail>>
+
+    suspend fun addPhoto(
+        idOwner: Long,
+        idTrail: Long,
+        image: Drawable,
+        position: Position
+    ): Boolean
 }

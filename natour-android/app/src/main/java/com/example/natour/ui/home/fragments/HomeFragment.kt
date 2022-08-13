@@ -24,7 +24,7 @@ class HomeFragment : Fragment() {
     private val mMainUserViewModel: MainUserViewModel by activityViewModels()
     private val mHomeViewModel: HomeViewModel by hiltNavGraphViewModels(R.id.home_nav_graph)
     private val mTrailDetailsViewModel: TrailDetailsViewModel
-        by navGraphViewModels(R.id.home_nav_graph)
+        by hiltNavGraphViewModels(R.id.home_nav_graph)
 
     private lateinit var mRecyclerView: RecyclerView
 
