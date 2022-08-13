@@ -28,7 +28,7 @@ class HomeViewModel @Inject constructor(
     val pagesAreFinished get() = _pagesAreFinished
 
     private var _trails = MutableLiveData<List<Trail>>(listOf())
-    val trails: LiveData<List<Trail>> = _trails
+    val trails: LiveData<List<Trail>> get() = _trails
 
     fun loadTrails() = viewModelScope.launch {
         trailRepository.load(currentPage).collect { listTrails ->

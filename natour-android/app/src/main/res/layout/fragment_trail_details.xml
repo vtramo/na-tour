@@ -9,6 +9,10 @@
         <variable
             name="trailDetailsViewModel"
             type="com.example.natour.ui.home.viewmodels.TrailDetailsViewModel" />
+
+        <variable
+            name="trailDetailsFragment"
+            type="com.example.natour.ui.home.fragments.TrailDetailsFragment" />
     </data>
 
     <ScrollView
@@ -178,6 +182,11 @@
                 app:layout_constraintTop_toBottomOf="@id/trail_details_head_info_linear_layout"
                 android:orientation="vertical">
 
+                <!-- Divider -->
+                <View style="@style/Divider"
+                    android:layout_marginBottom="10dp"
+                    />
+
                 <!-- Difficulty -->
                 <LinearLayout
                     android:id="@+id/trail_difficulty_linear_layout"
@@ -265,6 +274,7 @@
 
             <!-- Map -->
             <LinearLayout
+                android:id="@+id/trail_map_linear_layout"
                 app:layout_constraintTop_toBottomOf="@id/trail_details_linear_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -273,12 +283,19 @@
                 android:paddingTop="16dp"
                 >
 
+                <!-- Divider -->
+                <View style="@style/Divider"
+                    android:layout_marginBottom="10dp"
+                    />
+
+
                 <!-- Map TextView -->
                 <TextView
                     android:id="@+id/trail_details_map_text_view"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/map"
+                    android:textSize="22sp"
                     android:layout_marginBottom="10dp"
                     android:fontFamily="@font/montserrat_bold" />
 
@@ -298,8 +315,92 @@
 
             </LinearLayout>
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+            <!-- Photos linear layout -->
+            <LinearLayout
+                android:id="@+id/trail_photos_linear_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintTop_toBottomOf="@id/trail_map_linear_layout"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:paddingHorizontal="16dp"
+                android:paddingTop="16dp"
+                >
 
+                <!-- Divider -->
+                <View style="@style/Divider"
+                    android:layout_marginBottom="10dp"
+                    />
+
+                <!-- Photos textview and button -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <!-- Photos text view -->
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="@string/photos"
+                        android:textSize="22sp"
+                        android:layout_weight="15"
+                        android:layout_marginBottom="10dp"
+                        android:fontFamily="@font/montserrat_bold" />
+
+                    <!-- Add a photo button -->
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/add_a_photo_button"
+                        android:onClick="@{() -> trailDetailsFragment.onAddPhotoClick()}"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/add_a_photo"
+                        android:fontFamily="@font/montserrat_bold"
+                        android:drawableLeft="@drawable/ic_add_photo_camera"
+                        app:cornerRadius="8dp"
+                        app:strokeColor="#7F8487"
+                        app:rippleColor="@color/black"
+                        android:backgroundTint="@color/white"
+                        android:textColor="@color/gray"
+                        app:strokeWidth="1dp"
+                        tools:ignore="RtlHardcoded" />
+
+                </LinearLayout>
+
+                <!-- Photos Recycler view -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/trail_photos_recycler_view"
+                        android:layout_marginTop="20dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        />
+
+                </LinearLayout>
+
+                <!-- There are no photos text view -->
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="@string/there_are_no_photos"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:layout_marginVertical="10dp"
+                    android:textSize="24sp"
+                    android:visibility="@{trailDetailsViewModel.thereAreNoPhotosVisibility}"
+                    />
+
+            </LinearLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </ScrollView>
 

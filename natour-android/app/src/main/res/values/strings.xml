@@ -56,6 +56,10 @@
     <string name="travel_time">Travel time:</string>
     <string name="description_label">Description:</string>
     <string name="map">Map</string>
+    <string name="add_a_photo">Add a photo</string>
+    <string name="photos">Photos</string>
+    <string name="log_out">Log out</string>
+    <string name="there_are_no_photos">There are no photos</string>
 
     <!-- Route Creation -->
     <string-array name="listDifficulties">

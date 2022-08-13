@@ -15,8 +15,8 @@ fun TrailDto.toTrailModel(): Trail =
         duration,
         bytesImage.toDrawable(),
         routePoints,
-        photos.toListOfTrailPhotoModel(),
-        reviews,
+        photos.toMutableListOfTrailPhotoModel(),
+        reviews.toMutableList(),
         stars
     )
 
@@ -27,5 +27,6 @@ fun TrailPhotoDto.toTrailPhotoModel(): TrailPhoto =
         position
     )
 
-fun List<TrailPhotoDto>.toListOfTrailPhotoModel(): List<TrailPhoto> =
+fun List<TrailPhotoDto>.toMutableListOfTrailPhotoModel(): MutableList<TrailPhoto> =
     map { trailPhotoDto -> trailPhotoDto.toTrailPhotoModel() }
+        .toMutableList()

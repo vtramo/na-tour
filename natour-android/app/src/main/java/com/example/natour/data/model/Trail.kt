@@ -14,8 +14,8 @@ data class Trail(
     val duration: Duration,
     val image: Drawable,
     val routePoints: List<RoutePoint>,
-    val photos: List<TrailPhoto>,
-    val reviews: List<TrailReview>,
+    val photos: MutableList<TrailPhoto>,
+    val reviews: MutableList<TrailReview>,
     val stars: Stars
 ) {
     fun getStarsImage(): Drawable =
