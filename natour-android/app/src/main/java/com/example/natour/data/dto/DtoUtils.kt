@@ -4,6 +4,7 @@ import com.example.natour.data.dto.TrailDto
 import com.example.natour.data.dto.TrailPhotoDto
 import com.example.natour.data.model.Trail
 import com.example.natour.data.model.TrailPhoto
+import com.example.natour.util.toDrawable
 
 fun TrailDto.toTrailModel(): Trail =
     Trail(

@@ -16,14 +16,61 @@
         app:cardElevation="0dp"
         >
 
-        <ImageView
-            android:id="@+id/trail_photo"
-            android:layout_width="match_parent"
-            android:layout_height="194dp"
-            android:adjustViewBounds="true"
-            android:scaleType="centerCrop"
-            tools:ignore="ContentDescription"
-            tools:src="@drawable/trail_test_image" />
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <!-- Image -->
+            <ImageView
+                android:id="@+id/trail_photo"
+                android:layout_width="match_parent"
+                android:layout_height="194dp"
+                android:adjustViewBounds="true"
+                android:scaleType="centerCrop"
+                tools:ignore="ContentDescription"
+                tools:src="@drawable/trail_test_image" />
+
+            <!-- Owner label -->
+            <LinearLayout
+                android:layout_margin="8dp"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:background="@drawable/shape_round"
+                android:layout_gravity="start|bottom"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:layout_marginHorizontal="7dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/user_image_card"
+                    tools:ignore="ContentDescription" />
+
+                <TextView
+                    android:id="@+id/username_text_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="7dp"
+                    android:textSize="12sp"
+                    tools:text="bonek"
+                    />
+
+            </LinearLayout>
+
+            <!-- Gps Image -->
+            <ImageButton
+                android:id="@+id/gps_image_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:layout_margin="8dp"
+                android:src="@drawable/ic_baseline_gps_fixed_24"
+                tools:ignore="ContentDescription" />
+
+        </FrameLayout>
+
 
     </com.google.android.material.card.MaterialCardView>
 

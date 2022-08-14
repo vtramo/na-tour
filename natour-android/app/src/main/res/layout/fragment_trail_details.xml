@@ -288,16 +288,42 @@
                     android:layout_marginBottom="10dp"
                     />
 
-
-                <!-- Map TextView -->
-                <TextView
-                    android:id="@+id/trail_details_map_text_view"
-                    android:layout_width="wrap_content"
+                <!-- Map TextView and Go to trail button -->
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/map"
-                    android:textSize="22sp"
-                    android:layout_marginBottom="10dp"
-                    android:fontFamily="@font/montserrat_bold" />
+                    android:layout_marginBottom="8dp"
+                    android:orientation="horizontal">
+
+                    <!-- Map TextView -->
+                    <TextView
+                        android:id="@+id/trail_details_map_text_view"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="8"
+                        android:text="@string/map"
+                        android:textSize="22sp"
+                        android:layout_marginBottom="10dp"
+                        android:fontFamily="@font/montserrat_bold" />
+
+                    <!-- Go to trail button -->
+                    <com.google.android.material.button.MaterialButton
+                        android:onClick="@{() -> trailDetailsFragment.onGoToTrailClick()}"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/go_to_trail"
+                        android:fontFamily="@font/montserrat_bold"
+                        android:drawableLeft="@drawable/ic_baseline_map_24"
+                        app:cornerRadius="8dp"
+                        app:strokeColor="#7F8487"
+                        app:rippleColor="@color/black"
+                        android:backgroundTint="@color/white"
+                        android:textColor="@color/gray"
+                        app:strokeWidth="1dp"
+                        tools:ignore="RtlHardcoded" />
+
+                </LinearLayout>
 
                 <!-- Google Map -->
                 <fragment
@@ -305,7 +331,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     android:id="@+id/map"
-                    android:name="com.example.natour.ui.util.SupportMapFragmentWrapper"
+                    android:name="com.example.natour.ui.trail.SupportMapFragmentWrapper"
                     android:layout_width="match_parent"
                     android:layout_height="500dp"
                     app:cameraTilt="30"

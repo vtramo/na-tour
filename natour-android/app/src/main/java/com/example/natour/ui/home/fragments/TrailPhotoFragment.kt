@@ -32,6 +32,7 @@ class TrailPhotoFragment: Fragment() {
         _binding = FragmentTrailPhotoBinding.inflate(inflater, container, false)
 
         binding.trailDetailsViewModel = mTrailDetailsViewModel
+        binding.trailPhotoFragment = this
 
         return binding.root
     }
@@ -62,6 +63,11 @@ class TrailPhotoFragment: Fragment() {
                 }
             }
         }
+    }
+
+    fun onGpsTrailPhotoClick() {
+        mTrailDetailsViewModel.gpsTrailPhotoButtonClicked = true
+        view?.findNavController()?.popBackStack()
     }
 
     override fun onDestroy() {

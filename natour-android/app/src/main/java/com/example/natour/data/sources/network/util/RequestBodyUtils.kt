@@ -5,6 +5,7 @@ import com.example.natour.data.model.Duration
 import com.example.natour.data.model.Position
 import com.example.natour.data.model.RoutePoint
 import com.example.natour.data.model.TrailDifficulty
+import com.example.natour.util.convertDrawableToByteArray
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaTypeOrNull

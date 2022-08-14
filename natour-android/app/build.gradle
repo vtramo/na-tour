@@ -150,6 +150,9 @@ dependencies {
     implementation("androidx.hilt:hilt-navigation-fragment:1.0.0")
 
     implementation 'io.github.igreenwood.loupe:loupe:1.2.2'
+
+    // Google Maps Utils
+    implementation 'com.google.maps.android:android-maps-utils:2.3.0'
 }
 
 

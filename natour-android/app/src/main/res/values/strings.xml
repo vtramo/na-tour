@@ -60,6 +60,7 @@
     <string name="photos">Photos</string>
     <string name="log_out">Log out</string>
     <string name="there_are_no_photos">There are no photos</string>
+    <string name="go_to_trail">Go to trail</string>
 
     <!-- Route Creation -->
     <string-array name="listDifficulties">

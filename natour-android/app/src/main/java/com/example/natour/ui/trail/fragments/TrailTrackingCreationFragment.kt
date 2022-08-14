@@ -193,6 +193,7 @@ class TrailTrackingCreationFragment : Fragment(), OnMapReadyCallback {
                     .build()
             )
         )
+        mStartingPositionMarker.showInfoWindow()
     }
 
     @SuppressLint("MissingPermission")

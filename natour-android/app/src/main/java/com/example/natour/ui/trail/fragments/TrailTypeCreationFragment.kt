@@ -17,7 +17,7 @@ import androidx.navigation.findNavController
 import com.example.natour.R
 import com.example.natour.databinding.FragmentTrailTypeCreationBinding
 import com.example.natour.ui.trail.TrailStartCreationViewModel
-import com.example.natour.ui.util.RouteGPXParser
+import com.example.natour.ui.trail.RouteGPXParser
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import javax.inject.Inject

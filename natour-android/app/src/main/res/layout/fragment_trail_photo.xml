@@ -8,6 +8,10 @@
         <variable
             name="trailDetailsViewModel"
             type="com.example.natour.ui.home.viewmodels.TrailDetailsViewModel" />
+
+        <variable
+            name="trailPhotoFragment"
+            type="com.example.natour.ui.home.fragments.TrailPhotoFragment" />
     </data>
 
     <FrameLayout
@@ -16,9 +20,27 @@
         android:layout_height="match_parent"
         android:background="@color/black">
 
+        <!-- Full Screen Image -->
+        <ImageView
+            android:id="@+id/image"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@{trailDetailsViewModel.trailPhotoClicked.image}"
+            tools:ignore="ContentDescription" />
 
+        <!-- GPS Button -->
+        <ImageButton
+            android:layout_margin="32dp"
+            android:onClick="@{() -> trailPhotoFragment.onGpsTrailPhotoClick()}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_baseline_gps_fixed_24"
+            android:layout_gravity="bottom|end"
+            tools:ignore="ContentDescription" />
+
+        <!-- Owner label -->
         <LinearLayout
-            android:layout_margin="16dp"
+            android:layout_margin="32dp"
             android:layout_width="wrap_content"
             android:layout_height="40dp"
             android:background="@drawable/shape_round"
@@ -28,8 +50,9 @@
 
             <ImageView
                 android:layout_marginHorizontal="7dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:scaleType="centerCrop"
                 android:src="@drawable/user_image_card"
                 tools:ignore="ContentDescription" />
 
@@ -43,13 +66,6 @@
                 />
 
         </LinearLayout>
-
-        <ImageView
-            android:id="@+id/image"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:src="@{trailDetailsViewModel.trailPhotoClicked.image}"
-            tools:ignore="ContentDescription" />
 
     </FrameLayout>
 
