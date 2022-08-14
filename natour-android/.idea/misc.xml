@@ -7,6 +7,7 @@
         <entry key="..\:/NaTour/NaTour/natour-android/app/src/main/res/layout/login_fragment.xml" value="0.25" />
         <entry key="..\:/NaTour/natour-android/app/src/main/res/drawable/button_add_photo_bg.xml" value="0.3065" />
         <entry key="..\:/NaTour/natour-android/app/src/main/res/drawable/ic_error.xml" value="0.273" />
+        <entry key="..\:/NaTour/natour-android/app/src/main/res/drawable/shape_round.xml" value="0.156" />
         <entry key="..\:/NaTour/natour-android/app/src/main/res/layout-v28/fragment_trail_start_creation.xml" value="0.12280701754385964" />
         <entry key="..\:/NaTour/natour-android/app/src/main/res/layout/activity_main.xml" value="0.38697916666666665" />
         <entry key="..\:/NaTour/natour-android/app/src/main/res/layout/card_view.xml" value="0.33" />
@@ -20,8 +21,9 @@
         <entry key="..\:/NaTour/natour-android/app/src/main/res/layout/fragment_route_tracking_creation.xml" value="0.25" />
         <entry key="..\:/NaTour/natour-android/app/src/main/res/layout/fragment_route_type_creation.xml" value="0.13352272727272727" />
         <entry key="..\:/NaTour/natour-android/app/src/main/res/layout/fragment_trail_detail.xml" value="0.22" />
-        <entry key="..\:/NaTour/natour-android/app/src/main/res/layout/fragment_trail_details.xml" value="0.18" />
+        <entry key="..\:/NaTour/natour-android/app/src/main/res/layout/fragment_trail_details.xml" value="0.1625" />
         <entry key="..\:/NaTour/natour-android/app/src/main/res/layout/fragment_trail_display_creation.xml" value="0.18" />
+        <entry key="..\:/NaTour/natour-android/app/src/main/res/layout/fragment_trail_photo.xml" value="0.16" />
         <entry key="..\:/NaTour/natour-android/app/src/main/res/layout/fragment_trail_start_creation.xml" value="0.2444078947368421" />
         <entry key="..\:/NaTour/natour-android/app/src/main/res/layout/fragment_trail_tracking_creation.xml" value="0.2444078947368421" />
         <entry key="..\:/NaTour/natour-android/app/src/main/res/layout/fragment_trail_type_creation.xml" value="0.2444078947368421" />

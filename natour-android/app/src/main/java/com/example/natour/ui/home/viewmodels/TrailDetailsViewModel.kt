@@ -64,15 +64,29 @@ class TrailDetailsViewModel @Inject constructor(
     private var _photoSuccessfullyAddedLiveData = MutableLiveData<Boolean>()
     val photoSuccessfullyAddedLiveData: LiveData<Boolean> get() = _photoSuccessfullyAddedLiveData
 
+    private var _trailPhotoClicked = MutableLiveData<TrailPhoto>()
+    val trailPhotoClicked: LiveData<TrailPhoto>
+        get() = _trailPhotoClicked
+
+    fun setTrailPhotoClicked(trailPhotoClicked: TrailPhoto) {
+        _trailPhotoClicked.value = trailPhotoClicked
+    }
+
     fun addPhoto(photo: Drawable, position: Position) = viewModelScope.launch {
-        val idOwner = mainUserRepository.getDetails().id
-        _photoSuccessfullyAddedLiveData.value = trailRepository.addPhoto(
-            idOwner, thisTrail.idTrail, photo, position
+        _photoSuccessfullyAddedLiveData.value =
+            trailRepository.addPhoto(
+                idOwner = mainUserRepository.getDetails().id,
+                idTrail = thisTrail.idTrail,
+                image = photo,
+                position = position
         )
+
         if (photoSuccessfullyAddedLiveData.value!!) {
             val newTrailPhoto = TrailPhoto(_thisTrail.owner, photo, position)
             updateTrailPhotos(newTrailPhoto)
         }
+
+        _photoSuccessfullyAddedLiveData = MutableLiveData()
     }
 
     private fun updateTrailPhotos(newTrailPhoto: TrailPhoto) {
@@ -93,5 +107,7 @@ class TrailDetailsViewModel @Inject constructor(
         _listOfRoutePoints = listOf()
         _listOfTrailPhotos.value = listOf()
         _thereAreNoPhotosVisibility.value = View.VISIBLE
+        _photoSuccessfullyAddedLiveData = MutableLiveData()
+        _trailPhotoClicked = MutableLiveData()
     }
 }

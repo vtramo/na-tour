@@ -1,17 +1,20 @@
 package com.example.natour.ui.home.fragments
 
+
 import android.app.Activity
 import android.app.AlertDialog
 import android.graphics.drawable.Drawable
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.exifinterface.media.ExifInterface
 import androidx.fragment.app.Fragment
 import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
-import androidx.navigation.navGraphViewModels
+import androidx.navigation.findNavController
 import com.example.natour.R
 import com.example.natour.data.model.Position
 import com.example.natour.databinding.FragmentTrailDetailsBinding
@@ -24,6 +27,7 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.model.*
 import com.google.android.material.snackbar.Snackbar
+
 
 
 class TrailDetailsFragment : Fragment(), OnMapReadyCallback {
@@ -65,13 +69,20 @@ class TrailDetailsFragment : Fragment(), OnMapReadyCallback {
     }
 
     private fun setupListOfTrailPhotos() {
-        val trailPhotoListAdapter = TrailPhotoListAdapter {
+        val trailPhotoListAdapter = TrailPhotoListAdapter { trailPhoto ->
             // TODO: Set on click photo listener
+            mTrailDetailsViewModel.setTrailPhotoClicked(trailPhoto)
+            goToTrailPhotoFragment()
         }
         mTrailDetailsViewModel.listOfTrailPhotos.observe(viewLifecycleOwner) { listOfTrailPhotos ->
             trailPhotoListAdapter.submitList(listOfTrailPhotos)
         }
         binding.trailPhotosRecyclerView.adapter = trailPhotoListAdapter
+    }
+
+    private fun goToTrailPhotoFragment() {
+        val action = TrailDetailsFragmentDirections.actionTrailDetailFragmentToTrailPhotoFragment()
+        view?.findNavController()?.navigate(action)
     }
 
     private fun startGoogleMap() {
@@ -136,17 +147,33 @@ class TrailDetailsFragment : Fragment(), OnMapReadyCallback {
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == Activity.RESULT_OK) {
                 val imageUri = result.data!!.data!!
-                val trailPhotoDrawable = getDrawableFromImageUri(imageUri)
-                addPhoto(trailPhotoDrawable)
+                addPhoto(
+                    imageUri.toDrawable(),
+                    imageUri.getImagePosition()
+                )
             }
         }
 
-    private fun getDrawableFromImageUri(imageUri: Uri): Drawable {
-        val inputStream = requireContext().contentResolver.openInputStream(imageUri)
-        return Drawable.createFromStream(inputStream, imageUri.toString())
+    private fun Uri.toDrawable(): Drawable {
+        val imageInputStream = requireContext().contentResolver.openInputStream(this)!!
+        return Drawable.createFromStream(imageInputStream, this.toString())
     }
 
-    private fun addPhoto(trailPhotoDrawable: Drawable) {
+    private fun Uri.getImagePosition(): Position {
+        val imageInputStream = requireContext().contentResolver.openInputStream(this)!!
+
+        val exif =
+            if (Build.VERSION.SDK_INT >= 24)
+                ExifInterface(imageInputStream)
+            else
+                ExifInterface(path!!)
+
+        return exif.latLong?.let { dataPosition ->
+            Position(dataPosition[0], dataPosition[1])
+        } ?: Position.NOT_EXISTS
+    }
+
+    private fun addPhoto(trailPhotoDrawable: Drawable, position: Position) {
         with(mTrailDetailsViewModel) {
             photoSuccessfullyAddedLiveData.observe(viewLifecycleOwner) { photoSuccessfullyAdded ->
                 if (photoSuccessfullyAdded) {
@@ -156,7 +183,7 @@ class TrailDetailsFragment : Fragment(), OnMapReadyCallback {
                 }
             }
         }
-        mTrailDetailsViewModel.addPhoto(trailPhotoDrawable, Position(0.0,0.0))
+        mTrailDetailsViewModel.addPhoto(trailPhotoDrawable, position)
     }
 
     private fun showPhotoSuccessfullyAddedSnackbar() {

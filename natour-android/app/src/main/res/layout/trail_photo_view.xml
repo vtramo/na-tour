@@ -20,11 +20,10 @@
             android:id="@+id/trail_photo"
             android:layout_width="match_parent"
             android:layout_height="194dp"
+            android:adjustViewBounds="true"
             android:scaleType="centerCrop"
             tools:ignore="ContentDescription"
-            tools:src="@drawable/trail_test_image"
-            android:adjustViewBounds="true"
-            />
+            tools:src="@drawable/trail_test_image" />
 
     </com.google.android.material.card.MaterialCardView>
 

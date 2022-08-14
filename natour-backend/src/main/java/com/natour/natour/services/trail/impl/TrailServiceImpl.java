@@ -177,7 +177,11 @@ public class TrailServiceImpl implements TrailService {
         if (page < 0) 
             throw new IllegalArgumentException("Page number must be positive.");
 
-        Pageable pageable = PageRequest.of(page, 10, Sort.by("stars").descending());
+        Pageable pageable = PageRequest.of(
+            page, 
+            10, 
+            Sort.by("stars").descending().and(Sort.by("id").ascending())
+        );
 
         return trailRepository.findAll(pageable)
             .stream()
