@@ -12,6 +12,7 @@ import com.example.natour.data.repositories.TrailRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import kotlin.properties.Delegates
 
 @HiltViewModel
 class TrailDetailsViewModel @Inject constructor(
@@ -24,19 +25,39 @@ class TrailDetailsViewModel @Inject constructor(
         get() = _thisTrail
         set(trail) {
             _thisTrail = trail
-            _ownerUsername = trail.owner.username
-            _numberOfReviews.value = "${trail.reviews.size} votes"
-            _trailDuration = trail.duration.toString()
-            _descriptionVisibility = if (trail.description.isBlank()) View.GONE else View.VISIBLE
-            _positionDetails = trail.getPositionDetails()
-            _listOfRoutePoints = trail.routePoints
-            _listOfTrailPhotos.value = trail.photos.toList()
-            _thereAreNoPhotosVisibility.value = if (trail.photos.isEmpty()) View.VISIBLE else View.GONE
-            _listOfTrailReviews.value = trail.reviews.toList()
-            _thereAreNoReviewsVisibility.value = if (trail.reviews.isEmpty()) View.VISIBLE else View.GONE
-            _addReviewEnabled.value = !thisUserHasAlreadyAddedReview()
-            _starsImage.value = trail.getStarsImage()
+            setupTrailInformation()
+            setupListOfRoutePoints()
+            setupListOfTrailPhotos()
+            setupListOfTrailReviews()
         }
+
+    private fun setupTrailInformation() {
+        _ownerUsername = _thisTrail.owner.username
+        _numberOfReviews.value = "${_thisTrail.reviews.size} votes"
+        _trailDuration = _thisTrail.duration.toString()
+        _descriptionVisibility = if (_thisTrail.description.isBlank()) View.GONE else View.VISIBLE
+        _positionDetails = _thisTrail.getPositionDetails()
+    }
+
+    private fun setupListOfRoutePoints() {
+        _listOfRoutePoints = _thisTrail.routePoints
+    }
+
+    private fun setupListOfTrailPhotos() {
+        with(_thisTrail) {
+            _listOfTrailPhotos.value = photos.toList()
+            _thereAreNoPhotosVisibility.value = if (photos.isEmpty()) View.VISIBLE else View.GONE
+        }
+    }
+
+    private fun setupListOfTrailReviews() {
+        with(_thisTrail) {
+            _listOfTrailReviews.value = reviews.toList()
+            _thereAreNoReviewsVisibility.value = if (reviews.isEmpty()) View.VISIBLE else View.GONE
+            _thisUserHasAlreadyAddedReviewOnThisTrail = thisUserHasAlreadyAddedReviewOnThisTrail()
+            _starsImage.value = getStarsImage()
+        }
+    }
 
     private lateinit var _ownerUsername: String
     val ownerUsername get() = _ownerUsername
@@ -118,10 +139,10 @@ class TrailDetailsViewModel @Inject constructor(
     private var _thereAreNoReviewsVisibility = MutableLiveData(View.VISIBLE)
     val thereAreNoReviewsVisibility: LiveData<Int> get() = _thereAreNoReviewsVisibility
 
-    private var _addReviewEnabled = MutableLiveData<Boolean>()
-    val addReviewEnabled: LiveData<Boolean> get() = _addReviewEnabled
+    private var _thisUserHasAlreadyAddedReviewOnThisTrail by Delegates.notNull<Boolean>()
+    val thisUserHasAlreadyAddedReviewOnThisTrail get() = _thisUserHasAlreadyAddedReviewOnThisTrail
 
-    private fun thisUserHasAlreadyAddedReview(): Boolean {
+    private fun thisUserHasAlreadyAddedReviewOnThisTrail(): Boolean {
         val thisUsername = mainUserRepository.getDetails().username
         _thisTrail.reviews.forEach { trailReview ->
             if (trailReview.owner.username == thisUsername) return true
@@ -180,7 +201,7 @@ class TrailDetailsViewModel @Inject constructor(
         _listOfTrailReviews.value = listOf()
         _reviewSuccessfullyAddedLiveData = MutableLiveData()
         _numberOfReviews = MutableLiveData()
-        _addReviewEnabled = MutableLiveData()
+        _thisUserHasAlreadyAddedReviewOnThisTrail = false
         _starsImage = MutableLiveData()
     }
 }
