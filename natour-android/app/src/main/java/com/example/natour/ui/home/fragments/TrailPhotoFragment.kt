@@ -1,13 +1,11 @@
 package com.example.natour.ui.home.fragments
 
-import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.ImageView
-import androidx.core.graphics.drawable.toBitmap
 import androidx.fragment.app.Fragment
 import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
 import androidx.navigation.findNavController
@@ -50,6 +48,7 @@ class TrailPhotoFragment: Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         mImageView = binding.image
+        setTrailPhotoToImageView()
         mFrameLayout = binding.container
 
         Loupe.create(mImageView, mFrameLayout) {
@@ -77,7 +76,7 @@ class TrailPhotoFragment: Fragment() {
     private fun setTrailPhotoToImageView() {
         val drawableImage = mTrailDetailsViewModel.trailPhotoClicked.value!!.image
         val byteArray = drawableImage.convertDrawableToByteArray()
-        binding.image.setImageDrawable(byteArray.toDrawable())
+        mImageView.setImageDrawable(byteArray.toDrawable())
     }
 
     fun onGpsTrailPhotoClick() {
