@@ -13,4 +13,5 @@ public class TrailReviewResponseDto {
     private UserDetailsDto owner;
     private Stars stars;
     private String description;
+    private String date;
 }

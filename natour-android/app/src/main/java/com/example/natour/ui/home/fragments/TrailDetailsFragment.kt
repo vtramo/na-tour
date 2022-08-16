@@ -26,6 +26,7 @@ import com.example.natour.data.model.TrailPhoto
 import com.example.natour.util.bitmapFromVector
 import com.example.natour.databinding.FragmentTrailDetailsBinding
 import com.example.natour.ui.home.TrailPhotoListAdapter
+import com.example.natour.ui.home.TrailReviewListAdapter
 import com.example.natour.ui.home.viewmodels.TrailDetailsViewModel
 import com.example.natour.ui.trail.SupportMapFragmentWrapper
 import com.github.dhaval2404.imagepicker.ImagePicker
@@ -72,6 +73,16 @@ class TrailDetailsFragment : Fragment(), OnMapReadyCallback, OnInfoWindowClickLi
 
         startGoogleMap()
         setupListOfTrailPhotos()
+        setupListOfTrailReviews()
+    }
+
+    private fun startGoogleMap() {
+        val mapFragment = childFragmentManager
+            .findFragmentById(R.id.map) as SupportMapFragmentWrapper
+        mapFragment.getMapAsync(this)
+        mapFragment.setOnTouchListener {
+            binding.trailDetailsScrollView.requestDisallowInterceptTouchEvent(true)
+        }
     }
 
     private fun setupListOfTrailPhotos() {
@@ -85,11 +96,9 @@ class TrailDetailsFragment : Fragment(), OnMapReadyCallback, OnInfoWindowClickLi
                 onGpsTrailPhotoClick()
             }
         )
-
         mTrailDetailsViewModel.listOfTrailPhotos.observe(viewLifecycleOwner) { listOfTrailPhotos ->
             trailPhotoListAdapter.submitList(listOfTrailPhotos)
         }
-
         binding.trailPhotosRecyclerView.adapter = trailPhotoListAdapter
     }
 
@@ -98,13 +107,12 @@ class TrailDetailsFragment : Fragment(), OnMapReadyCallback, OnInfoWindowClickLi
         view?.findNavController()?.navigate(action)
     }
 
-    private fun startGoogleMap() {
-        val mapFragment = childFragmentManager
-            .findFragmentById(R.id.map) as SupportMapFragmentWrapper
-        mapFragment.getMapAsync(this)
-        mapFragment.setOnTouchListener {
-            binding.trailDetailsScrollView.requestDisallowInterceptTouchEvent(true)
+    private fun setupListOfTrailReviews() {
+        val trailReviewListAdapter = TrailReviewListAdapter()
+        mTrailDetailsViewModel.listOfTrailReviews.observe(viewLifecycleOwner) { listOfTrailReview ->
+            trailReviewListAdapter.submitList(listOfTrailReview)
         }
+        binding.trailReviewsRecyclerView.adapter = trailReviewListAdapter
     }
 
     @SuppressLint("PotentialBehaviorOverride")
@@ -179,6 +187,41 @@ class TrailDetailsFragment : Fragment(), OnMapReadyCallback, OnInfoWindowClickLi
         mStartPointMarker.showInfoWindow()
     }
 
+    fun onAddReviewClick() {
+        with(mTrailDetailsViewModel) {
+            reviewSuccessfullyAddedLiveData.observe(viewLifecycleOwner) { reviewSuccessfullyAdded ->
+                if (reviewSuccessfullyAdded) {
+                    showReviewSuccessfullyAddedSnackbar()
+                } else {
+                    showFailReviewAddedAlertDialog()
+                }
+            }
+        }
+        showAddTrailReviewDialogFragment()
+    }
+
+    private fun showAddTrailReviewDialogFragment() {
+        AddTrailReviewDialogFragment().show(
+            childFragmentManager, AddTrailReviewDialogFragment.TAG
+        )
+    }
+
+    private fun showReviewSuccessfullyAddedSnackbar() {
+        Snackbar.make(
+            requireView(),
+            "Review successfully added",
+            Snackbar.LENGTH_SHORT
+        ).show()
+    }
+
+    private fun showFailReviewAddedAlertDialog() {
+        AlertDialog.Builder(requireContext())
+            .setTitle("Error")
+            .setMessage("A problem occurred in adding the review")
+            .setPositiveButton("Okay") { _, _ -> }
+            .show()
+    }
+
     fun onAddPhotoClick() {
         ImagePicker.with(this)
             .crop()
@@ -205,21 +248,26 @@ class TrailDetailsFragment : Fragment(), OnMapReadyCallback, OnInfoWindowClickLi
 
     private fun Uri.getPosition(): Position {
         val imageInputStream = requireContext().contentResolver.openInputStream(this)!!
-
         val exif =
             if (Build.VERSION.SDK_INT >= 24)
                 ExifInterface(imageInputStream)
             else
                 ExifInterface(path!!)
-
         return exif.latLong?.let { dataPosition ->
-            val latitude = dataPosition[0]
-            val longitude = dataPosition[1]
-            if (PolyUtil.isLocationOnPath(LatLng(latitude, longitude), mListOfRoutePoints, false, 1000.0))
-                return Position(latitude, longitude)
-            else
-                return Position.NOT_EXISTS
+            if (!dataPosition.isLocationOnPath()) return Position.NOT_EXISTS
+            return Position(latitude = dataPosition[0], longitude = dataPosition[1])
         } ?: Position.NOT_EXISTS
+    }
+
+    private fun DoubleArray.isLocationOnPath(): Boolean {
+        val latitude = get(0)
+        val longitude = get(1)
+        return PolyUtil.isLocationOnPath(
+            LatLng(latitude, longitude),
+            mListOfRoutePoints,
+            false,
+            250.0
+        )
     }
 
     private fun addPhoto(trailPhotoDrawable: Drawable, trailPhotoPosition: Position) {
@@ -231,8 +279,9 @@ class TrailDetailsFragment : Fragment(), OnMapReadyCallback, OnInfoWindowClickLi
                     showFailPhotoAddedAlertDialog()
                 }
             }
+
+            addPhoto(trailPhotoDrawable, trailPhotoPosition)
         }
-        mTrailDetailsViewModel.addPhoto(trailPhotoDrawable, trailPhotoPosition)
     }
 
     private fun showPhotoSuccessfullyAddedSnackbar() {

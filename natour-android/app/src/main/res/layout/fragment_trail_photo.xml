@@ -25,11 +25,14 @@
             android:id="@+id/image"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:src="@{trailDetailsViewModel.trailPhotoClicked.image}"
+            android:adjustViewBounds="true"
+            android:scaleType="centerInside"
+
             tools:ignore="ContentDescription" />
 
         <!-- GPS Button -->
         <ImageButton
+            android:id="@+id/trail_photo_gps_button"
             android:layout_margin="32dp"
             android:onClick="@{() -> trailPhotoFragment.onGpsTrailPhotoClick()}"
             android:layout_width="wrap_content"

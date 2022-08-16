@@ -21,7 +21,7 @@ class RouteGPXParser @Inject constructor(
     }
 
     fun parse(gpxFileUri: Uri): Route {
-        checkTypeUri(gpxFileUri)
+        //checkTypeUri(gpxFileUri)
         val inputStream = openInputStream(gpxFileUri)
         val parsedGpx = gpxParser.parse(inputStream)
         val listOfRoutePoints = getListOfRoutePointsFromParsedGpx(parsedGpx)

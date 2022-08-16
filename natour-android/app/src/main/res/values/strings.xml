@@ -61,6 +61,12 @@
     <string name="log_out">Log out</string>
     <string name="there_are_no_photos">There are no photos</string>
     <string name="go_to_trail">Go to trail</string>
+    <string name="reviews">Reviews</string>
+    <string name="there_are_no_reviews">There are no reviews</string>
+    <string name="add_a_review">Add a review</string>
+    <string name="optional_tell_others_what_you_think">(Optional) Tell others what you think</string>
+    <string name="submit">Submit</string>
+    <string name="cancel">Cancel</string>
 
     <!-- Route Creation -->
     <string-array name="listDifficulties">

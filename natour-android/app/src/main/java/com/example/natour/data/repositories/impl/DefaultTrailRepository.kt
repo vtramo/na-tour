@@ -1,6 +1,7 @@
 package com.example.natour.data.repositories.impl
 
 import android.graphics.drawable.Drawable
+import com.example.natour.data.dto.TrailReviewDto
 import com.example.natour.data.model.*
 import com.example.natour.data.repositories.TrailRepository
 import com.example.natour.data.sources.TrailDataSource
@@ -70,6 +71,24 @@ class DefaultTrailRepository(
             idTrailRequestBody,
             positionRequestBody,
             imageMultipartBody
+        )
+    }
+
+    override suspend fun addReview(
+        idOwner: Long,
+        idTrail: Long,
+        date: String,
+        description: String,
+        stars: Stars
+    ): Boolean = withContext(ioDispatcher) {
+        trailDataSource.addReview(
+            TrailReviewDto(
+                idOwner,
+                idTrail,
+                date,
+                stars,
+                description
+            )
         )
     }
 }

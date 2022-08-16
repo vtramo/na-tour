@@ -116,6 +116,7 @@ public class TrailServiceImpl implements TrailService {
         final TrailReview trailReview = new TrailReview();
         trailReview.setStars(trailReviewDto.getStars());
         trailReview.setDescription(trailReviewDto.getDescription());
+        trailReview.setDate(trailReviewDto.getDate());
         owner.addTrailReview(trailReview);
         trail.addReview(trailReview);
         trailReview.setOwner(owner);

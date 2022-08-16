@@ -16,7 +16,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import com.example.natour.R
 import com.example.natour.databinding.FragmentTrailTypeCreationBinding
-import com.example.natour.ui.trail.TrailStartCreationViewModel
+import com.example.natour.ui.trail.TrailCreationViewModel
 import com.example.natour.ui.trail.RouteGPXParser
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -28,7 +28,7 @@ class TrailTypeCreationFragment : Fragment() {
     private var _binding: FragmentTrailTypeCreationBinding? = null
     private val binding get() = _binding!!
 
-    private val mTrailStartCreationViewModel: TrailStartCreationViewModel
+    private val mTrailCreationViewModel: TrailCreationViewModel
         by hiltNavGraphViewModels(R.id.trail_creation_nav_graph)
 
     @Inject
@@ -54,9 +54,10 @@ class TrailTypeCreationFragment : Fragment() {
     }
 
     fun onGpxFileClick() {
-        val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
-        intent.addCategory(Intent.CATEGORY_OPENABLE)
-        intent.type = "application/gpx+xml"
+        val intent = Intent(Intent.ACTION_GET_CONTENT)
+        intent.type = "*/*"
+        val mimeTypes = arrayOf("application/gpx+xml", "application/octet-stream")
+        intent.putExtra(Intent.EXTRA_MIME_TYPES, mimeTypes)
         getGpxUriLauncher.launch(intent)
     }
 
@@ -64,11 +65,12 @@ class TrailTypeCreationFragment : Fragment() {
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == Activity.RESULT_OK) {
                 val gpxFileUri = result.data!!.data!!
+                Log.i("TYPE GPX", requireContext().contentResolver.getType(gpxFileUri) ?: "")
 
                 lifecycleScope.launch {
                     try {
                         val route = mRouteGPXParser.parse(gpxFileUri)
-                        mTrailStartCreationViewModel.listOfRoutePoints = route.listOfRoutePoints
+                        mTrailCreationViewModel.listOfRoutePoints = route.listOfRoutePoints
                         goToTrailDisplayCreationFragment()
                     } catch (e: Exception) {
                         showErrorGPXAlertDialog()

@@ -86,11 +86,18 @@
             <action
                 android:id="@+id/action_trailDetailFragment_to_trailPhotoFragment"
                 app:destination="@id/trailPhotoFragment" />
+            <action
+                android:id="@+id/action_trailDetailFragment_to_addTrailReviewDialogFragment"
+                app:destination="@id/addTrailReviewDialogFragment" />
         </fragment>
         <fragment
             android:id="@+id/trailPhotoFragment"
             android:name="com.example.natour.ui.home.fragments.TrailPhotoFragment"
             android:label="fragment_trail_photo"
             tools:layout="@layout/fragment_trail_photo" />
+        <dialog
+            android:id="@+id/addTrailReviewDialogFragment"
+            android:name="com.example.natour.ui.home.fragments.AddTrailReviewDialogFragment"
+            android:label="AddTrailReviewDialogFragment" />
     </navigation>
 </navigation>

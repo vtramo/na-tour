@@ -149,7 +149,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         tools:src="@drawable/five_stars_image"
-                        android:src="@{trailDetailsViewModel.thisTrail.starsImage}"
+                        android:src="@{trailDetailsViewModel.starsImage}"
                         android:adjustViewBounds="true"
                         android:scaleType="fitCenter"
                         android:maxHeight="25dp"
@@ -424,6 +424,91 @@
                     android:visibility="@{trailDetailsViewModel.thereAreNoPhotosVisibility}"
                     />
 
+            </LinearLayout>
+
+            <!-- Reviews -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/trail_photos_linear_layout"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:orientation="vertical"
+                android:paddingHorizontal="16dp"
+                android:paddingTop="16dp"
+                >
+
+                <!-- Divider -->
+                <View style="@style/Divider"
+                    android:layout_marginBottom="10dp"
+                    />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <!-- Reviews text view label -->
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_weight="23"
+                        android:layout_height="wrap_content"
+                        android:text="@string/reviews"
+                        android:textSize="22sp"
+                        android:layout_marginBottom="10dp"
+                        android:fontFamily="@font/montserrat_bold"
+                        />
+
+                    <!-- Add a review button -->
+                    <com.google.android.material.button.MaterialButton
+                        android:onClick="@{() -> trailDetailsFragment.onAddReviewClick()}"
+                        android:enabled="@{trailDetailsViewModel.addReviewEnabled}"
+                        android:clickable="@{trailDetailsViewModel.addReviewEnabled}"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/add_a_review"
+                        android:fontFamily="@font/montserrat_bold"
+                        android:drawableLeft="@drawable/empty_star_image"
+                        app:cornerRadius="8dp"
+                        app:strokeColor="#7F8487"
+                        app:rippleColor="@color/black"
+                        android:backgroundTint="@color/white"
+                        android:textColor="@color/gray"
+                        app:strokeWidth="1dp"
+                        tools:ignore="RtlHardcoded" />
+
+                </LinearLayout>
+
+                <!-- Trail review Recycler view -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/trail_reviews_recycler_view"
+                        android:layout_marginTop="20dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        />
+
+                </LinearLayout>
+
+                <!-- There are no reviews text view -->
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="@string/there_are_no_reviews"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:layout_marginVertical="10dp"
+                    android:textSize="24sp"
+                    android:visibility="@{trailDetailsViewModel.thereAreNoReviewsVisibility}"
+                    />
+                
             </LinearLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>

@@ -11,14 +11,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.activityViewModels
 import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
 import androidx.navigation.findNavController
-import androidx.navigation.navGraphViewModels
 import com.example.natour.R
 import com.example.natour.data.model.RoutePoint
 import com.example.natour.databinding.FragmentTrailTrackingCreationBinding
-import com.example.natour.ui.trail.TrailStartCreationViewModel
+import com.example.natour.ui.trail.TrailCreationViewModel
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -31,7 +29,7 @@ class TrailTrackingCreationFragment : Fragment(), OnMapReadyCallback {
     private var _binding: FragmentTrailTrackingCreationBinding? = null
     private val binding get() = _binding!!
 
-    private val mTrailStartCreationViewModel: TrailStartCreationViewModel
+    private val mTrailCreationViewModel: TrailCreationViewModel
         by hiltNavGraphViewModels(R.id.trail_creation_nav_graph)
 
     private lateinit var mPolyline: Polyline
@@ -121,7 +119,7 @@ class TrailTrackingCreationFragment : Fragment(), OnMapReadyCallback {
         assert(!mPolyline.hasZeroPoints())
 
         binding.confirmButton.isClickable = false
-        with(mTrailStartCreationViewModel) {
+        with(mTrailCreationViewModel) {
             listOfRoutePoints = mPolyline.points.map { RoutePoint(it.latitude, it.longitude) }
             hasBeenCreated.observe(viewLifecycleOwner) { hasBeenCreated ->
                 if (hasBeenCreated) {

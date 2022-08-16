@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    >
+
+    <data>
+        <variable
+            name="addTrailReviewDialogFragment"
+            type="com.example.natour.ui.home.fragments.AddTrailReviewDialogFragment" />
+
+        <variable
+            name="mainUserViewModel"
+            type="com.example.natour.ui.MainUserViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+
+        <!-- Add a review label and username -->
+        <LinearLayout
+            android:id="@+id/add_a_review_head_linear_layout"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="12dp"
+            >
+
+            <!-- Add a review label -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/add_a_review"
+                android:layout_gravity="center"
+                android:textSize="22sp"
+                android:fontFamily="@font/montserrat_bold"/>
+
+            <!-- Username -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_gravity="center"
+                android:gravity="end"
+                tools:ignore="UseCompoundDrawables">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="bonekkkkkkkkkkkk"
+                    android:text="@{mainUserViewModel.mainUser.username}"
+                    android:layout_gravity="center"
+                    android:textSize="15sp"
+                    android:textStyle="bold"/>
+
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:src="@drawable/user_image_card"
+                    android:layout_marginStart="5dp"
+                    tools:ignore="ContentDescription" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <!-- Divider -->
+        <View style="@style/Divider"
+            android:id="@+id/divider_between_head_and_stars"
+            app:layout_constraintTop_toBottomOf="@id/add_a_review_head_linear_layout"
+            app:layout_constraintBottom_toTopOf="@id/stars_linear_layout"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_margin="10dp"
+            />
+
+        <!-- Stars -->
+        <LinearLayout
+            android:layout_marginTop="10dp"
+            android:id="@+id/stars_linear_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/divider_between_head_and_stars"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+
+                <ImageView
+                    android:id="@+id/star_one_image_view"
+                    android:onClick="@{() -> addTrailReviewDialogFragment.onStarClick(1)}"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@drawable/empty_star_image"
+                    android:layout_marginHorizontal="15dp"
+                    tools:ignore="ContentDescription" />
+
+                <ImageView
+                    android:id="@+id/star_two_image_view"
+                    android:onClick="@{() -> addTrailReviewDialogFragment.onStarClick(2)}"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@drawable/empty_star_image"
+                    android:layout_marginHorizontal="15dp"
+                    tools:ignore="ContentDescription" />
+
+                <ImageView
+                    android:id="@+id/star_three_image_view"
+                    android:onClick="@{() -> addTrailReviewDialogFragment.onStarClick(3)}"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@drawable/empty_star_image"
+                    android:layout_marginHorizontal="15dp"
+                    tools:ignore="ContentDescription" />
+
+                <ImageView
+                    android:id="@+id/star_four_image_view"
+                    android:onClick="@{() -> addTrailReviewDialogFragment.onStarClick(4)}"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@drawable/empty_star_image"
+                    android:layout_marginHorizontal="15dp"
+                    tools:ignore="ContentDescription" />
+
+                <ImageView
+                    android:id="@+id/star_five_image_view"
+                    android:onClick="@{() -> addTrailReviewDialogFragment.onStarClick(5)}"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@drawable/empty_star_image"
+                    android:layout_marginHorizontal="15dp"
+                    tools:ignore="ContentDescription" />
+
+        </LinearLayout>
+
+        <!-- Review description -->
+        <LinearLayout
+            android:id="@+id/review_description_linear_layout"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/stars_linear_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- Review description -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/review_text_input_layout"
+                style="@style/Widget.Unscramble.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="12dp"
+                app:helperText="Public review"
+                app:counterEnabled="true"
+                app:counterMaxLength="250"
+                app:errorIconDrawable="@drawable/ic_error"
+                app:helperTextTextAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/review_text_input_edit_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:hint="@string/optional_tell_others_what_you_think"
+                    android:inputType="textMultiLine"
+                    android:lines="5"
+                    android:layout_gravity="top|start"
+                    android:gravity="top|start"
+                    android:maxLines="10"
+                    tools:ignore="DuplicateClickableBoundsCheck" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+        </LinearLayout>
+
+        <!-- Buttons -->
+        <LinearLayout
+            app:layout_constraintTop_toBottomOf="@id/review_description_linear_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <!-- Cancel button -->
+            <Button
+                android:onClick="@{() -> addTrailReviewDialogFragment.dismiss()}"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:backgroundTint="@color/white"
+                android:textColor="@color/purple_700"
+                android:layout_marginHorizontal="5dp"
+                android:text="@string/cancel"
+                tools:ignore="ButtonStyle" />
+
+            <!-- Submit button -->
+            <Button
+                android:id="@+id/submit_button"
+                android:onClick="@{() -> addTrailReviewDialogFragment.onSubmitClick()}"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginHorizontal="5dp"
+                android:enabled="false"
+                android:text="@string/submit"
+                tools:ignore="ButtonStyle" />
+
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

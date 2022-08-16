@@ -1,6 +1,7 @@
 package com.example.natour.data.sources.network
 
 import com.example.natour.data.dto.TrailDto
+import com.example.natour.data.dto.TrailReviewDto
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.http.*
@@ -29,5 +30,10 @@ interface TrailApiService {
         @Part("idTrail")    idTrail: RequestBody,
         @Part("position")   position: RequestBody,
         @Part               image: MultipartBody.Part
+    ): Boolean
+
+    @POST("/trail/review")
+    suspend fun addReview(
+        @Body trailReview: TrailReviewDto
     ): Boolean
 }

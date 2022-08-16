@@ -1,5 +1,6 @@
 package com.example.natour.data.sources.impl
 
+import com.example.natour.data.dto.TrailReviewDto
 import com.example.natour.data.model.Trail
 import com.example.natour.data.sources.TrailDataSource
 import com.example.natour.data.sources.network.TrailApiService
@@ -51,4 +52,7 @@ class TrailRemoteDataSource(
             position,
             image
         )
+
+    override suspend fun addReview(trailReview: TrailReviewDto): Boolean =
+        trailApiService.addReview(trailReview)
 }

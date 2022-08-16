@@ -1,17 +1,22 @@
 package com.example.natour.ui.home.fragments
 
+import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.ImageView
+import androidx.core.graphics.drawable.toBitmap
 import androidx.fragment.app.Fragment
 import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
 import androidx.navigation.findNavController
 import com.example.natour.R
+import com.example.natour.data.model.Position
 import com.example.natour.databinding.FragmentTrailPhotoBinding
 import com.example.natour.ui.home.viewmodels.TrailDetailsViewModel
+import com.example.natour.util.convertDrawableToByteArray
+import com.example.natour.util.toDrawable
 import com.igreenwood.loupe.Loupe
 
 class TrailPhotoFragment: Fragment() {
@@ -31,11 +36,15 @@ class TrailPhotoFragment: Fragment() {
     ): View {
         _binding = FragmentTrailPhotoBinding.inflate(inflater, container, false)
 
+        if (!trailPhotoHasPosition()) binding.trailPhotoGpsButton.visibility = View.GONE
         binding.trailDetailsViewModel = mTrailDetailsViewModel
         binding.trailPhotoFragment = this
 
         return binding.root
     }
+
+    private fun trailPhotoHasPosition() =
+        mTrailDetailsViewModel.trailPhotoClicked.value!!.position != Position.NOT_EXISTS
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -63,6 +72,12 @@ class TrailPhotoFragment: Fragment() {
                 }
             }
         }
+    }
+
+    private fun setTrailPhotoToImageView() {
+        val drawableImage = mTrailDetailsViewModel.trailPhotoClicked.value!!.image
+        val byteArray = drawableImage.convertDrawableToByteArray()
+        binding.image.setImageDrawable(byteArray.toDrawable())
     }
 
     fun onGpsTrailPhotoClick() {

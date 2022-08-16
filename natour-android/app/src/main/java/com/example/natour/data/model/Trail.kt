@@ -16,7 +16,7 @@ data class Trail(
     val routePoints: List<RoutePoint>,
     val photos: MutableList<TrailPhoto>,
     val reviews: MutableList<TrailReview>,
-    val stars: Stars
+    var stars: Stars
 ) {
     fun getStarsImage(): Drawable =
         with(MainActivity) {
@@ -39,6 +39,24 @@ data class Trail(
             var positionResult = if (adminArea.isNullOrBlank()) "" else "$adminArea, "
             positionResult += countryName
             return@with positionResult
+        }
+    }
+
+    fun calculateStars() {
+        var sumStars = 0
+        reviews.forEach { sumStars += it.stars.ordinal }
+        setStars(sumStars / reviews.size)
+    }
+
+    private fun setStars(value: Int) {
+        stars = when(value) {
+            0 -> Stars.ZERO
+            1 -> Stars.ONE
+            2 -> Stars.TWO
+            3 -> Stars.THREE
+            4 -> Stars.FOUR
+            5 -> Stars.FIVE
+            else -> throw IllegalArgumentException()
         }
     }
 }

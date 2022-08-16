@@ -82,8 +82,8 @@ public class TrailController {
     @ResponseStatus(HttpStatus.OK)
     @Operation(summary = "Adds the provided trail review to the provided trail and " +
                          "returns true if it has succeeded, false otherwise")
-    public boolean addReview(@RequestBody TrailReviewRequestDto review) {
-        return trailService.addReview(review);
+    public boolean addReview(@RequestBody TrailReviewRequestDto trailReview) {
+        return trailService.addReview(trailReview);
     }
 
     @PostMapping(

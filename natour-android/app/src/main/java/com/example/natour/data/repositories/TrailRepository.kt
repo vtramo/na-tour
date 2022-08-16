@@ -24,4 +24,14 @@ interface TrailRepository {
         image: Drawable,
         position: Position
     ): Boolean
+
+    suspend fun addReview(
+        idOwner: Long,
+        idTrail: Long,
+        date: String,
+        description: String,
+        stars: Stars
+    ): Boolean
+
+
 }

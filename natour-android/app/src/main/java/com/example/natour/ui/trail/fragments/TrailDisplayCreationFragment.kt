@@ -11,7 +11,7 @@ import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
 import androidx.navigation.findNavController
 import com.example.natour.R
 import com.example.natour.databinding.FragmentTrailDisplayCreationBinding
-import com.example.natour.ui.trail.TrailStartCreationViewModel
+import com.example.natour.ui.trail.TrailCreationViewModel
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -24,7 +24,7 @@ class TrailDisplayCreationFragment : Fragment(), OnMapReadyCallback {
     private var _binding: FragmentTrailDisplayCreationBinding? = null
     private val binding get() = _binding!!
 
-    private val mTrailStartCreationViewModel: TrailStartCreationViewModel
+    private val mTrailCreationViewModel: TrailCreationViewModel
         by hiltNavGraphViewModels(R.id.trail_creation_nav_graph)
 
     private lateinit var mListOfRoutePoints: List<LatLng>
@@ -34,7 +34,7 @@ class TrailDisplayCreationFragment : Fragment(), OnMapReadyCallback {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        mListOfRoutePoints = mTrailStartCreationViewModel
+        mListOfRoutePoints = mTrailCreationViewModel
                     .listOfRoutePoints
                     .map { LatLng(it.latitude, it.longitude) }
     }
@@ -106,7 +106,7 @@ class TrailDisplayCreationFragment : Fragment(), OnMapReadyCallback {
 
     fun onConfirmButtonClick() {
         binding.confirmButton.isClickable = false
-        with(mTrailStartCreationViewModel) {
+        with(mTrailCreationViewModel) {
             hasBeenCreated.observe(viewLifecycleOwner) { hasBeenCreated ->
                 if (hasBeenCreated) {
                     showTrailSuccessfullyCreatedSnackbar()

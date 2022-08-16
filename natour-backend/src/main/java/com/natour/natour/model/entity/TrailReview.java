@@ -31,6 +31,8 @@ public class TrailReview {
     @ManyToOne(cascade=CascadeType.ALL)
     private Trail trail;
 
+    private String date;
+
     private Stars stars;
 
     private String description;

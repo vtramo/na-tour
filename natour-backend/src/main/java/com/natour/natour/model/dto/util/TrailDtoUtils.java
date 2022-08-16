@@ -131,7 +131,8 @@ public abstract class TrailDtoUtils {
             return new TrailReviewResponseDto(
                 owner,
                 review.getStars(),
-                review.getDescription()
+                review.getDescription(),
+                review.getDate()
             );
     }
 }

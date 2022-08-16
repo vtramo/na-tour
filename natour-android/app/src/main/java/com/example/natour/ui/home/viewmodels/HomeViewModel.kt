@@ -49,6 +49,7 @@ class HomeViewModel @Inject constructor(
 
     fun refreshTrails() = viewModelScope.launch {
         currentPage = 0
+        _pagesAreFinished = false
         trailRepository.load(currentPage).collect { listTrails ->
             _trails.value = listTrails.toMutableList()
         }

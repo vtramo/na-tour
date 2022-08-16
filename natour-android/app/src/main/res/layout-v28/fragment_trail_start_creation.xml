@@ -10,7 +10,7 @@
 
         <variable
             name="trailStartCreationViewModel"
-            type="com.example.natour.ui.trail.TrailStartCreationViewModel" />
+            type="com.example.natour.ui.trail.TrailCreationViewModel" />
     </data>
 
     <ScrollView
@@ -255,7 +255,7 @@
 
             <!-- Description -->
             <EditText
-                android:id="@+id/edit_text"
+                android:id="@+id/description_edit_text"
                 android:layout_width="match_parent"
                 style="@style/Widget.Unscramble.TextInputLayout.OutlinedBox"
                 android:layout_marginTop="16dp"

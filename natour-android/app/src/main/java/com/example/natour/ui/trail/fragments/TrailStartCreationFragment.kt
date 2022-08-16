@@ -23,7 +23,7 @@ import com.example.natour.R
 import com.example.natour.data.model.TrailDifficulty
 import com.example.natour.databinding.FragmentTrailStartCreationBinding
 import com.example.natour.ui.ConstantRegex
-import com.example.natour.ui.trail.TrailStartCreationViewModel
+import com.example.natour.ui.trail.TrailCreationViewModel
 import com.github.dhaval2404.imagepicker.ImagePicker
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
@@ -35,7 +35,7 @@ class TrailStartCreationFragment : Fragment() {
     private var _binding: FragmentTrailStartCreationBinding? = null
     private val binding get() = _binding!!
 
-    private val mTrailStartCreationViewModel: TrailStartCreationViewModel
+    private val mTrailCreationViewModel: TrailCreationViewModel
         by hiltNavGraphViewModels(R.id.trail_creation_nav_graph)
 
     override fun onCreateView(
@@ -55,7 +55,7 @@ class TrailStartCreationFragment : Fragment() {
 
         binding.lifecycleOwner = viewLifecycleOwner
         binding.trailStartCreationFragment = this
-        binding.trailStartCreationViewModel = mTrailStartCreationViewModel
+        binding.trailStartCreationViewModel = mTrailCreationViewModel
 
         setupCustomBackToolbar()
         setupRouteDifficultyDropDownList()
@@ -77,7 +77,7 @@ class TrailStartCreationFragment : Fragment() {
                 resources.getStringArray(R.array.listDifficulties)
             )
         )
-        mTrailStartCreationViewModel.difficulty?.let { trailDifficulty ->
+        mTrailCreationViewModel.difficulty?.let { trailDifficulty ->
             difficultyAutoComplete.setText(trailDifficulty.toString(), false)
         }
     }
@@ -115,7 +115,7 @@ class TrailStartCreationFragment : Fragment() {
     }
 
     private fun setFormToViewModelProperties() {
-        with(mTrailStartCreationViewModel) {
+        with(mTrailCreationViewModel) {
             with(binding) {
                 trailName   = trailNameTextInputEditText.textString()
                 difficulty  = TrailDifficulty.toEnumValue(difficultyAutoCompleteTextView.textString())
@@ -123,6 +123,7 @@ class TrailStartCreationFragment : Fragment() {
                 hours       = Integer.parseInt(hoursTextInputEditText.textString())
                 days        = Integer.parseInt(daysTextInputEditText.textString())
                 months      = Integer.parseInt(monthsTextInputEditText.textString())
+                description = descriptionEditText.text?.toString() ?: ""
                 image       = uploadImageButton.background
             }
         }
