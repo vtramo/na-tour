@@ -6,7 +6,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
 import androidx.navigation.findNavController
-import androidx.navigation.navGraphViewModels
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.OnScrollListener
 import com.example.natour.R
@@ -67,6 +66,7 @@ class HomeFragment : Fragment() {
                 super.onScrollStateChanged(recyclerView, newState)
 
                 if (recyclerView.canScrollVertically(DIRECTION_DOWN)) return
+                if (mHomeViewModel.isLoadingTrails) return
                 if (mHomeViewModel.pagesAreFinished) return
 
                 loadNextTrailPage()

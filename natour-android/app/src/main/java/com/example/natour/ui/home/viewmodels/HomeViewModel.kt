@@ -30,7 +30,11 @@ class HomeViewModel @Inject constructor(
     private var _trails = MutableLiveData<List<Trail>>(listOf())
     val trails: LiveData<List<Trail>> get() = _trails
 
+    private var _isLoadingTrails = false
+    val isLoadingTrails get() = _isLoadingTrails
+
     fun loadTrails() = viewModelScope.launch {
+        _isLoadingTrails = true
         trailRepository.load(currentPage).collect { listTrails ->
             if (listTrails.isEmpty()) {
                 _pagesAreFinished = true
@@ -38,6 +42,7 @@ class HomeViewModel @Inject constructor(
             }
             addMoreTrails(listTrails)
         }
+        _isLoadingTrails = false
     }
 
     private fun addMoreTrails(otherTrails: List<Trail>) {
@@ -50,8 +55,10 @@ class HomeViewModel @Inject constructor(
     fun refreshTrails() = viewModelScope.launch {
         currentPage = 0
         _pagesAreFinished = false
+        _isLoadingTrails = true
         trailRepository.load(currentPage).collect { listTrails ->
             _trails.value = listTrails.toMutableList()
         }
+        _isLoadingTrails = false
     }
 }
