@@ -52,13 +52,21 @@ class HomeViewModel @Inject constructor(
         _trails.value = newTrailList
     }
 
+    private var _isRefreshingLiveData = MutableLiveData<Boolean>()
+    val isRefreshingLiveData get() = _isRefreshingLiveData
+
     fun refreshTrails() = viewModelScope.launch {
+        _isRefreshingLiveData.value = true
         currentPage = 0
         _pagesAreFinished = false
         _isLoadingTrails = true
+
         trailRepository.load(currentPage).collect { listTrails ->
             _trails.value = listTrails.toMutableList()
         }
+
         _isLoadingTrails = false
+        _isRefreshingLiveData.value = false
+        _isRefreshingLiveData = MutableLiveData()
     }
 }

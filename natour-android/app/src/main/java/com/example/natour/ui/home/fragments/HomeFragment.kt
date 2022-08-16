@@ -34,6 +34,7 @@ class HomeFragment : Fragment() {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
 
         setupRecyclerView()
+        setupSwipeRefreshLayout()
 
         return binding.root
     }
@@ -77,6 +78,16 @@ class HomeFragment : Fragment() {
     private fun loadNextTrailPage() {
         mHomeViewModel.currentPage++
         mHomeViewModel.loadTrails()
+    }
+
+    private fun setupSwipeRefreshLayout() {
+        val swipeRefreshLayout = binding.swipeRefreshLayout
+        swipeRefreshLayout.setOnRefreshListener {
+            mHomeViewModel.isRefreshingLiveData.observe(viewLifecycleOwner) {
+                swipeRefreshLayout.isRefreshing = it
+            }
+            mHomeViewModel.refreshTrails()
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

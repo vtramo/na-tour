@@ -332,7 +332,7 @@ class TrailDetailsFragment : Fragment(), OnMapReadyCallback, OnInfoWindowClickLi
 
     internal inner class CustomInfoWindowAdapter : InfoWindowAdapter {
         @SuppressLint("InflateParams")
-        private val contents: View = layoutInflater.inflate(R.layout.custom_info_contents, null)
+        private val contents: View = layoutInflater.inflate(R.layout.trail_photo_miniature_custom_info_contents, null)
 
         override fun getInfoWindow(marker: Marker): View? = null
 
