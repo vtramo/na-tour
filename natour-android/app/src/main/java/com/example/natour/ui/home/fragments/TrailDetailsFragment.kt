@@ -23,8 +23,8 @@ import androidx.navigation.findNavController
 import com.example.natour.R
 import com.example.natour.data.model.Position
 import com.example.natour.data.model.TrailPhoto
-import com.example.natour.util.bitmapFromVector
 import com.example.natour.databinding.FragmentTrailDetailsBinding
+import com.example.natour.util.bitmapFromVector
 import com.example.natour.ui.home.TrailPhotoListAdapter
 import com.example.natour.ui.home.TrailReviewListAdapter
 import com.example.natour.ui.home.viewmodels.TrailDetailsViewModel
@@ -189,6 +189,10 @@ class TrailDetailsFragment : Fragment(), OnMapReadyCallback, OnInfoWindowClickLi
 
     fun onAddReviewClick() {
         with(mTrailDetailsViewModel) {
+            if (thisUserHasAlreadyAddedReviewOnThisTrail) {
+                showAlreadyAddedReviewAlertDialog()
+                return
+            }
             reviewSuccessfullyAddedLiveData.observe(viewLifecycleOwner) { reviewSuccessfullyAdded ->
                 if (reviewSuccessfullyAdded) {
                     showReviewSuccessfullyAddedSnackbar()
@@ -198,6 +202,13 @@ class TrailDetailsFragment : Fragment(), OnMapReadyCallback, OnInfoWindowClickLi
             }
         }
         showAddTrailReviewDialogFragment()
+    }
+
+    private fun showAlreadyAddedReviewAlertDialog() {
+        AlertDialog.Builder(requireContext())
+            .setMessage("You have already added a review to this trail")
+            .setPositiveButton("Okay") { _, _ -> }
+            .show()
     }
 
     private fun showAddTrailReviewDialogFragment() {
