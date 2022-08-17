@@ -1,4 +1,4 @@
-package com.example.natour.ui.home.fragments
+package com.example.natour.ui.home.trail.detail
 
 import android.Manifest
 import android.annotation.SuppressLint
@@ -25,10 +25,7 @@ import com.example.natour.data.model.Position
 import com.example.natour.data.model.TrailPhoto
 import com.example.natour.databinding.FragmentTrailDetailsBinding
 import com.example.natour.util.bitmapFromVector
-import com.example.natour.ui.home.TrailPhotoListAdapter
-import com.example.natour.ui.home.TrailReviewListAdapter
-import com.example.natour.ui.home.viewmodels.TrailDetailsViewModel
-import com.example.natour.ui.trail.SupportMapFragmentWrapper
+import com.example.natour.ui.home.trail.SupportMapFragmentWrapper
 import com.github.dhaval2404.imagepicker.ImagePicker
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap

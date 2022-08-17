@@ -3,23 +3,19 @@ package com.example.natour
 import android.app.Application
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.LinearLayout
-import android.widget.Toolbar
 import androidx.activity.viewModels
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.example.natour.ui.MainUserViewModel
-import com.example.natour.ui.signin.viewmodels.ThirdPartyLoginViewModel
-import com.example.natour.ui.signin.thirdparty.FacebookLogin
-import com.example.natour.ui.signin.thirdparty.GoogleLogin
+import com.example.natour.ui.signin.ThirdPartyLoginViewModel
+import com.example.natour.ui.signin.FacebookLogin
+import com.example.natour.ui.signin.GoogleLogin
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

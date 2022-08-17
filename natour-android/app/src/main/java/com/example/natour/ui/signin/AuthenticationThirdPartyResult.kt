@@ -1,4 +1,4 @@
-package com.example.natour.ui.signin.thirdparty
+package com.example.natour.ui.signin
 
 enum class AuthenticationThirdPartyResult {
     AUTHENTICATED, NOT_AUTHENTICATED, RESET;

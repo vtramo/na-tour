@@ -1,4 +1,4 @@
-package com.example.natour.ui.home
+package com.example.natour.ui.home.trail.detail
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

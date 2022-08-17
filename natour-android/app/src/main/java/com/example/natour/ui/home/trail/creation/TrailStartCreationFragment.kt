@@ -1,4 +1,4 @@
-package com.example.natour.ui.trail.fragments
+package com.example.natour.ui.home.trail.creation
 
 import android.app.Activity
 import android.app.AlertDialog
@@ -22,8 +22,7 @@ import com.example.natour.MainActivity
 import com.example.natour.R
 import com.example.natour.data.model.TrailDifficulty
 import com.example.natour.databinding.FragmentTrailStartCreationBinding
-import com.example.natour.ui.ConstantRegex
-import com.example.natour.ui.trail.TrailCreationViewModel
+import com.example.natour.util.ConstantRegex
 import com.github.dhaval2404.imagepicker.ImagePicker
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout

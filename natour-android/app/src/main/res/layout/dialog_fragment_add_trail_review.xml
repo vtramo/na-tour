@@ -7,7 +7,7 @@
     <data>
         <variable
             name="addTrailReviewDialogFragment"
-            type="com.example.natour.ui.home.fragments.AddTrailReviewDialogFragment" />
+            type="com.example.natour.ui.home.trail.detail.AddTrailReviewDialogFragment" />
 
         <variable
             name="mainUserViewModel"

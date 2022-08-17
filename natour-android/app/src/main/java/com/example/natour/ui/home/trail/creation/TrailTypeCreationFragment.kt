@@ -1,4 +1,4 @@
-package com.example.natour.ui.trail.fragments
+package com.example.natour.ui.home.trail.creation
 
 import android.app.Activity
 import android.app.AlertDialog
@@ -16,8 +16,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import com.example.natour.R
 import com.example.natour.databinding.FragmentTrailTypeCreationBinding
-import com.example.natour.ui.trail.TrailCreationViewModel
-import com.example.natour.ui.trail.RouteGPXParser
+import com.example.natour.ui.home.trail.RouteGPXParser
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import javax.inject.Inject

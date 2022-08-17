@@ -1,4 +1,4 @@
-package com.example.natour.ui.home.viewmodels
+package com.example.natour.ui.home.trail.detail
 
 import android.graphics.drawable.Drawable
 import android.view.View
@@ -9,7 +9,6 @@ import androidx.lifecycle.viewModelScope
 import com.example.natour.data.model.*
 import com.example.natour.data.repositories.MainUserRepository
 import com.example.natour.data.repositories.TrailRepository
-import com.example.natour.ui.home.fragments.TrailDownloadResult
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject

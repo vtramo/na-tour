@@ -1,4 +1,4 @@
-package com.example.natour.ui
+package com.example.natour.util
 
 import android.util.Patterns
 

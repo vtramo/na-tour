@@ -1,4 +1,4 @@
-package com.example.natour.ui.signin.thirdparty
+package com.example.natour.ui.signin
 
 import android.app.Activity
 import android.content.Intent

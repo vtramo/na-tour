@@ -1,4 +1,4 @@
-package com.example.natour.ui.home.fragments
+package com.example.natour.ui.home
 
 import android.os.Bundle
 import android.view.*
@@ -11,9 +11,7 @@ import androidx.recyclerview.widget.RecyclerView.OnScrollListener
 import com.example.natour.R
 import com.example.natour.databinding.FragmentHomeBinding
 import com.example.natour.ui.MainUserViewModel
-import com.example.natour.ui.home.viewmodels.HomeViewModel
-import com.example.natour.ui.home.viewmodels.TrailDetailsViewModel
-import com.example.natour.ui.home.TrailListAdapter
+import com.example.natour.ui.home.trail.detail.TrailDetailsViewModel
 
 class HomeFragment : Fragment() {
 

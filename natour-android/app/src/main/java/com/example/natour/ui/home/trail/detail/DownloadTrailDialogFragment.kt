@@ -1,4 +1,4 @@
-package com.example.natour.ui.home.fragments
+package com.example.natour.ui.home.trail.detail
 
 import android.app.Activity
 import android.content.DialogInterface
@@ -16,7 +16,6 @@ import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
 import com.example.natour.R
 import com.example.natour.databinding.DialogFragmentDownloadTrailBinding
 import com.example.natour.databinding.PdfTrailDetailsBinding
-import com.example.natour.ui.home.viewmodels.TrailDetailsViewModel
 import io.jenetics.jpx.GPX
 
 class DownloadTrailDialogFragment: DialogFragment() {
@@ -70,7 +69,8 @@ class DownloadTrailDialogFragment: DialogFragment() {
                     mTrailDetailsViewModel.trailDownloadedSuccessfullyLiveData.value =
                         TrailDownloadResult.SUCCESS
                 }
-            } else mTrailDetailsViewModel.trailDownloadedSuccessfullyLiveData.value = TrailDownloadResult.FAIL
+            } else mTrailDetailsViewModel.trailDownloadedSuccessfullyLiveData.value =
+                TrailDownloadResult.FAIL
 
             dismiss()
         }
@@ -142,7 +142,8 @@ class DownloadTrailDialogFragment: DialogFragment() {
                     mTrailDetailsViewModel.trailDownloadedSuccessfullyLiveData.value =
                         TrailDownloadResult.SUCCESS
                 }
-            } else mTrailDetailsViewModel.trailDownloadedSuccessfullyLiveData.value = TrailDownloadResult.FAIL
+            } else mTrailDetailsViewModel.trailDownloadedSuccessfullyLiveData.value =
+                TrailDownloadResult.FAIL
             dismiss()
         }
 
@@ -155,7 +156,8 @@ class DownloadTrailDialogFragment: DialogFragment() {
     override fun onDismiss(dialog: DialogInterface) {
         with(mTrailDetailsViewModel) {
             if (trailDownloadedSuccessfullyLiveData.value == TrailDownloadResult.NOT_SET) {
-                mTrailDetailsViewModel.trailDownloadedSuccessfullyLiveData.value = TrailDownloadResult.DISMISS
+                mTrailDetailsViewModel.trailDownloadedSuccessfullyLiveData.value =
+                    TrailDownloadResult.DISMISS
             }
             resetTrailDownloadedSuccessfullyLiveData()
         }

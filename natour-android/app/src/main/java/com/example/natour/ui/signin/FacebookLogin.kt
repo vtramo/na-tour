@@ -1,4 +1,4 @@
-package com.example.natour.ui.signin.thirdparty
+package com.example.natour.ui.signin
 
 import android.util.Log
 import androidx.fragment.app.FragmentActivity
@@ -28,7 +28,8 @@ class FacebookLogin(private val activity: FragmentActivity) {
     val isAuthenticated: LiveData<AuthenticationThirdPartyResult> = _isAuthenticated
 
     init {
-        loginManager.registerCallback(callBackManager,
+        loginManager.registerCallback(
+            callBackManager,
             object : FacebookCallback<LoginResult> {
                 override fun onCancel() {
                     Log.i(FACEBOOK_TAG, "cancelled")

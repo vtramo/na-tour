@@ -1,4 +1,4 @@
-package com.example.natour.ui.trail.fragments
+package com.example.natour.ui.home.trail.creation
 
 import android.app.AlertDialog
 import android.os.Bundle
@@ -11,7 +11,6 @@ import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
 import androidx.navigation.findNavController
 import com.example.natour.R
 import com.example.natour.databinding.FragmentTrailDisplayCreationBinding
-import com.example.natour.ui.trail.TrailCreationViewModel
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback

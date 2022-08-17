@@ -1,4 +1,4 @@
-package com.example.natour.ui.trail.fragments
+package com.example.natour.ui.home.trail.creation
 
 import android.Manifest
 import android.annotation.SuppressLint
@@ -16,7 +16,6 @@ import androidx.navigation.findNavController
 import com.example.natour.R
 import com.example.natour.data.model.RoutePoint
 import com.example.natour.databinding.FragmentTrailTrackingCreationBinding
-import com.example.natour.ui.trail.TrailCreationViewModel
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback

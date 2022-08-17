@@ -6,11 +6,11 @@
     <data>
         <variable
             name="trailStartCreationFragment"
-            type="com.example.natour.ui.trail.fragments.TrailStartCreationFragment" />
+            type="com.example.natour.ui.home.trail.creation.TrailStartCreationFragment" />
 
         <variable
             name="trailStartCreationViewModel"
-            type="com.example.natour.ui.trail.TrailCreationViewModel" />
+            type="com.example.natour.ui.home.trail.creation.TrailCreationViewModel" />
     </data>
 
     <ScrollView

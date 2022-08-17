@@ -1,4 +1,4 @@
-package com.example.natour.ui.home.fragments
+package com.example.natour.ui.home.trail.detail
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -12,7 +12,6 @@ import androidx.navigation.findNavController
 import com.example.natour.R
 import com.example.natour.data.model.Position
 import com.example.natour.databinding.FragmentTrailPhotoBinding
-import com.example.natour.ui.home.viewmodels.TrailDetailsViewModel
 import com.example.natour.util.convertDrawableToByteArray
 import com.example.natour.util.toDrawable
 import com.igreenwood.loupe.Loupe

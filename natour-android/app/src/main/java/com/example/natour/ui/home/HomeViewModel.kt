@@ -1,4 +1,4 @@
-package com.example.natour.ui.home.viewmodels
+package com.example.natour.ui.home
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

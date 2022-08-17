@@ -1,6 +1,5 @@
-package com.example.natour.ui.home.fragments
+package com.example.natour.ui.home.trail.detail
 
-import android.app.AlertDialog
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
@@ -12,8 +11,6 @@ import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
 import com.example.natour.R
 import com.example.natour.databinding.DialogFragmentAddTrailReviewBinding
 import com.example.natour.ui.MainUserViewModel
-import com.example.natour.ui.home.viewmodels.TrailDetailsViewModel
-import com.google.android.material.snackbar.Snackbar
 import java.text.SimpleDateFormat
 import java.util.*
 

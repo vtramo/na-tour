@@ -1,11 +1,8 @@
-package com.example.natour.ui.signin.viewmodels
+package com.example.natour.ui.signin
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.example.natour.ui.signin.thirdparty.FacebookLogin
-import com.example.natour.ui.signin.thirdparty.GoogleLogin
-import com.example.natour.ui.signin.thirdparty.AuthenticationThirdPartyResult
 
 class ThirdPartyLoginViewModel(
     val googleLogin: GoogleLogin,

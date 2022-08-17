@@ -1,4 +1,4 @@
-package com.example.natour.ui
+package com.example.natour.util
 
 import android.Manifest
 import androidx.appcompat.app.AppCompatActivity

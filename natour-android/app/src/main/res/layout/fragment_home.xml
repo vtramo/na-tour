@@ -10,11 +10,11 @@
 
         <variable
             name="homeFragment"
-            type="com.example.natour.ui.home.fragments.HomeFragment" />
+            type="com.example.natour.ui.home.HomeFragment" />
 
         <variable
             name="homeViewModel"
-            type="com.example.natour.ui.home.viewmodels.HomeViewModel" />
+            type="com.example.natour.ui.home.HomeViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

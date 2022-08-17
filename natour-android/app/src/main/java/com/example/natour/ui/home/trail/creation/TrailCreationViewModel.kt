@@ -1,4 +1,4 @@
-package com.example.natour.ui.trail
+package com.example.natour.ui.home.trail.creation
 
 import android.graphics.drawable.Drawable
 import androidx.lifecycle.LiveData

@@ -1,4 +1,4 @@
-package com.example.natour.ui.signin.viewmodels
+package com.example.natour.ui.signin
 
 import androidx.lifecycle.*
 import com.example.natour.data.model.Credentials

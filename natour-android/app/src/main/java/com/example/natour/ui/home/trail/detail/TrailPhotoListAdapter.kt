@@ -1,9 +1,8 @@
-package com.example.natour.ui.home
+package com.example.natour.ui.home.trail.detail
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
