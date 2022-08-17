@@ -1,9 +1,12 @@
 package com.natour.natour.controllers;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -12,10 +15,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.natour.natour.model.dto.TrailResponseDto;
 import com.natour.natour.services.user.ApplicationUserService;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import retrofit2.http.GET;
+import retrofit2.http.Path;
 
 @RestController
 @RequestMapping("/user")
@@ -67,5 +73,18 @@ public class UserController {
         @RequestParam long trailId
     ) {
         return applicationUserService.deleteFavoriteTrail(userId, trailId);
+    }
+
+    @GetMapping(
+        path = "trail/favorite/{userId}",
+        consumes = {MediaType.ALL_VALUE},
+        produces = {MediaType.APPLICATION_JSON_VALUE}
+    )
+    @ResponseStatus(HttpStatus.OK)
+    @Operation(summary = "Returns the favorite trails of this user")
+    public List<TrailResponseDto> getFavoriteTrails(
+        @PathVariable("userId") long userId
+    ) {
+        return applicationUserService.getFavoriteTrails(userId);
     }
 }
