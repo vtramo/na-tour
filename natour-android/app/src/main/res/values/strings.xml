@@ -67,6 +67,13 @@
     <string name="optional_tell_others_what_you_think">(Optional) Tell others what you think</string>
     <string name="submit">Submit</string>
     <string name="cancel">Cancel</string>
+    <string name="download_pdf">Download PDF</string>
+    <string name="download_gpx">Download GPX</string>
+    <string name="starting_point_lat_long">Starting point LAT/LONG:</string>
+    <string name="difficulty">Difficulty:</string>
+    <string name="duration">Duration:</string>
+    <string name="trail_name">Trail name:</string>
+    <string name="trail_position">Trail position:</string>
 
     <!-- Route Creation -->
     <string-array name="listDifficulties">

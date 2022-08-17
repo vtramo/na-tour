@@ -153,6 +153,12 @@ dependencies {
 
     // Google Maps Utils
     implementation 'com.google.maps.android:android-maps-utils:2.3.0'
+
+    // GPX Library for create gpx file
+    //noinspection GradleDependency
+    implementation 'io.jenetics:jpx:2.3.0'
+    implementation group: 'stax', name: 'stax', version: '1.2.0'
+
 }
 
 

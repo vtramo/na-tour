@@ -9,6 +9,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.natour.data.model.*
 import com.example.natour.data.repositories.MainUserRepository
 import com.example.natour.data.repositories.TrailRepository
+import com.example.natour.ui.home.fragments.TrailDownloadResult
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -25,8 +26,8 @@ class TrailDetailsViewModel @Inject constructor(
         get() = _thisTrail
         set(trail) {
             _thisTrail = trail
-            setupTrailInformation()
             setupListOfRoutePoints()
+            setupTrailInformation()
             setupListOfTrailPhotos()
             setupListOfTrailReviews()
         }
@@ -37,6 +38,7 @@ class TrailDetailsViewModel @Inject constructor(
         _trailDuration = _thisTrail.duration.toString()
         _descriptionVisibility = if (_thisTrail.description.isBlank()) View.GONE else View.VISIBLE
         _positionDetails = _thisTrail.getPositionDetails()
+        _startingPointDetails = with(listOfRoutePoints[0]) { "($latitude, $longitude)" }
     }
 
     private fun setupListOfRoutePoints() {
@@ -73,6 +75,9 @@ class TrailDetailsViewModel @Inject constructor(
 
     private lateinit var _listOfRoutePoints: List<RoutePoint>
     val listOfRoutePoints get() = _listOfRoutePoints
+
+    private lateinit var _startingPointDetails: String
+    val startingPointDetails get() = _startingPointDetails
 
 
     private var _listOfTrailPhotos = MutableLiveData<List<TrailPhoto>>()
@@ -186,12 +191,20 @@ class TrailDetailsViewModel @Inject constructor(
         _thereAreNoReviewsVisibility.value = View.GONE
     }
 
+    private var _trailDownloadedSuccessfullyLiveData = MutableLiveData(TrailDownloadResult.NOT_SET)
+    val trailDownloadedSuccessfullyLiveData get() = _trailDownloadedSuccessfullyLiveData
+
+    fun resetTrailDownloadedSuccessfullyLiveData() {
+        _trailDownloadedSuccessfullyLiveData = MutableLiveData(TrailDownloadResult.NOT_SET)
+    }
+
     fun reset() {
         _ownerUsername = ""
         _numberOfReviews.value = ""
         _trailDuration = ""
         _descriptionVisibility = View.VISIBLE
         _positionDetails = ""
+        _startingPointDetails = ""
         _listOfRoutePoints = listOf()
         _listOfTrailPhotos.value = listOf()
         _thereAreNoPhotosVisibility.value = View.VISIBLE
@@ -202,6 +215,7 @@ class TrailDetailsViewModel @Inject constructor(
         _reviewSuccessfullyAddedLiveData = MutableLiveData()
         _numberOfReviews = MutableLiveData()
         _thisUserHasAlreadyAddedReviewOnThisTrail = false
+        _trailDownloadedSuccessfullyLiveData = MutableLiveData(TrailDownloadResult.NOT_SET)
         _starsImage = MutableLiveData()
     }
 }

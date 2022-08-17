@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    >
+
+    <data>
+        <variable
+            name="downloadTrailDialogFragment"
+            type="com.example.natour.ui.home.fragments.DownloadTrailDialogFragment" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="25dp"
+        >
+
+        <LinearLayout
+            android:id="@+id/download_buttons_linear_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="25dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <!-- Download PDF button -->
+            <com.google.android.material.button.MaterialButton
+                android:onClick="@{() -> downloadTrailDialogFragment.onDownloadPdfClick()}"
+                android:id="@+id/download_pdf_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/download_pdf"
+                android:drawableLeft="@drawable/ic_baseline_picture_as_pdf_24"
+                app:cornerRadius="8dp"
+                app:strokeColor="#7F8487"
+                app:rippleColor="@color/black"
+                android:backgroundTint="@color/white"
+                android:textColor="@color/gray"
+                app:strokeWidth="1dp"
+                tools:ignore="RtlHardcoded" />
+
+            <!-- Download GPX button -->
+            <com.google.android.material.button.MaterialButton
+                android:onClick="@{() -> downloadTrailDialogFragment.onDownloadGpxClick()}"
+                android:id="@+id/download_gpx_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:text="@string/download_gpx"
+                android:drawableLeft="@drawable/gpx_file_icon"
+                app:cornerRadius="8dp"
+                app:strokeColor="#7F8487"
+                app:rippleColor="@color/black"
+                android:backgroundTint="@color/white"
+                android:textColor="@color/gray"
+                app:strokeWidth="1dp"
+                tools:ignore="RtlHardcoded" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/view"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:visibility="gone"
+            android:orientation="horizontal" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

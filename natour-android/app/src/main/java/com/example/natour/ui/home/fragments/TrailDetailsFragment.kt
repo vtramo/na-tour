@@ -195,9 +195,9 @@ class TrailDetailsFragment : Fragment(), OnMapReadyCallback, OnInfoWindowClickLi
             }
             reviewSuccessfullyAddedLiveData.observe(viewLifecycleOwner) { reviewSuccessfullyAdded ->
                 if (reviewSuccessfullyAdded) {
-                    showReviewSuccessfullyAddedSnackbar()
+                    showSnackBar("Review successfully added")
                 } else {
-                    showFailReviewAddedAlertDialog()
+                    showErrorAlertDialog("A problem occurred in adding the review")
                 }
             }
         }
@@ -215,22 +215,6 @@ class TrailDetailsFragment : Fragment(), OnMapReadyCallback, OnInfoWindowClickLi
         AddTrailReviewDialogFragment().show(
             childFragmentManager, AddTrailReviewDialogFragment.TAG
         )
-    }
-
-    private fun showReviewSuccessfullyAddedSnackbar() {
-        Snackbar.make(
-            requireView(),
-            "Review successfully added",
-            Snackbar.LENGTH_SHORT
-        ).show()
-    }
-
-    private fun showFailReviewAddedAlertDialog() {
-        AlertDialog.Builder(requireContext())
-            .setTitle("Error")
-            .setMessage("A problem occurred in adding the review")
-            .setPositiveButton("Okay") { _, _ -> }
-            .show()
     }
 
     fun onAddPhotoClick() {
@@ -285,30 +269,14 @@ class TrailDetailsFragment : Fragment(), OnMapReadyCallback, OnInfoWindowClickLi
         with(mTrailDetailsViewModel) {
             photoSuccessfullyAddedLiveData.observe(viewLifecycleOwner) { photoSuccessfullyAdded ->
                 if (photoSuccessfullyAdded) {
-                    showPhotoSuccessfullyAddedSnackbar()
+                    showSnackBar("Photo successfully added")
                 } else {
-                    showFailPhotoAddedAlertDialog()
+                    showErrorAlertDialog("A problem occurred in adding the photo")
                 }
             }
 
             addPhoto(trailPhotoDrawable, trailPhotoPosition)
         }
-    }
-
-    private fun showPhotoSuccessfullyAddedSnackbar() {
-        Snackbar.make(
-            requireView(),
-            "Photo successfully added",
-            Snackbar.LENGTH_SHORT
-        ).show()
-    }
-
-    private fun showFailPhotoAddedAlertDialog() {
-        AlertDialog.Builder(requireContext())
-            .setTitle("Error")
-            .setMessage("A problem occurred in adding the photo")
-            .setPositiveButton("Okay") { _, _ -> }
-            .show()
     }
 
     fun onGoToTrailClick() {
@@ -343,7 +311,10 @@ class TrailDetailsFragment : Fragment(), OnMapReadyCallback, OnInfoWindowClickLi
 
     internal inner class CustomInfoWindowAdapter : InfoWindowAdapter {
         @SuppressLint("InflateParams")
-        private val contents: View = layoutInflater.inflate(R.layout.trail_photo_miniature_custom_info_contents, null)
+        private val contents: View = layoutInflater.inflate(
+            R.layout.trail_photo_miniature_custom_info_contents,
+            null
+        )
 
         override fun getInfoWindow(marker: Marker): View? = null
 
@@ -376,6 +347,47 @@ class TrailDetailsFragment : Fragment(), OnMapReadyCallback, OnInfoWindowClickLi
     }
 
     private fun Marker.isTrailPhotoMarker() = this.tag is TrailPhoto
+
+    fun onDownloadTrailClick() {
+        observeDownloadResultLiveData()
+        showDownloadTrailDialogFragment()
+    }
+
+    private fun observeDownloadResultLiveData() {
+        with(mTrailDetailsViewModel) {
+            trailDownloadedSuccessfullyLiveData.observe(viewLifecycleOwner) { result ->
+                when (result) {
+                    TrailDownloadResult.NOT_SET -> return@observe
+                    TrailDownloadResult.DISMISS -> return@observe
+                    TrailDownloadResult.SUCCESS -> showSnackBar("Trail successfully downloaded")
+                    else -> showErrorAlertDialog("A problem occurred in downloading the trail")
+                }
+                trailDownloadedSuccessfullyLiveData.removeObservers(viewLifecycleOwner)
+            }
+        }
+    }
+
+    private fun showSnackBar(text: String) {
+        Snackbar.make(
+            requireView(),
+            text,
+            Snackbar.LENGTH_SHORT
+        ).show()
+    }
+
+    private fun showErrorAlertDialog(message: String) {
+        AlertDialog.Builder(requireContext())
+            .setTitle("Error")
+            .setMessage(message)
+            .setPositiveButton("Okay") { _, _ -> }
+            .show()
+    }
+
+    private fun showDownloadTrailDialogFragment() {
+        DownloadTrailDialogFragment().show(
+            childFragmentManager, AddTrailReviewDialogFragment.TAG
+        )
+    }
 
     override fun onDestroy() {
         super.onDestroy()

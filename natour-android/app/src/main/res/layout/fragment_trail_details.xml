@@ -56,6 +56,7 @@
                         tools:ignore="ContentDescription" />
 
                     <ImageButton
+                        android:onClick="@{() -> trailDetailsFragment.onDownloadTrailClick()}"
                         style="@style/Widget.AppCompat.Button.Borderless"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
@@ -506,7 +507,7 @@
                     android:textSize="24sp"
                     android:visibility="@{trailDetailsViewModel.thereAreNoReviewsVisibility}"
                     />
-                
+
             </LinearLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>

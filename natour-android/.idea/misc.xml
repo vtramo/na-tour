@@ -6,13 +6,22 @@
         <entry key="..\:/NaTour/NaTour/natour-android/app/src/main/res/layout/activity_main.xml" value="0.2717391304347826" />
         <entry key="..\:/NaTour/NaTour/natour-android/app/src/main/res/layout/login_fragment.xml" value="0.25" />
         <entry key="..\:/NaTour/natour-android/app/src/main/res/drawable/button_add_photo_bg.xml" value="0.3065" />
+        <entry key="..\:/NaTour/natour-android/app/src/main/res/drawable/close.xml" value="0.277" />
+        <entry key="..\:/NaTour/natour-android/app/src/main/res/drawable/gpx_file_icon.xml" value="0.3375" />
+        <entry key="..\:/NaTour/natour-android/app/src/main/res/drawable/ic_baseline_image_24.xml" value="0.193" />
+        <entry key="..\:/NaTour/natour-android/app/src/main/res/drawable/ic_baseline_picture_as_pdf_24.xml" value="0.3375" />
         <entry key="..\:/NaTour/natour-android/app/src/main/res/drawable/ic_error.xml" value="0.273" />
+        <entry key="..\:/NaTour/natour-android/app/src/main/res/drawable/mountain_icon_graphics_1_580x386_1.xml" value="0.159" />
+        <entry key="..\:/NaTour/natour-android/app/src/main/res/drawable/mountains_couple_svgrepo_com.xml" value="0.1085" />
+        <entry key="..\:/NaTour/natour-android/app/src/main/res/drawable/natour.xml" value="0.1085" />
+        <entry key="..\:/NaTour/natour-android/app/src/main/res/drawable/pdf_trail_details.xml" value="0.193" />
         <entry key="..\:/NaTour/natour-android/app/src/main/res/drawable/shape_round.xml" value="0.156" />
         <entry key="..\:/NaTour/natour-android/app/src/main/res/layout-v28/fragment_trail_start_creation.xml" value="0.12280701754385964" />
         <entry key="..\:/NaTour/natour-android/app/src/main/res/layout/activity_main.xml" value="0.38697916666666665" />
         <entry key="..\:/NaTour/natour-android/app/src/main/res/layout/card_view.xml" value="0.33" />
         <entry key="..\:/NaTour/natour-android/app/src/main/res/layout/custom_info_contents.xml" value="0.25" />
         <entry key="..\:/NaTour/natour-android/app/src/main/res/layout/dialog_fragment_add_trail_review.xml" value="0.25" />
+        <entry key="..\:/NaTour/natour-android/app/src/main/res/layout/dialog_fragment_download_trail.xml" value="0.3333333333333333" />
         <entry key="..\:/NaTour/natour-android/app/src/main/res/layout/dropdown_item_difficulty.xml" value="0.26721014492753625" />
         <entry key="..\:/NaTour/natour-android/app/src/main/res/layout/fragment_home.xml" value="0.22" />
         <entry key="..\:/NaTour/natour-android/app/src/main/res/layout/fragment_login.xml" value="0.1" />
@@ -30,6 +39,7 @@
         <entry key="..\:/NaTour/natour-android/app/src/main/res/layout/fragment_trail_tracking_creation.xml" value="0.2444078947368421" />
         <entry key="..\:/NaTour/natour-android/app/src/main/res/layout/fragment_trail_type_creation.xml" value="0.2444078947368421" />
         <entry key="..\:/NaTour/natour-android/app/src/main/res/layout/login_fragment.xml" value="0.1" />
+        <entry key="..\:/NaTour/natour-android/app/src/main/res/layout/pdf_trail_details.xml" value="0.26132246376811596" />
         <entry key="..\:/NaTour/natour-android/app/src/main/res/layout/trail_card_view.xml" value="0.25" />
         <entry key="..\:/NaTour/natour-android/app/src/main/res/layout/trail_photo_view.xml" value="0.5" />
         <entry key="..\:/NaTour/natour-android/app/src/main/res/layout/trail_review_view.xml" value="0.2" />

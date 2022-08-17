@@ -89,6 +89,9 @@
             <action
                 android:id="@+id/action_trailDetailFragment_to_addTrailReviewDialogFragment"
                 app:destination="@id/addTrailReviewDialogFragment" />
+            <action
+                android:id="@+id/action_trailDetailFragment_to_downloadTrailDialogFragment"
+                app:destination="@id/downloadTrailDialogFragment" />
         </fragment>
         <fragment
             android:id="@+id/trailPhotoFragment"
@@ -99,5 +102,9 @@
             android:id="@+id/addTrailReviewDialogFragment"
             android:name="com.example.natour.ui.home.fragments.AddTrailReviewDialogFragment"
             android:label="AddTrailReviewDialogFragment" />
+        <dialog
+            android:id="@+id/downloadTrailDialogFragment"
+            android:name="com.example.natour.ui.home.fragments.DownloadTrailDialogFragment"
+            android:label="DownloadTrailDialogFragment" />
     </navigation>
 </navigation>
