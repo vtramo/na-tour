@@ -15,4 +15,16 @@ class DefaultUserRepository(
         withContext(defaultDispatcher) {
             userDataSource.existsByUsername(username)
         }
+
+    override suspend fun addFavoriteTrail(idTrail: Long, idUser: Long): Boolean =
+        withContext(defaultDispatcher) {
+            userDataSource.addFavoriteTrail(idTrail, idUser)
+        }
+
+    override suspend fun removeFavoriteTrail(idTrail: Long, idUser: Long): Boolean =
+        withContext(defaultDispatcher) {
+            userDataSource.removeFavoriteTrail(idTrail, idUser)
+        }
+
+
 }

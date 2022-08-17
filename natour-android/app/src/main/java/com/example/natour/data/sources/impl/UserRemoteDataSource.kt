@@ -9,4 +9,10 @@ class UserRemoteDataSource(
 
     override suspend fun existsByUsername(username: String): Boolean =
         userApiService.existsByUsername(username)
+
+    override suspend fun addFavoriteTrail(idTrail: Long, idUser: Long): Boolean =
+        userApiService.addFavoriteTrail(idTrail, idUser)
+
+    override suspend fun removeFavoriteTrail(idTrail: Long, idUser: Long): Boolean =
+        userApiService.removeFavoriteTrail(idTrail, idUser)
 }
