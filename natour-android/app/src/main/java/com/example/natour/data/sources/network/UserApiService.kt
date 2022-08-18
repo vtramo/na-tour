@@ -1,5 +1,6 @@
 package com.example.natour.data.sources.network
 
+import com.example.natour.data.dto.TrailDto
 import retrofit2.http.*
 
 interface UserApiService {
@@ -7,15 +8,21 @@ interface UserApiService {
     @POST("/user")
     suspend fun existsByUsername(@Field("username") username: String): Boolean
 
-    @PUT("/trail/favorite/{userId}")
+    @Headers("Content-Type: application/json")
+    @PUT("user/trail/favorite/{userId}")
     suspend fun addFavoriteTrail(
-        @Field("trailId") trailId: Long,
+        @Body trailId: Long,
         @Path("userId") userId: Long
     ): Boolean
 
-    @DELETE("/trail/favorite/{userId}")
+    @HTTP(method = "DELETE", path = "user/trail/favorite/{userId}", hasBody = true)
     suspend fun removeFavoriteTrail(
-        @Field("trailId") trailId: Long,
+        @Body trailId: Long,
         @Path("userId") userId: Long
     ): Boolean
+
+    @GET("user/trail/favorite/{userId}")
+    suspend fun getFavoriteTrails(
+        @Path("userId") userId: Long
+    ): List<TrailDto>
 }

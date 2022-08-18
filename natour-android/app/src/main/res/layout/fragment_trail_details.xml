@@ -29,44 +29,64 @@
                 android:id="@+id/trail_details_toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
-                <!-- TODO: WTF IS THIS TOOLBAR? !!!! -->
-                <RelativeLayout
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
+                    android:layout_height="match_parent"
+                    >
+                    <!-- Back button -->
                     <ImageButton
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:src="@drawable/ic_send_message_40"
-                        android:rotation="-40"
-                        android:layout_alignParentEnd="true"
-                        android:layout_marginEnd="20dp"
+                        android:id="@+id/toolbar_back_image_button"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:layout_gravity="start"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/arrow_left"
                         style="@style/Widget.AppCompat.Button.Borderless"
                         tools:ignore="ContentDescription" />
 
+                    <!-- Download button -->
                     <ImageButton
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:src="@drawable/ic_back_40"
+                        android:id="@+id/toolbar_download_image_button"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintEnd_toStartOf="@id/toolbar_send_image_button"
+                        android:layout_marginEnd="15dp"
                         style="@style/Widget.AppCompat.Button.Borderless"
-                        tools:ignore="ContentDescription" />
-
-                    <ImageButton
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
                         android:onClick="@{() -> trailDetailsFragment.onDownloadTrailClick()}"
-                        style="@style/Widget.AppCompat.Button.Borderless"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:layout_alignParentStart="true"
-                        android:layout_alignParentEnd="true"
-                        android:layout_marginEnd="20dp"
-                        android:src="@drawable/ic_file_download_black_40"
+                        android:src="@drawable/download"
                         tools:ignore="ContentDescription" />
 
-                </RelativeLayout>
+                    <!-- Send message button -->
+                    <ImageButton
+                        android:id="@+id/toolbar_send_image_button"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintEnd_toStartOf="@id/toolbar_favorite_trail_image_button"
+                        android:layout_marginEnd="15dp"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/send"
+                        style="@style/Widget.AppCompat.Button.Borderless"
+                        tools:ignore="ContentDescription" />
+
+                    <!-- Favorite trail button -->
+                    <ImageButton
+                        android:onClick="@{() -> trailDetailsFragment.onFavoriteTrailClick()}"
+                        android:id="@+id/toolbar_favorite_trail_image_button"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        android:layout_marginEnd="15dp"
+                        style="@style/Widget.AppCompat.Button.Borderless"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/heart_black"
+                        tools:ignore="ContentDescription" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
             </androidx.appcompat.widget.Toolbar>
 
@@ -87,7 +107,7 @@
                     android:layout_width="wrap_content"
                     android:text="@{trailDetailsViewModel.thisTrail.name}"
                     tools:text="Sentiero degli dei"
-                    android:layout_marginTop="15dp"
+                    android:layout_marginTop="6dp"
                     android:textSize="30sp"
                     android:fontFamily="@font/montserrat_bold"
                     android:layout_height="wrap_content" />

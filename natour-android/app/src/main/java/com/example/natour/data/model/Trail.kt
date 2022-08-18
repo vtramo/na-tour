@@ -18,6 +18,14 @@ data class Trail(
     val reviews: MutableList<TrailReview>,
     var stars: Stars
 ) {
+
+    override fun equals(other: Any?): Boolean {
+        if (other !is Trail) return false
+        return other.idTrail == this.idTrail
+    }
+
+    override fun hashCode(): Int = idTrail.hashCode() xor name.hashCode()
+
     fun getStarsImage(): Drawable =
         with(MainActivity) {
             when(stars) {

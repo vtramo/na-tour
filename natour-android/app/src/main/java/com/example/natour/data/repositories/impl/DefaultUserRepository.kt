@@ -1,8 +1,10 @@
 package com.example.natour.data.repositories.impl
 
+import com.example.natour.data.model.Trail
 import com.example.natour.data.repositories.UserRepository
 import com.example.natour.data.sources.UserDataSource
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
 import kotlin.coroutines.CoroutineContext
 
@@ -26,5 +28,8 @@ class DefaultUserRepository(
             userDataSource.removeFavoriteTrail(idTrail, idUser)
         }
 
-
+    override suspend fun getFavoriteTrails(idUser: Long): Flow<List<Trail>> =
+        withContext(defaultDispatcher) {
+            userDataSource.getFavoriteTrails(idUser)
+        }
 }

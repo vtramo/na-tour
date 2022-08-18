@@ -4,7 +4,8 @@ import java.io.IOException;
 import java.sql.Blob;
 import java.sql.SQLException;
 
-import javax.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
+
 
 public abstract class BlobUtils {
     

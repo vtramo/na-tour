@@ -12,6 +12,7 @@ import com.example.natour.R
 import com.example.natour.databinding.FragmentHomeBinding
 import com.example.natour.ui.MainUserViewModel
 import com.example.natour.ui.home.trail.detail.TrailDetailsViewModel
+import com.example.natour.ui.home.trail.favorites.FavoriteTrailsViewModel
 
 class HomeFragment : Fragment() {
 
@@ -19,8 +20,13 @@ class HomeFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val mMainUserViewModel: MainUserViewModel by activityViewModels()
+
     private val mHomeViewModel: HomeViewModel by hiltNavGraphViewModels(R.id.home_nav_graph)
+
     private val mTrailDetailsViewModel: TrailDetailsViewModel
+        by hiltNavGraphViewModels(R.id.home_nav_graph)
+
+    private val mFavoriteTrailsViewModel: FavoriteTrailsViewModel
         by hiltNavGraphViewModels(R.id.home_nav_graph)
 
     private lateinit var mRecyclerView: RecyclerView
@@ -31,6 +37,7 @@ class HomeFragment : Fragment() {
     ): View {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
 
+        mFavoriteTrailsViewModel.loadFavoriteTrails()
         setupRecyclerView()
         setupSwipeRefreshLayout()
 

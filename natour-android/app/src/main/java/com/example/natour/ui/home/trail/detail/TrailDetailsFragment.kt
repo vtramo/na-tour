@@ -9,6 +9,7 @@ import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -20,12 +21,14 @@ import androidx.exifinterface.media.ExifInterface
 import androidx.fragment.app.Fragment
 import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
 import androidx.navigation.findNavController
+import com.example.natour.MainActivity
 import com.example.natour.R
 import com.example.natour.data.model.Position
 import com.example.natour.data.model.TrailPhoto
 import com.example.natour.databinding.FragmentTrailDetailsBinding
 import com.example.natour.util.bitmapFromVector
 import com.example.natour.ui.home.trail.SupportMapFragmentWrapper
+import com.example.natour.ui.home.trail.favorites.FavoriteTrailsViewModel
 import com.github.dhaval2404.imagepicker.ImagePicker
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -40,6 +43,9 @@ class TrailDetailsFragment : Fragment(), OnMapReadyCallback, OnInfoWindowClickLi
     private val mTrailDetailsViewModel: TrailDetailsViewModel
         by hiltNavGraphViewModels(R.id.home_nav_graph)
 
+    private val mFavoriteTrailsViewModel: FavoriteTrailsViewModel
+            by hiltNavGraphViewModels(R.id.home_nav_graph)
+
     private var _binding: FragmentTrailDetailsBinding? = null
     private val binding get() = _binding!!
 
@@ -52,6 +58,8 @@ class TrailDetailsFragment : Fragment(), OnMapReadyCallback, OnInfoWindowClickLi
             .listOfRoutePoints
             .map { LatLng(it.latitude, it.longitude) }
     }
+
+    private var isFavoriteTrail = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -68,10 +76,29 @@ class TrailDetailsFragment : Fragment(), OnMapReadyCallback, OnInfoWindowClickLi
         binding.trailDetailsFragment = this
         binding.lifecycleOwner = viewLifecycleOwner
 
+        setupHeartFavoriteTrailImageButton()
         startGoogleMap()
         setupListOfTrailPhotos()
         setupListOfTrailReviews()
     }
+
+    private fun setupHeartFavoriteTrailImageButton() {
+        isFavoriteTrail = isFavoriteTrail()
+        with(binding.toolbarFavoriteTrailImageButton) {
+            setImageDrawable(
+                if (isFavoriteTrail) {
+                    MainActivity.getDrawable(R.drawable.heart_red)
+                } else {
+                    MainActivity.getDrawable(R.drawable.heart_black)
+                }
+            )
+        }
+    }
+
+    private fun isFavoriteTrail() =
+        mFavoriteTrailsViewModel.listOfFavoriteTrails.value!!.contains(
+            mTrailDetailsViewModel.thisTrail
+        )
 
     private fun startGoogleMap() {
         val mapFragment = childFragmentManager
@@ -384,6 +411,54 @@ class TrailDetailsFragment : Fragment(), OnMapReadyCallback, OnInfoWindowClickLi
         DownloadTrailDialogFragment().show(
             childFragmentManager, AddTrailReviewDialogFragment.TAG
         )
+    }
+
+    fun onFavoriteTrailClick() {
+        binding.toolbarFavoriteTrailImageButton.isClickable = false
+        observeFavoriteTrailChange { isSuccess ->
+            if (!isSuccess) {
+                showErrorAlertDialog(
+                    "It is currently not possible to perform this operation"
+                )
+                isFavoriteTrail = !isFavoriteTrail
+                switchHeartImageButton()
+            }
+        }
+        performEditOperationPreferredTrail()
+        switchHeartImageButton()
+        binding.toolbarFavoriteTrailImageButton.isClickable = true
+    }
+
+    private fun switchHeartImageButton() {
+        with(binding.toolbarFavoriteTrailImageButton) {
+            setImageDrawable(
+                if (isFavoriteTrail) {
+                    MainActivity.getDrawable(R.drawable.heart_red)!!
+                } else {
+                    MainActivity.getDrawable(R.drawable.heart_black)!!
+                }
+            )
+        }
+    }
+
+    private fun observeFavoriteTrailChange(consumesBoolean: (Boolean) -> Unit) {
+        with(mFavoriteTrailsViewModel) {
+            favoriteTrailSuccessfullyChangedLiveData.observe(viewLifecycleOwner) { isSuccess ->
+                consumesBoolean(isSuccess)
+            }
+        }
+    }
+
+    private fun performEditOperationPreferredTrail() {
+        val thisTrail = mTrailDetailsViewModel.thisTrail
+        with(mFavoriteTrailsViewModel) {
+            if (!isFavoriteTrail) {
+                addFavoriteTrail(thisTrail)
+            } else {
+                removeFavoriteTrail(thisTrail)
+            }
+            isFavoriteTrail = !isFavoriteTrail
+        }
     }
 
     override fun onDestroy() {

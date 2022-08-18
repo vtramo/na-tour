@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -20,8 +21,6 @@ import com.natour.natour.services.user.ApplicationUserService;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import retrofit2.http.GET;
-import retrofit2.http.Path;
 
 @RestController
 @RequestMapping("/user")
@@ -47,7 +46,7 @@ public class UserController {
 
     @PutMapping( 
         path = "trail/favorite/{userId}",
-        consumes = {MediaType.ALL_VALUE},
+        consumes = {MediaType.APPLICATION_JSON_VALUE},
         produces = {MediaType.APPLICATION_JSON_VALUE}
     )
     @ResponseStatus(HttpStatus.OK)
@@ -55,14 +54,14 @@ public class UserController {
                                 "list of favorite trails")
     public boolean addFavoriteTrail(
         @PathVariable("userId") long userId,
-        @RequestParam long trailId
+        @RequestBody long trailId
     ) {
         return applicationUserService.addFavoriteTrail(userId, trailId);
     }
 
     @DeleteMapping(
         path = "trail/favorite/{userId}",
-        consumes = {MediaType.ALL_VALUE},
+        consumes = {MediaType.APPLICATION_JSON_VALUE},
         produces = {MediaType.APPLICATION_JSON_VALUE}
     )
     @ResponseStatus(HttpStatus.OK)
@@ -70,7 +69,7 @@ public class UserController {
                                 "list of favorite trails")
     public boolean removeFavoriteTrail(
         @PathVariable("userId") long userId,
-        @RequestParam long trailId
+        @RequestBody long trailId
     ) {
         return applicationUserService.deleteFavoriteTrail(userId, trailId);
     }
