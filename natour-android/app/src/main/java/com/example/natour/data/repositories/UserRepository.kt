@@ -7,5 +7,5 @@ interface UserRepository {
     suspend fun existsByUsername(username: String): Boolean
     suspend fun addFavoriteTrail(idTrail: Long, idUser: Long): Boolean
     suspend fun removeFavoriteTrail(idTrail: Long, idUser: Long): Boolean
-    suspend fun getFavoriteTrails(idUser: Long): Flow<List<Trail>>
+    suspend fun getFavoriteTrails(idUser: Long): Flow<Map<Long, Trail>>
 }

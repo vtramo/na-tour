@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
 import androidx.navigation.findNavController
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.OnScrollListener
 import com.example.natour.MainActivity
@@ -32,6 +33,7 @@ class HomeFragment : Fragment() {
         by hiltNavGraphViewModels(R.id.home_nav_graph)
 
     private lateinit var mRecyclerView: RecyclerView
+    private lateinit var mTrailListAdapter: TrailListAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -39,12 +41,25 @@ class HomeFragment : Fragment() {
     ): View {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
 
+        setupBottomHomeMenu()
         setupMainUser()
         mFavoriteTrailsViewModel.loadFavoriteTrails()
         setupRecyclerView()
         setupSwipeRefreshLayout()
 
         return binding.root
+    }
+
+    private fun setupBottomHomeMenu() {
+        with(mHomeViewModel) {
+            with(binding) {
+                if (isOnHome) {
+                    highlightHomeButton()
+                } else {
+                    highlightFavoriteTrailsButton()
+                }
+            }
+        }
     }
 
     private fun setupMainUser() {
@@ -59,12 +74,21 @@ class HomeFragment : Fragment() {
             mTrailDetailsViewModel.thisTrail = trailClicked
             goToTrailDetailsFragment()
         }
+        mTrailListAdapter = trailListAdapter
         mRecyclerView.adapter = trailListAdapter
 
         addOnFinishedTrailsRecyclerViewListener()
 
-        mHomeViewModel.trails.observe(viewLifecycleOwner) { listTrails ->
-            trailListAdapter.submitList(listTrails)
+        with(mHomeViewModel) {
+            trails.observe(viewLifecycleOwner) { listTrails ->
+                if (!isOnHome) return@observe
+                trailListAdapter.submitList(listTrails, isFavoriteList = false)
+            }
+
+            mFavoriteTrailsViewModel.mapOfFavoriteTrails.observe(viewLifecycleOwner) { mapTrails ->
+                if (isOnHome) return@observe
+                trailListAdapter.submitList(mapTrails.values.toList(), isFavoriteList = true)
+            }
         }
     }
 
@@ -129,7 +153,12 @@ class HomeFragment : Fragment() {
     }
 
     fun onHomeClick() {
+        mHomeViewModel.isOnHome = true
         highlightHomeButton()
+        mTrailListAdapter.submitList(
+            mHomeViewModel.trails.value!!,
+            isFavoriteList = false
+        )
     }
 
     private fun highlightHomeButton() {
@@ -140,7 +169,12 @@ class HomeFragment : Fragment() {
     }
 
     fun onFavoriteTrailsClick() {
+        mHomeViewModel.isOnHome = false
         highlightFavoriteTrailsButton()
+        mTrailListAdapter.submitList(
+            mFavoriteTrailsViewModel.mapOfFavoriteTrails.value!!.values.toList(),
+            isFavoriteList = true
+        )
     }
 
     private fun highlightFavoriteTrailsButton() {

@@ -206,6 +206,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent">
 
+                        <!-- Trail image -->
                         <ImageView
                             android:id="@+id/trail_image"
                             android:layout_width="match_parent"
@@ -216,13 +217,15 @@
                             android:src="@drawable/trail_test_image"
                             app:layout_constraintBottom_toBottomOf="parent" />
 
+                        <!-- Favorite trail button -->
                         <ImageButton
+                            android:id="@+id/favorite_trail_image_button"
                             android:layout_width="24dp"
                             android:layout_height="24dp"
                             android:layout_gravity="end"
                             android:layout_margin="12.5dp"
                             android:background="@android:color/transparent"
-                            android:src="@drawable/heart_white_transparent"
+                            tools:src="@drawable/heart_white_red"
                             tools:ignore="ContentDescription" />
 
                     </FrameLayout>

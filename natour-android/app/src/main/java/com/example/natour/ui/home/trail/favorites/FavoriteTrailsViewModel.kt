@@ -1,6 +1,5 @@
 package com.example.natour.ui.home.trail.favorites
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -18,10 +17,6 @@ class FavoriteTrailsViewModel @Inject constructor(
     private val mainUserRepository: MainUserRepository
 ) : ViewModel() {
 
-    init {
-        loadFavoriteTrails()
-    }
-
     private var _hasLoadedFavoriteTrails = false
 
     fun loadFavoriteTrails() = viewModelScope.launch {
@@ -29,13 +24,13 @@ class FavoriteTrailsViewModel @Inject constructor(
         userRepository.getFavoriteTrails(
             mainUserRepository.getDetails().id
         ).collect {
-            _listOfFavoriteTrails.value = it
+            _mapOfFavoriteTrails.value = it.toMutableMap()
             _hasLoadedFavoriteTrails = true
         }
     }
 
-    private var _listOfFavoriteTrails = MutableLiveData<List<Trail>>(listOf())
-    val listOfFavoriteTrails: LiveData<List<Trail>> get() = _listOfFavoriteTrails
+    private val _mapOfFavoriteTrails = MutableLiveData<Map<Long, Trail>>()
+    val mapOfFavoriteTrails: LiveData<Map<Long, Trail>> get() = _mapOfFavoriteTrails
 
     private var _favoriteTrailSuccessfullyChangedLiveData = MutableLiveData<Boolean>()
     val favoriteTrailSuccessfullyChangedLiveData: LiveData<Boolean>
@@ -47,16 +42,16 @@ class FavoriteTrailsViewModel @Inject constructor(
             mainUserRepository.getDetails().id
         )
 
-        addFavoriteTrailToList(trail)
+        addFavoriteTrailToMap(trail)
         _favoriteTrailSuccessfullyChangedLiveData.value = favoriteTrailSuccessfullyAdded
         _favoriteTrailSuccessfullyChangedLiveData = MutableLiveData()
     }
 
-    private fun addFavoriteTrailToList(trail: Trail) {
-        val newList = mutableListOf<Trail>()
-        newList.addAll(_listOfFavoriteTrails.value!!)
-        newList.add(trail)
-        _listOfFavoriteTrails.value = newList
+    private fun addFavoriteTrailToMap(trail: Trail) {
+        val newMap = mutableMapOf<Long, Trail>()
+        newMap.putAll(_mapOfFavoriteTrails.value!!)
+        newMap[trail.idTrail] = trail
+        _mapOfFavoriteTrails.value = newMap
     }
 
     fun removeFavoriteTrail(trail: Trail) = viewModelScope.launch {
@@ -65,16 +60,17 @@ class FavoriteTrailsViewModel @Inject constructor(
             mainUserRepository.getDetails().id
         )
 
-        removeFavoriteTrailFromList(trail)
+        removeFavoriteTrailFromMap(trail)
         _favoriteTrailSuccessfullyChangedLiveData.value = favoriteTrailSuccessfullyRemoved
         _favoriteTrailSuccessfullyChangedLiveData = MutableLiveData()
     }
 
-    private fun removeFavoriteTrailFromList(trail: Trail) {
-        val newList = mutableListOf<Trail>()
-        newList.addAll(_listOfFavoriteTrails.value!!)
-        newList.remove(trail)
-        _listOfFavoriteTrails.value = newList
+    private fun removeFavoriteTrailFromMap(trail: Trail) {
+        val newMap = mutableMapOf<Long, Trail>()
+        newMap.putAll(_mapOfFavoriteTrails.value!!)
+        newMap.remove(trail.idTrail)
+        _mapOfFavoriteTrails.value = newMap
     }
 
+    fun isFavoriteTrail(trail: Trail): Boolean = mapOfFavoriteTrails.value!!.containsKey(trail.idTrail)
 }

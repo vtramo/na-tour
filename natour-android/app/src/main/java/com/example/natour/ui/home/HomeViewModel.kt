@@ -1,5 +1,6 @@
 package com.example.natour.ui.home
 
+import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -69,4 +70,9 @@ class HomeViewModel @Inject constructor(
         _isRefreshingLiveData.value = false
         _isRefreshingLiveData = MutableLiveData()
     }
+
+    private var _isOnHome = true
+    var isOnHome
+        get() = _isOnHome
+        set(value) { _isOnHome = value }
 }

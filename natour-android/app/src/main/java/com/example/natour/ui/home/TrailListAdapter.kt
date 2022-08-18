@@ -2,9 +2,12 @@ package com.example.natour.ui.home
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.ImageButton
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.example.natour.MainActivity
+import com.example.natour.R
 import com.example.natour.data.model.Trail
 import com.example.natour.databinding.TrailCardViewBinding
 
@@ -59,5 +62,12 @@ class TrailListAdapter(
 
     override fun onBindViewHolder(trailCardViewHolder: TrailCardViewHolder, position: Int) {
         trailCardViewHolder.bindTrail(getItem(position))
+    }
+
+    private var _isFavoriteList = false
+
+    fun submitList(trails: List<Trail>, isFavoriteList: Boolean) {
+        _isFavoriteList = isFavoriteList
+        submitList(trails)
     }
 }

@@ -9,7 +9,6 @@ import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -83,7 +82,7 @@ class TrailDetailsFragment : Fragment(), OnMapReadyCallback, OnInfoWindowClickLi
     }
 
     private fun setupHeartFavoriteTrailImageButton() {
-        isFavoriteTrail = isFavoriteTrail()
+        isFavoriteTrail = mFavoriteTrailsViewModel.isFavoriteTrail(mTrailDetailsViewModel.thisTrail)
         with(binding.toolbarFavoriteTrailImageButton) {
             setImageDrawable(
                 if (isFavoriteTrail) {
@@ -94,11 +93,6 @@ class TrailDetailsFragment : Fragment(), OnMapReadyCallback, OnInfoWindowClickLi
             )
         }
     }
-
-    private fun isFavoriteTrail() =
-        mFavoriteTrailsViewModel.listOfFavoriteTrails.value!!.contains(
-            mTrailDetailsViewModel.thisTrail
-        )
 
     private fun startGoogleMap() {
         val mapFragment = childFragmentManager
