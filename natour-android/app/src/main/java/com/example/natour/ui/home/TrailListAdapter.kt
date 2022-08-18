@@ -35,7 +35,8 @@ class TrailListAdapter(
             cardTrailName.text = trail.name
             cardOwnerName.text = trail.owner.username
             totalStarsTextView.text = trail.stars.ordinal.toString()
-            totalStarsTextView.setTextColor(trail.difficulty.color)
+            difficultyTextView.text = trail.difficulty.toString()
+            difficultyTextView.setTextColor(trail.difficulty.color)
             totalReviewsTextView.text = "(${trail.reviews.size})"
             trailPositionDetails.text = trail.getPositionDetails()
             favoriteTrailImageButton.setImageDrawable(

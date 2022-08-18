@@ -1,9 +1,8 @@
 package com.example.natour.data.model
 
 import android.annotation.SuppressLint
-import android.graphics.Color
-import androidx.core.graphics.toColor
 import com.example.natour.MainActivity
+import com.example.natour.MainActivity.Companion.getColor
 import com.example.natour.R
 import kotlinx.serialization.Serializable
 import java.lang.IllegalArgumentException
@@ -14,11 +13,11 @@ enum class TrailDifficulty(
     private val _nameDifficulty: String,
     private val _color: Int
 ) {
-    EASIEST("Easiest", R.color.green_difficulty),
-    EASY("Easy", android.R.color.holo_green_dark),
-    MORE_DIFFICULT("More difficult", R.color.orange_difficulty),
-    VERY_DIFFICULT("Very difficult", R.color.red_1_difficulty),
-    EXTREMELY_DIFFICULT("Extremely difficult", R.color.red_2_difficulty);
+    EASIEST("Easiest", getColor(R.color.green_difficulty)),
+    EASY("Easy", getColor(android.R.color.holo_green_dark)),
+    MORE_DIFFICULT("More difficult", getColor(R.color.orange_difficulty)),
+    VERY_DIFFICULT("Very difficult", getColor(R.color.red_1_difficulty)),
+    EXTREMELY_DIFFICULT("Extremely difficult", getColor(R.color.red_2_difficulty));
 
     val color get() = _color
 

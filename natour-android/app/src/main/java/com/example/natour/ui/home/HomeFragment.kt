@@ -6,10 +6,9 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
 import androidx.navigation.findNavController
-import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.OnScrollListener
-import com.example.natour.MainActivity
+import com.example.natour.MainActivity.Companion.getDrawable
 import com.example.natour.R
 import com.example.natour.databinding.FragmentHomeBinding
 import com.example.natour.ui.MainUserViewModel
@@ -43,6 +42,7 @@ class HomeFragment : Fragment() {
     ): View {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
 
+        setupToolbarTitle()
         setupBottomHomeMenu()
         setupMainUser()
         mFavoriteTrailsViewModel.loadFavoriteTrails()
@@ -52,14 +52,23 @@ class HomeFragment : Fragment() {
         return binding.root
     }
 
+    private fun setupToolbarTitle() {
+        val toolbarTitleTextView = binding.toolbarTitleTextView
+        with(mHomeViewModel) {
+            if (isOnHome) {
+                toolbarTitleTextView.text = getString(R.string.explore_new_trails)
+            } else {
+                toolbarTitleTextView.text = getString(R.string.your_favorite_trails)
+            }
+        }
+    }
+
     private fun setupBottomHomeMenu() {
         with(mHomeViewModel) {
-            with(binding) {
-                if (isOnHome) {
-                    highlightHomeButton()
-                } else {
-                    highlightFavoriteTrailsButton()
-                }
+            if (isOnHome) {
+                highlightHomeButton()
+            } else {
+                highlightFavoriteTrailsButton()
             }
         }
     }
@@ -95,8 +104,8 @@ class HomeFragment : Fragment() {
                         mFavoriteTrailsViewModel::addFavoriteTrail,
                         mFavoriteTrailsViewModel::removeFavoriteTrail,
                         mFavoriteTrailsViewModel.favoriteTrailSuccessfullyChangedLiveData,
-                        MainActivity.getDrawable(R.drawable.heart_white_red)!!,
-                        MainActivity.getDrawable(R.drawable.heart_white_transparent)!!
+                        getDrawable(R.drawable.heart_white_red)!!,
+                        getDrawable(R.drawable.heart_white_transparent)!!
                     )
                 favoriteTrailChanger.run().observe(viewLifecycleOwner) { isSuccess ->
                     if (!isSuccess) {
@@ -187,6 +196,7 @@ class HomeFragment : Fragment() {
     fun onHomeClick() {
         mHomeViewModel.isOnHome = true
         highlightHomeButton()
+        binding.toolbarTitleTextView.text = getString(R.string.explore_new_trails)
         mTrailListAdapter.submitList(
             mHomeViewModel.trails.value!!,
         )
@@ -194,14 +204,15 @@ class HomeFragment : Fragment() {
 
     private fun highlightHomeButton() {
         with(binding) {
-            homeImageButton.setImageDrawable(MainActivity.getDrawable(R.drawable.home_black))
-            heartImageButton.setImageDrawable(MainActivity.getDrawable(R.drawable.heart_dark_gray))
+            homeImageButton.setImageDrawable(getDrawable(R.drawable.home_black))
+            heartImageButton.setImageDrawable(getDrawable(R.drawable.heart_dark_gray))
         }
     }
 
     fun onFavoriteTrailsClick() {
         mHomeViewModel.isOnHome = false
         highlightFavoriteTrailsButton()
+        binding.toolbarTitleTextView.text = getString(R.string.your_favorite_trails)
         mTrailListAdapter.submitList(
             mFavoriteTrailsViewModel.mapOfFavoriteTrails.value!!.values.toList(),
         )
@@ -209,8 +220,8 @@ class HomeFragment : Fragment() {
 
     private fun highlightFavoriteTrailsButton() {
         with(binding) {
-            homeImageButton.setImageDrawable(MainActivity.getDrawable(R.drawable.home_dark_gray))
-            heartImageButton.setImageDrawable(MainActivity.getDrawable(R.drawable.heart_black))
+            homeImageButton.setImageDrawable(getDrawable(R.drawable.home_dark_gray))
+            heartImageButton.setImageDrawable(getDrawable(R.drawable.heart_black))
         }
     }
 }

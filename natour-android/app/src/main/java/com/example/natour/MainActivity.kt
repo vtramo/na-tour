@@ -11,6 +11,7 @@ import androidx.annotation.DrawableRes
 import androidx.annotation.RequiresApi
 import androidx.annotation.StringRes
 import androidx.appcompat.content.res.AppCompatResources
+import androidx.core.content.ContextCompat
 import androidx.core.graphics.toColor
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
@@ -37,7 +38,7 @@ class MainActivity : AppCompatActivity() {
         fun getString(@StringRes id: Int) = context.getString(id)
         fun getDrawable(@DrawableRes id: Int) = AppCompatResources.getDrawable(context, id)
         @RequiresApi(Build.VERSION_CODES.M)
-        fun getColor(@ColorRes id: Int) = context.getColor(id).toColor()
+        fun getColor(@ColorRes id: Int) = ContextCompat.getColor(context, id)
     }
 
     @SuppressLint("NewApi")

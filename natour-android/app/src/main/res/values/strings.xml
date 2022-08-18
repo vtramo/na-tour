@@ -81,6 +81,7 @@
     <string name="log_outU">LOG OUT</string>
     <string name="emailU">EMAIL</string>
     <string name="very_difficult">Very difficult</string>
+    <string name="your_favorite_trails">Your favorite trails</string>
 
     <!-- Route Creation -->
     <string-array name="listDifficulties">
