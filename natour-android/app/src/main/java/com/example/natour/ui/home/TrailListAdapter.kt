@@ -30,7 +30,9 @@ class TrailListAdapter(
             trailImage.setImageDrawable(trail.image)
             cardTrailName.text = trail.name
             cardOwnerName.text = trail.owner.username
-            trailStars.setImageDrawable(trail.getStarsImage())
+            totalStarsTextView.text = trail.stars.ordinal.toString()
+            totalStarsTextView.setTextColor(trail.difficulty.color)
+            totalReviewsTextView.text = "(${trail.reviews.size})"
             trailPositionDetails.text = trail.getPositionDetails()
         }
     }

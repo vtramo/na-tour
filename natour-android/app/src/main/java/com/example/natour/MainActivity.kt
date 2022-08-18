@@ -2,12 +2,16 @@ package com.example.natour
 
 import android.annotation.SuppressLint
 import android.app.Application
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
+import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
+import androidx.annotation.RequiresApi
 import androidx.annotation.StringRes
 import androidx.appcompat.content.res.AppCompatResources
+import androidx.core.graphics.toColor
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
@@ -32,6 +36,8 @@ class MainActivity : AppCompatActivity() {
 
         fun getString(@StringRes id: Int) = context.getString(id)
         fun getDrawable(@DrawableRes id: Int) = AppCompatResources.getDrawable(context, id)
+        @RequiresApi(Build.VERSION_CODES.M)
+        fun getColor(@ColorRes id: Int) = context.getColor(id).toColor()
     }
 
     @SuppressLint("NewApi")

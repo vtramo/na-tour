@@ -8,6 +8,7 @@ import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.OnScrollListener
+import com.example.natour.MainActivity
 import com.example.natour.R
 import com.example.natour.databinding.FragmentHomeBinding
 import com.example.natour.ui.MainUserViewModel
@@ -125,5 +126,27 @@ class HomeFragment : Fragment() {
             childFragmentManager,
             UserDetailsDialogFragment.TAG
         )
+    }
+
+    fun onHomeClick() {
+        highlightHomeButton()
+    }
+
+    private fun highlightHomeButton() {
+        with(binding) {
+            homeImageButton.setImageDrawable(MainActivity.getDrawable(R.drawable.home_black))
+            heartImageButton.setImageDrawable(MainActivity.getDrawable(R.drawable.heart_dark_gray))
+        }
+    }
+
+    fun onFavoriteTrailsClick() {
+        highlightFavoriteTrailsButton()
+    }
+
+    private fun highlightFavoriteTrailsButton() {
+        with(binding) {
+            homeImageButton.setImageDrawable(MainActivity.getDrawable(R.drawable.home_dark_gray))
+            heartImageButton.setImageDrawable(MainActivity.getDrawable(R.drawable.heart_black))
+        }
     }
 }
