@@ -17,7 +17,7 @@ data class Trail(
     val photos: MutableList<TrailPhoto>,
     val reviews: MutableList<TrailReview>,
     var stars: Stars,
-    var isFavorite: Boolean
+    var isFavorite: Boolean = false
 ) {
 
     override fun equals(other: Any?): Boolean {
