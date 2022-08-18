@@ -13,6 +13,7 @@ import com.example.natour.databinding.FragmentHomeBinding
 import com.example.natour.ui.MainUserViewModel
 import com.example.natour.ui.home.trail.detail.TrailDetailsViewModel
 import com.example.natour.ui.home.trail.favorites.FavoriteTrailsViewModel
+import com.example.natour.ui.home.user.UserDetailsDialogFragment
 
 class HomeFragment : Fragment() {
 
@@ -37,11 +38,18 @@ class HomeFragment : Fragment() {
     ): View {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
 
+        setupMainUser()
         mFavoriteTrailsViewModel.loadFavoriteTrails()
         setupRecyclerView()
         setupSwipeRefreshLayout()
 
         return binding.root
+    }
+
+    private fun setupMainUser() {
+        with(mMainUserViewModel) {
+            if (mainUser.value == null) loadMainUser()
+        }
     }
 
     private fun setupRecyclerView() {
@@ -108,13 +116,14 @@ class HomeFragment : Fragment() {
         view?.findNavController()?.navigate(action)
     }
 
-    fun onLogout() {
-        mMainUserViewModel.logout()
-        goToLoginFragment()
+    fun onUserDetailsClick() {
+        showUserDetailsDialogFragment()
     }
 
-    private fun goToLoginFragment() {
-        val action = HomeFragmentDirections.actionHomeFragmentToLoginFragment()
-        view?.findNavController()?.navigate(action)
+    private fun showUserDetailsDialogFragment() {
+        UserDetailsDialogFragment().show(
+            childFragmentManager,
+            UserDetailsDialogFragment.TAG
+        )
     }
 }

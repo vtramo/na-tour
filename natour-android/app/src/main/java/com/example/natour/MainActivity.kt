@@ -1,5 +1,6 @@
 package com.example.natour
 
+import android.annotation.SuppressLint
 import android.app.Application
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -33,6 +34,7 @@ class MainActivity : AppCompatActivity() {
         fun getDrawable(@DrawableRes id: Int) = AppCompatResources.getDrawable(context, id)
     }
 
+    @SuppressLint("NewApi")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         context = application
@@ -40,6 +42,8 @@ class MainActivity : AppCompatActivity() {
         supportActionBar?.hide()
         loadMainUser()
         setupThirdPartyLoginViewModel()
+
+        window.statusBarColor = context.getColor(R.color.darkgray)
     }
 
     private fun loadMainUser() {

@@ -26,6 +26,10 @@ class AddTrailReviewDialogFragment: DialogFragment() {
     private var _binding: DialogFragmentAddTrailReviewBinding? = null
     private val binding get() = _binding!!
 
+    companion object {
+        const val TAG = "AddTrailReviewDialog"
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -93,10 +97,6 @@ class AddTrailReviewDialogFragment: DialogFragment() {
             starFourImageView.setImageResource(emptyStar)
             starFiveImageView.setImageResource(emptyStar)
         }
-    }
-
-    companion object {
-        const val TAG = "AddTrailReviewDialog"
     }
 
     fun onSubmitClick() {

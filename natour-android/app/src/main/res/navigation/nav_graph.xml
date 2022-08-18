@@ -77,6 +77,9 @@
             <action
                 android:id="@+id/action_homeFragment_to_trailDetailFragment"
                 app:destination="@id/trailDetailFragment" />
+            <action
+                android:id="@+id/action_homeFragment_to_userDetailsDialogFragment"
+                app:destination="@id/userDetailsDialogFragment" />
         </fragment>
         <fragment
             android:id="@+id/trailDetailFragment"
@@ -106,5 +109,12 @@
             android:id="@+id/downloadTrailDialogFragment"
             android:name="com.example.natour.ui.home.trail.detail.DownloadTrailDialogFragment"
             android:label="DownloadTrailDialogFragment" />
+        <dialog
+            android:id="@+id/userDetailsDialogFragment"
+            android:name="com.example.natour.ui.home.user.UserDetailsDialogFragment"
+            android:label="UserDetailsDialogFragment" />
+        <action
+            android:id="@+id/action_global_loginFragment"
+            app:destination="@id/loginFragment" />
     </navigation>
 </navigation>
