@@ -12,7 +12,8 @@ import com.example.natour.data.model.Trail
 import com.example.natour.databinding.TrailCardViewBinding
 
 class TrailListAdapter(
-    private val trailCardClickListener: (Trail) -> Unit
+    private val trailCardClickListener: (Trail) -> Unit,
+    private val favoriteTrailClickListener: (Trail, ImageButton) -> Unit
 ): ListAdapter<Trail, TrailListAdapter.TrailCardViewHolder>(TrailDiffCallback) {
 
     companion object {
@@ -37,6 +38,13 @@ class TrailListAdapter(
             totalStarsTextView.setTextColor(trail.difficulty.color)
             totalReviewsTextView.text = "(${trail.reviews.size})"
             trailPositionDetails.text = trail.getPositionDetails()
+            favoriteTrailImageButton.setImageDrawable(
+                if (trail.isFavorite) {
+                    MainActivity.getDrawable(R.drawable.heart_white_red)
+                } else {
+                    MainActivity.getDrawable(R.drawable.heart_white_transparent)
+                }
+            )
         }
     }
 
@@ -57,6 +65,11 @@ class TrailListAdapter(
             trailCardClickListener(getItem(position))
         }
 
+        binding.favoriteTrailImageButton.setOnClickListener {
+            val position = viewHolder.adapterPosition
+            favoriteTrailClickListener(getItem(position), it as ImageButton)
+        }
+
         return viewHolder
     }
 
@@ -64,10 +77,4 @@ class TrailListAdapter(
         trailCardViewHolder.bindTrail(getItem(position))
     }
 
-    private var _isFavoriteList = false
-
-    fun submitList(trails: List<Trail>, isFavoriteList: Boolean) {
-        _isFavoriteList = isFavoriteList
-        submitList(trails)
-    }
 }

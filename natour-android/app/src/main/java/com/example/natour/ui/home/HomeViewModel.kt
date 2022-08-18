@@ -31,6 +31,8 @@ class HomeViewModel @Inject constructor(
     private var _trails = MutableLiveData<List<Trail>>(listOf())
     val trails: LiveData<List<Trail>> get() = _trails
 
+    private var mapOfFavoriteTrails = mapOf<Long, Trail>()
+
     private var _isLoadingTrails = false
     val isLoadingTrails get() = _isLoadingTrails
 
@@ -49,6 +51,7 @@ class HomeViewModel @Inject constructor(
     private fun addMoreTrails(otherTrails: List<Trail>) {
         val newTrailList = mutableListOf<Trail>()
         newTrailList.addAll(_trails.value!!)
+        otherTrails.forEach { it.isFavorite = mapOfFavoriteTrails.containsKey(it.idTrail) }
         newTrailList.addAll(otherTrails)
         _trails.value = newTrailList
     }
@@ -75,4 +78,14 @@ class HomeViewModel @Inject constructor(
     var isOnHome
         get() = _isOnHome
         set(value) { _isOnHome = value }
+
+    fun updateFavoriteTrailsInTheList(mapFavoriteTrails: Map<Long, Trail>) {
+        mapOfFavoriteTrails = mapFavoriteTrails
+        val newTrailList = mutableListOf<Trail>()
+        newTrailList.addAll(_trails.value!!)
+        newTrailList.forEach {
+            it.isFavorite = mapFavoriteTrails.containsKey(it.idTrail)
+        }
+        _trails.value = newTrailList
+    }
 }

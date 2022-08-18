@@ -14,8 +14,10 @@ import com.example.natour.R
 import com.example.natour.databinding.FragmentHomeBinding
 import com.example.natour.ui.MainUserViewModel
 import com.example.natour.ui.home.trail.detail.TrailDetailsViewModel
+import com.example.natour.ui.home.trail.favorites.FavoriteTrailChanger
 import com.example.natour.ui.home.trail.favorites.FavoriteTrailsViewModel
 import com.example.natour.ui.home.user.UserDetailsDialogFragment
+import com.example.natour.util.showErrorAlertDialog
 
 class HomeFragment : Fragment() {
 
@@ -70,25 +72,55 @@ class HomeFragment : Fragment() {
 
     private fun setupRecyclerView() {
         mRecyclerView = binding.recyclerViewHome
-        val trailListAdapter = TrailListAdapter { trailClicked ->
-            mTrailDetailsViewModel.thisTrail = trailClicked
-            goToTrailDetailsFragment()
-        }
-        mTrailListAdapter = trailListAdapter
-        mRecyclerView.adapter = trailListAdapter
+        mTrailListAdapter = setupTrailListAdapter()
+        mRecyclerView.adapter = mTrailListAdapter
 
         addOnFinishedTrailsRecyclerViewListener()
 
-        with(mHomeViewModel) {
-            trails.observe(viewLifecycleOwner) { listTrails ->
-                if (!isOnHome) return@observe
-                trailListAdapter.submitList(listTrails, isFavoriteList = false)
-            }
+        observeTrailListChanges()
+        observeMapOfFavoriteTrailsChanges()
+    }
 
-            mFavoriteTrailsViewModel.mapOfFavoriteTrails.observe(viewLifecycleOwner) { mapTrails ->
-                if (isOnHome) return@observe
-                trailListAdapter.submitList(mapTrails.values.toList(), isFavoriteList = true)
+    private fun setupTrailListAdapter(): TrailListAdapter =
+         TrailListAdapter(
+            trailCardClickListener = { trailClicked ->
+                mTrailDetailsViewModel.thisTrail = trailClicked
+                goToTrailDetailsFragment()
+            },
+            favoriteTrailClickListener = { trailClicked, heartImageButton ->
+                val favoriteTrailChanger =
+                    FavoriteTrailChanger(
+                        heartImageButton,
+                        trailClicked,
+                        mFavoriteTrailsViewModel::addFavoriteTrail,
+                        mFavoriteTrailsViewModel::removeFavoriteTrail,
+                        mFavoriteTrailsViewModel.favoriteTrailSuccessfullyChangedLiveData,
+                        MainActivity.getDrawable(R.drawable.heart_white_red)!!,
+                        MainActivity.getDrawable(R.drawable.heart_white_transparent)!!
+                    )
+                favoriteTrailChanger.run().observe(viewLifecycleOwner) { isSuccess ->
+                    if (!isSuccess) {
+                        showErrorAlertDialog(
+                            "It is currently not possible to perform this operation",
+                            requireContext()
+                        )
+                    }
+                }
             }
+        )
+
+    private fun observeTrailListChanges() = with(mHomeViewModel) {
+        trails.observe(viewLifecycleOwner) { listTrails ->
+            if (!isOnHome) return@observe
+            mTrailListAdapter.submitList(listTrails)
+        }
+    }
+
+    private fun observeMapOfFavoriteTrailsChanges() = with(mHomeViewModel) {
+        mFavoriteTrailsViewModel.mapOfFavoriteTrails.observe(viewLifecycleOwner) { mapTrails ->
+            updateFavoriteTrailsInTheList(mapTrails)
+            if (isOnHome) return@observe
+            mTrailListAdapter.submitList(mapTrails.values.toList())
         }
     }
 
@@ -157,7 +189,6 @@ class HomeFragment : Fragment() {
         highlightHomeButton()
         mTrailListAdapter.submitList(
             mHomeViewModel.trails.value!!,
-            isFavoriteList = false
         )
     }
 
@@ -173,7 +204,6 @@ class HomeFragment : Fragment() {
         highlightFavoriteTrailsButton()
         mTrailListAdapter.submitList(
             mFavoriteTrailsViewModel.mapOfFavoriteTrails.value!!.values.toList(),
-            isFavoriteList = true
         )
     }
 

@@ -42,12 +42,13 @@ class FavoriteTrailsViewModel @Inject constructor(
             mainUserRepository.getDetails().id
         )
 
-        addFavoriteTrailToMap(trail)
+        if (favoriteTrailSuccessfullyAdded) addFavoriteTrailToMap(trail)
         _favoriteTrailSuccessfullyChangedLiveData.value = favoriteTrailSuccessfullyAdded
         _favoriteTrailSuccessfullyChangedLiveData = MutableLiveData()
     }
 
     private fun addFavoriteTrailToMap(trail: Trail) {
+        trail.isFavorite = true
         val newMap = mutableMapOf<Long, Trail>()
         newMap.putAll(_mapOfFavoriteTrails.value!!)
         newMap[trail.idTrail] = trail
@@ -60,17 +61,16 @@ class FavoriteTrailsViewModel @Inject constructor(
             mainUserRepository.getDetails().id
         )
 
-        removeFavoriteTrailFromMap(trail)
+        if (favoriteTrailSuccessfullyRemoved) removeFavoriteTrailFromMap(trail)
         _favoriteTrailSuccessfullyChangedLiveData.value = favoriteTrailSuccessfullyRemoved
         _favoriteTrailSuccessfullyChangedLiveData = MutableLiveData()
     }
 
     private fun removeFavoriteTrailFromMap(trail: Trail) {
+        trail.isFavorite = false
         val newMap = mutableMapOf<Long, Trail>()
         newMap.putAll(_mapOfFavoriteTrails.value!!)
         newMap.remove(trail.idTrail)
         _mapOfFavoriteTrails.value = newMap
     }
-
-    fun isFavoriteTrail(trail: Trail): Boolean = mapOfFavoriteTrails.value!!.containsKey(trail.idTrail)
 }

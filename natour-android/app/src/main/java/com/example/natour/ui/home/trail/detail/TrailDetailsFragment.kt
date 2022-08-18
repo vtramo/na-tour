@@ -23,18 +23,21 @@ import androidx.navigation.findNavController
 import com.example.natour.MainActivity
 import com.example.natour.R
 import com.example.natour.data.model.Position
+import com.example.natour.data.model.Trail
 import com.example.natour.data.model.TrailPhoto
 import com.example.natour.databinding.FragmentTrailDetailsBinding
 import com.example.natour.util.bitmapFromVector
 import com.example.natour.ui.home.trail.SupportMapFragmentWrapper
+import com.example.natour.ui.home.trail.favorites.FavoriteTrailChanger
 import com.example.natour.ui.home.trail.favorites.FavoriteTrailsViewModel
+import com.example.natour.util.showErrorAlertDialog
+import com.example.natour.util.showSnackBar
 import com.github.dhaval2404.imagepicker.ImagePicker
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.GoogleMap.*
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.model.*
-import com.google.android.material.snackbar.Snackbar
 import com.google.maps.android.PolyUtil
 
 class TrailDetailsFragment : Fragment(), OnMapReadyCallback, OnInfoWindowClickListener {
@@ -58,7 +61,7 @@ class TrailDetailsFragment : Fragment(), OnMapReadyCallback, OnInfoWindowClickLi
             .map { LatLng(it.latitude, it.longitude) }
     }
 
-    private var isFavoriteTrail = false
+    private lateinit var mThisTrail: Trail
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -75,6 +78,7 @@ class TrailDetailsFragment : Fragment(), OnMapReadyCallback, OnInfoWindowClickLi
         binding.trailDetailsFragment = this
         binding.lifecycleOwner = viewLifecycleOwner
 
+        mThisTrail = mTrailDetailsViewModel.thisTrail
         setupHeartFavoriteTrailImageButton()
         startGoogleMap()
         setupListOfTrailPhotos()
@@ -82,10 +86,9 @@ class TrailDetailsFragment : Fragment(), OnMapReadyCallback, OnInfoWindowClickLi
     }
 
     private fun setupHeartFavoriteTrailImageButton() {
-        isFavoriteTrail = mFavoriteTrailsViewModel.isFavoriteTrail(mTrailDetailsViewModel.thisTrail)
         with(binding.toolbarFavoriteTrailImageButton) {
             setImageDrawable(
-                if (isFavoriteTrail) {
+                if (mThisTrail.isFavorite) {
                     MainActivity.getDrawable(R.drawable.heart_red)
                 } else {
                     MainActivity.getDrawable(R.drawable.heart_black)
@@ -213,9 +216,12 @@ class TrailDetailsFragment : Fragment(), OnMapReadyCallback, OnInfoWindowClickLi
             }
             reviewSuccessfullyAddedLiveData.observe(viewLifecycleOwner) { reviewSuccessfullyAdded ->
                 if (reviewSuccessfullyAdded) {
-                    showSnackBar("Review successfully added")
+                    showSnackBar("Review successfully added", requireView())
                 } else {
-                    showErrorAlertDialog("A problem occurred in adding the review")
+                    showErrorAlertDialog(
+                        "A problem occurred in adding the review",
+                        requireContext()
+                    )
                 }
             }
         }
@@ -287,9 +293,12 @@ class TrailDetailsFragment : Fragment(), OnMapReadyCallback, OnInfoWindowClickLi
         with(mTrailDetailsViewModel) {
             photoSuccessfullyAddedLiveData.observe(viewLifecycleOwner) { photoSuccessfullyAdded ->
                 if (photoSuccessfullyAdded) {
-                    showSnackBar("Photo successfully added")
+                    showSnackBar("Photo successfully added", requireView())
                 } else {
-                    showErrorAlertDialog("A problem occurred in adding the photo")
+                    showErrorAlertDialog(
+                        "A problem occurred in adding the photo",
+                        requireContext()
+                    )
                 }
             }
 
@@ -377,28 +386,18 @@ class TrailDetailsFragment : Fragment(), OnMapReadyCallback, OnInfoWindowClickLi
                 when (result) {
                     TrailDownloadResult.NOT_SET -> return@observe
                     TrailDownloadResult.DISMISS -> return@observe
-                    TrailDownloadResult.SUCCESS -> showSnackBar("Trail successfully downloaded")
-                    else -> showErrorAlertDialog("A problem occurred in downloading the trail")
+                    TrailDownloadResult.SUCCESS -> showSnackBar(
+                        "Trail successfully downloaded",
+                        requireView()
+                    )
+                    else -> showErrorAlertDialog(
+                        "A problem occurred in downloading the trail",
+                        requireContext()
+                    )
                 }
                 trailDownloadedSuccessfullyLiveData.removeObservers(viewLifecycleOwner)
             }
         }
-    }
-
-    private fun showSnackBar(text: String) {
-        Snackbar.make(
-            requireView(),
-            text,
-            Snackbar.LENGTH_SHORT
-        ).show()
-    }
-
-    private fun showErrorAlertDialog(message: String) {
-        AlertDialog.Builder(requireContext())
-            .setTitle("Error")
-            .setMessage(message)
-            .setPositiveButton("Okay") { _, _ -> }
-            .show()
     }
 
     private fun showDownloadTrailDialogFragment() {
@@ -408,50 +407,22 @@ class TrailDetailsFragment : Fragment(), OnMapReadyCallback, OnInfoWindowClickLi
     }
 
     fun onFavoriteTrailClick() {
-        binding.toolbarFavoriteTrailImageButton.isClickable = false
-        observeFavoriteTrailChange { isSuccess ->
+        val favoriteTrailChanger =
+            FavoriteTrailChanger(
+                binding.toolbarFavoriteTrailImageButton,
+                mThisTrail,
+                mFavoriteTrailsViewModel::addFavoriteTrail,
+                mFavoriteTrailsViewModel::removeFavoriteTrail,
+                mFavoriteTrailsViewModel.favoriteTrailSuccessfullyChangedLiveData,
+            )
+
+        favoriteTrailChanger.run().observe(viewLifecycleOwner) { isSuccess ->
             if (!isSuccess) {
                 showErrorAlertDialog(
-                    "It is currently not possible to perform this operation"
+                    "It is currently not possible to perform this operation",
+                    requireContext()
                 )
-                isFavoriteTrail = !isFavoriteTrail
-                switchHeartImageButton()
             }
-        }
-        performEditOperationPreferredTrail()
-        switchHeartImageButton()
-        binding.toolbarFavoriteTrailImageButton.isClickable = true
-    }
-
-    private fun switchHeartImageButton() {
-        with(binding.toolbarFavoriteTrailImageButton) {
-            setImageDrawable(
-                if (isFavoriteTrail) {
-                    MainActivity.getDrawable(R.drawable.heart_red)!!
-                } else {
-                    MainActivity.getDrawable(R.drawable.heart_black)!!
-                }
-            )
-        }
-    }
-
-    private fun observeFavoriteTrailChange(consumesBoolean: (Boolean) -> Unit) {
-        with(mFavoriteTrailsViewModel) {
-            favoriteTrailSuccessfullyChangedLiveData.observe(viewLifecycleOwner) { isSuccess ->
-                consumesBoolean(isSuccess)
-            }
-        }
-    }
-
-    private fun performEditOperationPreferredTrail() {
-        val thisTrail = mTrailDetailsViewModel.thisTrail
-        with(mFavoriteTrailsViewModel) {
-            if (!isFavoriteTrail) {
-                addFavoriteTrail(thisTrail)
-            } else {
-                removeFavoriteTrail(thisTrail)
-            }
-            isFavoriteTrail = !isFavoriteTrail
         }
     }
 
