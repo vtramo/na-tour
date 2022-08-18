@@ -461,6 +461,10 @@ class TrailDetailsFragment : Fragment(), OnMapReadyCallback, OnInfoWindowClickLi
         }
     }
 
+    fun onBackClick() {
+        view?.findNavController()?.popBackStack()
+    }
+
     override fun onDestroy() {
         super.onDestroy()
         _binding = null

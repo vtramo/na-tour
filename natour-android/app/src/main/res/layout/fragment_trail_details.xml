@@ -38,6 +38,7 @@
                     >
                     <!-- Back button -->
                     <ImageButton
+                        android:onClick="@{() -> trailDetailsFragment.onBackClick()}"
                         android:id="@+id/toolbar_back_image_button"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"

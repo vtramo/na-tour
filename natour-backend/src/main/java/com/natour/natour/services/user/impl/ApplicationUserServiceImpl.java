@@ -112,9 +112,12 @@ public class ApplicationUserServiceImpl implements ApplicationUserService {
             "Invalid user ID (favorite trail list)"
         );
 
-        return user.getFavoriteTrails()
+        List<TrailResponseDto> trails = user.getFavoriteTrails()
             .stream()
             .map(TrailDtoUtils::convertTrailEntityToTrailResponseDto)
             .collect(Collectors.toList());
+        log.info("List of " + user.getUsername() + "'s favorite routes successfully" +
+            "obtained: " + trails.size());
+        return trails;
     }
 }
