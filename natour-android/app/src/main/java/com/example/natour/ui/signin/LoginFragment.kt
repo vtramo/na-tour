@@ -13,9 +13,6 @@ import androidx.navigation.findNavController
 import com.example.natour.R
 import com.example.natour.databinding.FragmentLoginBinding
 import com.example.natour.data.model.Credentials
-import com.example.natour.ui.signin.viewmodels.ThirdPartyLoginViewModel
-import com.example.natour.ui.signin.viewmodels.LoginViewModel
-import com.example.natour.ui.signin.thirdparty.AuthenticationThirdPartyResult
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

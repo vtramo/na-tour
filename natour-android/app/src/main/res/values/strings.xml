@@ -55,6 +55,34 @@
     <string name="difficulty_level">Difficulty Level:</string>
     <string name="travel_time">Travel time:</string>
     <string name="description_label">Description:</string>
+    <string name="map">Map</string>
+    <string name="add_a_photo">Add a photo</string>
+    <string name="photos">Photos</string>
+    <string name="log_out">Log out</string>
+    <string name="there_are_no_photos">There are no photos</string>
+    <string name="go_to_trail">Go to trail</string>
+    <string name="reviews">Reviews</string>
+    <string name="there_are_no_reviews">There are no reviews</string>
+    <string name="add_a_review">Add a review</string>
+    <string name="optional_tell_others_what_you_think">(Optional) Tell others what you think</string>
+    <string name="submit">Submit</string>
+    <string name="cancel">Cancel</string>
+    <string name="download_pdf">Download PDF</string>
+    <string name="download_gpx">Download GPX</string>
+    <string name="starting_point_lat_long">Starting point LAT/LONG:</string>
+    <string name="difficulty">Difficulty:</string>
+    <string name="duration">Duration:</string>
+    <string name="trail_name">Trail name:</string>
+    <string name="trail_position">Trail position:</string>
+    <string name="first_nameU">FIRST NAME</string>
+    <string name="last_nameU">LAST NAME</string>
+    <string name="usernameU">USERNAME</string>
+    <string name="user_details">User details</string>
+    <string name="log_outU">LOG OUT</string>
+    <string name="emailU">EMAIL</string>
+    <string name="very_difficult">Very difficult</string>
+    <string name="your_favorite_trails">Your favorite trails</string>
+    <string name="loading">Loading...</string>
 
     <!-- Route Creation -->
     <string-array name="listDifficulties">

@@ -14,10 +14,19 @@ data class Trail(
     val duration: Duration,
     val image: Drawable,
     val routePoints: List<RoutePoint>,
-    val photos: List<TrailPhoto>,
-    val reviews: List<TrailReview>,
-    val stars: Stars
+    val photos: MutableList<TrailPhoto>,
+    val reviews: MutableList<TrailReview>,
+    var stars: Stars,
+    var isFavorite: Boolean = false
 ) {
+
+    override fun equals(other: Any?): Boolean {
+        if (other !is Trail) return false
+        return other.idTrail == this.idTrail
+    }
+
+    override fun hashCode(): Int = idTrail.hashCode() xor name.hashCode()
+
     fun getStarsImage(): Drawable =
         with(MainActivity) {
             when(stars) {
@@ -39,6 +48,24 @@ data class Trail(
             var positionResult = if (adminArea.isNullOrBlank()) "" else "$adminArea, "
             positionResult += countryName
             return@with positionResult
+        }
+    }
+
+    fun calculateStars() {
+        var sumStars = 0
+        reviews.forEach { sumStars += it.stars.ordinal }
+        setStars(sumStars / reviews.size)
+    }
+
+    private fun setStars(value: Int) {
+        stars = when(value) {
+            0 -> Stars.ZERO
+            1 -> Stars.ONE
+            2 -> Stars.TWO
+            3 -> Stars.THREE
+            4 -> Stars.FOUR
+            5 -> Stars.FIVE
+            else -> throw IllegalArgumentException()
         }
     }
 }

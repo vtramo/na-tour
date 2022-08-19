@@ -2,14 +2,18 @@ package com.example.natour.ui.home
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.ImageButton
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.example.natour.MainActivity
+import com.example.natour.R
 import com.example.natour.data.model.Trail
 import com.example.natour.databinding.TrailCardViewBinding
 
 class TrailListAdapter(
-    private val trailCardClickListener: (Trail) -> Unit
+    private val trailCardClickListener: (Trail) -> Unit,
+    private val favoriteTrailClickListener: (Trail, ImageButton) -> Unit
 ): ListAdapter<Trail, TrailListAdapter.TrailCardViewHolder>(TrailDiffCallback) {
 
     companion object {
@@ -30,8 +34,18 @@ class TrailListAdapter(
             trailImage.setImageDrawable(trail.image)
             cardTrailName.text = trail.name
             cardOwnerName.text = trail.owner.username
-            trailStars.setImageDrawable(trail.getStarsImage())
+            totalStarsTextView.text = trail.stars.ordinal.toString()
+            difficultyTextView.text = trail.difficulty.toString()
+            difficultyTextView.setTextColor(trail.difficulty.color)
+            totalReviewsTextView.text = "(${trail.reviews.size})"
             trailPositionDetails.text = trail.getPositionDetails()
+            favoriteTrailImageButton.setImageDrawable(
+                if (trail.isFavorite) {
+                    MainActivity.getDrawable(R.drawable.heart_white_red)
+                } else {
+                    MainActivity.getDrawable(R.drawable.heart_white_transparent)
+                }
+            )
         }
     }
 
@@ -52,10 +66,16 @@ class TrailListAdapter(
             trailCardClickListener(getItem(position))
         }
 
+        binding.favoriteTrailImageButton.setOnClickListener {
+            val position = viewHolder.adapterPosition
+            favoriteTrailClickListener(getItem(position), it as ImageButton)
+        }
+
         return viewHolder
     }
 
     override fun onBindViewHolder(trailCardViewHolder: TrailCardViewHolder, position: Int) {
         trailCardViewHolder.bindTrail(getItem(position))
     }
+
 }

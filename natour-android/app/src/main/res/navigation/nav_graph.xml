@@ -32,7 +32,7 @@
         app:startDestination="@id/trailStartCreationFragment">
         <fragment
             android:id="@+id/trailStartCreationFragment"
-            android:name="com.example.natour.ui.trail.fragments.TrailStartCreationFragment"
+            android:name="com.example.natour.ui.home.trail.creation.TrailStartCreationFragment"
             android:label="TrailStartCreationFragment">
             <action
                 android:id="@+id/action_trailCreationFragment_to_trailTypeCreationFragment"
@@ -40,7 +40,7 @@
         </fragment>
         <fragment
             android:id="@+id/trailTypeCreationFragment"
-            android:name="com.example.natour.ui.trail.fragments.TrailTypeCreationFragment"
+            android:name="com.example.natour.ui.home.trail.creation.TrailTypeCreationFragment"
             android:label="TrailTypeCreationFragment"
             tools:layout="@layout/fragment_trail_type_creation">
             <action
@@ -52,11 +52,11 @@
         </fragment>
         <fragment
             android:id="@+id/trailDisplayCreationFragment"
-            android:name="com.example.natour.ui.trail.fragments.TrailDisplayCreationFragment"
+            android:name="com.example.natour.ui.home.trail.creation.TrailDisplayCreationFragment"
             android:label="TrailDisplayCreationFragment" />
         <fragment
             android:id="@+id/trailTrackingCreationFragment"
-            android:name="com.example.natour.ui.trail.fragments.TrailTrackingCreationFragment"
+            android:name="com.example.natour.ui.home.trail.creation.TrailTrackingCreationFragment"
             android:label="TrailTrackingCreationFragment" />
     </navigation>
     <navigation android:id="@+id/home_nav_graph"
@@ -77,11 +77,44 @@
             <action
                 android:id="@+id/action_homeFragment_to_trailDetailFragment"
                 app:destination="@id/trailDetailFragment" />
+            <action
+                android:id="@+id/action_homeFragment_to_userDetailsDialogFragment"
+                app:destination="@id/userDetailsDialogFragment" />
         </fragment>
         <fragment
             android:id="@+id/trailDetailFragment"
-            android:name="com.example.natour.ui.home.TrailDetailsFragment"
+            android:name="com.example.natour.ui.home.trail.detail.TrailDetailsFragment"
             android:label="fragment_trail_detail"
-            tools:layout="@layout/fragment_trail_details" />
+            tools:layout="@layout/fragment_trail_details" >
+            <action
+                android:id="@+id/action_trailDetailFragment_to_trailPhotoFragment"
+                app:destination="@id/trailPhotoFragment" />
+            <action
+                android:id="@+id/action_trailDetailFragment_to_addTrailReviewDialogFragment"
+                app:destination="@id/addTrailReviewDialogFragment" />
+            <action
+                android:id="@+id/action_trailDetailFragment_to_downloadTrailDialogFragment"
+                app:destination="@id/downloadTrailDialogFragment" />
+        </fragment>
+        <fragment
+            android:id="@+id/trailPhotoFragment"
+            android:name="com.example.natour.ui.home.trail.detail.TrailPhotoFragment"
+            android:label="fragment_trail_photo"
+            tools:layout="@layout/fragment_trail_photo" />
+        <dialog
+            android:id="@+id/addTrailReviewDialogFragment"
+            android:name="com.example.natour.ui.home.trail.detail.AddTrailReviewDialogFragment"
+            android:label="AddTrailReviewDialogFragment" />
+        <dialog
+            android:id="@+id/downloadTrailDialogFragment"
+            android:name="com.example.natour.ui.home.trail.detail.DownloadTrailDialogFragment"
+            android:label="DownloadTrailDialogFragment" />
+        <dialog
+            android:id="@+id/userDetailsDialogFragment"
+            android:name="com.example.natour.ui.home.user.UserDetailsDialogFragment"
+            android:label="UserDetailsDialogFragment" />
+        <action
+            android:id="@+id/action_global_loginFragment"
+            app:destination="@id/loginFragment" />
     </navigation>
 </navigation>

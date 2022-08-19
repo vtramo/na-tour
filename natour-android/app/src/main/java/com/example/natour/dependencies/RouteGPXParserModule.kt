@@ -1,7 +1,7 @@
 package com.example.natour.dependencies
 
 import android.content.Context
-import com.example.natour.ui.trail.util.RouteGPXParser
+import com.example.natour.ui.home.trail.RouteGPXParser
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

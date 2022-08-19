@@ -1,25 +1,27 @@
 package com.example.natour
 
+import android.annotation.SuppressLint
 import android.app.Application
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.LinearLayout
-import android.widget.Toolbar
 import androidx.activity.viewModels
+import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
+import androidx.annotation.RequiresApi
 import androidx.annotation.StringRes
 import androidx.appcompat.content.res.AppCompatResources
+import androidx.core.content.ContextCompat
+import androidx.core.graphics.toColor
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.example.natour.ui.MainUserViewModel
-import com.example.natour.ui.signin.viewmodels.ThirdPartyLoginViewModel
-import com.example.natour.ui.signin.thirdparty.FacebookLogin
-import com.example.natour.ui.signin.thirdparty.GoogleLogin
+import com.example.natour.ui.signin.ThirdPartyLoginViewModel
+import com.example.natour.ui.signin.FacebookLogin
+import com.example.natour.ui.signin.GoogleLogin
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -35,8 +37,11 @@ class MainActivity : AppCompatActivity() {
 
         fun getString(@StringRes id: Int) = context.getString(id)
         fun getDrawable(@DrawableRes id: Int) = AppCompatResources.getDrawable(context, id)
+        @RequiresApi(Build.VERSION_CODES.M)
+        fun getColor(@ColorRes id: Int) = ContextCompat.getColor(context, id)
     }
 
+    @SuppressLint("NewApi")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         context = application
@@ -44,6 +49,8 @@ class MainActivity : AppCompatActivity() {
         supportActionBar?.hide()
         loadMainUser()
         setupThirdPartyLoginViewModel()
+
+        window.statusBarColor = context.getColor(R.color.darkgray)
     }
 
     private fun loadMainUser() {

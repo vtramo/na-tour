@@ -1,5 +1,6 @@
 package com.example.natour.data.sources
 
+import com.example.natour.data.dto.TrailReviewDto
 import com.example.natour.data.model.Trail
 import kotlinx.coroutines.flow.Flow
 import okhttp3.MultipartBody
@@ -17,4 +18,13 @@ interface TrailDataSource {
     ): Boolean
 
     suspend fun load(page: Int): Flow<List<Trail>>
+
+    suspend fun addPhoto(
+        idOwner: RequestBody,
+        idTrail: RequestBody,
+        position: RequestBody,
+        image: MultipartBody.Part
+    ): Boolean
+
+    suspend fun addReview(trailReview: TrailReviewDto): Boolean
 }

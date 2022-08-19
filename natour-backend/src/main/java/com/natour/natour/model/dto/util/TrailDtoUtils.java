@@ -2,6 +2,8 @@ package com.natour.natour.model.dto.util;
 
 import java.util.stream.Collectors;
 
+import javax.transaction.Transactional;
+
 import com.natour.natour.model.dto.DurationDto;
 import com.natour.natour.model.dto.PositionDto;
 import com.natour.natour.model.dto.TrailResponseDto;
@@ -21,6 +23,7 @@ import java.util.List;
 
 public abstract class TrailDtoUtils {
     
+    @Transactional
     public static TrailResponseDto convertTrailEntityToTrailResponseDto(Trail trail) {
         UserDetailsDto owner = new UserDetailsDto(trail.getOwner());
         DurationDto duration = convertTrailDurationToDurationDto(trail.getDuration());
@@ -131,7 +134,8 @@ public abstract class TrailDtoUtils {
             return new TrailReviewResponseDto(
                 owner,
                 review.getStars(),
-                review.getDescription()
+                review.getDescription(),
+                review.getDate()
             );
     }
 }

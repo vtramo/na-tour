@@ -1,8 +1,9 @@
 package com.example.natour.data.sources.impl
 
+import com.example.natour.data.dto.TrailReviewDto
 import com.example.natour.data.model.Trail
 import com.example.natour.data.sources.TrailDataSource
-import com.example.natour.data.sources.network.TrailApiService
+import com.example.natour.network.TrailApiService
 import com.example.natour.data.util.toTrailModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -38,4 +39,20 @@ class TrailRemoteDataSource(
             .map { trailDto -> trailDto.toTrailModel() }
         emit(newTrails)
     }
+
+    override suspend fun addPhoto(
+        idOwner: RequestBody,
+        idTrail: RequestBody,
+        position: RequestBody,
+        image: MultipartBody.Part
+    ): Boolean =
+        trailApiService.addPhoto(
+            idOwner,
+            idTrail,
+            position,
+            image
+        )
+
+    override suspend fun addReview(trailReview: TrailReviewDto): Boolean =
+        trailApiService.addReview(trailReview)
 }

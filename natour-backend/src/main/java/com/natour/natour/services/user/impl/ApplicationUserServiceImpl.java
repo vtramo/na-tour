@@ -3,6 +3,8 @@ package com.natour.natour.services.user.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.natour.natour.model.dto.TrailResponseDto;
+import com.natour.natour.model.dto.util.TrailDtoUtils;
 import com.natour.natour.model.entity.ApplicationUser;
 import com.natour.natour.model.entity.Trail;
 import com.natour.natour.repositories.ApplicationUserRepository;
@@ -12,6 +14,7 @@ import com.natour.natour.services.user.ApplicationUserService;
 import com.natour.natour.util.EntityUtils;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import lombok.extern.java.Log;
 
@@ -99,5 +102,22 @@ public class ApplicationUserServiceImpl implements ApplicationUserService {
                     user.getUsername() + "'s favorite list. "  +
                     "Trail name: " + trail.getName());
         return true;
+    }
+
+    @Override
+    public List<TrailResponseDto> getFavoriteTrails(long userId) {
+        final ApplicationUser user = EntityUtils.findEntityById(
+            applicationUserRepository,
+            userId,
+            "Invalid user ID (favorite trail list)"
+        );
+
+        List<TrailResponseDto> trails = user.getFavoriteTrails()
+            .stream()
+            .map(TrailDtoUtils::convertTrailEntityToTrailResponseDto)
+            .collect(Collectors.toList());
+        log.info("List of " + user.getUsername() + "'s favorite routes successfully" +
+            "obtained: " + trails.size());
+        return trails;
     }
 }

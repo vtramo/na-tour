@@ -27,7 +27,7 @@ class Duration(
 
     override fun toString(): String {
         if (months == 0 && days == 0 && hours == 0 && minutes == 0) return "0 min"
-        lateinit var durationString: String
+        var durationString = ""
         if (months != 0) durationString = "$months wk "
         if (days != 0) durationString += "$days d "
         if (hours != 0) durationString += "$hours hr "

@@ -8,6 +8,7 @@ import lombok.Data;
 public class TrailReviewRequestDto {
     private long idOwner;
     private long idTrail;
+    private String date;
     private Stars stars;
     private String description;
 }

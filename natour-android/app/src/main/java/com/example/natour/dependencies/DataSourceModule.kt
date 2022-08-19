@@ -3,10 +3,10 @@ package com.example.natour.dependencies
 import android.content.Context
 import com.example.natour.data.sources.*
 import com.example.natour.data.sources.impl.*
-import com.example.natour.data.sources.network.LoginApiService
-import com.example.natour.data.sources.network.RegistrationApiService
-import com.example.natour.data.sources.network.TrailApiService
-import com.example.natour.data.sources.network.UserApiService
+import com.example.natour.network.LoginApiService
+import com.example.natour.network.RegistrationApiService
+import com.example.natour.network.TrailApiService
+import com.example.natour.network.UserApiService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
