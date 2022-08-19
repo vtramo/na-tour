@@ -1,10 +1,8 @@
 package com.example.natour.ui.home.trail.creation
 
 import android.graphics.drawable.Drawable
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import android.net.Uri
+import androidx.lifecycle.*
 import com.example.natour.MainActivity
 import com.example.natour.R
 import com.example.natour.data.model.Duration
@@ -12,14 +10,19 @@ import com.example.natour.data.model.RoutePoint
 import com.example.natour.data.model.TrailDifficulty
 import com.example.natour.data.repositories.MainUserRepository
 import com.example.natour.data.repositories.TrailRepository
+import com.example.natour.network.IllegalContentImageDetectorApiService
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
 class TrailCreationViewModel @Inject constructor(
     private val mainUserRepository: MainUserRepository,
-    private val trailRepository: TrailRepository
+    private val trailRepository: TrailRepository,
+    private val illegalContentImageDetector: IllegalContentImageDetectorApiService
 ): ViewModel() {
 
     private var _listOfRoutePoints = listOf<RoutePoint>()

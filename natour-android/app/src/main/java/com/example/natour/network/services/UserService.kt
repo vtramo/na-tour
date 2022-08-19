@@ -1,14 +1,13 @@
-package com.example.natour.data.sources.network.services
+package com.example.natour.network.services
 
-import com.example.natour.data.sources.network.TrailApiService
-import com.example.natour.data.sources.network.util.Converters
-import com.example.natour.data.sources.network.util.URLs
+import com.example.natour.network.UserApiService
+import com.example.natour.network.util.Converters
+import com.example.natour.network.util.URLs
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 
-object TrailService {
-
+object UserService {
     private val okHttpClient = run {
         val httpLoggingInterceptor = HttpLoggingInterceptor()
         httpLoggingInterceptor.level = HttpLoggingInterceptor.Level.BASIC
@@ -21,7 +20,7 @@ object TrailService {
         .client(okHttpClient)
         .build()
 
-    val retrofitService: TrailApiService by lazy {
-        retrofit.create(TrailApiService::class.java)
+    val retrofitService: UserApiService by lazy {
+        retrofit.create(UserApiService::class.java)
     }
 }

@@ -16,17 +16,25 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.widget.addTextChangedListener
 import androidx.databinding.DataBindingUtil
 import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.example.natour.MainActivity
 import com.example.natour.R
 import com.example.natour.data.model.TrailDifficulty
 import com.example.natour.databinding.FragmentTrailStartCreationBinding
+import com.example.natour.network.IllegalContentImageDetectorApiService
 import com.example.natour.util.ConstantRegex
+import com.example.natour.util.createProgressAlertDialog
+import com.example.natour.util.showCustomAlertDialog
 import com.github.dhaval2404.imagepicker.ImagePicker
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class TrailStartCreationFragment : Fragment() {
@@ -36,6 +44,9 @@ class TrailStartCreationFragment : Fragment() {
 
     private val mTrailCreationViewModel: TrailCreationViewModel
         by hiltNavGraphViewModels(R.id.trail_creation_nav_graph)
+
+    @Inject
+    lateinit var mIllegalContentImageDetector: IllegalContentImageDetectorApiService
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -97,9 +108,35 @@ class TrailStartCreationFragment : Fragment() {
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == Activity.RESULT_OK) {
                 val imageUri = result.data!!.data!!
-                binding.uploadImageButton.setDrawableFromImageUri(imageUri)
+                checkContentImageBeforeUpload(imageUri)
             }
         }
+
+    private fun checkContentImageBeforeUpload(imageUri: Uri) {
+        val progressDialog = createProgressAlertDialog("Uploading the photo...", requireContext())
+        progressDialog.show()
+        lifecycleScope.launch(Dispatchers.IO) {
+            mIllegalContentImageDetector
+                .detectIllegalContent(imageUri.path!!).apply {
+                    withContext(Dispatchers.Main) {
+                        observe(viewLifecycleOwner) { isIllegalImage ->
+                            if (isIllegalImage) showIllegalContentImageAlertDialog()
+                            else binding.uploadImageButton.setDrawableFromImageUri(imageUri)
+                            progressDialog.dismiss()
+                        }
+                    }
+                }
+        }
+    }
+
+    private fun showIllegalContentImageAlertDialog() {
+        showCustomAlertDialog(
+            "Image with illegal content",
+            "The image contains explicit or suggestive adult content, " +
+                    "or violent content.",
+            requireContext()
+        )
+    }
 
     private fun ImageButton.setDrawableFromImageUri(imageUri: Uri) {
         val inputStream = requireContext().contentResolver.openInputStream(imageUri)

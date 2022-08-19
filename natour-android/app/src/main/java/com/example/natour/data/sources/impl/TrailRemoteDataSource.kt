@@ -3,7 +3,7 @@ package com.example.natour.data.sources.impl
 import com.example.natour.data.dto.TrailReviewDto
 import com.example.natour.data.model.Trail
 import com.example.natour.data.sources.TrailDataSource
-import com.example.natour.data.sources.network.TrailApiService
+import com.example.natour.network.TrailApiService
 import com.example.natour.data.util.toTrailModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow

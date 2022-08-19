@@ -159,6 +159,7 @@ dependencies {
     implementation 'io.jenetics:jpx:2.3.0'
     implementation group: 'stax', name: 'stax', version: '1.2.0'
 
+    implementation("aws.sdk.kotlin:rekognition:0.17.5-beta")
 }
 
 

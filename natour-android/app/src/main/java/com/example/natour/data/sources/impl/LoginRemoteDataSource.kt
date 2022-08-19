@@ -3,7 +3,7 @@ package com.example.natour.data.sources.impl
 import com.example.natour.data.model.AuthenticatedUser
 import com.example.natour.data.model.AuthenticationResponse
 import com.example.natour.data.sources.LoginDataSource
-import com.example.natour.data.sources.network.LoginApiService
+import com.example.natour.network.LoginApiService
 
 class LoginRemoteDataSource(private val loginApiService: LoginApiService) : LoginDataSource {
 

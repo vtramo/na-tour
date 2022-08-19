@@ -1,4 +1,4 @@
-package com.example.natour.data.sources.network
+package com.example.natour.network
 
 import com.example.natour.data.dto.TrailDto
 import retrofit2.http.*

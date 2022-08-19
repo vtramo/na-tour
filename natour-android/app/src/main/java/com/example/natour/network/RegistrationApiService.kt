@@ -1,4 +1,4 @@
-package com.example.natour.data.sources.network
+package com.example.natour.network
 
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
