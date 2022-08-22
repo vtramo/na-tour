@@ -136,6 +136,20 @@
             app:layout_constraintBottom_toTopOf="@id/bottom_bar"
             />
 
+        <!-- There are no saved favorite trails -->
+        <TextView
+            android:visibility="gone"
+            tools:visibility="visible"
+            android:id="@+id/there_are_no_favorite_trails_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/toolbar_home"
+            app:layout_constraintBottom_toTopOf="@id/bottom_bar"
+            android:text="@string/there_are_no_saved_favorite_trails"
+            android:textSize="16sp"/>
+
         <!-- Bottom bar -->
         <LinearLayout
             android:id="@+id/bottom_bar"
