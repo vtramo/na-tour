@@ -5,6 +5,7 @@ import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -17,14 +18,23 @@ import com.example.natour.R
 import com.example.natour.data.model.RoutePoint
 import com.example.natour.databinding.FragmentTrailTrackingCreationBinding
 import com.example.natour.util.createProgressAlertDialog
+import com.google.android.gms.common.api.Status
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.*
+import com.google.android.libraries.places.api.Places
+import com.google.android.libraries.places.api.model.Place
+import com.google.android.libraries.places.widget.AutocompleteSupportFragment
+import com.google.android.libraries.places.widget.listener.PlaceSelectionListener
 import com.google.android.material.snackbar.Snackbar
 
 class TrailTrackingCreationFragment : Fragment(), OnMapReadyCallback {
+
+    companion object {
+        const val TAG = "TRAIL CREATION TRACKING"
+    }
 
     private var _binding: FragmentTrailTrackingCreationBinding? = null
     private val binding get() = _binding!!
@@ -61,6 +71,7 @@ class TrailTrackingCreationFragment : Fragment(), OnMapReadyCallback {
         binding.confirmButton.isEnabled = false
 
         startGoogleMap()
+        startSearchToolbarGoogleMap()
         chooseStartingPointMode()
     }
 
@@ -68,6 +79,33 @@ class TrailTrackingCreationFragment : Fragment(), OnMapReadyCallback {
         val mapFragment = childFragmentManager
             .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
+    }
+
+    private fun startSearchToolbarGoogleMap() {
+        if (!Places.isInitialized()) {
+            Places.initialize(requireContext(), "AIzaSyD6uQe_m0qxqapGltpKZMJ3PRRzgG-RAVU")
+        }
+
+        val autocompleteFragment = childFragmentManager.findFragmentById(R.id.autocomplete_fragment)
+            as AutocompleteSupportFragment
+
+        autocompleteFragment.setPlaceFields(
+            listOf(Place.Field.ID, Place.Field.NAME, Place.Field.LAT_LNG)
+        )
+
+        autocompleteFragment.setOnPlaceSelectedListener(mPlaceSelectionListener)
+    }
+
+    private val mPlaceSelectionListener = object: PlaceSelectionListener {
+        override fun onPlaceSelected(place: Place) {
+            val newLatLng = place.latLng
+            mMap.moveCamera(CameraUpdateFactory.newLatLng(newLatLng!!))
+            mMap.animateCamera(CameraUpdateFactory.zoomTo(10F))
+        }
+
+        override fun onError(status: Status) {
+            Log.i(TAG, "An error occurred: $status")
+        }
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
