@@ -35,28 +35,28 @@ class TrailCreationViewModel @Inject constructor(
         get() = _trailName.value
         set(value) { _trailName.value = value }
 
-    private var _minutes = MutableLiveData<Int>()
+    private var _minutes = MutableLiveData(0)
     var minutes
         get() = _minutes.value
         set(value) {
             _minutes.value = value
         }
 
-    private var _hours = MutableLiveData<Int>()
+    private var _hours = MutableLiveData(0)
     var hours
         get() = _hours.value
         set(value) {
             _hours.value = value
         }
 
-    private var _days = MutableLiveData<Int>()
+    private var _days = MutableLiveData(0)
     var days
         get() = _days.value
         set(value) {
             _days.value = value
         }
 
-    private var _months = MutableLiveData<Int>( )
+    private var _months = MutableLiveData(0)
     var months
         get() = _months.value
         set(value) {
@@ -77,9 +77,7 @@ class TrailCreationViewModel @Inject constructor(
             _description.value = value
         }
 
-    private var _image = MutableLiveData<Drawable>(
-        MainActivity.getDrawable(R.drawable.ic_baseline_image_24)
-    )
+    private var _image = MutableLiveData<Drawable>()
 
     var image
         get() = _image.value

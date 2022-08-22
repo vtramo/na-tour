@@ -16,6 +16,7 @@ import androidx.navigation.findNavController
 import com.example.natour.R
 import com.example.natour.data.model.RoutePoint
 import com.example.natour.databinding.FragmentTrailTrackingCreationBinding
+import com.example.natour.util.createProgressAlertDialog
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -60,6 +61,7 @@ class TrailTrackingCreationFragment : Fragment(), OnMapReadyCallback {
         binding.confirmButton.isEnabled = false
 
         startGoogleMap()
+        chooseStartingPointMode()
     }
 
     private fun startGoogleMap() {
@@ -93,7 +95,10 @@ class TrailTrackingCreationFragment : Fragment(), OnMapReadyCallback {
     fun onUndoButtonClick() {
         with(mPolyline) {
             if (hasZeroPoints()) return
-            if (hasOnlyOnePoint()) chooseStartingPointMode()
+            if (hasOnlyOnePoint()) {
+                mStartingPositionMarker.remove()
+                chooseStartingPointMode()
+            }
             val lastIndex = points.lastIndex
             points = points.subList(0, lastIndex)
         }
@@ -103,6 +108,7 @@ class TrailTrackingCreationFragment : Fragment(), OnMapReadyCallback {
         with(mPolyline) {
             if (hasZeroPoints()) return
             points = listOf()
+            mStartingPositionMarker.remove()
             chooseStartingPointMode()
         }
     }
@@ -120,6 +126,8 @@ class TrailTrackingCreationFragment : Fragment(), OnMapReadyCallback {
         binding.confirmButton.isClickable = false
         with(mTrailCreationViewModel) {
             listOfRoutePoints = mPolyline.points.map { RoutePoint(it.latitude, it.longitude) }
+            val progressDialog = createProgressAlertDialog("Creating the trail...", requireContext())
+            progressDialog.show()
             hasBeenCreated.observe(viewLifecycleOwner) { hasBeenCreated ->
                 if (hasBeenCreated) {
                     showTrailSuccessfullyCreatedSnackbar()
@@ -129,6 +137,7 @@ class TrailTrackingCreationFragment : Fragment(), OnMapReadyCallback {
                     binding.confirmButton.isClickable = true
                     resetLiveData()
                 }
+                progressDialog.dismiss()
             }
             saveTrail()
         }
@@ -159,9 +168,12 @@ class TrailTrackingCreationFragment : Fragment(), OnMapReadyCallback {
     private fun Polyline.hasOnlyOnePoint() = points.size == 1
 
     private fun chooseStartingPointMode() {
-        mStartingPositionMarker.remove()
         binding.startPositionButton.imageAlpha = 75
         binding.startPositionButton.isEnabled = false
+        binding.deleteButton.imageAlpha = 75
+        binding.deleteButton.isEnabled = false
+        binding.undoButton.imageAlpha = 75
+        binding.undoButton.isEnabled = false
         binding.hintTextView.text = getString(R.string.choose_a_starting_point)
         binding.confirmButton.isEnabled = false
     }
@@ -169,6 +181,10 @@ class TrailTrackingCreationFragment : Fragment(), OnMapReadyCallback {
     private fun drawOnMapMode() {
         binding.startPositionButton.imageAlpha = 255
         binding.startPositionButton.isEnabled = true
+        binding.deleteButton.imageAlpha = 255
+        binding.deleteButton.isEnabled = true
+        binding.undoButton.imageAlpha = 255
+        binding.undoButton.isEnabled = true
         binding.hintTextView.text = getString(R.string.draw_the_route_on_the_map)
         binding.confirmButton.isEnabled = true
     }
@@ -207,4 +223,8 @@ class TrailTrackingCreationFragment : Fragment(), OnMapReadyCallback {
             requireContext(),
             Manifest.permission.ACCESS_COARSE_LOCATION
         ) == PackageManager.PERMISSION_GRANTED
+
+    fun onBackClick() {
+        view?.findNavController()?.popBackStack()
+    }
 }

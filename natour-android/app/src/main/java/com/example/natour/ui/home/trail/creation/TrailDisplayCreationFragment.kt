@@ -11,6 +11,7 @@ import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
 import androidx.navigation.findNavController
 import com.example.natour.R
 import com.example.natour.databinding.FragmentTrailDisplayCreationBinding
+import com.example.natour.util.createProgressAlertDialog
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -106,6 +107,8 @@ class TrailDisplayCreationFragment : Fragment(), OnMapReadyCallback {
     fun onConfirmButtonClick() {
         binding.confirmButton.isClickable = false
         with(mTrailCreationViewModel) {
+            val progressBar = createProgressAlertDialog("Creating the trail...", requireContext())
+            progressBar.show()
             hasBeenCreated.observe(viewLifecycleOwner) { hasBeenCreated ->
                 if (hasBeenCreated) {
                     showTrailSuccessfullyCreatedSnackbar()
@@ -115,6 +118,7 @@ class TrailDisplayCreationFragment : Fragment(), OnMapReadyCallback {
                     binding.confirmButton.isClickable = true
                     resetLiveData()
                 }
+                progressBar.dismiss()
             }
             saveTrail()
         }
@@ -139,5 +143,9 @@ class TrailDisplayCreationFragment : Fragment(), OnMapReadyCallback {
             .setMessage("A problem occurred in the creation of the trail")
             .setPositiveButton("Okay") { _, _ -> }
             .show()
+    }
+
+    fun onBackClick() {
+        view?.findNavController()?.popBackStack()
     }
 }

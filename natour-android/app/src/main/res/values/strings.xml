@@ -82,7 +82,16 @@
     <string name="emailU">EMAIL</string>
     <string name="very_difficult">Very difficult</string>
     <string name="your_favorite_trails">Your favorite trails</string>
-    <string name="loading">Loading...</string>
+    <string name="loading">Loading…</string>
+    <string name="optional_tell_others_about_the_trail">(Optional) Tell others about the trail</string>
+    <string name="select_a_level_of_difficulty_r">Select a level of difficulty*</string>
+    <string name="enter_trail_name_r">Enter trail name*</string>
+    <string name="select_a_duration_r">Select a duration*</string>
+    <string name="upload_a_photo_r">Upload a photo*</string>
+    <string name="insert_the_route">Insert the route</string>
+    <string name="your_route_in_gpx_format">Your route in gpx format</string>
+    <string name="select_a_difficulty_level_r">Select a difficulty level*</string>
+    <string name="easiest">Easiest</string>
 
     <!-- Route Creation -->
     <string-array name="listDifficulties">
