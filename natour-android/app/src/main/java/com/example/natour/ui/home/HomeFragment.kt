@@ -42,14 +42,31 @@ class HomeFragment : Fragment() {
     ): View {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
 
-        setupToolbarTitle()
-        setupBottomHomeMenu()
         setupMainUser()
-        mFavoriteTrailsViewModel.loadFavoriteTrails()
-        setupRecyclerView()
-        setupSwipeRefreshLayout()
-
+        loadTrails()
         return binding.root
+    }
+
+    private fun setupMainUser() {
+        with(mMainUserViewModel) {
+            if (mainUser.value == null) loadMainUser()
+        }
+    }
+
+    private fun loadTrails() {
+        with(mFavoriteTrailsViewModel) {
+            hasLoadedFavoriteTrailsLiveData.observe(viewLifecycleOwner) {
+                with(mHomeViewModel) {
+                    firstLoadFinishedLiveData.observe(viewLifecycleOwner) {
+                        setupToolbarTitle()
+                        setupBottomHomeMenu()
+                        setupRecyclerView()
+                        setupSwipeRefreshLayout()
+                    }
+                }
+            }
+            loadFavoriteTrails()
+        }
     }
 
     private fun setupToolbarTitle() {
@@ -70,12 +87,6 @@ class HomeFragment : Fragment() {
             } else {
                 highlightFavoriteTrailsButton()
             }
-        }
-    }
-
-    private fun setupMainUser() {
-        with(mMainUserViewModel) {
-            if (mainUser.value == null) loadMainUser()
         }
     }
 
