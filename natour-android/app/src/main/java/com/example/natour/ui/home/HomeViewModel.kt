@@ -36,6 +36,9 @@ class HomeViewModel @Inject constructor(
     private var _isLoadingTrails = false
     val isLoadingTrails get() = _isLoadingTrails
 
+    private val _firstLoadFinishedLiveData = MutableLiveData<Boolean>()
+    val firstLoadFinishedLiveData: LiveData<Boolean> get() = _firstLoadFinishedLiveData
+
     fun loadTrails() = viewModelScope.launch {
         _isLoadingTrails = true
         trailRepository.load(currentPage).collect { listTrails ->
@@ -46,15 +49,20 @@ class HomeViewModel @Inject constructor(
             addMoreTrails(listTrails)
         }
         _isLoadingTrails = false
+        if (isFirstLoad()) _firstLoadFinishedLiveData.value = true
     }
 
     private fun addMoreTrails(otherTrails: List<Trail>) {
         val newTrailList = mutableListOf<Trail>()
-        newTrailList.addAll(_trails.value!!)
-        otherTrails.forEach { it.isFavorite = mapOfFavoriteTrails.containsKey(it.idTrail) }
-        newTrailList.addAll(otherTrails)
-        _trails.value = newTrailList
+        with(newTrailList) {
+            addAll(_trails.value!!)
+            addAll(otherTrails)
+            flagFavoriteTrails()
+            _trails.value = this
+        }
     }
+
+    private fun isFirstLoad() = _firstLoadFinishedLiveData.value == null
 
     private var _isRefreshingLiveData = MutableLiveData<Boolean>()
     val isRefreshingLiveData get() = _isRefreshingLiveData
@@ -82,10 +90,14 @@ class HomeViewModel @Inject constructor(
     fun updateFavoriteTrailsInTheList(mapFavoriteTrails: Map<Long, Trail>) {
         mapOfFavoriteTrails = mapFavoriteTrails
         val newTrailList = mutableListOf<Trail>()
-        newTrailList.addAll(_trails.value!!)
-        newTrailList.forEach {
-            it.isFavorite = mapFavoriteTrails.containsKey(it.idTrail)
+        with(newTrailList) {
+            addAll(_trails.value!!)
+            flagFavoriteTrails()
+            _trails.value = this
         }
-        _trails.value = newTrailList
+    }
+
+    private fun List<Trail>.flagFavoriteTrails() = forEach {
+        trail -> trail.isFavorite = mapOfFavoriteTrails.containsKey(trail.idTrail)
     }
 }

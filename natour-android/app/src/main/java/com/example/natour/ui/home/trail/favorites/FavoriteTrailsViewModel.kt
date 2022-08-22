@@ -17,15 +17,16 @@ class FavoriteTrailsViewModel @Inject constructor(
     private val mainUserRepository: MainUserRepository
 ) : ViewModel() {
 
-    private var _hasLoadedFavoriteTrails = false
+    private val _hasLoadedFavoriteTrails = MutableLiveData<Boolean>()
+    val hasLoadedFavoriteTrailsLiveData: LiveData<Boolean> get() = _hasLoadedFavoriteTrails
 
     fun loadFavoriteTrails() = viewModelScope.launch {
-        if (_hasLoadedFavoriteTrails) return@launch
+        if (_hasLoadedFavoriteTrails.value == true) return@launch
         userRepository.getFavoriteTrails(
             mainUserRepository.getDetails().id
         ).collect {
             _mapOfFavoriteTrails.value = it.toMutableMap()
-            _hasLoadedFavoriteTrails = true
+            _hasLoadedFavoriteTrails.value = true
         }
     }
 
