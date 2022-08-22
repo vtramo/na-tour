@@ -5,6 +5,7 @@ import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.OnScrollListener
@@ -17,7 +18,12 @@ import com.example.natour.ui.home.trail.detail.TrailDetailsViewModel
 import com.example.natour.ui.home.trail.favorites.FavoriteTrailChanger
 import com.example.natour.ui.home.trail.favorites.FavoriteTrailsViewModel
 import com.example.natour.ui.home.user.UserDetailsDialogFragment
+import com.example.natour.util.LateTask
 import com.example.natour.util.showErrorAlertDialog
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import java.util.*
 
 class HomeFragment : Fragment() {
 
@@ -142,7 +148,23 @@ class HomeFragment : Fragment() {
         mFavoriteTrailsViewModel.mapOfFavoriteTrails.observe(viewLifecycleOwner) { mapTrails ->
             updateFavoriteTrailsInTheList(mapTrails)
             if (isOnHome) return@observe
+            setThereAreNoFavoriteTrailsTextView(mapTrails.isEmpty())
             mTrailListAdapter.submitList(mapTrails.values.toList())
+        }
+    }
+
+    private fun setThereAreNoFavoriteTrailsTextView(empty: Boolean) {
+        with(binding.thereAreNoFavoriteTrailsTextView) {
+            if (!empty) {
+                visibility = View.GONE
+            } else {
+                val lateTask = LateTask(delayMs = 100) {
+                    lifecycleScope.launch {
+                        withContext(Dispatchers.Main) { visibility = View.VISIBLE }
+                    }
+                }
+                lateTask.start()
+            }
         }
     }
 
@@ -208,6 +230,7 @@ class HomeFragment : Fragment() {
 
     fun onHomeClick() {
         mHomeViewModel.isOnHome = true
+        setThereAreNoFavoriteTrailsTextView(false)
         highlightHomeButton()
         binding.toolbarTitleTextView.text = getString(R.string.explore_new_trails)
         safeSubmitListToTrailListAdapter(
@@ -226,9 +249,7 @@ class HomeFragment : Fragment() {
         mHomeViewModel.isOnHome = false
         highlightFavoriteTrailsButton()
         binding.toolbarTitleTextView.text = getString(R.string.your_favorite_trails)
-        safeSubmitListToTrailListAdapter(
-            mFavoriteTrailsViewModel.mapOfFavoriteTrails.value?.values?.toList() ?: listOf(),
-        )
+        safeSubmitListToTrailListAdapter(mFavoriteTrailsViewModel.listOfFavoriteTrails)
     }
 
     private fun highlightFavoriteTrailsButton() {
@@ -240,7 +261,9 @@ class HomeFragment : Fragment() {
 
     private fun safeSubmitListToTrailListAdapter(listOfTrails: List<Trail>) {
         if (this@HomeFragment::mTrailListAdapter.isInitialized) {
-            mTrailListAdapter.submitList(listOfTrails)
+            mTrailListAdapter.submitList(listOfTrails) {
+                setThereAreNoFavoriteTrailsTextView(listOfTrails.isEmpty())
+            }
         }
     }
 }

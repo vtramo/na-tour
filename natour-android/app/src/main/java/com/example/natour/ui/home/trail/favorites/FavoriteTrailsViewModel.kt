@@ -33,6 +33,9 @@ class FavoriteTrailsViewModel @Inject constructor(
     private val _mapOfFavoriteTrails = MutableLiveData<Map<Long, Trail>>()
     val mapOfFavoriteTrails: LiveData<Map<Long, Trail>> get() = _mapOfFavoriteTrails
 
+    private var _listOfFavoriteTrails = listOf<Trail>()
+    val listOfFavoriteTrails get() = _listOfFavoriteTrails
+
     private var _favoriteTrailSuccessfullyChangedLiveData = MutableLiveData<Boolean>()
     val favoriteTrailSuccessfullyChangedLiveData: LiveData<Boolean>
         get() = _favoriteTrailSuccessfullyChangedLiveData
@@ -54,6 +57,7 @@ class FavoriteTrailsViewModel @Inject constructor(
         newMap.putAll(_mapOfFavoriteTrails.value!!)
         newMap[trail.idTrail] = trail
         _mapOfFavoriteTrails.value = newMap
+        _listOfFavoriteTrails = newMap.values.toList()
     }
 
     fun removeFavoriteTrail(trail: Trail) = viewModelScope.launch {
@@ -73,5 +77,6 @@ class FavoriteTrailsViewModel @Inject constructor(
         newMap.putAll(_mapOfFavoriteTrails.value!!)
         newMap.remove(trail.idTrail)
         _mapOfFavoriteTrails.value = newMap
+        _listOfFavoriteTrails = newMap.values.toList()
     }
 }

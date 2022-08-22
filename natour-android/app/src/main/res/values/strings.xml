@@ -92,6 +92,8 @@
     <string name="your_route_in_gpx_format">Your route in gpx format</string>
     <string name="select_a_difficulty_level_r">Select a difficulty level*</string>
     <string name="easiest">Easiest</string>
+    <string name="very_easy">Very easy</string>
+    <string name="there_are_no_saved_favorite_trails">There are no saved favorite trails</string>
 
     <!-- Route Creation -->
     <string-array name="listDifficulties">
