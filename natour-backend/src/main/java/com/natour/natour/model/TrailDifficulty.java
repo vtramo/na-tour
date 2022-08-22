@@ -1,7 +1,7 @@
 package com.natour.natour.model;
 
 public enum TrailDifficulty {
-    EASIEST(),
+    VERY_EASY(),
     EASY(),
     MORE_DIFFICULT(),
     VERY_DIFFICULT(),
