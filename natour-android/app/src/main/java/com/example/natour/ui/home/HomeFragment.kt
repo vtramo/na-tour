@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.OnScrollListener
 import com.example.natour.MainActivity.Companion.getDrawable
 import com.example.natour.R
+import com.example.natour.data.model.Trail
 import com.example.natour.databinding.FragmentHomeBinding
 import com.example.natour.ui.MainUserViewModel
 import com.example.natour.ui.home.trail.detail.TrailDetailsViewModel
@@ -62,6 +63,7 @@ class HomeFragment : Fragment() {
                         setupBottomHomeMenu()
                         setupRecyclerView()
                         setupSwipeRefreshLayout()
+                        binding.progressBarRecyclerView.visibility = View.GONE
                     }
                 }
             }
@@ -208,8 +210,8 @@ class HomeFragment : Fragment() {
         mHomeViewModel.isOnHome = true
         highlightHomeButton()
         binding.toolbarTitleTextView.text = getString(R.string.explore_new_trails)
-        mTrailListAdapter.submitList(
-            mHomeViewModel.trails.value!!,
+        safeSubmitListToTrailListAdapter(
+            mHomeViewModel.trails.value ?: listOf(),
         )
     }
 
@@ -224,8 +226,8 @@ class HomeFragment : Fragment() {
         mHomeViewModel.isOnHome = false
         highlightFavoriteTrailsButton()
         binding.toolbarTitleTextView.text = getString(R.string.your_favorite_trails)
-        mTrailListAdapter.submitList(
-            mFavoriteTrailsViewModel.mapOfFavoriteTrails.value!!.values.toList(),
+        safeSubmitListToTrailListAdapter(
+            mFavoriteTrailsViewModel.mapOfFavoriteTrails.value?.values?.toList() ?: listOf(),
         )
     }
 
@@ -233,6 +235,12 @@ class HomeFragment : Fragment() {
         with(binding) {
             homeImageButton.setImageDrawable(getDrawable(R.drawable.home_dark_gray))
             heartImageButton.setImageDrawable(getDrawable(R.drawable.heart_black))
+        }
+    }
+
+    private fun safeSubmitListToTrailListAdapter(listOfTrails: List<Trail>) {
+        if (this@HomeFragment::mTrailListAdapter.isInitialized) {
+            mTrailListAdapter.submitList(listOfTrails)
         }
     }
 }

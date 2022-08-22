@@ -330,7 +330,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="16dp"
                             app:counterEnabled="true"
-                            app:counterMaxLength="250"
+                            app:counterMaxLength="450"
                             app:errorIconDrawable="@drawable/ic_error"
                             app:helperTextTextAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
                             app:layout_constraintEnd_toEndOf="parent"
