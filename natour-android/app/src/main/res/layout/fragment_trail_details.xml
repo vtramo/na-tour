@@ -504,6 +504,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="15dp"
                     android:orientation="vertical">
 
                     <androidx.recyclerview.widget.RecyclerView
@@ -526,6 +527,7 @@
                     android:gravity="center"
                     android:layout_marginVertical="10dp"
                     android:textSize="24sp"
+                    android:layout_marginBottom="15dp"
                     android:visibility="@{trailDetailsViewModel.thereAreNoReviewsVisibility}"
                     />
 
