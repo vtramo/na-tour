@@ -102,6 +102,7 @@
                 android:textColor="@color/black"/>
         </LinearLayout>
 
+        <!-- Map tools -->
         <LinearLayout
             android:orientation="horizontal"
             android:id="@+id/controls_linear_layout"
@@ -109,6 +110,7 @@
             android:gravity="center"
             android:layout_height="wrap_content">
 
+            <!-- Start position button -->
             <ImageButton
                 android:id="@+id/start_position_button"
                 android:layout_width="wrap_content"
@@ -117,6 +119,7 @@
                 android:src="@drawable/ic_baseline_room_24"
                 tools:ignore="ContentDescription,SpeakableTextPresentCheck" />
 
+            <!-- Delete button -->
             <ImageButton
                 android:id="@+id/delete_button"
                 android:layout_width="wrap_content"
@@ -125,12 +128,22 @@
                 android:src="@drawable/ic_baseline_delete_24"
                 tools:ignore="ContentDescription,SpeakableTextPresentCheck" />
 
+            <!-- Undo button -->
             <ImageButton
                 android:id="@+id/undo_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:onClick="@{() -> routeTrackingCreationFragment.onUndoButtonClick()}"
                 android:src="@drawable/ic_baseline_undo_24"
+                tools:ignore="ContentDescription,SpeakableTextPresentCheck" />
+
+            <!-- Redo button -->
+            <ImageButton
+                android:id="@+id/redo_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="@{() -> routeTrackingCreationFragment.onRedoButtonClick()}"
+                android:src="@drawable/ic_baseline_redo_24"
                 tools:ignore="ContentDescription,SpeakableTextPresentCheck" />
 
         </LinearLayout>

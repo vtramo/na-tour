@@ -17,6 +17,7 @@ import androidx.navigation.findNavController
 import com.example.natour.R
 import com.example.natour.data.model.RoutePoint
 import com.example.natour.databinding.FragmentTrailTrackingCreationBinding
+import com.example.natour.ui.home.trail.creation.MapActionsMemory.*
 import com.example.natour.util.createProgressAlertDialog
 import com.google.android.gms.common.api.Status
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -44,6 +45,7 @@ class TrailTrackingCreationFragment : Fragment(), OnMapReadyCallback {
 
     private lateinit var mPolyline: Polyline
     private lateinit var mStartingPositionMarker: Marker
+    private var mMapActiosMemory = MapActionsMemory()
 
     private lateinit var mMap: GoogleMap
 
@@ -73,6 +75,7 @@ class TrailTrackingCreationFragment : Fragment(), OnMapReadyCallback {
         startGoogleMap()
         startSearchToolbarGoogleMap()
         chooseStartingPointMode()
+        changeRedoButton(disable = true)
     }
 
     private fun startGoogleMap() {
@@ -125,6 +128,8 @@ class TrailTrackingCreationFragment : Fragment(), OnMapReadyCallback {
             if (mPolyline.hasZeroPoints()) {
                 setMarkerOnStartPosition(point)
                 drawOnMapMode()
+                mMapActiosMemory.reset()
+                changeRedoButton(disable = true)
             }
             mPolyline.points = mPolyline.points + point
         }
@@ -137,7 +142,16 @@ class TrailTrackingCreationFragment : Fragment(), OnMapReadyCallback {
                 mStartingPositionMarker.remove()
                 chooseStartingPointMode()
             }
+
             val lastIndex = points.lastIndex
+
+            mMapActiosMemory.addAction(
+                MapActionType.UNDO,
+                listOf(points[lastIndex].toPair()),
+                isFirstPoint = hasOnlyOnePoint()
+            )
+            changeRedoButton(disable = false)
+
             points = points.subList(0, lastIndex)
         }
     }
@@ -145,6 +159,13 @@ class TrailTrackingCreationFragment : Fragment(), OnMapReadyCallback {
     fun onDeleteButtonClick() {
         with(mPolyline) {
             if (hasZeroPoints()) return
+
+            mMapActiosMemory.addAction(
+                MapActionType.DELETE,
+                points.toListPair()
+            )
+            changeRedoButton(disable = false)
+
             points = listOf()
             mStartingPositionMarker.remove()
             chooseStartingPointMode()
@@ -156,6 +177,29 @@ class TrailTrackingCreationFragment : Fragment(), OnMapReadyCallback {
             if (hasZeroPoints()) return
             mMap.animateCameraOnStartingPositionMarker()
         }
+    }
+
+    fun onRedoButtonClick() {
+        with(mMapActiosMemory) {
+            with(getLastAction()) {
+                val redoPoints = when(type) {
+                    MapActionType.UNDO -> {
+                        val point = with(routePoints[0]) { LatLng(first, second) }
+                        if (isFirstPoint) setMarkerOnStartPosition(point)
+                        listOf(point)
+                    }
+                    MapActionType.DELETE -> {
+                        val points = with(routePoints) { map { LatLng(it.first, it.second) } }
+                        setMarkerOnStartPosition(points[0])
+                        points
+                    }
+                }
+                with(mPolyline) { points = points + redoPoints }
+            }
+
+            if (isEmpty()) changeRedoButton(disable = true)
+        }
+        drawOnMapMode()
     }
 
     fun onConfirmButtonClick() {
@@ -205,26 +249,36 @@ class TrailTrackingCreationFragment : Fragment(), OnMapReadyCallback {
     private fun Polyline.hasZeroPoints() = points.size == 0
     private fun Polyline.hasOnlyOnePoint() = points.size == 1
 
-    private fun chooseStartingPointMode() {
-        binding.startPositionButton.imageAlpha = 75
-        binding.startPositionButton.isEnabled = false
-        binding.deleteButton.imageAlpha = 75
-        binding.deleteButton.isEnabled = false
-        binding.undoButton.imageAlpha = 75
-        binding.undoButton.isEnabled = false
-        binding.hintTextView.text = getString(R.string.choose_a_starting_point)
-        binding.confirmButton.isEnabled = false
+    private fun chooseStartingPointMode() = with(binding) {
+        startPositionButton.imageAlpha = 75
+        startPositionButton.isEnabled = false
+        deleteButton.imageAlpha = 75
+        deleteButton.isEnabled = false
+        undoButton.imageAlpha = 75
+        undoButton.isEnabled = false
+        hintTextView.text = getString(R.string.choose_a_starting_point)
+        confirmButton.isEnabled = false
     }
 
-    private fun drawOnMapMode() {
-        binding.startPositionButton.imageAlpha = 255
-        binding.startPositionButton.isEnabled = true
-        binding.deleteButton.imageAlpha = 255
-        binding.deleteButton.isEnabled = true
-        binding.undoButton.imageAlpha = 255
-        binding.undoButton.isEnabled = true
-        binding.hintTextView.text = getString(R.string.draw_the_route_on_the_map)
-        binding.confirmButton.isEnabled = true
+    private fun drawOnMapMode() = with(binding) {
+        startPositionButton.imageAlpha = 255
+        startPositionButton.isEnabled = true
+        deleteButton.imageAlpha = 255
+        deleteButton.isEnabled = true
+        undoButton.imageAlpha = 255
+        undoButton.isEnabled = true
+        hintTextView.text = getString(R.string.draw_the_route_on_the_map)
+        confirmButton.isEnabled = true
+    }
+
+    private fun changeRedoButton(disable: Boolean) = with(binding.redoButton) {
+        if (disable) {
+            imageAlpha = 75
+            isEnabled = false
+        } else {
+            imageAlpha = 255
+            isEnabled = true
+        }
     }
 
     private fun setMarkerOnStartPosition(point: LatLng) {
@@ -234,6 +288,9 @@ class TrailTrackingCreationFragment : Fragment(), OnMapReadyCallback {
                 .title("Starting point of the route")
         )!!
     }
+
+    private fun LatLng.toPair(): Pair<Double, Double> = Pair(latitude, longitude)
+    private fun List<LatLng>.toListPair(): List<Pair<Double, Double>> = map { it.toPair() }
 
     private fun GoogleMap.animateCameraOnStartingPositionMarker() {
         animateCamera(
