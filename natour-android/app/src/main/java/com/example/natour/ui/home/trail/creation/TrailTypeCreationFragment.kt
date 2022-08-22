@@ -98,4 +98,8 @@ class TrailTypeCreationFragment : Fragment() {
             .setPositiveButton("Okay") { _, _ -> }
             .show()
     }
+
+    fun onBackClick() {
+        view?.findNavController()?.popBackStack()
+    }
 }

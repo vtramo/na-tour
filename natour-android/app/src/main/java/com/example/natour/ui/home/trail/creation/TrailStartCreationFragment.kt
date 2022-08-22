@@ -2,9 +2,11 @@ package com.example.natour.ui.home.trail.creation
 
 import android.app.Activity
 import android.app.AlertDialog
+import android.content.res.ColorStateList
 import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -12,6 +14,7 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import android.widget.ImageButton
+import android.widget.ImageView
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.widget.addTextChangedListener
 import androidx.databinding.DataBindingUtil
@@ -28,6 +31,8 @@ import com.example.natour.util.ConstantRegex
 import com.example.natour.util.createProgressAlertDialog
 import com.example.natour.util.showCustomAlertDialog
 import com.github.dhaval2404.imagepicker.ImagePicker
+import com.google.android.material.slider.LabelFormatter
+import com.google.android.material.slider.Slider
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import dagger.hilt.android.AndroidEntryPoint
@@ -67,33 +72,64 @@ class TrailStartCreationFragment : Fragment() {
         binding.trailStartCreationFragment = this
         binding.trailStartCreationViewModel = mTrailCreationViewModel
 
-        setupCustomBackToolbar()
-        setupRouteDifficultyDropDownList()
-        setupTextChangedListeners()
+        setupSlider()
+        setupImagePicker()
+        setupNumberPickers()
     }
 
-    private fun setupCustomBackToolbar(){
-        val toolbar = binding.customToolbarRouteCreation
-        toolbar.setNavigationIcon(R.drawable.ic_back_40)
-        toolbar.setNavigationOnClickListener { findNavController().popBackStack() }
+    private fun setupSlider() {
+        binding.slider.setLabelFormatter { labelFormatter(it) }
+        binding.slider.addOnChangeListener { _, value, _ -> labelFormatter(value) }
+        binding.slider.value = mTrailCreationViewModel.difficulty?.ordinal?.toFloat() ?: 0f
     }
 
-    private fun setupRouteDifficultyDropDownList() {
-        val difficultyAutoComplete = binding.difficultyAutoCompleteTextView
-        difficultyAutoComplete.setAdapter(
-            ArrayAdapter(
-                requireContext(),
-                R.layout.dropdown_item_difficulty,
-                resources.getStringArray(R.array.listDifficulties)
-            )
-        )
-        mTrailCreationViewModel.difficulty?.let { trailDifficulty ->
-            difficultyAutoComplete.setText(trailDifficulty.toString(), false)
+    private fun labelFormatter(value: Float): String =
+        with(binding.textDifficulty) {
+            when (value) {
+                0f -> {
+                    setTextColor(TrailDifficulty.EASIEST.color)
+                    TrailDifficulty.EASIEST.toString().also { text = it }
+                }
+                1f -> {
+                    setTextColor(TrailDifficulty.EASY.color)
+                    TrailDifficulty.EASY.toString().also { text = it }
+                }
+                2f -> {
+                    setTextColor(TrailDifficulty.MORE_DIFFICULT.color)
+                    TrailDifficulty.MORE_DIFFICULT.toString().also { text = it }
+                }
+                3f -> {
+                    setTextColor(TrailDifficulty.VERY_DIFFICULT.color)
+                    TrailDifficulty.VERY_DIFFICULT.toString().also { text = it }
+                }
+                else -> {
+                    setTextColor(TrailDifficulty.EXTREMELY_DIFFICULT.color)
+                    TrailDifficulty.EXTREMELY_DIFFICULT.toString().also { text = it }
+                }
+            }
+        }
+
+    private fun setupImagePicker() {
+        if (mTrailCreationViewModel.image != null) {
+            binding.iconUploadImageView.visibility = View.GONE
         }
     }
 
-    private fun setupTextChangedListeners() {
-        binding.trailNameTextInputEditText.addTextChangedListener { checkTrailName() }
+    private fun setupNumberPickers() {
+        with(binding) {
+            minutesNumberPicker.minValue = 0
+            minutesNumberPicker.maxValue = 59
+            minutesNumberPicker.value = mTrailCreationViewModel.minutes!!
+            hoursNumberPicker.minValue = 0
+            hoursNumberPicker.maxValue = 23
+            hoursNumberPicker.value = mTrailCreationViewModel.hours!!
+            daysNumberPicker.minValue = 0
+            daysNumberPicker.maxValue = 30
+            daysNumberPicker.value = mTrailCreationViewModel.days!!
+            monthsNumberPicker.minValue = 0
+            monthsNumberPicker.maxValue = 12
+            monthsNumberPicker.value = mTrailCreationViewModel.months!!
+        }
     }
 
     fun onSelectImageClick() {
@@ -121,7 +157,7 @@ class TrailStartCreationFragment : Fragment() {
                     withContext(Dispatchers.Main) {
                         observe(viewLifecycleOwner) { isIllegalImage ->
                             if (isIllegalImage) showIllegalContentImageAlertDialog()
-                            else binding.uploadImageButton.setDrawableFromImageUri(imageUri)
+                            else setImageFromUri(imageUri)
                             progressDialog.dismiss()
                         }
                     }
@@ -138,10 +174,15 @@ class TrailStartCreationFragment : Fragment() {
         )
     }
 
-    private fun ImageButton.setDrawableFromImageUri(imageUri: Uri) {
+    private fun setImageFromUri(uri: Uri) {
+        binding.iconUploadImageView.visibility = View.GONE
+        binding.uploadImageButton.setDrawableFromImageUri(uri)
+    }
+
+    private fun ImageView.setDrawableFromImageUri(imageUri: Uri) {
         val inputStream = requireContext().contentResolver.openInputStream(imageUri)
         val drawable = Drawable.createFromStream(inputStream, imageUri.toString())
-        background = drawable
+        setImageDrawable(drawable)
     }
 
     fun onConfirmButtonClick() {
@@ -154,13 +195,13 @@ class TrailStartCreationFragment : Fragment() {
         with(mTrailCreationViewModel) {
             with(binding) {
                 trailName   = trailNameTextInputEditText.textString()
-                difficulty  = TrailDifficulty.toEnumValue(difficultyAutoCompleteTextView.textString())
-                minutes     = Integer.parseInt(minutesTextInputEditText.textString())
-                hours       = Integer.parseInt(hoursTextInputEditText.textString())
-                days        = Integer.parseInt(daysTextInputEditText.textString())
-                months      = Integer.parseInt(monthsTextInputEditText.textString())
+                difficulty  = TrailDifficulty.toEnumValue(slider.value.toInt())
+                minutes     = minutesNumberPicker.value
+                hours       = hoursNumberPicker.value
+                days        = daysNumberPicker.value
+                months      = monthsNumberPicker.value
                 description = descriptionEditText.text?.toString() ?: ""
-                image       = uploadImageButton.background
+                image       = uploadImageButton.drawable
             }
         }
     }
@@ -174,25 +215,12 @@ class TrailStartCreationFragment : Fragment() {
     private fun isValidForm() =
         checkTrailName()    &&
             checkDuration()     &&
-            checkDifficulty()   &&
             checkImage()
 
     private fun checkImage(): Boolean {
-        val isValidImage = isValidImage(binding.uploadImageButton.background)
+        val isValidImage = binding.uploadImageButton.drawable != null
         if (!isValidImage) showAlertDialog("Please upload a photo")
         return isValidImage
-    }
-
-    private fun isValidImage(drawable: Drawable) =
-        drawable != MainActivity.getDrawable(R.drawable.ic_baseline_image_24)
-
-    private fun checkDifficulty(): Boolean {
-        val isValidDifficulty = binding.difficultyAutoCompleteTextView.text!!.isNotBlank()
-        binding.difficultyTextInputLayout.setError(
-            isValidDifficulty,
-            if (isValidDifficulty) null else "A difficulty is required"
-        )
-        return isValidDifficulty
     }
 
     private fun checkTrailName(): Boolean {
@@ -214,22 +242,17 @@ class TrailStartCreationFragment : Fragment() {
     }
 
     private fun checkDuration(): Boolean {
-        val minutes = binding.minutesTextInputEditText.textString()
-        val hours   = binding.hoursTextInputEditText.textString()
-        val days    = binding.daysTextInputEditText.textString()
-        val months  = binding.monthsTextInputEditText.textString()
+        val minutes = binding.minutesNumberPicker.value
+        val hours   = binding.hoursNumberPicker.value
+        val days    = binding.daysNumberPicker.value
+        val months  = binding.monthsNumberPicker.value
         val isValidDuration = isValidDuration(minutes, hours, days, months)
         if (!isValidDuration) showAlertDialog("Invalid duration")
         return isValidDuration
     }
 
-    private fun isValidDuration(minutes: String, hours: String, days: String, months: String) =
-        minutes.matches("^[0-9]\$|^[1-5][0-9]?\$|^60\$".toRegex()) &&
-        hours.matches("^[0-9]\$|^[1-2][0-4]?\$".toRegex()) &&
-        days.matches("^[0-9]$|^[1-2][0-9]?$|^30$".toRegex()) &&
-        months.matches("^[0-9]\$|^[1-9][0-9]?\$".toRegex()) &&
-                (minutes.matches("^[^0]".toRegex()) || hours.matches("^[^0]".toRegex()) ||
-                        days.matches("^[^0]".toRegex()) || months.matches("^[^0].*".toRegex()))
+    private fun isValidDuration(minutes: Int, hours: Int, days: Int, months: Int) =
+        (minutes != 0 || hours != 0 || days != 0 || months != 0)
 
     private fun showAlertDialog(title: String) {
         AlertDialog.Builder(requireContext())
@@ -239,5 +262,8 @@ class TrailStartCreationFragment : Fragment() {
     }
 
     private fun TextInputEditText.textString()      = text!!.toString()
-    private fun AutoCompleteTextView.textString()   = text!!.toString()
+
+    fun onBackClick() {
+        view?.findNavController()?.popBackStack()
+    }
 }

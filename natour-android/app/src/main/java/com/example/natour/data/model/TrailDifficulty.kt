@@ -33,5 +33,15 @@ enum class TrailDifficulty(
                 EXTREMELY_DIFFICULT._nameDifficulty -> EXTREMELY_DIFFICULT
                 else -> throw IllegalArgumentException("Unknown name: $name")
             }
+
+        fun toEnumValue(int: Int): TrailDifficulty =
+            when(int) {
+                EASIEST.ordinal -> EASIEST
+                EASY.ordinal -> EASY
+                MORE_DIFFICULT.ordinal -> MORE_DIFFICULT
+                VERY_DIFFICULT.ordinal -> VERY_DIFFICULT
+                EXTREMELY_DIFFICULT.ordinal -> EXTREMELY_DIFFICULT
+                else -> throw IllegalArgumentException("Unknown int: $int")
+            }
     }
 }

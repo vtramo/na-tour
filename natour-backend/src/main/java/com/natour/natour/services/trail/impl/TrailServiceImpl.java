@@ -183,6 +183,7 @@ public class TrailServiceImpl implements TrailService {
             10, 
             Sort.by("stars").descending().and(Sort.by("id").ascending())
         );
+        
         return trailRepository.findAll(pageable)
             .stream()
             .map(TrailDtoUtils::convertTrailEntityToTrailResponseDto)
