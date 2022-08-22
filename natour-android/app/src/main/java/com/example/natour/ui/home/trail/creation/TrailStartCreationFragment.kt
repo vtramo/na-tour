@@ -87,8 +87,8 @@ class TrailStartCreationFragment : Fragment() {
         with(binding.textDifficulty) {
             when (value) {
                 0f -> {
-                    setTextColor(TrailDifficulty.EASIEST.color)
-                    TrailDifficulty.EASIEST.toString().also { text = it }
+                    setTextColor(TrailDifficulty.VERY_EASY.color)
+                    TrailDifficulty.VERY_EASY.toString().also { text = it }
                 }
                 1f -> {
                     setTextColor(TrailDifficulty.EASY.color)
