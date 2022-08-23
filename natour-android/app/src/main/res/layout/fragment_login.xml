@@ -10,194 +10,199 @@
             type="com.example.natour.ui.signin.LoginFragment" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="@dimen/default_padding"
-        >
+        android:layout_height="wrap_content">
 
-        <!-- Top image -->
-        <LinearLayout
-            android:layout_marginTop="12dp"
-            android:id="@+id/top_image_linear_layout"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="111dp"
-                android:layout_gravity="center"
-                android:src="@drawable/mountain_blue"
-                tools:ignore="ContentDescription" />
-
-            <!-- Natour -->
-            <ImageView
-                android:layout_marginTop="20dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/natour"
-                android:layout_gravity="center"
-                tools:ignore="ContentDescription" />
-
-        </LinearLayout>
-
-        <!-- Username and password -->
-        <LinearLayout
-            android:layout_marginVertical="24dp"
-            android:id="@+id/username_password_linear_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/top_image_linear_layout"
+            android:padding="@dimen/default_padding"
             >
 
-            <!-- Username -->
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/username_text_input_layout"
-                style="@style/Widget.Unscramble.TextInputLayout.OutlinedBox"
+            <!-- Top image -->
+            <LinearLayout
+                android:layout_marginTop="12dp"
+                android:id="@+id/top_image_linear_layout"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="32dp"
-                android:hint="@string/enter_your_username"
-                app:errorIconDrawable="@drawable/ic_error"
-                app:helperTextTextAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
-                app:startIconDrawable="@drawable/person"
-                >
+                android:orientation="vertical">
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/username_text_input_edit_text"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:inputType="textPersonName|textNoSuggestions"
-                    android:maxLines="1"
-                    tools:ignore="DuplicateClickableBoundsCheck"
-                    />
-            </com.google.android.material.textfield.TextInputLayout>
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="111dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/mountain_blue"
+                    tools:ignore="ContentDescription" />
 
-            <!-- Password -->
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/password_text_input_layout"
-                style="@style/Widget.Unscramble.TextInputLayout.OutlinedBox"
+                <!-- Natour -->
+                <ImageView
+                    android:layout_marginTop="20dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/natour"
+                    android:layout_gravity="center"
+                    tools:ignore="ContentDescription" />
+
+            </LinearLayout>
+
+            <!-- Username and password -->
+            <LinearLayout
+                android:layout_marginVertical="24dp"
+                android:id="@+id/username_password_linear_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="32dp"
-                android:hint="@string/enter_your_password"
-                app:errorIconDrawable="@drawable/ic_error"
-                app:helperTextTextAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
-                app:startIconDrawable="@drawable/icons8_lock_24"
+                android:orientation="vertical"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/top_image_linear_layout"
                 >
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/password_text_input_edit_text"
+                <!-- Username -->
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/username_text_input_layout"
+                    style="@style/Widget.Unscramble.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:inputType="textPassword"
-                    android:maxLines="1"
-                    tools:ignore="DuplicateClickableBoundsCheck" />
-            </com.google.android.material.textfield.TextInputLayout>
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="32dp"
+                    android:hint="@string/enter_your_username"
+                    app:errorIconDrawable="@drawable/ic_error"
+                    app:helperTextTextAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
+                    app:startIconDrawable="@drawable/person"
+                    >
 
-        </LinearLayout>
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/username_text_input_edit_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:inputType="textPersonName|textNoSuggestions"
+                        android:maxLines="1"
+                        tools:ignore="DuplicateClickableBoundsCheck"
+                        />
+                </com.google.android.material.textfield.TextInputLayout>
 
-        <!-- Forgot your password -->
-        <TextView
-            android:layout_marginTop="5dp"
-            android:id="@+id/forgot_password_text_view"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/forgot_your_password"
-            android:textSize="16sp"
-            app:layout_constraintEnd_toEndOf="@id/username_password_linear_layout"
-            app:layout_constraintTop_toBottomOf="@+id/username_password_linear_layout"
-            />
+                <!-- Password -->
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/password_text_input_layout"
+                    style="@style/Widget.Unscramble.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="32dp"
+                    android:hint="@string/enter_your_password"
+                    app:errorIconDrawable="@drawable/ic_error"
+                    app:helperTextTextAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
+                    app:startIconDrawable="@drawable/icons8_lock_24"
+                    >
 
-        <!-- Login Button -->
-        <Button
-            android:id="@+id/sign_in_button"
-            style="?attr/materialButtonOutlinedStyle"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/default_padding"
-            android:layout_marginEnd="@dimen/default_padding"
-            android:layout_marginTop="16dp"
-            android:text="@string/login"
-            android:backgroundTint="#1F3245"
-            android:textColor="@color/white"
-            app:layout_constraintTop_toBottomOf="@+id/forgot_password_text_view"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:onClick="@{() -> loginFragment.onSignIn()}"
-            />
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/password_text_input_edit_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:inputType="textPassword"
+                        android:maxLines="1"
+                        tools:ignore="DuplicateClickableBoundsCheck" />
+                </com.google.android.material.textfield.TextInputLayout>
 
-        <!-- Sign up -->
-        <TextView
-            android:id="@+id/sign_up_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="0dp"
-            android:text="@string/not_registered_yet_sign_up_now"
-            android:textSize="16sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/sign_in_button"
-            android:onClick="@{() -> loginFragment.onSignUpGoToRegistrationFragment()}"
-            />
+            </LinearLayout>
 
-
-        <!-- Divider -->
-        <View style="@style/Divider"
-            android:id="@+id/divider"
-            app:layout_constraintTop_toBottomOf="@id/sign_up_text"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginVertical="20dp"
-            android:layout_height="1dp"
-            android:layout_width="match_parent"
-            />
-
-        <!-- Google - Facebook -->
-        <LinearLayout
-            android:id="@+id/third_party_login_linear_layout"
-            android:layout_marginTop="32dp"
-            app:layout_constraintTop_toBottomOf="@id/divider"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_width="match_parent"
-            android:gravity="center"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <!-- Google button -->
-            <Button
-                android:layout_width="250dp"
+            <!-- Forgot your password -->
+            <TextView
+                android:layout_marginTop="5dp"
+                android:id="@+id/forgot_password_text_view"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/google"
-                android:backgroundTint="@color/white"
-                android:textColor="#167BD3"
-                android:drawableLeft="@drawable/logo_google"
-                android:onClick="@{() -> loginFragment.onSignInWithGoogle()}"
-                tools:ignore="RtlHardcoded" />
+                android:text="@string/forgot_your_password"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="@id/username_password_linear_layout"
+                app:layout_constraintTop_toBottomOf="@+id/username_password_linear_layout"
+                />
 
-            <!-- Facebook button -->
+            <!-- Login Button -->
             <Button
-                android:backgroundTint="@color/white"
-                android:layout_width="250dp"
+                android:id="@+id/sign_in_button"
+                style="?attr/materialButtonOutlinedStyle"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/facebook"
-                android:textColor="#1B91D1"
-                android:drawableLeft="@drawable/logo_facebook"
-                android:onClick="@{() -> loginFragment.onSignInWithFacebook()}"
-                tools:ignore="RtlHardcoded" />
+                android:layout_marginStart="@dimen/default_padding"
+                android:layout_marginEnd="@dimen/default_padding"
+                android:layout_marginTop="16dp"
+                android:text="@string/login"
+                android:backgroundTint="#1F3245"
+                android:textColor="@color/white"
+                app:layout_constraintTop_toBottomOf="@+id/forgot_password_text_view"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:onClick="@{() -> loginFragment.onSignIn()}"
+                />
 
-        </LinearLayout>
+            <!-- Sign up -->
+            <TextView
+                android:id="@+id/sign_up_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="0dp"
+                android:text="@string/not_registered_yet_sign_up_now"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/sign_in_button"
+                android:onClick="@{() -> loginFragment.onSignUpGoToRegistrationFragment()}"
+                />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
 
+            <!-- Divider -->
+            <View style="@style/Divider"
+                android:id="@+id/divider"
+                app:layout_constraintTop_toBottomOf="@id/sign_up_text"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginVertical="20dp"
+                android:layout_height="1dp"
+                android:layout_width="match_parent"
+                />
+
+            <!-- Google - Facebook -->
+            <LinearLayout
+                android:id="@+id/third_party_login_linear_layout"
+                android:layout_marginTop="32dp"
+                app:layout_constraintTop_toBottomOf="@id/divider"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_width="match_parent"
+                android:gravity="center"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <!-- Google button -->
+                <Button
+                    android:layout_width="250dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/google"
+                    android:backgroundTint="@color/white"
+                    android:textColor="#167BD3"
+                    android:drawableLeft="@drawable/logo_google"
+                    android:onClick="@{() -> loginFragment.onSignInWithGoogle()}"
+                    tools:ignore="RtlHardcoded" />
+
+                <!-- Facebook button -->
+                <Button
+                    android:backgroundTint="@color/white"
+                    android:layout_width="250dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/facebook"
+                    android:textColor="#1B91D1"
+                    android:drawableLeft="@drawable/logo_facebook"
+                    android:onClick="@{() -> loginFragment.onSignInWithFacebook()}"
+                    tools:ignore="RtlHardcoded" />
+
+            </LinearLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
 </layout>
