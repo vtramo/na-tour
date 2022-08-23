@@ -4,27 +4,103 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.signup.RegistrationFragment">
 
+    <data>
+        <variable
+            name="registrationFragment"
+            type="com.example.natour.ui.signup.RegistrationFragment" />
+    </data>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:orientation="vertical"
-        android:layout_marginTop="32dp"
         >
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/custom_toolbar_registration"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
 
-        <!-- Create a new profile -->
-        <TextView
-            android:id="@+id/create_a_new_profile_textView"
-            android:layout_width="wrap_content"
+        <!-- Toolbar -->
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="sans-serif"
-            android:text="@string/create_a_new_profile"
-            android:textSize="34sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                >
+
+                <!-- Back button -->
+                <ImageButton
+                    android:onClick="@{() -> registrationFragment.onBackClick()}"
+                    android:id="@+id/back_image_button"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:layout_marginEnd="15dp"
+                    android:layout_gravity="start"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/arrow_left"
+                    style="@style/Widget.AppCompat.Button.Borderless"
+                    tools:ignore="ContentDescription" />
+
+                <!-- Toolbar title -->
+                <TextView
+                    android:id="@+id/toolbar_title_text_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/create_a_new_profile"
+                    app:layout_constraintStart_toEndOf="@+id/back_image_button"
+                    android:layout_marginStart="15dp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:gravity="center"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"/>
+
+                <!-- Confirm button -->
+                <Button
+                    android:id="@+id/register_button"
+                    style="?android:attr/buttonBarButtonStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="34dp"
+                    android:text="@string/register"
+                    android:gravity="center"
+                    android:textSize="12sp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_marginEnd="15dp"
+                    />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.appcompat.widget.Toolbar>
+
+        <!-- Divider -->
+        <View style="@style/Divider"
+            android:id="@+id/divider"
+            app:layout_constraintTop_toBottomOf="@id/toolbar"
+            android:layout_height="1dp"
+            android:layout_width="match_parent"
             />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="4dp">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="165dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/resource_new"
+                tools:ignore="ContentDescription" />
+
+        </LinearLayout>
 
         <ScrollView
             android:id="@+id/registration_scroll_view"
@@ -36,6 +112,7 @@
             tools:ignore="SpeakableTextPresentCheck">
 
             <LinearLayout
+                android:layout_marginTop="14dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -47,9 +124,9 @@
                     style="@style/Widget.Unscramble.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="40dp"
                     app:errorIconDrawable="@drawable/ic_error"
                     android:hint="@string/first_name"
+                    app:startIconDrawable="@drawable/id_svgrepo_com"
                     app:endIconMode="custom">
 
                     <com.google.android.material.textfield.TextInputEditText
@@ -70,7 +147,9 @@
                     android:layout_marginTop="20dp"
                     app:errorIconDrawable="@drawable/ic_error"
                     android:hint="@string/last_name"
-                    app:endIconMode="custom">
+                    app:endIconMode="custom"
+                    app:startIconDrawable="@drawable/id_svgrepo_com"
+                    >
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/last_name_text_input_edit_text"
@@ -92,7 +171,9 @@
                     android:hint="@string/username"
                     app:counterEnabled="true"
                     app:endIconMode="custom"
-                    app:counterMaxLength="16">
+                    app:counterMaxLength="16"
+                    app:startIconDrawable="@drawable/person"
+                    >
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/username_text_input_edit_text"
@@ -112,7 +193,9 @@
                     app:errorIconDrawable="@drawable/ic_error"
                     android:layout_marginTop="20dp"
                     app:endIconMode="custom"
-                    android:hint="@string/email">
+                    android:hint="@string/email"
+                    app:startIconDrawable="@drawable/email_svgrepo_com"
+                    >
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/email_text_input_edit_text"
@@ -132,7 +215,9 @@
                     android:layout_marginTop="20dp"
                     app:errorIconDrawable="@drawable/ic_error"
                     android:hint="@string/password"
-                    app:passwordToggleEnabled="true">
+                    app:passwordToggleEnabled="true"
+                    app:startIconDrawable="@drawable/icons8_lock_24"
+                    >
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/password_text_input_edit_text"
@@ -152,7 +237,9 @@
                     app:errorIconDrawable="@drawable/ic_error"
                     app:endIconMode="custom"
                     android:layout_marginTop="20dp"
-                    android:hint="@string/confirm_password">
+                    android:hint="@string/confirm_password"
+                    app:startIconDrawable="@drawable/icons8_lock"
+                    >
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/confirm_password_text_input_edit_text"
@@ -163,14 +250,6 @@
                         android:maxLines="1" />
 
                 </com.google.android.material.textfield.TextInputLayout>
-
-                <!-- Register Button -->
-                <Button
-                    android:id="@+id/register_button"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="25dp"
-                    android:text="@string/register" />
 
             </LinearLayout>
 
