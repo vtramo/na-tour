@@ -35,34 +35,43 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
 
-                    <!-- User icon -->
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:src="@drawable/user_image_card"
-                        tools:ignore="ContentDescription" />
-
                     <!-- Username, date -->
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="10dp"
                         android:layout_gravity="center"
                         android:gravity="center"
-                        android:orientation="vertical">
+                        android:orientation="vertical"
+                        tools:ignore="UselessParent">
 
-                        <!-- Username -->
-                        <TextView
-                            android:id="@+id/trail_review_username_owner_text_view"
-                            android:layout_width="match_parent"
+                        <LinearLayout
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_marginHorizontal="10dp"
-                            android:gravity="center"
-                            android:textSize="20sp"
-                            android:textStyle="bold"
-                            tools:text="bonek" />
+                            android:orientation="horizontal"
+                            tools:ignore="UseCompoundDrawables">
+
+                            <!-- User icon -->
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center|end"
+                                android:src="@drawable/person"
+                                tools:ignore="ContentDescription" />
+
+                            <!-- Username -->
+                            <TextView
+                                android:id="@+id/trail_review_username_owner_text_view"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_marginHorizontal="5dp"
+                                android:gravity="center"
+                                android:textSize="20sp"
+                                android:textColor="@color/black"
+                                android:textStyle="normal"
+                                tools:text="bonek" />
+
+                        </LinearLayout>
 
                         <!-- Date -->
                         <TextView
