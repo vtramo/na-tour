@@ -26,6 +26,7 @@ class FavoriteTrailsViewModel @Inject constructor(
             mainUserRepository.getDetails().id
         ).collect {
             _mapOfFavoriteTrails.value = it.toMutableMap()
+            _listOfFavoriteTrails = it.values.toList()
             _hasLoadedFavoriteTrails.value = true
         }
     }
