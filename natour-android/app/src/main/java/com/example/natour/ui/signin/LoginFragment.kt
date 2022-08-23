@@ -15,6 +15,7 @@ import com.example.natour.R
 import com.example.natour.databinding.FragmentLoginBinding
 import com.example.natour.data.model.Credentials
 import com.example.natour.util.createProgressAlertDialog
+import com.example.natour.util.showSnackBar
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -54,7 +55,7 @@ class LoginFragment : Fragment() {
         mLoginViewModel.isAuthenticated.observe(viewLifecycleOwner) { isAuthenticated ->
             setErrorTextField(!isAuthenticated)
             if (isAuthenticated) {
-                Toast.makeText(context, "LOGIN SUCCESSFULLY", Toast.LENGTH_SHORT).show()
+                showSnackBar("Successfully logged in", requireView())
                 goToHomeFragment()
             }
             mLoginProgressDialog.dismiss()
