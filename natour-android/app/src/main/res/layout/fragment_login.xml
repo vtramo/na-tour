@@ -43,7 +43,6 @@
                 android:layout_gravity="center"
                 tools:ignore="ContentDescription" />
 
-
         </LinearLayout>
 
         <!-- Username and password -->
