@@ -15,526 +15,538 @@
             type="com.example.natour.ui.home.trail.detail.TrailDetailsFragment" />
     </data>
 
-    <ScrollView
-        android:id="@+id/trail_details_scroll_view"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <!-- Toolbar -->
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/trail_details_toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <!-- Toolbar -->
-            <androidx.appcompat.widget.Toolbar
-                android:id="@+id/trail_details_toolbar"
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                android:layout_height="match_parent"
+                >
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    >
-                    <!-- Back button -->
-                    <ImageButton
-                        android:onClick="@{() -> trailDetailsFragment.onBackClick()}"
-                        android:id="@+id/toolbar_back_image_button"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        android:layout_gravity="start"
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
-                        android:src="@drawable/arrow_left"
-                        style="@style/Widget.AppCompat.Button.Borderless"
-                        tools:ignore="ContentDescription" />
+                <!-- Back button -->
+                <ImageButton
+                    android:onClick="@{() -> trailDetailsFragment.onBackClick()}"
+                    android:id="@+id/toolbar_back_image_button"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:layout_gravity="start"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/arrow_left"
+                    style="@style/Widget.AppCompat.Button.Borderless"
+                    tools:ignore="ContentDescription" />
 
-                    <!-- Download button -->
-                    <ImageButton
-                        android:id="@+id/toolbar_download_image_button"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintEnd_toStartOf="@id/toolbar_send_image_button"
-                        android:layout_marginEnd="15dp"
-                        style="@style/Widget.AppCompat.Button.Borderless"
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
-                        android:onClick="@{() -> trailDetailsFragment.onDownloadTrailClick()}"
-                        android:src="@drawable/download"
-                        tools:ignore="ContentDescription" />
+                <!-- Download button -->
+                <ImageButton
+                    android:id="@+id/toolbar_download_image_button"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/toolbar_send_image_button"
+                    android:layout_marginEnd="15dp"
+                    style="@style/Widget.AppCompat.Button.Borderless"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:onClick="@{() -> trailDetailsFragment.onDownloadTrailClick()}"
+                    android:src="@drawable/download"
+                    tools:ignore="ContentDescription" />
 
-                    <!-- Send message button -->
-                    <ImageButton
-                        android:id="@+id/toolbar_send_image_button"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintEnd_toStartOf="@id/toolbar_favorite_trail_image_button"
-                        android:layout_marginEnd="15dp"
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
-                        android:src="@drawable/send"
-                        style="@style/Widget.AppCompat.Button.Borderless"
-                        tools:ignore="ContentDescription" />
+                <!-- Send message button -->
+                <ImageButton
+                    android:id="@+id/toolbar_send_image_button"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/toolbar_favorite_trail_image_button"
+                    android:layout_marginEnd="15dp"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/send"
+                    style="@style/Widget.AppCompat.Button.Borderless"
+                    tools:ignore="ContentDescription" />
 
-                    <!-- Favorite trail button -->
-                    <ImageButton
-                        android:onClick="@{() -> trailDetailsFragment.onFavoriteTrailClick()}"
-                        android:id="@+id/toolbar_favorite_trail_image_button"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        android:layout_marginEnd="15dp"
-                        style="@style/Widget.AppCompat.Button.Borderless"
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
-                        android:src="@drawable/heart_black"
-                        tools:ignore="ContentDescription" />
+                <!-- Favorite trail button -->
+                <ImageButton
+                    android:onClick="@{() -> trailDetailsFragment.onFavoriteTrailClick()}"
+                    android:id="@+id/toolbar_favorite_trail_image_button"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_marginEnd="15dp"
+                    style="@style/Widget.AppCompat.Button.Borderless"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/heart_black"
+                    tools:ignore="ContentDescription" />
 
-                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
-            </androidx.appcompat.widget.Toolbar>
+        </androidx.appcompat.widget.Toolbar>
 
-            <!-- Trail details head -->
+        <!-- Divider -->
+        <View style="@style/Divider"
+            android:id="@+id/divider_top_duration"
+            android:layout_height="1dp"
+            android:layout_width="match_parent"
+            />
+
+        <ScrollView
+            android:id="@+id/trail_details_scroll_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
             <LinearLayout
-                android:id="@+id/trail_details_head_info_linear_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/trail_details_toolbar"
                 android:orientation="vertical"
-                android:gravity="center">
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-                <!-- Trail name -->
-                <TextView
-                    android:id="@+id/trail_name_text_view"
-                    android:layout_width="wrap_content"
-                    android:text="@{trailDetailsViewModel.thisTrail.name}"
-                    tools:text="Sentiero degli dei"
-                    android:layout_marginTop="6dp"
-                    android:textSize="30sp"
-                    android:fontFamily="@font/montserrat_bold"
-                    android:layout_height="wrap_content" />
-
-                <!-- Country position -->
-                <TextView
-                    android:id="@+id/trail_country_text_view"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@{trailDetailsViewModel.positionDetails}"
-                    tools:text="Italia, Europa"
-                    android:fontFamily="@font/montserrat"
-                    android:textSize="15sp"
-                    tools:ignore="HardcodedText" />
-
-                <!-- User -->
+                <!-- Trail details head -->
                 <LinearLayout
-                    android:id="@+id/user_linear_layout"
-                    android:layout_width="wrap_content"
+                    android:id="@+id/trail_details_head_info_linear_layout"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:layout_marginTop="5dp"
-                    android:orientation="horizontal"
-                    tools:ignore="UseCompoundDrawables">
+                    android:orientation="vertical"
+                    android:gravity="center">
 
-                    <!-- User icon -->
-                    <ImageView
-                        android:id="@+id/user_icon_image_view"
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:layout_marginEnd="5dp"
-                        android:src="@drawable/user_image_card"
-                        android:adjustViewBounds="true"
-                        tools:ignore="ContentDescription" />
-
-                    <!-- Username -->
+                    <!-- Trail name -->
                     <TextView
-                        android:id="@+id/trail_owner_text_view"
+                        android:id="@+id/trail_name_text_view"
+                        android:layout_width="wrap_content"
+                        android:text="@{trailDetailsViewModel.thisTrail.name}"
+                        tools:text="Sentiero degli dei"
+                        android:layout_marginTop="6dp"
+                        android:textSize="33sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/black"
+                        android:layout_height="wrap_content" />
+
+                    <!-- Country position -->
+                    <TextView
+                        android:id="@+id/trail_country_text_view"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@{trailDetailsViewModel.ownerUsername}"
-                        tools:text="toddteller"
+                        android:text="@{trailDetailsViewModel.positionDetails}"
+                        tools:text="Italia, Europa"
+                        android:fontFamily="@font/montserrat"
                         android:textSize="15sp"
-                        android:fontFamily="@font/montserrat_semibold" />
-
-                </LinearLayout>
-
-                <!-- Reviews info -->
-                <LinearLayout
-                    android:id="@+id/reviews_linear_layout"
-                    android:layout_width="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:orientation="vertical">
-
-                    <!-- Stars -->
-                    <ImageView
-                        android:id="@+id/trail_stars_image_view"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        tools:src="@drawable/five_stars_image"
-                        android:src="@{trailDetailsViewModel.starsImage}"
-                        android:adjustViewBounds="true"
-                        android:scaleType="fitCenter"
-                        android:maxHeight="25dp"
-                        tools:ignore="ContentDescription" />
-
-                    <!-- Number of reviews -->
-                    <TextView
-                        android:id="@+id/trail_number_reviews_text_view"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/montserrat_italic"
-                        tools:text="15 votes"
-                        android:text="@{trailDetailsViewModel.numberOfReviews}"
-                        android:textSize="18sp"
                         tools:ignore="HardcodedText" />
 
-                </LinearLayout>
-
-            </LinearLayout>
-
-            <!-- Trail details -->
-            <LinearLayout
-                android:id="@+id/trail_details_linear_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="20dp"
-                android:layout_marginVertical="20dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/trail_details_head_info_linear_layout"
-                android:orientation="vertical">
-
-                <!-- Divider -->
-                <View style="@style/Divider"
-                    android:layout_marginBottom="10dp"
-                    />
-
-                <!-- Difficulty -->
-                <LinearLayout
-                    android:id="@+id/trail_difficulty_linear_layout"
-                    android:layout_marginBottom="10dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <!-- Difficulty Label -->
-                    <TextView
-                        android:id="@+id/trail_difficulty_text_view"
+                    <!-- User -->
+                    <LinearLayout
+                        android:id="@+id/user_linear_layout"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/difficulty_level"
-                        android:fontFamily="@font/montserrat_bold" />
+                        android:gravity="center"
+                        android:layout_marginTop="5dp"
+                        android:orientation="horizontal"
+                        tools:ignore="UseCompoundDrawables">
 
-                    <!-- Difficulty text -->
-                    <TextView
-                        android:id="@+id/trail_difficulty_level_text_view"
-                        android:layout_marginStart="10dp"
-                        tools:text="Easy"
+                        <!-- User icon -->
+                        <ImageView
+                            android:id="@+id/user_icon_image_view"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_marginEnd="5dp"
+                            android:src="@drawable/user_image_card"
+                            android:adjustViewBounds="true"
+                            tools:ignore="ContentDescription" />
+
+                        <!-- Username -->
+                        <TextView
+                            android:id="@+id/trail_owner_text_view"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@{trailDetailsViewModel.ownerUsername}"
+                            tools:text="toddteller"
+                            android:textStyle="normal"
+                            android:textColor="@color/black"
+                            android:textSize="17sp" />
+
+                    </LinearLayout>
+
+                    <!-- Reviews info -->
+                    <LinearLayout
+                        android:id="@+id/reviews_linear_layout"
                         android:layout_width="wrap_content"
+                        android:layout_marginTop="5dp"
                         android:layout_height="wrap_content"
-                        android:text="@{trailDetailsViewModel.thisTrail.difficulty.toString()}"
-                        android:fontFamily="@font/montserrat" />
+                        android:gravity="center"
+                        android:orientation="vertical">
 
-                </LinearLayout>
+                        <!-- Stars -->
+                        <ImageView
+                            android:id="@+id/trail_stars_image_view"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            tools:src="@drawable/five_stars_image"
+                            android:src="@{trailDetailsViewModel.starsImage}"
+                            android:adjustViewBounds="true"
+                            android:scaleType="fitCenter"
+                            android:maxHeight="25dp"
+                            tools:ignore="ContentDescription" />
 
-                <!-- Travel Time -->
-                <LinearLayout
-                    android:id="@+id/trail_time_linear_layout"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp"
-                    android:orientation="horizontal">
+                        <!-- Number of reviews -->
+                        <TextView
+                            android:id="@+id/trail_number_reviews_text_view"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/montserrat_italic"
+                            tools:text="15 votes"
+                            android:text="@{trailDetailsViewModel.numberOfReviews}"
+                            android:textSize="18sp"
+                            tools:ignore="HardcodedText" />
 
-                    <!-- Travel Label -->
-                    <TextView
-                        android:id="@+id/trail_time_label_text_view"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/travel_time"
-                        android:fontFamily="@font/montserrat_bold" />
-
-                    <!-- Travel time -->
-                    <TextView
-                        android:id="@+id/trail_time_text_view"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@{trailDetailsViewModel.trailDuration}"
-                        tools:text="4h"
-                        android:fontFamily="@font/montserrat"
-                        android:layout_marginStart="10dp" />
+                    </LinearLayout>
 
                 </LinearLayout>
 
-                <!-- Description -->
+                <!-- Trail details -->
                 <LinearLayout
-                    android:id="@+id/trail_description_linear_layout"
-                    android:visibility="@{trailDetailsViewModel.descriptionVisibility}"
+                    android:id="@+id/trail_details_linear_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="20dp"
+                    android:layout_marginTop="10dp"
                     android:orientation="vertical">
 
-                    <!-- Description Label -->
-                    <TextView
-                        android:id="@+id/trail_description_label_text_view"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/description_label"
-                        android:fontFamily="@font/montserrat_bold" />
+                    <!-- Divider -->
+                    <View style="@style/Divider"
+                        android:layout_marginBottom="10dp"
+                        />
 
-                    <!-- Description text -->
-                    <TextView
-                        android:id="@+id/trail_description_text_view"
-                        android:layout_width="wrap_content"
+                    <!-- Difficulty -->
+                    <LinearLayout
+                        android:id="@+id/trail_difficulty_linear_layout"
+                        android:layout_marginBottom="10dp"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/montserrat"
-                        tools:text="Up branch to easily missed by do. Admiration considered acceptance too led one melancholy expression. Are will took form the nor true. Winding enjoyed minuter her letters evident use eat colonel. He attacks observe mr cottage inquiry am examine gravity. Are dear but near left was. Year kept on over so as this of. She steepest doubtful betrayed formerly him. Active one called uneasy our seeing see cousin tastes its. Ye am it formed indeed agreed relied piqued."
-                        android:text="@{trailDetailsViewModel.thisTrail.description}" />
+                        android:orientation="horizontal">
+
+                        <!-- Difficulty Label -->
+                        <TextView
+                            android:id="@+id/trail_difficulty_text_view"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/difficulty_level"
+                            android:textStyle="bold"
+                            android:textColor="@color/black"
+                            />
+
+                        <!-- Difficulty text -->
+                        <TextView
+                            android:id="@+id/trail_difficulty_level_text_view"
+                            android:layout_marginStart="10dp"
+                            tools:text="Easy"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@{trailDetailsViewModel.thisTrail.difficulty.toString()}"
+                            android:fontFamily="@font/montserrat" />
+
+                    </LinearLayout>
+
+                    <!-- Travel Time -->
+                    <LinearLayout
+                        android:id="@+id/trail_time_linear_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:orientation="horizontal">
+
+                        <!-- Travel Label -->
+                        <TextView
+                            android:id="@+id/trail_time_label_text_view"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/travel_time"
+                            android:textColor="@color/black"
+                            android:textStyle="bold"
+                            />
+
+                        <!-- Travel time -->
+                        <TextView
+                            android:id="@+id/trail_time_text_view"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@{trailDetailsViewModel.trailDuration}"
+                            tools:text="4h"
+                            android:fontFamily="@font/montserrat"
+                            android:layout_marginStart="10dp" />
+
+                    </LinearLayout>
+
+                    <!-- Description -->
+                    <LinearLayout
+                        android:id="@+id/trail_description_linear_layout"
+                        android:visibility="@{trailDetailsViewModel.descriptionVisibility}"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <!-- Description Label -->
+                        <TextView
+                            android:id="@+id/trail_description_label_text_view"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/description_label"
+                            android:textStyle="bold"
+                            android:textColor="@color/black"
+                            />
+
+                        <!-- Description text -->
+                        <TextView
+                            android:id="@+id/trail_description_text_view"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="15sp"
+                            tools:text="Up branch to easily missed by do. Admiration considered acceptance too led one melancholy expression. Are will took form the nor true. Winding enjoyed minuter her letters evident use eat colonel. He attacks observe mr cottage inquiry am examine gravity. Are dear but near left was. Year kept on over so as this of. She steepest doubtful betrayed formerly him. Active one called uneasy our seeing see cousin tastes its. Ye am it formed indeed agreed relied piqued."
+                            android:text="@{trailDetailsViewModel.thisTrail.description}" />
+
+                    </LinearLayout>
 
                 </LinearLayout>
 
-            </LinearLayout>
+                <!-- Map -->
+                <LinearLayout
+                    android:id="@+id/trail_map_linear_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingHorizontal="16dp"
+                    android:paddingTop="16dp"
+                    >
 
-            <!-- Map -->
-            <LinearLayout
-                android:id="@+id/trail_map_linear_layout"
-                app:layout_constraintTop_toBottomOf="@id/trail_details_linear_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:paddingHorizontal="16dp"
-                android:paddingTop="16dp"
-                >
+                    <!-- Divider -->
+                    <View style="@style/Divider"
+                        android:layout_marginBottom="10dp"
+                        />
 
-                <!-- Divider -->
-                <View style="@style/Divider"
-                    android:layout_marginBottom="10dp"
-                    />
+                    <!-- Map TextView and Go to trail button -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:orientation="horizontal">
 
-                <!-- Map TextView and Go to trail button -->
+                        <!-- Map TextView -->
+                        <TextView
+                            android:id="@+id/trail_details_map_text_view"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="8"
+                            android:text="@string/map"
+                            android:textSize="25sp"
+                            android:layout_marginBottom="10dp"
+                            android:textStyle="bold"
+                            android:textColor="@color/black"
+                            />
+
+                        <!-- Go to trail button -->
+                        <com.google.android.material.button.MaterialButton
+                            android:onClick="@{() -> trailDetailsFragment.onGoToTrailClick()}"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/go_to_trail"
+                            android:drawableLeft="@drawable/ic_baseline_map_24"
+                            app:cornerRadius="8dp"
+                            app:strokeColor="#7F8487"
+                            app:rippleColor="@color/black"
+                            android:backgroundTint="@color/white"
+                            android:textColor="@color/black"
+                            app:strokeWidth="1dp"
+                            tools:ignore="RtlHardcoded" />
+
+                    </LinearLayout>
+
+                    <!-- Google Map -->
+                    <fragment
+                        android:id="@+id/map"
+                        android:name="com.example.natour.ui.home.trail.SupportMapFragmentWrapper"
+                        android:layout_width="match_parent"
+                        android:layout_height="500dp"
+                        app:cameraTilt="30"
+                        app:uiRotateGestures="true"
+                        app:uiZoomControls="true"
+                        tools:ignore="FragmentTagUsage" />
+
+                </LinearLayout>
+
+                <!-- Photos linear layout -->
+                <LinearLayout
+                    android:id="@+id/trail_photos_linear_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingHorizontal="16dp"
+                    android:paddingTop="16dp"
+                    >
+
+                    <!-- Divider -->
+                    <View style="@style/Divider"
+                        android:layout_marginBottom="10dp"
+                        />
+
+                    <!-- Photos textview and button -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <!-- Photos text view -->
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:text="@string/photos"
+                            android:textSize="25sp"
+                            android:layout_weight="15"
+                            android:layout_marginBottom="10dp"
+                            android:textColor="@color/black"
+                            android:textStyle="bold"
+                            />
+
+                        <!-- Add a photo button -->
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/add_a_photo_button"
+                            android:onClick="@{() -> trailDetailsFragment.onAddPhotoClick()}"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/add_a_photo"
+                            android:drawableLeft="@drawable/ic_add_photo_camera"
+                            app:cornerRadius="8dp"
+                            app:strokeColor="#7F8487"
+                            app:rippleColor="@color/black"
+                            android:backgroundTint="@color/white"
+                            android:textColor="@color/black"
+                            app:strokeWidth="1dp"
+                            tools:ignore="RtlHardcoded" />
+
+                    </LinearLayout>
+
+                    <!-- Photos Recycler view -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/trail_photos_recycler_view"
+                            android:layout_marginTop="20dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal"
+                            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                            />
+
+                    </LinearLayout>
+
+                    <!-- There are no photos text view -->
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="@string/there_are_no_photos"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:layout_marginVertical="10dp"
+                        android:textSize="24sp"
+                        android:visibility="@{trailDetailsViewModel.thereAreNoPhotosVisibility}"
+                        />
+
+                </LinearLayout>
+
+                <!-- Reviews -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="8dp"
-                    android:orientation="horizontal">
-
-                    <!-- Map TextView -->
-                    <TextView
-                        android:id="@+id/trail_details_map_text_view"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="8"
-                        android:text="@string/map"
-                        android:textSize="22sp"
-                        android:layout_marginBottom="10dp"
-                        android:fontFamily="@font/montserrat_bold" />
-
-                    <!-- Go to trail button -->
-                    <com.google.android.material.button.MaterialButton
-                        android:onClick="@{() -> trailDetailsFragment.onGoToTrailClick()}"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="@string/go_to_trail"
-                        android:fontFamily="@font/montserrat_bold"
-                        android:drawableLeft="@drawable/ic_baseline_map_24"
-                        app:cornerRadius="8dp"
-                        app:strokeColor="#7F8487"
-                        app:rippleColor="@color/black"
-                        android:backgroundTint="@color/white"
-                        android:textColor="@color/gray"
-                        app:strokeWidth="1dp"
-                        tools:ignore="RtlHardcoded" />
-
-                </LinearLayout>
-
-                <!-- Google Map -->
-                <fragment
-                    app:layout_constraintTop_toBottomOf="@id/map"
+                    app:layout_constraintTop_toBottomOf="@id/trail_photos_linear_layout"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    android:id="@+id/map"
-                    android:name="com.example.natour.ui.home.trail.SupportMapFragmentWrapper"
-                    android:layout_width="match_parent"
-                    android:layout_height="500dp"
-                    app:cameraTilt="30"
-                    app:uiRotateGestures="true"
-                    app:uiZoomControls="true"
-                    tools:ignore="FragmentTagUsage" />
+                    android:orientation="vertical"
+                    android:paddingHorizontal="16dp"
+                    android:paddingTop="16dp"
+                    android:layout_marginBottom="20dp"
+                    >
 
-            </LinearLayout>
-
-            <!-- Photos linear layout -->
-            <LinearLayout
-                android:id="@+id/trail_photos_linear_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:layout_constraintTop_toBottomOf="@id/trail_map_linear_layout"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:paddingHorizontal="16dp"
-                android:paddingTop="16dp"
-                >
-
-                <!-- Divider -->
-                <View style="@style/Divider"
-                    android:layout_marginBottom="10dp"
-                    />
-
-                <!-- Photos textview and button -->
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <!-- Photos text view -->
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:text="@string/photos"
-                        android:textSize="22sp"
-                        android:layout_weight="15"
+                    <!-- Divider -->
+                    <View style="@style/Divider"
                         android:layout_marginBottom="10dp"
-                        android:fontFamily="@font/montserrat_bold" />
+                        />
 
-                    <!-- Add a photo button -->
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/add_a_photo_button"
-                        android:onClick="@{() -> trailDetailsFragment.onAddPhotoClick()}"
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="@string/add_a_photo"
-                        android:fontFamily="@font/montserrat_bold"
-                        android:drawableLeft="@drawable/ic_add_photo_camera"
-                        app:cornerRadius="8dp"
-                        app:strokeColor="#7F8487"
-                        app:rippleColor="@color/black"
-                        android:backgroundTint="@color/white"
-                        android:textColor="@color/gray"
-                        app:strokeWidth="1dp"
-                        tools:ignore="RtlHardcoded" />
+                        android:orientation="horizontal">
 
-                </LinearLayout>
+                        <!-- Reviews text view label -->
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_weight="23"
+                            android:layout_height="wrap_content"
+                            android:textStyle="bold"
+                            android:textColor="@color/black"
+                            android:text="@string/reviews"
+                            android:textSize="25sp"
+                            android:layout_marginBottom="10dp"
+                            />
 
-                <!-- Photos Recycler view -->
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                        <!-- Add a review button -->
+                        <com.google.android.material.button.MaterialButton
+                            android:onClick="@{() -> trailDetailsFragment.onAddReviewClick()}"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/add_a_review"
+                            android:drawableLeft="@drawable/empty_star_image_black"
+                            app:cornerRadius="8dp"
+                            app:strokeColor="#7F8487"
+                            app:rippleColor="@color/black"
+                            android:backgroundTint="@color/white"
+                            android:textColor="@color/black"
+                            app:strokeWidth="1dp"
+                            tools:ignore="RtlHardcoded" />
 
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/trail_photos_recycler_view"
-                        android:layout_marginTop="20dp"
+                    </LinearLayout>
+
+                    <!-- Trail review Recycler view -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="15dp"
+                        android:orientation="vertical">
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/trail_reviews_recycler_view"
+                            android:layout_marginTop="20dp"
+                            android:layout_marginBottom="10dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical"
+                            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                            />
+
+                    </LinearLayout>
+
+                    <!-- There are no reviews text view -->
+                    <TextView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:orientation="horizontal"
-                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        android:text="@string/there_are_no_reviews"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:layout_marginVertical="10dp"
+                        android:textSize="24sp"
+                        android:visibility="@{trailDetailsViewModel.thereAreNoReviewsVisibility}"
                         />
 
                 </LinearLayout>
-
-                <!-- There are no photos text view -->
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:text="@string/there_are_no_photos"
-                    android:layout_gravity="center"
-                    android:gravity="center"
-                    android:layout_marginVertical="10dp"
-                    android:textSize="24sp"
-                    android:visibility="@{trailDetailsViewModel.thereAreNoPhotosVisibility}"
-                    />
 
             </LinearLayout>
 
-            <!-- Reviews -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@id/trail_photos_linear_layout"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:orientation="vertical"
-                android:paddingHorizontal="16dp"
-                android:paddingTop="16dp"
-                >
+        </ScrollView>
 
-                <!-- Divider -->
-                <View style="@style/Divider"
-                    android:layout_marginBottom="10dp"
-                    />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <!-- Reviews text view label -->
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_weight="23"
-                        android:layout_height="wrap_content"
-                        android:text="@string/reviews"
-                        android:textSize="22sp"
-                        android:layout_marginBottom="10dp"
-                        android:fontFamily="@font/montserrat_bold"
-                        />
-
-                    <!-- Add a review button -->
-                    <com.google.android.material.button.MaterialButton
-                        android:onClick="@{() -> trailDetailsFragment.onAddReviewClick()}"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="@string/add_a_review"
-                        android:fontFamily="@font/montserrat_bold"
-                        android:drawableLeft="@drawable/empty_star_image"
-                        app:cornerRadius="8dp"
-                        app:strokeColor="#7F8487"
-                        app:rippleColor="@color/black"
-                        android:backgroundTint="@color/white"
-                        android:textColor="@color/gray"
-                        app:strokeWidth="1dp"
-                        tools:ignore="RtlHardcoded" />
-
-                </LinearLayout>
-
-                <!-- Trail review Recycler view -->
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="15dp"
-                    android:orientation="vertical">
-
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/trail_reviews_recycler_view"
-                        android:layout_marginTop="20dp"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="vertical"
-                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                        />
-
-                </LinearLayout>
-
-                <!-- There are no reviews text view -->
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:text="@string/there_are_no_reviews"
-                    android:layout_gravity="center"
-                    android:gravity="center"
-                    android:layout_marginVertical="10dp"
-                    android:textSize="24sp"
-                    android:layout_marginBottom="15dp"
-                    android:visibility="@{trailDetailsViewModel.thereAreNoReviewsVisibility}"
-                    />
-
-            </LinearLayout>
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-    </ScrollView>
+    </LinearLayout>
 
 </layout>

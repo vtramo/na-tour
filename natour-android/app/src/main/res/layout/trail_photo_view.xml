@@ -44,8 +44,7 @@
                     android:layout_width="15dp"
                     android:layout_height="15dp"
                     android:layout_marginHorizontal="7dp"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/user_image_card"
+                    android:src="@drawable/person"
                     tools:ignore="ContentDescription" />
 
                 <TextView
@@ -53,6 +52,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="7dp"
+                    android:textColor="@color/black"
                     android:textSize="12sp"
                     tools:text="bonek"
                     />
@@ -61,6 +61,7 @@
 
             <!-- Gps Image -->
             <ImageButton
+                android:backgroundTint="#8CE6DEDE"
                 android:id="@+id/gps_image_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
