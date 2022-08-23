@@ -94,6 +94,10 @@
     <string name="easiest">Easiest</string>
     <string name="very_easy">Very easy</string>
     <string name="there_are_no_saved_favorite_trails">There are no saved favorite trails</string>
+    <string name="login">Login</string>
+    <string name="google">Google</string>
+    <string name="facebook">Facebook</string>
+    <string name="forgot_your_password">Forgot Your Password?</string>
 
     <!-- Route Creation -->
     <string-array name="listDifficulties">
