@@ -80,24 +80,28 @@ class HomeFragment : Fragment() {
         binding.progressBarRecyclerView.visibility = View.VISIBLE
 
         with(mFavoriteTrailsViewModel) {
-            observePossibleErrors()
+            observePossibleErrors { handleConnectionErrorWhenLoadFavoriteTrails() }
             observeLoadingFavoriteTrails()
             loadFavoriteTrails()
         }
     }
 
-    private fun FavoriteTrailsViewModel.observePossibleErrors() {
+    private fun FavoriteTrailsViewModel.observePossibleErrors(reaction: () -> (Unit)) {
         connectionErrorLiveData.observe(viewLifecycleOwner) { isConnectionError ->
             if (isConnectionError) {
-                binding.progressBarRecyclerView.visibility = View.GONE
-                binding.connectionErrorLinearLayout.visibility = View.VISIBLE
-                showSomethingWentWrongAlertDialog(
-                    ErrorMessages.CONNECTION_ERROR,
-                    ErrorMessages.CONNECTION_ERROR_SERVER,
-                    requireContext()
-                )
+                reaction()
             }
         }
+    }
+
+    private fun handleConnectionErrorWhenLoadFavoriteTrails() {
+        binding.progressBarRecyclerView.visibility = View.GONE
+        binding.connectionErrorLinearLayout.visibility = View.VISIBLE
+        showSomethingWentWrongAlertDialog(
+            ErrorMessages.CONNECTION_ERROR,
+            ErrorMessages.CONNECTION_ERROR_SERVER,
+            requireContext()
+        )
     }
 
     private fun FavoriteTrailsViewModel.observeLoadingFavoriteTrails() {
@@ -235,11 +239,30 @@ class HomeFragment : Fragment() {
     private fun setupSwipeRefreshLayout() {
         val swipeRefreshLayout = binding.swipeRefreshLayout
         swipeRefreshLayout.setOnRefreshListener {
-            mHomeViewModel.isRefreshingLiveData.observe(viewLifecycleOwner) {
-                swipeRefreshLayout.isRefreshing = it
+            with(mHomeViewModel) {
+                isRefreshingLiveData.observe(viewLifecycleOwner) {
+                    swipeRefreshLayout.isRefreshing = it
+                }
+                observePossibleErrors { handleConnectionErrorWhenRefreshingTrails() }
+                refreshTrails()
             }
-            mHomeViewModel.refreshTrails()
         }
+    }
+
+    private fun HomeViewModel.observePossibleErrors(reaction: () -> (Unit)) {
+        connectionErrorLiveData.observe(viewLifecycleOwner) { isConnectionError ->
+            if (isConnectionError) {
+                reaction()
+            }
+        }
+    }
+
+    private fun handleConnectionErrorWhenRefreshingTrails() {
+        showSomethingWentWrongAlertDialog(
+            ErrorMessages.CONNECTION_ERROR,
+            ErrorMessages.CONNECTION_ERROR_SERVER,
+            requireContext()
+        )
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
