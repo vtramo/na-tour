@@ -42,11 +42,18 @@ class RegistrationFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        changeRegisterButton(enabled = false)
         setupSignUp()
         setupTextVerifies()
         setConfirmPasswordVerifier()
         setupErrorHandlingUserAlreadyExists()
         binding.registerButton.setOnClickListener { submitForm() }
+    }
+
+    private fun changeRegisterButton(enabled: Boolean) {
+        with(binding.registerButton) {
+            isEnabled = enabled
+        }
     }
 
     private fun setupSignUp() {
@@ -93,6 +100,7 @@ class RegistrationFragment : Fragment() {
         val inputEditText = editText!!
         inputEditText.addTextChangedListener {
             inputEditText.validateTextWithRegex(this, regex, errorMessage)
+            changeRegisterButton(enabled = isValidForm())
         }
     }
 
@@ -121,6 +129,7 @@ class RegistrationFragment : Fragment() {
             val confirmPassword = confirmPasswordEditable.toString()
 
             verifyIfPasswordAndConfirmPasswordAreTheSame(password, confirmPassword)
+            changeRegisterButton(enabled = isValidForm())
         }
 
         passwordTextInputEditText.addTextChangedListener { passwordEditable ->
@@ -128,6 +137,7 @@ class RegistrationFragment : Fragment() {
             val confirmPassword = confirmPasswordTextInputEditText.text!!.toString()
 
             verifyIfPasswordAndConfirmPasswordAreTheSame(password, confirmPassword)
+            changeRegisterButton(enabled = isValidForm())
         }
     }
 
