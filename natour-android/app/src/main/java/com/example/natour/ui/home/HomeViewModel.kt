@@ -45,7 +45,7 @@ class HomeViewModel @Inject constructor(
         _isLoadingTrails = true
         trailRepository
             .load(currentPage)
-            .catch { handleErrors(it) }
+            .catch { it.handleErrors() }
             .collect { listTrails ->
                 _pagesAreFinished = listTrails.isEmpty()
                 addMoreTrails(listTrails)
@@ -75,9 +75,10 @@ class HomeViewModel @Inject constructor(
         _pagesAreFinished = false
         _isLoadingTrails = true
 
-        trailRepository.load(currentPage).collect { listTrails ->
-            _trails.value = listTrails.toMutableList()
-        }
+        trailRepository
+            .load(currentPage)
+            .catch { it.handleErrors() }
+            .collect { listTrails -> _trails.value = listTrails.toMutableList() }
 
         _isLoadingTrails = false
         _isRefreshingLiveData.value = false
@@ -103,12 +104,11 @@ class HomeViewModel @Inject constructor(
         trail -> trail.isFavorite = mapOfFavoriteTrails.containsKey(trail.idTrail)
     }
 
-
     private var _connectionErrorLiveData = MutableLiveData<Boolean>()
     val connectionErrorLiveData get() = _connectionErrorLiveData
 
-    private fun handleErrors(throwable: Throwable) {
-        if (throwable is ConnectException || throwable is SocketTimeoutException) {
+    private fun Throwable.handleErrors() {
+        if (this is ConnectException || this is SocketTimeoutException) {
             _connectionErrorLiveData.value = true
             _connectionErrorLiveData = MutableLiveData()
         }
