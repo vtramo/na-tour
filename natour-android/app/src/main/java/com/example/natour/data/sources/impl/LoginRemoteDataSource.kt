@@ -5,6 +5,7 @@ import com.example.natour.data.model.AuthenticationResponse
 import com.example.natour.data.sources.LoginDataSource
 import com.example.natour.network.LoginApiService
 import java.net.ConnectException
+import java.net.SocketTimeoutException
 
 class LoginRemoteDataSource(private val loginApiService: LoginApiService) : LoginDataSource {
 
@@ -14,6 +15,8 @@ class LoginRemoteDataSource(private val loginApiService: LoginApiService) : Logi
             produceResult(authenticationResponse)
         } catch (connectException: ConnectException) {
             Result.failure(connectException)
+        } catch (socketTimeoutException: SocketTimeoutException) {
+            Result.failure(socketTimeoutException)
         }
     }
 
@@ -23,6 +26,8 @@ class LoginRemoteDataSource(private val loginApiService: LoginApiService) : Logi
             produceResult(authenticationResponse)
         } catch (connectException: ConnectException) {
             Result.failure(connectException)
+        } catch (socketTimeoutException: SocketTimeoutException) {
+            Result.failure(socketTimeoutException)
         }
     }
 
@@ -32,6 +37,8 @@ class LoginRemoteDataSource(private val loginApiService: LoginApiService) : Logi
             produceResult(authenticationResponse)
         } catch (connectException: ConnectException) {
             Result.failure(connectException)
+        } catch (socketTimeoutException: SocketTimeoutException) {
+            Result.failure(socketTimeoutException)
         }
     }
 

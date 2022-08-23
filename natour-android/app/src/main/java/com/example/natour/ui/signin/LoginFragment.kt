@@ -74,8 +74,11 @@ class LoginFragment : Fragment() {
             .isAuthenticatedWithGoogle.observe(viewLifecycleOwner) { isAuthenticatedWithGoogle ->
                 if (isAuthenticatedWithGoogle == AuthenticationThirdPartyResult.AUTHENTICATED) {
                     showLoginProgressDialog()
-                    mLoginViewModel.authcodeGoogle = mThirdPartyLoginViewModel.googleAuthCode
-                    mLoginViewModel.loginWithGoogle()
+                    with(mLoginViewModel) {
+                        observePossibleLoginErrors()
+                        authcodeGoogle = mThirdPartyLoginViewModel.googleAuthCode
+                        loginWithGoogle()
+                    }
                 }
         }
     }
@@ -85,8 +88,11 @@ class LoginFragment : Fragment() {
             .isAuthenticatedWithFacebook.observe(viewLifecycleOwner) { isAuthenticatedWithFacebook ->
                 if (isAuthenticatedWithFacebook == AuthenticationThirdPartyResult.AUTHENTICATED) {
                     showLoginProgressDialog()
-                    mLoginViewModel.accessTokenFacebook = mThirdPartyLoginViewModel.fbAccessToken
-                    mLoginViewModel.loginWithFacebook()
+                    with(mLoginViewModel) {
+                        observePossibleLoginErrors()
+                        accessTokenFacebook = mThirdPartyLoginViewModel.fbAccessToken
+                        loginWithFacebook()
+                    }
                 }
         }
     }
