@@ -142,28 +142,37 @@ class TrailStartCreationFragment : Fragment() {
 
     private val getImageLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+
+            val progressDialog = createProgressAlertDialog(
+                "Uploading the photo...",
+                requireContext()
+            )
+            progressDialog.show()
+
             if (result.resultCode == Activity.RESULT_OK) {
                 val imageUri = result.data!!.data!!
-                checkContentImageBeforeUpload(imageUri)
+
+                detectIllegalContentImage(imageUri) { isIllegalImage ->
+                    if (isIllegalImage) {
+                        showIllegalContentImageAlertDialog()
+                    } else {
+                        setImageFromUri(imageUri)
+                    }
+                    progressDialog.dismiss()
+                }
             }
         }
 
-    private fun checkContentImageBeforeUpload(imageUri: Uri) {
-        val progressDialog = createProgressAlertDialog("Uploading the photo...", requireContext())
-        progressDialog.show()
+
+    private fun detectIllegalContentImage(trailImageUri: Uri, reaction: (Boolean) -> (Unit)) =
         lifecycleScope.launch(Dispatchers.IO) {
             mIllegalContentImageDetector
-                .detectIllegalContent(imageUri.path!!).apply {
+                .detectIllegalContent(trailImageUri.path!!).apply {
                     withContext(Dispatchers.Main) {
-                        observe(viewLifecycleOwner) { isIllegalImage ->
-                            if (isIllegalImage) showIllegalContentImageAlertDialog()
-                            else setImageFromUri(imageUri)
-                            progressDialog.dismiss()
-                        }
+                        observe(viewLifecycleOwner) { isIllegalImage -> reaction(isIllegalImage) }
                     }
                 }
         }
-    }
 
     private fun showIllegalContentImageAlertDialog() {
         showCustomAlertDialog(
