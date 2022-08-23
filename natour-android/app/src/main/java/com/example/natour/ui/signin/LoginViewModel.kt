@@ -7,6 +7,7 @@ import com.example.natour.data.repositories.AuthenticatedUserRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import java.net.ConnectException
+import java.net.SocketTimeoutException
 import javax.inject.Inject
 
 @HiltViewModel
@@ -63,5 +64,10 @@ class LoginViewModel @Inject constructor(
     }
 
     private fun Result<AuthenticatedUser>.isFailureConnectException() =
-        isFailure.and(exceptionOrNull()!!.cause is ConnectException)
+        isFailure
+            .and(
+                with(exceptionOrNull()) {
+                        this is ConnectException || this is SocketTimeoutException
+                    }
+            )
 }
