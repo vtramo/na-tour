@@ -46,7 +46,7 @@ class TrailTrackingCreationFragment : Fragment(), OnMapReadyCallback,
 
     private lateinit var mPolyline: Polyline
     private lateinit var mStartingPositionMarker: Marker
-    private var mMapActiosMemory = MapActionsMemory()
+    private var mMapActionsMemory = MapActionsMemory()
 
     private lateinit var mMap: GoogleMap
 
@@ -129,7 +129,7 @@ class TrailTrackingCreationFragment : Fragment(), OnMapReadyCallback,
             if (mPolyline.hasZeroPoints()) {
                 setMarkerOnStartPosition(point)
                 drawOnMapMode()
-                mMapActiosMemory.reset()
+                mMapActionsMemory.reset()
                 changeRedoButton(disable = true)
             }
             mPolyline.points = mPolyline.points + point
@@ -146,7 +146,7 @@ class TrailTrackingCreationFragment : Fragment(), OnMapReadyCallback,
 
             val lastIndex = points.lastIndex
 
-            mMapActiosMemory.addAction(
+            mMapActionsMemory.addAction(
                 MapActionType.UNDO,
                 listOf(points[lastIndex].toPair()),
                 isFirstPoint = hasOnlyOnePoint()
@@ -161,7 +161,7 @@ class TrailTrackingCreationFragment : Fragment(), OnMapReadyCallback,
         with(mPolyline) {
             if (hasZeroPoints()) return
 
-            mMapActiosMemory.addAction(
+            mMapActionsMemory.addAction(
                 MapActionType.DELETE,
                 points.toListPair()
             )
@@ -181,7 +181,7 @@ class TrailTrackingCreationFragment : Fragment(), OnMapReadyCallback,
     }
 
     fun onRedoButtonClick() {
-        with(mMapActiosMemory) {
+        with(mMapActionsMemory) {
             with(getLastAction()) {
                 val redoPoints = when(type) {
                     MapActionType.UNDO -> {
