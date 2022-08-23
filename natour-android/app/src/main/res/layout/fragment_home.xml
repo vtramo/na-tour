@@ -136,6 +136,36 @@
             app:layout_constraintBottom_toTopOf="@id/bottom_bar"
             />
 
+        <!-- Connection error linear layout -->
+        <LinearLayout
+            android:gravity="center"
+            tools:visibility="visible"
+            android:visibility="gone"
+            android:id="@+id/connection_error_linear_layout"
+            android:orientation="vertical"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/toolbar_home"
+            app:layout_constraintBottom_toTopOf="@id/bottom_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <!-- Connection error image -->
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/no_connection"
+                tools:ignore="ContentDescription" />
+
+            <Button
+                android:onClick="@{() -> homeFragment.loadTrails()}"
+                android:id="@+id/connection_error_retry_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/retry"/>
+
+        </LinearLayout>
+
         <!-- There are no saved favorite trails -->
         <TextView
             android:visibility="gone"

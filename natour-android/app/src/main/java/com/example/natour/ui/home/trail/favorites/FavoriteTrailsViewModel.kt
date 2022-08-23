@@ -8,7 +8,10 @@ import com.example.natour.data.model.Trail
 import com.example.natour.data.repositories.MainUserRepository
 import com.example.natour.data.repositories.UserRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
+import java.net.ConnectException
+import java.net.SocketTimeoutException
 import javax.inject.Inject
 
 @HiltViewModel
@@ -22,13 +25,14 @@ class FavoriteTrailsViewModel @Inject constructor(
 
     fun loadFavoriteTrails() = viewModelScope.launch {
         if (_hasLoadedFavoriteTrails.value == true) return@launch
-        userRepository.getFavoriteTrails(
-            mainUserRepository.getDetails().id
-        ).collect {
-            _mapOfFavoriteTrails.value = it.toMutableMap()
-            _listOfFavoriteTrails = it.values.toList()
-            _hasLoadedFavoriteTrails.value = true
-        }
+        userRepository
+            .getFavoriteTrails(mainUserRepository.getDetails().id)
+            .catch { it.handleErrors() }
+            .collect {
+                _mapOfFavoriteTrails.value = it.toMutableMap()
+                _listOfFavoriteTrails = it.values.toList()
+                _hasLoadedFavoriteTrails.value = true
+            }
     }
 
     private val _mapOfFavoriteTrails = MutableLiveData<Map<Long, Trail>>()
@@ -79,5 +83,15 @@ class FavoriteTrailsViewModel @Inject constructor(
         newMap.remove(trail.idTrail)
         _mapOfFavoriteTrails.value = newMap
         _listOfFavoriteTrails = newMap.values.toList()
+    }
+
+    private var _connectionErrorLiveData = MutableLiveData<Boolean>()
+    val connectionErrorLiveData get() = _connectionErrorLiveData
+
+    private fun Throwable.handleErrors() {
+        if (this is ConnectException || this is SocketTimeoutException) {
+            _connectionErrorLiveData.value = true
+            _connectionErrorLiveData = MutableLiveData()
+        }
     }
 }
