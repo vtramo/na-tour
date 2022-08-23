@@ -173,6 +173,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+            <!-- Google button -->
             <Button
                 android:layout_width="250dp"
                 android:layout_height="wrap_content"
@@ -181,9 +182,10 @@
                 android:backgroundTint="@color/white"
                 android:textColor="#167BD3"
                 android:drawableLeft="@drawable/logo_google"
-                android:onClick="@{() -> loginFragment.onSignUpGoToRegistrationFragment()}"
+                android:onClick="@{() -> loginFragment.onSignInWithGoogle()}"
                 tools:ignore="RtlHardcoded" />
 
+            <!-- Facebook button -->
             <Button
                 android:backgroundTint="@color/white"
                 android:layout_width="250dp"
