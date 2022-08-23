@@ -1,10 +1,12 @@
 package com.example.natour.ui.signin
 
 import androidx.lifecycle.*
+import com.example.natour.data.model.AuthenticatedUser
 import com.example.natour.data.model.Credentials
 import com.example.natour.data.repositories.AuthenticatedUserRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import java.net.ConnectException
 import javax.inject.Inject
 
 @HiltViewModel
@@ -33,18 +35,33 @@ class LoginViewModel @Inject constructor(
     private val _isAuthenticated = MutableLiveData<Boolean>()
     val isAuthenticated: LiveData<Boolean> = _isAuthenticated
 
+    private var _errorConnectionLiveData = MutableLiveData<Boolean>()
+    val errorConnectionLiveData get() = _errorConnectionLiveData
+
     fun login() = viewModelScope.launch {
-        val authenticatedUser = authenticatedUserRepository.login(_credentials.username, _credentials.password)
-        _isAuthenticated.value = authenticatedUser.isSuccess
+        val result = authenticatedUserRepository.login(_credentials.username, _credentials.password)
+        if (!result.isError()) _isAuthenticated.value = result.isSuccess
     }
 
     fun loginWithGoogle() = viewModelScope.launch {
-        val authenticatedUser = authenticatedUserRepository.loginWithGoogle(_authcodeGoogle)
-        _isAuthenticated.value = authenticatedUser.isSuccess
+        val result = authenticatedUserRepository.loginWithGoogle(_authcodeGoogle)
+        if (!result.isError()) _isAuthenticated.value = result.isSuccess
     }
 
     fun loginWithFacebook() = viewModelScope.launch {
-        val authenticatedUser = authenticatedUserRepository.loginWithFacebook(_accessTokenFacebook)
-        _isAuthenticated.value = authenticatedUser.isSuccess
+        val result = authenticatedUserRepository.loginWithFacebook(_accessTokenFacebook)
+        if (!result.isError()) _isAuthenticated.value = result.isSuccess
     }
+
+    private fun Result<AuthenticatedUser>.isError(): Boolean {
+        if (isFailureConnectException()) {
+            _errorConnectionLiveData.value = true
+            _errorConnectionLiveData = MutableLiveData()
+            return true
+        }
+        return false
+    }
+
+    private fun Result<AuthenticatedUser>.isFailureConnectException() =
+        isFailure.and(exceptionOrNull()!!.cause is ConnectException)
 }

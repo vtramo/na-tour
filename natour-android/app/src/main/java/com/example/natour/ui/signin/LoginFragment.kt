@@ -14,8 +14,10 @@ import androidx.navigation.findNavController
 import com.example.natour.R
 import com.example.natour.databinding.FragmentLoginBinding
 import com.example.natour.data.model.Credentials
+import com.example.natour.exceptions.ErrorMessages
 import com.example.natour.util.createProgressAlertDialog
 import com.example.natour.util.showSnackBar
+import com.example.natour.util.showSomethingWentWrongAlertDialog
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -95,8 +97,24 @@ class LoginFragment : Fragment() {
 
         if (areCorrectCredentials()) {
             showLoginProgressDialog()
-            mLoginViewModel.credentials = mCredentials
-            mLoginViewModel.login()
+            with(mLoginViewModel) {
+                observePossibleLoginErrors()
+                credentials = mCredentials
+                login()
+            }
+        }
+    }
+
+    private fun LoginViewModel.observePossibleLoginErrors() {
+        errorConnectionLiveData.observe(viewLifecycleOwner) { isErrorConnection ->
+            if (isErrorConnection) {
+                showSomethingWentWrongAlertDialog(
+                    ErrorMessages.CONNECTION_ERROR,
+                    ErrorMessages.CONNECTION_ERROR_SERVER,
+                    requireContext()
+                )
+                mLoginProgressDialog.dismiss()
+            }
         }
     }
 
