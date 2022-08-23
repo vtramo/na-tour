@@ -1,5 +1,6 @@
 package com.example.natour.ui.signin
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -13,6 +14,7 @@ import androidx.navigation.findNavController
 import com.example.natour.R
 import com.example.natour.databinding.FragmentLoginBinding
 import com.example.natour.data.model.Credentials
+import com.example.natour.util.createProgressAlertDialog
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -21,10 +23,12 @@ class LoginFragment : Fragment() {
     private var _binding: FragmentLoginBinding? = null
     private val binding get() = _binding!!
 
-    private val loginViewModel: LoginViewModel by viewModels()
-    private val thirdPartyLoginViewModel: ThirdPartyLoginViewModel by activityViewModels()
+    private val mLoginViewModel: LoginViewModel by viewModels()
+    private val mThirdPartyLoginViewModel: ThirdPartyLoginViewModel by activityViewModels()
 
-    private val credentials = Credentials()
+    private val mCredentials = Credentials()
+
+    private lateinit var mLoginProgressDialog: AlertDialog
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -47,12 +51,13 @@ class LoginFragment : Fragment() {
     }
 
     private fun setupSignIn() {
-        loginViewModel.isAuthenticated.observe(viewLifecycleOwner) { isAuthenticated ->
+        mLoginViewModel.isAuthenticated.observe(viewLifecycleOwner) { isAuthenticated ->
             setErrorTextField(!isAuthenticated)
             if (isAuthenticated) {
                 Toast.makeText(context, "LOGIN SUCCESSFULLY", Toast.LENGTH_SHORT).show()
                 goToHomeFragment()
             }
+            mLoginProgressDialog.dismiss()
         }
     }
 
@@ -62,41 +67,51 @@ class LoginFragment : Fragment() {
     }
 
     private fun setupSignInWithGoogle() {
-        thirdPartyLoginViewModel
+        mThirdPartyLoginViewModel
             .isAuthenticatedWithGoogle.observe(viewLifecycleOwner) { isAuthenticatedWithGoogle ->
                 if (isAuthenticatedWithGoogle == AuthenticationThirdPartyResult.AUTHENTICATED) {
-                    loginViewModel.authcodeGoogle = thirdPartyLoginViewModel.googleAuthCode
-                    loginViewModel.loginWithGoogle()
+                    showLoginProgressDialog()
+                    mLoginViewModel.authcodeGoogle = mThirdPartyLoginViewModel.googleAuthCode
+                    mLoginViewModel.loginWithGoogle()
                 }
         }
     }
 
     private fun setupSignInWithFacebook() {
-        thirdPartyLoginViewModel
+        mThirdPartyLoginViewModel
             .isAuthenticatedWithFacebook.observe(viewLifecycleOwner) { isAuthenticatedWithFacebook ->
                 if (isAuthenticatedWithFacebook == AuthenticationThirdPartyResult.AUTHENTICATED) {
-                    loginViewModel.accessTokenFacebook = thirdPartyLoginViewModel.fbAccessToken
-                    loginViewModel.loginWithFacebook()
+                    showLoginProgressDialog()
+                    mLoginViewModel.accessTokenFacebook = mThirdPartyLoginViewModel.fbAccessToken
+                    mLoginViewModel.loginWithFacebook()
                 }
         }
     }
 
     fun onSignIn() {
-        credentials.username = binding.usernameTextInputEditText.text.toString()
-        credentials.password = binding.passwordTextInputEditText.text.toString()
+        mCredentials.username = binding.usernameTextInputEditText.text.toString()
+        mCredentials.password = binding.passwordTextInputEditText.text.toString()
 
         if (areCorrectCredentials()) {
-            loginViewModel.credentials = credentials
-            loginViewModel.login()
+            showLoginProgressDialog()
+            mLoginViewModel.credentials = mCredentials
+            mLoginViewModel.login()
         }
     }
 
+    private fun showLoginProgressDialog() {
+        mLoginProgressDialog = createProgressAlertDialog(
+            "Loading...",
+            requireContext()
+        ).also { it.show() }
+    }
+
     fun onSignInWithGoogle() {
-        thirdPartyLoginViewModel.googleLogin.launch()
+        mThirdPartyLoginViewModel.googleLogin.launch()
     }
 
     fun onSignInWithFacebook() {
-        thirdPartyLoginViewModel.facebookLogin.launch()
+        mThirdPartyLoginViewModel.facebookLogin.launch()
     }
 
     fun onSignUpGoToRegistrationFragment() {
@@ -106,7 +121,7 @@ class LoginFragment : Fragment() {
 
     private fun areCorrectCredentials(): Boolean {
         val areCorrectCredentials =
-            credentials.username.isNotBlank() && credentials.password.isNotBlank()
+            mCredentials.username.isNotBlank() && mCredentials.password.isNotBlank()
         setErrorTextField(!areCorrectCredentials)
         return areCorrectCredentials
     }
