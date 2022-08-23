@@ -31,7 +31,8 @@ import com.google.android.libraries.places.widget.AutocompleteSupportFragment
 import com.google.android.libraries.places.widget.listener.PlaceSelectionListener
 import com.google.android.material.snackbar.Snackbar
 
-class TrailTrackingCreationFragment : Fragment(), OnMapReadyCallback {
+class TrailTrackingCreationFragment : Fragment(), OnMapReadyCallback,
+    GoogleMap.OnMyLocationButtonClickListener {
 
     companion object {
         const val TAG = "TRAIL CREATION TRACKING"
@@ -306,8 +307,10 @@ class TrailTrackingCreationFragment : Fragment(), OnMapReadyCallback {
 
     @SuppressLint("MissingPermission")
     private fun enableMyLocation() {
-        if (locationPermissionsAreGranted())
+        if (locationPermissionsAreGranted()) {
+            mMap.setOnMyLocationButtonClickListener(this)
             mMap.isMyLocationEnabled = true
+        }
     }
 
     private fun locationPermissionsAreGranted() =
@@ -322,4 +325,6 @@ class TrailTrackingCreationFragment : Fragment(), OnMapReadyCallback {
     fun onBackClick() {
         view?.findNavController()?.popBackStack()
     }
+
+    override fun onMyLocationButtonClick(): Boolean = false
 }

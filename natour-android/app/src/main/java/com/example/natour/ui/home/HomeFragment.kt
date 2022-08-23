@@ -2,6 +2,7 @@ package com.example.natour.ui.home
 
 import android.os.Bundle
 import android.view.*
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
@@ -19,6 +20,8 @@ import com.example.natour.ui.home.trail.favorites.FavoriteTrailChanger
 import com.example.natour.ui.home.trail.favorites.FavoriteTrailsViewModel
 import com.example.natour.ui.home.user.UserDetailsDialogFragment
 import com.example.natour.util.LateTask
+import com.example.natour.util.PermissionUtils.LOCATION_PERMISSION_REQUEST_CODE
+import com.example.natour.util.PermissionUtils.requestLocationPermissions
 import com.example.natour.util.showErrorAlertDialog
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -42,6 +45,11 @@ class HomeFragment : Fragment() {
 
     private lateinit var mRecyclerView: RecyclerView
     private lateinit var mTrailListAdapter: TrailListAdapter
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        requestLocationPermissions(requireActivity() as AppCompatActivity, LOCATION_PERMISSION_REQUEST_CODE)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
