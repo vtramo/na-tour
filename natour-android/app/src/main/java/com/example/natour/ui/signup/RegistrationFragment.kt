@@ -32,6 +32,10 @@ class RegistrationFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentRegistrationBinding.inflate(inflater, container,false)
+
+        binding.lifecycleOwner = viewLifecycleOwner
+        binding.registrationFragment = this
+
         return binding.root
     }
 
@@ -42,14 +46,7 @@ class RegistrationFragment : Fragment() {
         setupTextVerifies()
         setConfirmPasswordVerifier()
         setupErrorHandlingUserAlreadyExists()
-        setupCustomToolbar()
         binding.registerButton.setOnClickListener { submitForm() }
-    }
-
-    private fun setupCustomToolbar(){
-        val toolbar = binding.customToolbarRegistration
-        toolbar.setNavigationIcon(R.drawable.ic_back_40)
-        toolbar.setNavigationOnClickListener { findNavController().popBackStack() }
     }
 
     private fun setupSignUp() {
@@ -199,6 +196,10 @@ class RegistrationFragment : Fragment() {
             .setMessage(message)
             .setPositiveButton("Okay") { _, _ -> }
             .show()
+    }
+
+    fun onBackClick() {
+        view?.findNavController()?.popBackStack()
     }
 
     override fun onDestroyView() {

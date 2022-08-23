@@ -98,6 +98,7 @@
     <string name="google">Google</string>
     <string name="facebook">Facebook</string>
     <string name="forgot_your_password">Forgot Your Password?</string>
+    <string name="sign_up">Sign up</string>
 
     <!-- Route Creation -->
     <string-array name="listDifficulties">
