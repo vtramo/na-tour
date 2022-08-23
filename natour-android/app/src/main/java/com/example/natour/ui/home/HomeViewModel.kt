@@ -7,7 +7,10 @@ import androidx.lifecycle.viewModelScope
 import com.example.natour.data.model.Trail
 import com.example.natour.data.repositories.TrailRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
+import java.net.ConnectException
+import java.net.SocketTimeoutException
 import javax.inject.Inject
 
 @HiltViewModel
@@ -40,15 +43,15 @@ class HomeViewModel @Inject constructor(
 
     fun loadTrails() = viewModelScope.launch {
         _isLoadingTrails = true
-        trailRepository.load(currentPage).collect { listTrails ->
-            if (listTrails.isEmpty()) {
-                _pagesAreFinished = true
-                return@collect
+        trailRepository
+            .load(currentPage)
+            .catch { handleErrors(it) }
+            .collect { listTrails ->
+                _pagesAreFinished = listTrails.isEmpty()
+                addMoreTrails(listTrails)
+                if (isFirstLoad()) _firstLoadFinishedLiveData.value = true
             }
-            addMoreTrails(listTrails)
-        }
         _isLoadingTrails = false
-        if (isFirstLoad()) _firstLoadFinishedLiveData.value = true
     }
 
     private fun addMoreTrails(otherTrails: List<Trail>) {
@@ -98,5 +101,16 @@ class HomeViewModel @Inject constructor(
 
     private fun List<Trail>.flagFavoriteTrails() = forEach {
         trail -> trail.isFavorite = mapOfFavoriteTrails.containsKey(trail.idTrail)
+    }
+
+
+    private var _connectionErrorLiveData = MutableLiveData<Boolean>()
+    val connectionErrorLiveData get() = _connectionErrorLiveData
+
+    private fun handleErrors(throwable: Throwable) {
+        if (throwable is ConnectException || throwable is SocketTimeoutException) {
+            _connectionErrorLiveData.value = true
+            _connectionErrorLiveData = MutableLiveData()
+        }
     }
 }

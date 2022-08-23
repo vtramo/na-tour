@@ -14,6 +14,7 @@ import com.example.natour.MainActivity.Companion.getDrawable
 import com.example.natour.R
 import com.example.natour.data.model.Trail
 import com.example.natour.databinding.FragmentHomeBinding
+import com.example.natour.exceptions.ErrorMessages
 import com.example.natour.ui.MainUserViewModel
 import com.example.natour.ui.home.trail.detail.TrailDetailsViewModel
 import com.example.natour.ui.home.trail.favorites.FavoriteTrailChanger
@@ -23,6 +24,7 @@ import com.example.natour.util.LateTask
 import com.example.natour.util.PermissionUtils.LOCATION_PERMISSION_REQUEST_CODE
 import com.example.natour.util.PermissionUtils.requestLocationPermissions
 import com.example.natour.util.showErrorAlertDialog
+import com.example.natour.util.showSomethingWentWrongAlertDialog
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -48,7 +50,11 @@ class HomeFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        requestLocationPermissions(requireActivity() as AppCompatActivity, LOCATION_PERMISSION_REQUEST_CODE)
+
+        requestLocationPermissions(
+            requireActivity() as AppCompatActivity,
+            LOCATION_PERMISSION_REQUEST_CODE
+        )
     }
 
     override fun onCreateView(
@@ -59,6 +65,7 @@ class HomeFragment : Fragment() {
 
         setupMainUser()
         loadTrails()
+
         return binding.root
     }
 
@@ -68,20 +75,43 @@ class HomeFragment : Fragment() {
         }
     }
 
-    private fun loadTrails() {
+    fun loadTrails() {
+        binding.connectionErrorLinearLayout.visibility = View.GONE
+        binding.progressBarRecyclerView.visibility = View.VISIBLE
+
         with(mFavoriteTrailsViewModel) {
-            hasLoadedFavoriteTrailsLiveData.observe(viewLifecycleOwner) {
-                with(mHomeViewModel) {
-                    firstLoadFinishedLiveData.observe(viewLifecycleOwner) {
-                        setupToolbarTitle()
-                        setupBottomHomeMenu()
-                        setupRecyclerView()
-                        setupSwipeRefreshLayout()
-                        binding.progressBarRecyclerView.visibility = View.GONE
-                    }
+            observePossibleErrors()
+            observeLoadingFavoriteTrails()
+            loadFavoriteTrails()
+        }
+    }
+
+    private fun FavoriteTrailsViewModel.observePossibleErrors() {
+        connectionErrorLiveData.observe(viewLifecycleOwner) { isConnectionError ->
+            if (isConnectionError) {
+                binding.progressBarRecyclerView.visibility = View.GONE
+                binding.connectionErrorLinearLayout.visibility = View.VISIBLE
+                showSomethingWentWrongAlertDialog(
+                    ErrorMessages.CONNECTION_ERROR,
+                    ErrorMessages.CONNECTION_ERROR_SERVER,
+                    requireContext()
+                )
+            }
+        }
+    }
+
+    private fun FavoriteTrailsViewModel.observeLoadingFavoriteTrails() {
+        hasLoadedFavoriteTrailsLiveData.observe(viewLifecycleOwner) {
+            with(mHomeViewModel) {
+                firstLoadFinishedLiveData.observe(viewLifecycleOwner) {
+                    binding.connectionErrorLinearLayout.visibility = View.GONE
+                    setupToolbarTitle()
+                    setupBottomHomeMenu()
+                    setupRecyclerView()
+                    setupSwipeRefreshLayout()
+                    binding.progressBarRecyclerView.visibility = View.GONE
                 }
             }
-            loadFavoriteTrails()
         }
     }
 
