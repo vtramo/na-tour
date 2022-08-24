@@ -63,10 +63,21 @@ class HomeFragment : Fragment() {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
 
         setupMainUser()
-        binding.progressBarRecyclerView.visibility = View.VISIBLE
-        loadFavoriteTrails()
+        setupHome()
 
         return binding.root
+    }
+
+    private fun setupHome() {
+        if (mFavoriteTrailsViewModel.hasLoadedFavoriteTrailsLiveData.value == true) {
+            if (mHomeViewModel.firstLoadFinishedLiveData.value == true) {
+                initHome()
+            } else {
+                loadTrails()
+            }
+        } else {
+            loadFavoriteTrails()
+        }
     }
 
     private fun setupMainUser() {
@@ -77,6 +88,8 @@ class HomeFragment : Fragment() {
 
     private fun loadFavoriteTrails() {
         with(mFavoriteTrailsViewModel) {
+            if (hasLoadedFavoriteTrailsLiveData.value == true) return
+            binding.progressBarRecyclerView.visibility = View.VISIBLE
             observePossibleErrors { handleConnectionErrorWhenLoadTrails() }
             observeLoadingFavoriteTrails()
             loadFavoriteTrails()
@@ -111,13 +124,17 @@ class HomeFragment : Fragment() {
         with(mHomeViewModel) {
             observePossibleErrors { handleConnectionErrorWhenLoadTrails() }
             firstLoadFinishedLiveData.observe(viewLifecycleOwner) {
-                setupToolbarTitle()
-                setupBottomHomeMenu()
-                setupRecyclerView()
-                setupSwipeRefreshLayout()
-                binding.progressBarRecyclerView.visibility = View.GONE
+                initHome()
             }
         }
+    }
+
+    private fun initHome() {
+        binding.progressBarRecyclerView.visibility = View.GONE
+        setupToolbarTitle()
+        setupBottomHomeMenu()
+        setupRecyclerView()
+        setupSwipeRefreshLayout()
     }
 
     private fun setupToolbarTitle() {

@@ -4,12 +4,12 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.AlertDialog
-import android.content.Context
 import android.content.pm.PackageManager
 import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -271,15 +271,20 @@ class TrailDetailsFragment : Fragment(), OnMapReadyCallback, OnInfoWindowClickLi
 
                 val trailImageUri = result.data!!.data!!
 
-                detectIllegalContentImage(trailImageUri) { isIllegalImage ->
-                    if (isIllegalImage) {
-                        showIllegalContentImageAlertDialog()
-                    } else {
-                        addPhoto(
-                            trailImageUri.toDrawable(),
-                            trailImageUri.getPosition()
-                        )
+                try {
+                    detectIllegalContentImage(trailImageUri) { isIllegalImage ->
+                        if (isIllegalImage) {
+                            showIllegalContentImageAlertDialog()
+                        } else {
+                            addPhoto(
+                                trailImageUri.toDrawable(),
+                                trailImageUri.getPosition()
+                            )
+                        }
+                        progressDialog.dismiss()
                     }
+                } catch (exception: Exception) {
+                    Log.e("TRAIL DETAILS", "Error in adding a photo ${exception.message}")
                     progressDialog.dismiss()
                 }
             }

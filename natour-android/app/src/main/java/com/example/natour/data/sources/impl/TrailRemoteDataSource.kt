@@ -22,7 +22,7 @@ class TrailRemoteDataSource(
         trailDescription: RequestBody,
         routePoints: RequestBody,
         image: MultipartBody.Part
-    ): Boolean =
+    ): Boolean = try {
         trailApiService.save(
             idOwner,
             trailName,
@@ -32,6 +32,7 @@ class TrailRemoteDataSource(
             routePoints,
             image
         )
+    } catch (exception: Exception) { false }
 
     override suspend fun load(page: Int): Flow<List<Trail>> = flow {
         val newTrails = trailApiService
@@ -45,14 +46,17 @@ class TrailRemoteDataSource(
         idTrail: RequestBody,
         position: RequestBody,
         image: MultipartBody.Part
-    ): Boolean =
+    ): Boolean = try {
         trailApiService.addPhoto(
             idOwner,
             idTrail,
             position,
             image
         )
+    } catch (exception: Exception) { false }
 
     override suspend fun addReview(trailReview: TrailReviewDto): Boolean =
+    try {
         trailApiService.addReview(trailReview)
+    } catch (exception: Exception) { false }
 }
