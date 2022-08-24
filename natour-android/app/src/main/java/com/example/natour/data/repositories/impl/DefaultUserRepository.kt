@@ -19,19 +19,30 @@ class DefaultUserRepository(
             userDataSource.existsByUsername(username)
         }
 
-    override suspend fun addFavoriteTrail(idTrail: Long, idUser: Long): Boolean =
+    override suspend fun addFavoriteTrail(
+        idTrail: Long,
+        idUser: Long,
+        accessToken: String
+    ): Boolean =
         withContext(defaultDispatcher) {
-            userDataSource.addFavoriteTrail(idTrail, idUser)
+            userDataSource.addFavoriteTrail(idTrail, idUser, accessToken)
         }
 
-    override suspend fun removeFavoriteTrail(idTrail: Long, idUser: Long): Boolean =
+    override suspend fun removeFavoriteTrail(
+        idTrail: Long,
+        idUser: Long,
+        accessToken: String
+    ): Boolean =
         withContext(defaultDispatcher) {
-            userDataSource.removeFavoriteTrail(idTrail, idUser)
+            userDataSource.removeFavoriteTrail(idTrail, idUser, accessToken)
         }
 
-    override suspend fun getFavoriteTrails(idUser: Long): Flow<Map<Long, Trail>> =
+    override suspend fun getFavoriteTrails(
+        idUser: Long,
+        accessToken: String
+    ): Flow<Map<Long, Trail>> =
         withContext(defaultDispatcher) {
-            userDataSource.getFavoriteTrails(idUser)
+            userDataSource.getFavoriteTrails(idUser, accessToken)
                 .onEach { it.forEach { it.isFavorite = true } }
                 .map { it.associateBy { it.idTrail } }
         }

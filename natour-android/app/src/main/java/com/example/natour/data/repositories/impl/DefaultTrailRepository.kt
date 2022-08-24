@@ -25,7 +25,8 @@ class DefaultTrailRepository(
         trailDuration: Duration,
         trailDescription: String,
         routePoints: List<RoutePoint>,
-        image: Drawable
+        image: Drawable,
+        accessToken: String
     ): Boolean = withContext(ioDispatcher) {
 
         val idOwnerRequestBody          = idOwner.buildRequestBody()
@@ -45,19 +46,24 @@ class DefaultTrailRepository(
             trailDurationRequestBody,
             trailDescriptionRequestBody,
             routePointsRequestBody,
-            imageMultipartBody
+            imageMultipartBody,
+            accessToken
         )
     }
 
-    override suspend fun load(page: Int): Flow<List<Trail>> = withContext(ioDispatcher) {
-        trailDataSource.load(page)
+    override suspend fun load(
+        page: Int,
+        accessToken: String
+    ): Flow<List<Trail>> = withContext(ioDispatcher) {
+        trailDataSource.load(page, accessToken)
     }
 
     override suspend fun addPhoto(
         idOwner: Long,
         idTrail: Long,
         image: Drawable,
-        position: Position
+        position: Position,
+        accessToken: String
     ): Boolean = withContext(ioDispatcher) {
         val idOwnerRequestBody = idOwner.buildRequestBody()
         val idTrailRequestBody = idTrail.buildRequestBody()
@@ -70,7 +76,8 @@ class DefaultTrailRepository(
             idOwnerRequestBody,
             idTrailRequestBody,
             positionRequestBody,
-            imageMultipartBody
+            imageMultipartBody,
+            accessToken
         )
     }
 
@@ -79,7 +86,8 @@ class DefaultTrailRepository(
         idTrail: Long,
         date: String,
         description: String,
-        stars: Stars
+        stars: Stars,
+        accessToken: String
     ): Boolean = withContext(ioDispatcher) {
         trailDataSource.addReview(
             TrailReviewDto(
@@ -87,8 +95,9 @@ class DefaultTrailRepository(
                 idTrail,
                 date,
                 stars,
-                description
-            )
+                description,
+            ),
+            accessToken
         )
     }
 }

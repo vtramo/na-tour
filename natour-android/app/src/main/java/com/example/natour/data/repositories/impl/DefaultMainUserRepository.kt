@@ -33,6 +33,8 @@ class DefaultMainUserRepository(
 
     override fun getDetails(): MainUser.Details = mainUserObject.details
 
+    override fun getAccessToken(): String = mainUserObject.accessToken
+
     override fun load() = flow {
         if (mainUserDataSource.isAlreadyLoggedIn()) {
             val authentication = mainUserDataSource.load()

@@ -10,4 +10,5 @@ interface MainUserRepository {
     fun load(): Flow<MainUser?>
     suspend fun clear(): Boolean
     fun getDetails(): MainUser.Details
+    fun getAccessToken(): String
 }

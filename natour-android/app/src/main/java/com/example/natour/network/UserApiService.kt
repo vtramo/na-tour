@@ -12,17 +12,20 @@ interface UserApiService {
     @PUT("user/trail/favorite/{userId}")
     suspend fun addFavoriteTrail(
         @Body trailId: Long,
-        @Path("userId") userId: Long
+        @Path("userId") userId: Long,
+        @Header("Authorization") authHeader: String
     ): Boolean
 
     @HTTP(method = "DELETE", path = "user/trail/favorite/{userId}", hasBody = true)
     suspend fun removeFavoriteTrail(
         @Body trailId: Long,
-        @Path("userId") userId: Long
+        @Path("userId") userId: Long,
+        @Header("Authorization") authHeader: String
     ): Boolean
 
     @GET("user/trail/favorite/{userId}")
     suspend fun getFavoriteTrails(
-        @Path("userId") userId: Long
+        @Path("userId") userId: Long,
+        @Header("Authorization") authHeader: String
     ): List<TrailDto>
 }
