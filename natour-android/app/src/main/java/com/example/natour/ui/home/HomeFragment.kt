@@ -28,7 +28,6 @@ import com.example.natour.util.showSomethingWentWrongAlertDialog
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import java.util.*
 
 class HomeFragment : Fragment() {
 
@@ -64,7 +63,8 @@ class HomeFragment : Fragment() {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
 
         setupMainUser()
-        loadTrails()
+        binding.progressBarRecyclerView.visibility = View.VISIBLE
+        loadFavoriteTrails()
 
         return binding.root
     }
@@ -75,12 +75,9 @@ class HomeFragment : Fragment() {
         }
     }
 
-    fun loadTrails() {
-        binding.connectionErrorLinearLayout.visibility = View.GONE
-        binding.progressBarRecyclerView.visibility = View.VISIBLE
-
+    private fun loadFavoriteTrails() {
         with(mFavoriteTrailsViewModel) {
-            observePossibleErrors { handleConnectionErrorWhenLoadFavoriteTrails() }
+            observePossibleErrors { handleConnectionErrorWhenLoadTrails() }
             observeLoadingFavoriteTrails()
             loadFavoriteTrails()
         }
@@ -94,7 +91,7 @@ class HomeFragment : Fragment() {
         }
     }
 
-    private fun handleConnectionErrorWhenLoadFavoriteTrails() {
+    private fun handleConnectionErrorWhenLoadTrails() {
         binding.progressBarRecyclerView.visibility = View.GONE
         binding.connectionErrorLinearLayout.visibility = View.VISIBLE
         showSomethingWentWrongAlertDialog(
@@ -106,15 +103,19 @@ class HomeFragment : Fragment() {
 
     private fun FavoriteTrailsViewModel.observeLoadingFavoriteTrails() {
         hasLoadedFavoriteTrailsLiveData.observe(viewLifecycleOwner) {
-            with(mHomeViewModel) {
-                firstLoadFinishedLiveData.observe(viewLifecycleOwner) {
-                    binding.connectionErrorLinearLayout.visibility = View.GONE
-                    setupToolbarTitle()
-                    setupBottomHomeMenu()
-                    setupRecyclerView()
-                    setupSwipeRefreshLayout()
-                    binding.progressBarRecyclerView.visibility = View.GONE
-                }
+            loadTrails()
+        }
+    }
+
+    private fun loadTrails() {
+        with(mHomeViewModel) {
+            observePossibleErrors { handleConnectionErrorWhenLoadTrails() }
+            firstLoadFinishedLiveData.observe(viewLifecycleOwner) {
+                setupToolbarTitle()
+                setupBottomHomeMenu()
+                setupRecyclerView()
+                setupSwipeRefreshLayout()
+                binding.progressBarRecyclerView.visibility = View.GONE
             }
         }
     }
@@ -200,12 +201,11 @@ class HomeFragment : Fragment() {
             if (!empty) {
                 visibility = View.GONE
             } else {
-                val lateTask = LateTask(delayMs = 100) {
+                LateTask(delayMs = 100, action = {
                     lifecycleScope.launch {
                         withContext(Dispatchers.Main) { visibility = View.VISIBLE }
                     }
-                }
-                lateTask.start()
+                }).start()
             }
         }
     }
@@ -219,8 +219,8 @@ class HomeFragment : Fragment() {
         mRecyclerView.addOnScrollListener(object : OnScrollListener() {
             private val DIRECTION_DOWN = 1
 
-            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
-                super.onScrollStateChanged(recyclerView, newState)
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
 
                 if (recyclerView.canScrollVertically(DIRECTION_DOWN)) return
                 if (mHomeViewModel.isLoadingTrails) return
@@ -232,8 +232,20 @@ class HomeFragment : Fragment() {
     }
 
     private fun loadNextTrailPage() {
-        mHomeViewModel.currentPage++
-        mHomeViewModel.loadTrails()
+        with(mHomeViewModel) {
+            observePossibleErrors { handleConnectionErrorWhenLoadNextTrailPage() }
+            currentPage++
+            loadTrails()
+        }
+    }
+
+    private fun handleConnectionErrorWhenLoadNextTrailPage() {
+        mHomeViewModel.currentPage--
+        showSomethingWentWrongAlertDialog(
+            ErrorMessages.CONNECTION_ERROR,
+            ErrorMessages.CONNECTION_ERROR_SERVER,
+            requireContext()
+        )
     }
 
     private fun setupSwipeRefreshLayout() {
@@ -325,6 +337,16 @@ class HomeFragment : Fragment() {
             mTrailListAdapter.submitList(listOfTrails) {
                 setThereAreNoFavoriteTrailsTextView(listOfTrails.isEmpty())
             }
+        }
+    }
+
+    fun onRetryClick() {
+        binding.connectionErrorLinearLayout.visibility = View.GONE
+        binding.progressBarRecyclerView.visibility = View.VISIBLE
+        if (mFavoriteTrailsViewModel.hasLoadedFavoriteTrailsLiveData.value == true) {
+            loadTrails()
+        } else {
+            loadFavoriteTrails()
         }
     }
 }
