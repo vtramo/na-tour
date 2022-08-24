@@ -12,6 +12,7 @@ import com.example.natour.R
 import com.example.natour.databinding.DialogFragmentAddTrailReviewBinding
 import com.example.natour.ui.MainUserViewModel
 import com.example.natour.util.createProgressAlertDialog
+import com.example.natour.util.showErrorAlertDialog
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -108,6 +109,12 @@ class AddTrailReviewDialogFragment: DialogFragment() {
         progressDialog.show()
         with(mTrailDetailsViewModel) {
             reviewSuccessfullyAddedLiveData.observe(viewLifecycleOwner) { reviewSuccessfullyAdded ->
+                if (!reviewSuccessfullyAdded) {
+                    showErrorAlertDialog(
+                        "An error occurred in trying to save the review. Please try again.",
+                        requireContext()
+                    )
+                }
                 progressDialog.dismiss()
                 dismiss()
             }

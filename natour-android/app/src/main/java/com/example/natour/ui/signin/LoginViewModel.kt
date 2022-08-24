@@ -55,19 +55,11 @@ class LoginViewModel @Inject constructor(
     }
 
     private fun Result<AuthenticatedUser>.isError(): Boolean {
-        if (isFailureConnectException()) {
+        if (isFailure) {
             _errorConnectionLiveData.value = true
             _errorConnectionLiveData = MutableLiveData()
             return true
         }
         return false
     }
-
-    private fun Result<AuthenticatedUser>.isFailureConnectException() =
-        isFailure
-            .and(
-                with(exceptionOrNull()) {
-                        this is ConnectException || this is SocketTimeoutException
-                    }
-            )
 }

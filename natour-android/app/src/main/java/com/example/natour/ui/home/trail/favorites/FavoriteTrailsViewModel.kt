@@ -10,8 +10,6 @@ import com.example.natour.data.repositories.UserRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
-import java.net.ConnectException
-import java.net.SocketTimeoutException
 import javax.inject.Inject
 
 @HiltViewModel
@@ -27,7 +25,7 @@ class FavoriteTrailsViewModel @Inject constructor(
         if (_hasLoadedFavoriteTrails.value == true) return@launch
         userRepository
             .getFavoriteTrails(mainUserRepository.getDetails().id)
-            .catch { it.handleErrors() }
+            .catch { handleErrors() }
             .collect {
                 _mapOfFavoriteTrails.value = it.toMutableMap()
                 _listOfFavoriteTrails = it.values.toList()
@@ -88,10 +86,8 @@ class FavoriteTrailsViewModel @Inject constructor(
     private var _connectionErrorLiveData = MutableLiveData<Boolean>()
     val connectionErrorLiveData get() = _connectionErrorLiveData
 
-    private fun Throwable.handleErrors() {
-        if (this is ConnectException || this is SocketTimeoutException) {
-            _connectionErrorLiveData.value = true
-            _connectionErrorLiveData = MutableLiveData()
-        }
+    private fun handleErrors() {
+        _connectionErrorLiveData.value = true
+        _connectionErrorLiveData = MutableLiveData()
     }
 }
