@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.natour.data.model.Trail
+import com.example.natour.data.repositories.MainUserRepository
 import com.example.natour.data.repositories.TrailRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.catch
@@ -15,7 +16,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val trailRepository: TrailRepository
+    private val trailRepository: TrailRepository,
+    private val mainUserRepository: MainUserRepository
 ) : ViewModel() {
 
     init {
@@ -44,7 +46,7 @@ class HomeViewModel @Inject constructor(
     fun loadTrails() = viewModelScope.launch {
         _isLoadingTrails = true
         trailRepository
-            .load(currentPage)
+            .load(currentPage, mainUserRepository.getAccessToken())
             .catch { handleErrors() }
             .collect { listTrails ->
                 _pagesAreFinished = listTrails.size < 10
@@ -77,7 +79,7 @@ class HomeViewModel @Inject constructor(
         _isLoadingTrails = true
 
         trailRepository
-            .load(currentPage)
+            .load(currentPage, mainUserRepository.getAccessToken())
             .catch { handleErrors() }
             .collect { listTrails ->
                 _trails.value = listTrails.toMutableList()

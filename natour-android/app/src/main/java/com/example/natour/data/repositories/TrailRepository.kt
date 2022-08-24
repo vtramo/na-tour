@@ -4,7 +4,6 @@ import android.graphics.drawable.Drawable
 import com.example.natour.data.model.*
 import kotlinx.coroutines.flow.Flow
 
-
 interface TrailRepository {
     suspend fun save(
         idOwner: Long,
@@ -13,16 +12,18 @@ interface TrailRepository {
         trailDuration: Duration,
         trailDescription: String,
         routePoints: List<RoutePoint>,
-        image: Drawable
+        image: Drawable,
+        accessToken: String
     ): Boolean
 
-    suspend fun load(page: Int): Flow<List<Trail>>
+    suspend fun load(page: Int, accessToken: String): Flow<List<Trail>>
 
     suspend fun addPhoto(
         idOwner: Long,
         idTrail: Long,
         image: Drawable,
-        position: Position
+        position: Position,
+        accessToken: String
     ): Boolean
 
     suspend fun addReview(
@@ -30,8 +31,7 @@ interface TrailRepository {
         idTrail: Long,
         date: String,
         description: String,
-        stars: Stars
+        stars: Stars,
+        accessToken: String
     ): Boolean
-
-
 }

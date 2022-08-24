@@ -106,7 +106,8 @@ class TrailDetailsViewModel @Inject constructor(
                 idOwner = mainUserRepository.getDetails().id,
                 idTrail = thisTrail.idTrail,
                 image = photo,
-                position = position
+                position = position,
+                accessToken = mainUserRepository.getAccessToken()
         )
 
         if (photoSuccessfullyAdded) {
@@ -161,7 +162,8 @@ class TrailDetailsViewModel @Inject constructor(
                 idTrail = thisTrail.idTrail,
                 description = description,
                 stars = Stars.intToEnumValue(stars),
-                date = date
+                date = date,
+                accessToken = mainUserRepository.getAccessToken()
             )
 
         if (reviewSuccessfullyAdded) {

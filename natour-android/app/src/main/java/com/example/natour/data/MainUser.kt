@@ -1,8 +1,6 @@
 package com.example.natour.data
 
 import com.example.natour.data.model.AuthenticatedUser
-import com.example.natour.data.model.AuthenticationResponse
-import java.lang.IllegalArgumentException
 
 object MainUser {
     data class Details(

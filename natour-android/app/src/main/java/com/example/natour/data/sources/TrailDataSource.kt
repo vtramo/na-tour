@@ -14,17 +14,19 @@ interface TrailDataSource {
         trailDuration: RequestBody,
         trailDescription: RequestBody,
         routePoints: RequestBody,
-        image: MultipartBody.Part
+        image: MultipartBody.Part,
+        accessToken: String
     ): Boolean
 
-    suspend fun load(page: Int): Flow<List<Trail>>
+    suspend fun load(page: Int, accessToken: String): Flow<List<Trail>>
 
     suspend fun addPhoto(
         idOwner: RequestBody,
         idTrail: RequestBody,
         position: RequestBody,
-        image: MultipartBody.Part
+        image: MultipartBody.Part,
+        accessToken: String
     ): Boolean
 
-    suspend fun addReview(trailReview: TrailReviewDto): Boolean
+    suspend fun addReview(trailReview: TrailReviewDto, accessToken: String): Boolean
 }

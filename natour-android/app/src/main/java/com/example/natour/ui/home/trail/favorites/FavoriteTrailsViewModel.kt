@@ -24,7 +24,10 @@ class FavoriteTrailsViewModel @Inject constructor(
     fun loadFavoriteTrails() = viewModelScope.launch {
         if (_hasLoadedFavoriteTrails.value == true) return@launch
         userRepository
-            .getFavoriteTrails(mainUserRepository.getDetails().id)
+            .getFavoriteTrails(
+                mainUserRepository.getDetails().id,
+                mainUserRepository.getAccessToken()
+            )
             .catch { handleErrors() }
             .collect {
                 _mapOfFavoriteTrails.value = it.toMutableMap()
@@ -46,7 +49,8 @@ class FavoriteTrailsViewModel @Inject constructor(
     fun addFavoriteTrail(trail: Trail) = viewModelScope.launch {
         val favoriteTrailSuccessfullyAdded = userRepository.addFavoriteTrail(
             trail.idTrail,
-            mainUserRepository.getDetails().id
+            mainUserRepository.getDetails().id,
+            accessToken = mainUserRepository.getAccessToken()
         )
 
         if (favoriteTrailSuccessfullyAdded) addFavoriteTrailToMap(trail)
@@ -66,7 +70,8 @@ class FavoriteTrailsViewModel @Inject constructor(
     fun removeFavoriteTrail(trail: Trail) = viewModelScope.launch {
         val favoriteTrailSuccessfullyRemoved = userRepository.removeFavoriteTrail(
             trail.idTrail,
-            mainUserRepository.getDetails().id
+            mainUserRepository.getDetails().id,
+            accessToken = mainUserRepository.getAccessToken()
         )
 
         if (favoriteTrailSuccessfullyRemoved) removeFavoriteTrailFromMap(trail)
