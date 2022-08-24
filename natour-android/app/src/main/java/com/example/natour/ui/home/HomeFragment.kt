@@ -325,7 +325,7 @@ class HomeFragment : Fragment() {
         binding.toolbarTitleTextView.text = getString(R.string.explore_new_trails)
         safeSubmitListToTrailListAdapter(
             mHomeViewModel.trails.value ?: listOf(),
-        )
+        ) {}
     }
 
     private fun highlightHomeButton() {
@@ -339,7 +339,11 @@ class HomeFragment : Fragment() {
         mHomeViewModel.isOnHome = false
         highlightFavoriteTrailsButton()
         binding.toolbarTitleTextView.text = getString(R.string.your_favorite_trails)
-        safeSubmitListToTrailListAdapter(mFavoriteTrailsViewModel.listOfFavoriteTrails)
+        with(mFavoriteTrailsViewModel) {
+            safeSubmitListToTrailListAdapter(listOfFavoriteTrails) {
+                setThereAreNoFavoriteTrailsTextView(it)
+            }
+        }
     }
 
     private fun highlightFavoriteTrailsButton() {
@@ -349,10 +353,13 @@ class HomeFragment : Fragment() {
         }
     }
 
-    private fun safeSubmitListToTrailListAdapter(listOfTrails: List<Trail>) {
+    private fun safeSubmitListToTrailListAdapter(
+        listOfTrails: List<Trail>,
+        commitCallback: (Boolean) -> Unit
+    ) {
         if (this@HomeFragment::mTrailListAdapter.isInitialized) {
             mTrailListAdapter.submitList(listOfTrails) {
-                setThereAreNoFavoriteTrailsTextView(listOfTrails.isEmpty())
+                commitCallback(listOfTrails.isEmpty())
             }
         }
     }
