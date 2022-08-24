@@ -47,11 +47,12 @@ class HomeViewModel @Inject constructor(
             .load(currentPage)
             .catch { it.handleErrors() }
             .collect { listTrails ->
-                _pagesAreFinished = listTrails.isEmpty()
+                _pagesAreFinished = listTrails.size < 10
                 addMoreTrails(listTrails)
                 if (isFirstLoad()) _firstLoadFinishedLiveData.value = true
             }
         _isLoadingTrails = false
+        resetErrorsLiveData()
     }
 
     private fun addMoreTrails(otherTrails: List<Trail>) {
@@ -78,11 +79,15 @@ class HomeViewModel @Inject constructor(
         trailRepository
             .load(currentPage)
             .catch { it.handleErrors() }
-            .collect { listTrails -> _trails.value = listTrails.toMutableList() }
+            .collect { listTrails ->
+                _trails.value = listTrails.toMutableList()
+                _pagesAreFinished = listTrails.size < 10
+            }
 
         _isLoadingTrails = false
         _isRefreshingLiveData.value = false
         _isRefreshingLiveData = MutableLiveData()
+        resetErrorsLiveData()
     }
 
     private var _isOnHome = true
@@ -112,5 +117,9 @@ class HomeViewModel @Inject constructor(
             _connectionErrorLiveData.value = true
             _connectionErrorLiveData = MutableLiveData()
         }
+    }
+
+    private fun resetErrorsLiveData() {
+        _connectionErrorLiveData = MutableLiveData()
     }
 }
