@@ -40,6 +40,7 @@ data class Trail(
         }
 
     fun getPositionDetails(): String {
+        if (routePoints.size == 0) return "Unknown location"
         val geocoder = Geocoder(MainActivity.context)
         val latitude = routePoints[0].latitude
         val longitude = routePoints[0].longitude
