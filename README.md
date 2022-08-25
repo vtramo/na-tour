@@ -28,5 +28,6 @@ NaTour is a complex and distributed system aimed at offering a modern social net
     <br><br>
     <image src="https://github.com/vtramo/NaTour/blob/main/images/route_creation.gif?raw=true" height="500"/>
     <image src="https://github.com/vtramo/NaTour/blob/main/images/route_creation_gpx.gif?raw=true" height="500"/>
+    <image src="https://github.com/vtramo/NaTour/blob/main/images/route_creation_tracking_map.gif?raw=true" height="500"/>
   </li>
 </ul>
