@@ -147,9 +147,9 @@ class TrailStartCreationFragment : Fragment() {
                 "Uploading the photo...",
                 requireContext()
             )
-            progressDialog.show()
 
             if (result.resultCode == Activity.RESULT_OK) {
+                progressDialog.show()
                 val imageUri = result.data!!.data!!
 
                 detectIllegalContentImage(imageUri) { isIllegalImage ->
