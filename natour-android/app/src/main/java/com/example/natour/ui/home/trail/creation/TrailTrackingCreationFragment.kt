@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.compose.ui.text.intl.Locale
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
@@ -50,6 +51,13 @@ class TrailTrackingCreationFragment : Fragment(), OnMapReadyCallback,
 
     private lateinit var mMap: GoogleMap
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        if (!Places.isInitialized()) {
+            Places.initialize(requireContext(), "AIzaSyD6uQe_m0qxqapGltpKZMJ3PRRzgG-RAVU")
+        }
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -74,7 +82,6 @@ class TrailTrackingCreationFragment : Fragment(), OnMapReadyCallback,
         binding.confirmButton.isEnabled = false
 
         startGoogleMap()
-        startSearchToolbarGoogleMap()
         chooseStartingPointMode()
         changeRedoButton(disable = true)
     }
@@ -83,33 +90,6 @@ class TrailTrackingCreationFragment : Fragment(), OnMapReadyCallback,
         val mapFragment = childFragmentManager
             .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
-    }
-
-    private fun startSearchToolbarGoogleMap() {
-        if (!Places.isInitialized()) {
-            Places.initialize(requireContext(), "AIzaSyD6uQe_m0qxqapGltpKZMJ3PRRzgG-RAVU")
-        }
-
-        val autocompleteFragment = childFragmentManager.findFragmentById(R.id.autocomplete_fragment)
-            as AutocompleteSupportFragment
-
-        autocompleteFragment.setPlaceFields(
-            listOf(Place.Field.ID, Place.Field.NAME, Place.Field.LAT_LNG)
-        )
-
-        autocompleteFragment.setOnPlaceSelectedListener(mPlaceSelectionListener)
-    }
-
-    private val mPlaceSelectionListener = object: PlaceSelectionListener {
-        override fun onPlaceSelected(place: Place) {
-            val newLatLng = place.latLng
-            mMap.moveCamera(CameraUpdateFactory.newLatLng(newLatLng!!))
-            mMap.animateCamera(CameraUpdateFactory.zoomTo(10F))
-        }
-
-        override fun onError(status: Status) {
-            Log.i(TAG, "An error occurred: $status")
-        }
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
@@ -133,6 +113,31 @@ class TrailTrackingCreationFragment : Fragment(), OnMapReadyCallback,
                 changeRedoButton(disable = true)
             }
             mPolyline.points = mPolyline.points + point
+        }
+
+        startSearchToolbarGoogleMap()
+    }
+
+    private fun startSearchToolbarGoogleMap() {
+        val autocompleteFragment = childFragmentManager.findFragmentById(R.id.autocomplete_fragment)
+                as AutocompleteSupportFragment
+
+        autocompleteFragment.setPlaceFields(
+            listOf(Place.Field.ID, Place.Field.NAME, Place.Field.LAT_LNG)
+        )
+
+        autocompleteFragment.setOnPlaceSelectedListener(mPlaceSelectionListener)
+    }
+
+    private val mPlaceSelectionListener = object: PlaceSelectionListener {
+        override fun onPlaceSelected(place: Place) {
+            val newLatLng = place.latLng
+            mMap.moveCamera(CameraUpdateFactory.newLatLng(newLatLng!!))
+            mMap.animateCamera(CameraUpdateFactory.zoomTo(10F))
+        }
+
+        override fun onError(status: Status) {
+            Log.i(TAG, "An error occurred: $status")
         }
     }
 

@@ -87,7 +87,7 @@
             android:layout_width="match_parent"
             />
 
-        <!-- Scroll view -->
+            <!-- Scroll view -->
             <ScrollView
                 android:id="@+id/scroll_view"
                 android:layout_width="match_parent"
@@ -100,299 +100,308 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:padding="@dimen/default_padding"
                     >
 
                     <ImageView
-                        android:layout_width="175dp"
+                        android:layout_width="match_parent"
                         android:layout_height="175dp"
                         android:layout_gravity="center"
-                        android:src="@drawable/hiking__1_"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/mountain_landscape2_generated"
                         android:layout_marginBottom="12dp"
                         tools:ignore="ContentDescription" />
 
-                    <!-- Trail name -->
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/trail_name_text_input_layout"
-                        style="@style/Widget.Unscramble.TextInputLayout.OutlinedBox"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/enter_trail_name_r"
-                        app:errorIconDrawable="@drawable/ic_error"
-                        app:helperTextTextAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
-                        >
 
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/trail_name_text_input_edit_text"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:text="@{trailStartCreationViewModel.trailName}"
-                            android:inputType="textPersonName|textNoSuggestions"
-                            android:maxLines="1"
-                            tools:ignore="DuplicateClickableBoundsCheck" />
-                    </com.google.android.material.textfield.TextInputLayout>
-
-                    <!-- Divider -->
-                    <View style="@style/Divider"
-                        android:layout_marginTop="24dp"
-                        android:id="@+id/divider_top_difficulty"
-                        app:layout_constraintTop_toBottomOf="@id/toolbar"
-                        android:layout_height="1dp"
-                        android:layout_width="match_parent"
-                        />
-
-                    <!-- Duration label -->
-                    <TextView
-                        android:id="@+id/difficulty_text_view"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/select_a_difficulty_level_r"
-                        android:textColor="@color/black"
-                        android:textStyle="bold"
-                        android:textSize="16sp"
-                        android:layout_marginTop="16dp"
-                        app:layout_constraintBottom_toTopOf="@id/duration_linear_layout"
-                        app:layout_constraintStart_toStartOf="parent"/>
-
-                    <!-- Discrete slider -->
-                    <com.google.android.material.slider.Slider
-                        app:thumbColor="@color/com_facebook_blue"
-                        android:id="@+id/slider"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:valueFrom="0.0"
-                        android:valueTo="3.0"
-                        android:stepSize="1.0"/>
-
-                    <TextView
-                        android:id="@+id/text_difficulty"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:text="@string/very_easy"
-                        android:textColor="@color/green_difficulty"
-                        android:textSize="24sp"/>
-
-                    <!-- Divider -->
-                    <View style="@style/Divider"
-                        android:layout_marginTop="24dp"
-                        android:id="@+id/divider_top_duration"
-                        app:layout_constraintTop_toBottomOf="@id/toolbar"
-                        android:layout_height="1dp"
-                        android:layout_width="match_parent"
-                        />
-
-                    <!-- Duration -->
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginTop="16dp"
-                        >
-
-                        <!-- Duration label -->
-                        <TextView
-                            android:id="@+id/duration_text_view"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/select_a_duration_r"
-                            android:textColor="@color/black"
-                            android:textStyle="bold"
-                            android:textSize="16sp"
-                            app:layout_constraintBottom_toTopOf="@id/duration_linear_layout"
-                            app:layout_constraintStart_toStartOf="parent"/>
-
-                        <!-- Duration view -->
-                        <LinearLayout
-                            app:layout_constraintTop_toBottomOf="@id/duration_text_view"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            android:id="@+id/duration_linear_layout"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:layout_gravity="center"
-                            android:baselineAligned="false">
-
-                            <!-- Months -->
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:orientation="vertical"
-                                android:layout_weight="1"
-                                android:gravity="center"
-                                >
-
-                                <NumberPicker
-                                    android:id="@+id/months_number_picker"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    />
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="@string/months" />
-
-                            </LinearLayout>
-
-                            <!-- Days -->
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:orientation="vertical"
-                                android:gravity="center"
-                                >
-
-                                <NumberPicker
-                                    android:id="@+id/days_number_picker"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    />
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="@string/days" />
-
-                            </LinearLayout>
-
-                            <!-- Hours -->
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:orientation="vertical"
-                                android:gravity="center"
-                                >
-
-                                <NumberPicker
-                                    android:id="@+id/hours_number_picker"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    />
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="@string/hours" />
-
-                            </LinearLayout>
-
-                            <!-- Minutes -->
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:orientation="vertical"
-                                android:gravity="center"
-                                >
-
-                                <NumberPicker
-                                    android:id="@+id/minutes_number_picker"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    />
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="@string/minutes" />
-
-                            </LinearLayout>
-
-                        </LinearLayout>
-
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-
-                    <!-- Divider -->
-                    <View style="@style/Divider"
-                        android:layout_marginTop="16dp"
-                        android:id="@+id/divider_top_description"
-                        app:layout_constraintTop_toBottomOf="@id/toolbar"
-                        android:layout_height="1dp"
-                        android:layout_width="match_parent"
-                        />
-
-
-                    <!-- Trail description linear layout-->
                     <LinearLayout
-                        android:id="@+id/trail_description_linear_layout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:padding="16dp"
                         android:orientation="vertical">
 
-                        <!-- Trail description -->
+                        <!-- Trail name -->
                         <com.google.android.material.textfield.TextInputLayout
-                            android:id="@+id/description_text_input_layout"
+                            android:id="@+id/trail_name_text_input_layout"
                             style="@style/Widget.Unscramble.TextInputLayout.OutlinedBox"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="16dp"
-                            app:counterEnabled="true"
-                            app:counterMaxLength="450"
+                            android:hint="@string/enter_trail_name_r"
                             app:errorIconDrawable="@drawable/ic_error"
                             app:helperTextTextAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent">
+                            >
 
                             <com.google.android.material.textfield.TextInputEditText
-                                android:id="@+id/description_edit_text"
+                                android:id="@+id/trail_name_text_input_edit_text"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:hint="@string/optional_tell_others_about_the_trail"
-                                android:inputType="textMultiLine"
-                                android:lines="5"
-                                android:text="@{trailStartCreationViewModel.description}"
-                                android:layout_gravity="top|start"
-                                android:gravity="top|start"
-                                android:maxLines="10"
+                                android:text="@{trailStartCreationViewModel.trailName}"
+                                android:inputType="textPersonName|textNoSuggestions"
+                                android:maxLines="1"
                                 tools:ignore="DuplicateClickableBoundsCheck" />
                         </com.google.android.material.textfield.TextInputLayout>
 
-                    </LinearLayout>
+                        <!-- Divider -->
+                        <View style="@style/Divider"
+                            android:layout_marginTop="24dp"
+                            android:id="@+id/divider_top_difficulty"
+                            app:layout_constraintTop_toBottomOf="@id/toolbar"
+                            android:layout_height="1dp"
+                            android:layout_width="match_parent"
+                            />
 
-                    <!-- Photo picker -->
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginVertical="12dp"
-                        android:orientation="vertical">
-
+                        <!-- Duration label -->
                         <TextView
+                            android:id="@+id/difficulty_text_view"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/upload_a_photo_r"
+                            android:text="@string/select_a_difficulty_level_r"
                             android:textColor="@color/black"
                             android:textStyle="bold"
-                            android:textSize="16sp"/>
+                            android:textSize="16sp"
+                            android:layout_marginTop="16dp"
+                            app:layout_constraintBottom_toTopOf="@id/duration_linear_layout"
+                            app:layout_constraintStart_toStartOf="parent"/>
 
-                        <FrameLayout
-                            android:layout_marginTop="5dp"
+                        <!-- Discrete slider -->
+                        <com.google.android.material.slider.Slider
+                            app:thumbColor="@color/com_facebook_blue"
+                            android:id="@+id/slider"
                             android:layout_width="match_parent"
-                            android:layout_height="250dp"
-                            android:background="@drawable/rectangle_dashed">
+                            android:layout_height="wrap_content"
+                            android:valueFrom="0.0"
+                            android:valueTo="3.0"
+                            android:stepSize="1.0"/>
 
-                            <!-- Trail Image -->
-                            <ImageView
-                                android:scaleType="centerCrop"
-                                android:id="@+id/upload_image_button"
-                                android:onClick="@{() -> trailStartCreationFragment.onSelectImageClick()}"
+                        <TextView
+                            android:id="@+id/text_difficulty"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:text="@string/very_easy"
+                            android:textColor="@color/green_difficulty"
+                            android:textSize="24sp"/>
+
+                        <!-- Divider -->
+                        <View style="@style/Divider"
+                            android:layout_marginTop="24dp"
+                            android:id="@+id/divider_top_duration"
+                            app:layout_constraintTop_toBottomOf="@id/toolbar"
+                            android:layout_height="1dp"
+                            android:layout_width="match_parent"
+                            />
+
+                        <!-- Duration -->
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginTop="16dp"
+                            >
+
+                            <!-- Duration label -->
+                            <TextView
+                                android:id="@+id/duration_text_view"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/select_a_duration_r"
+                                android:textColor="@color/black"
+                                android:textStyle="bold"
+                                android:textSize="16sp"
+                                app:layout_constraintBottom_toTopOf="@id/duration_linear_layout"
+                                app:layout_constraintStart_toStartOf="parent"/>
+
+                            <!-- Duration view -->
+                            <LinearLayout
+                                app:layout_constraintTop_toBottomOf="@id/duration_text_view"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                android:id="@+id/duration_linear_layout"
                                 android:layout_width="match_parent"
-                                android:src="@{trailStartCreationViewModel.image}"
-                                android:layout_height="match_parent"
-                                tools:ignore="ContentDescription" />
-
-                            <ImageView
-                                android:id="@+id/icon_upload_image_view"
-                                android:layout_width="40dp"
-                                android:layout_height="40dp"
-                                android:src="@drawable/picture_svgrepo_com"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
                                 android:layout_gravity="center"
-                                tools:ignore="ContentDescription" />
+                                android:baselineAligned="false">
 
-                        </FrameLayout>
+                                <!-- Months -->
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="vertical"
+                                    android:layout_weight="1"
+                                    android:gravity="center"
+                                    >
+
+                                    <NumberPicker
+                                        android:id="@+id/months_number_picker"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="@string/months" />
+
+                                </LinearLayout>
+
+                                <!-- Days -->
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:orientation="vertical"
+                                    android:gravity="center"
+                                    >
+
+                                    <NumberPicker
+                                        android:id="@+id/days_number_picker"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="@string/days" />
+
+                                </LinearLayout>
+
+                                <!-- Hours -->
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:orientation="vertical"
+                                    android:gravity="center"
+                                    >
+
+                                    <NumberPicker
+                                        android:id="@+id/hours_number_picker"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="@string/hours" />
+
+                                </LinearLayout>
+
+                                <!-- Minutes -->
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:orientation="vertical"
+                                    android:gravity="center"
+                                    >
+
+                                    <NumberPicker
+                                        android:id="@+id/minutes_number_picker"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="@string/minutes" />
+
+                                </LinearLayout>
+
+                            </LinearLayout>
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        <!-- Divider -->
+                        <View style="@style/Divider"
+                            android:layout_marginTop="16dp"
+                            android:id="@+id/divider_top_description"
+                            app:layout_constraintTop_toBottomOf="@id/toolbar"
+                            android:layout_height="1dp"
+                            android:layout_width="match_parent"
+                            />
+
+
+                        <!-- Trail description linear layout-->
+                        <LinearLayout
+                            android:id="@+id/trail_description_linear_layout"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <!-- Trail description -->
+                            <com.google.android.material.textfield.TextInputLayout
+                                android:id="@+id/description_text_input_layout"
+                                style="@style/Widget.Unscramble.TextInputLayout.OutlinedBox"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="16dp"
+                                app:counterEnabled="true"
+                                app:counterMaxLength="450"
+                                app:errorIconDrawable="@drawable/ic_error"
+                                app:helperTextTextAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent">
+
+                                <com.google.android.material.textfield.TextInputEditText
+                                    android:id="@+id/description_edit_text"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:hint="@string/optional_tell_others_about_the_trail"
+                                    android:inputType="textMultiLine"
+                                    android:lines="5"
+                                    android:text="@{trailStartCreationViewModel.description}"
+                                    android:layout_gravity="top|start"
+                                    android:gravity="top|start"
+                                    android:maxLines="10"
+                                    tools:ignore="DuplicateClickableBoundsCheck" />
+                            </com.google.android.material.textfield.TextInputLayout>
+
+                        </LinearLayout>
+
+                        <!-- Photo picker -->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginVertical="12dp"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/upload_a_photo_r"
+                                android:textColor="@color/black"
+                                android:textStyle="bold"
+                                android:textSize="16sp"/>
+
+                            <FrameLayout
+                                android:layout_marginTop="5dp"
+                                android:layout_width="match_parent"
+                                android:layout_height="250dp"
+                                android:background="@drawable/rectangle_dashed">
+
+                                <!-- Trail Image -->
+                                <ImageView
+                                    android:scaleType="centerCrop"
+                                    android:id="@+id/upload_image_button"
+                                    android:onClick="@{() -> trailStartCreationFragment.onSelectImageClick()}"
+                                    android:layout_width="match_parent"
+                                    android:src="@{trailStartCreationViewModel.image}"
+                                    android:layout_height="match_parent"
+                                    tools:ignore="ContentDescription" />
+
+                                <ImageView
+                                    android:id="@+id/icon_upload_image_view"
+                                    android:layout_width="40dp"
+                                    android:layout_height="40dp"
+                                    android:src="@drawable/picture_svgrepo_com"
+                                    android:layout_gravity="center"
+                                    tools:ignore="ContentDescription" />
+
+                            </FrameLayout>
+
+                        </LinearLayout>
 
                     </LinearLayout>
 
