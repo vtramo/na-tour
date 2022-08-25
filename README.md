@@ -16,12 +16,16 @@ NaTour is a complex and distributed system aimed at offering a modern social net
   <br>
   
   <li>
-    A logged-in user can view all trails uploaded to the system.
+    An authenticated user can view all trails uploaded to the system.
     <br><br>
     <img src="https://github.com/vtramo/NaTour/blob/main/images/home.gif?raw=true" height="500"/>
   </li>
-  <li>Parish</li>
   
-  <br><br>
+  <br>
   
+  <li>
+    An authenticated user can enter new trails into the platform. A trail is characterized by a name, a duration, a level of difficulty, a starting point, a description (optional), and a geographic trail (optional) that represents it on a map. The geographic trail must be either manually entered (by interacting with an interactive map) or via file in standard GPX format.
+    <br><br>
+    <image src="https://github.com/vtramo/NaTour/blob/main/images/route_creation.gif?raw=true" height="500"/>
+  </li>
 </ul>
