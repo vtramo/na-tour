@@ -12,6 +12,7 @@ import androidx.navigation.findNavController
 import com.example.natour.R
 import com.example.natour.databinding.FragmentTrailDisplayCreationBinding
 import com.example.natour.util.createProgressAlertDialog
+import com.example.natour.util.showErrorAlertDialog
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -68,6 +69,16 @@ class TrailDisplayCreationFragment : Fragment(), OnMapReadyCallback {
 
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
+
+        if (mListOfRoutePoints.isEmpty()) {
+            showErrorAlertDialog(
+                "This file gpx doesn't contain any points!",
+                requireContext()
+            )
+            binding.confirmButton.isEnabled = false
+            binding.confirmButton.alpha = 0.75f
+            return
+        }
 
         mMap.addMarker(
             MarkerOptions()
