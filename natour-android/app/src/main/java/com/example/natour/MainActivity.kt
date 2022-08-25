@@ -50,7 +50,7 @@ class MainActivity : AppCompatActivity() {
         loadMainUser()
         setupThirdPartyLoginViewModel()
 
-        window.statusBarColor = context.getColor(R.color.darkgray)
+        window.statusBarColor = context.getColor(R.color.gray)
     }
 
     private fun loadMainUser() {

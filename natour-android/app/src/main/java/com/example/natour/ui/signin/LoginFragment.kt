@@ -11,6 +11,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
+import com.bumptech.glide.Glide
+import com.example.natour.MainActivity
 import com.example.natour.R
 import com.example.natour.databinding.FragmentLoginBinding
 import com.example.natour.data.model.Credentials
@@ -51,6 +53,10 @@ class LoginFragment : Fragment() {
 
         binding.loginFragment = this
         binding.lifecycleOwner = viewLifecycleOwner
+
+        Glide.with(requireContext())
+            .load(MainActivity.getDrawable(R.drawable.forest_gif))
+            .into(binding.gifNatour)
     }
 
     private fun setupSignIn() {
