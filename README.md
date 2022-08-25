@@ -12,7 +12,16 @@ NaTour is a complex and distributed system aimed at offering a modern social net
     <img src="https://github.com/vtramo/NaTour/blob/main/images/login.gif?raw=true" height="500"/>
     <img src="https://github.com/vtramo/NaTour/blob/main/images/register.jpeg?raw=true" height="500"/>
   </li>
-  <br><br>
-  <li>McHale</li>
+  
+  <br>
+  
+  <li>
+    A logged-in user can view all trails uploaded to the system.
+    <br><br>
+    <img src="https://github.com/vtramo/NaTour/blob/main/images/home.gif?raw=true" height="500"/>
+  </li>
   <li>Parish</li>
+  
+  <br><br>
+  
 </ul>
