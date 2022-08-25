@@ -31,6 +31,8 @@ public class Trail {
     @Lob
     private Blob image;
 
+    @Lob
+    @Column
     private String description;
 
     private TrailDifficulty difficulty;
