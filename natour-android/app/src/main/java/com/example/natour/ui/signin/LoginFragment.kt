@@ -55,7 +55,7 @@ class LoginFragment : Fragment() {
         binding.lifecycleOwner = viewLifecycleOwner
 
         Glide.with(requireContext())
-            .load(MainActivity.getDrawable(R.drawable.forest_gif))
+            .load(MainActivity.getDrawable(R.drawable.login_gif))
             .into(binding.gifNatour)
     }
 
