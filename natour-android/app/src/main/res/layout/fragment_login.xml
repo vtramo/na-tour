@@ -16,7 +16,7 @@
             android:layout_height="match_parent">
 
             <ImageView
-                android:src="@drawable/forest_gif"
+                android:src="@drawable/login_gif"
                 android:scaleType="centerCrop"
                 android:id="@+id/gif_natour"
                 android:layout_width="match_parent"
