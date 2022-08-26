@@ -19,6 +19,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.exifinterface.media.ExifInterface
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
@@ -29,6 +30,7 @@ import com.example.natour.data.model.Trail
 import com.example.natour.data.model.TrailPhoto
 import com.example.natour.databinding.FragmentTrailDetailsBinding
 import com.example.natour.network.IllegalContentImageDetectorApiService
+import com.example.natour.ui.MainUserViewModel
 import com.example.natour.ui.home.trail.SupportMapFragmentWrapper
 import com.example.natour.ui.home.trail.favorites.FavoriteTrailChanger
 import com.example.natour.ui.home.trail.favorites.FavoriteTrailsViewModel
@@ -54,6 +56,8 @@ class TrailDetailsFragment : Fragment(), OnMapReadyCallback, OnInfoWindowClickLi
 
     private val mFavoriteTrailsViewModel: FavoriteTrailsViewModel
             by hiltNavGraphViewModels(R.id.home_nav_graph)
+
+    private val mMainUserViewModel: MainUserViewModel by activityViewModels()
 
     private var _binding: FragmentTrailDetailsBinding? = null
     private val binding get() = _binding!!
@@ -139,7 +143,7 @@ class TrailDetailsFragment : Fragment(), OnMapReadyCallback, OnInfoWindowClickLi
     }
 
     private fun setupListOfTrailReviews() {
-        val trailReviewListAdapter = TrailReviewListAdapter()
+        val trailReviewListAdapter = TrailReviewListAdapter(mMainUserViewModel)
         mTrailDetailsViewModel.listOfTrailReviews.observe(viewLifecycleOwner) { listOfTrailReview ->
             trailReviewListAdapter.submitList(listOfTrailReview)
         }

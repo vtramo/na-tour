@@ -69,7 +69,8 @@
                                 android:textSize="20sp"
                                 android:textColor="@color/black"
                                 android:textStyle="normal"
-                                tools:text="bonek" />
+                                tools:text="bonek"
+                                />
 
                         </LinearLayout>
 
