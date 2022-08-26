@@ -111,6 +111,14 @@
                     android:orientation="vertical"
                     android:gravity="center">
 
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="150dp"
+                        android:src="@{trailDetailsViewModel.thisTrail.image}"
+                        tools:src="@drawable/sentiero_degli_dei_vista"
+                        android:scaleType="centerCrop"
+                        tools:ignore="ContentDescription" />
+
                     <!-- Trail name -->
                     <TextView
                         android:id="@+id/trail_name_text_view"
@@ -243,6 +251,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@{trailDetailsViewModel.thisTrail.difficulty.toString()}"
+                            android:textColor="@{trailDetailsViewModel.thisTrail.difficulty.color}"
                             android:fontFamily="@font/montserrat" />
 
                     </LinearLayout>
