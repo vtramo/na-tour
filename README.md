@@ -41,4 +41,11 @@ NaTour is a complex and distributed system aimed at offering a modern social net
   </li>
   
   <br>
+  
+  <li>
+    A user can download the trail in GPX format, or the summary information in PDF format.
+    <br><br>
+    <image src="https://github.com/vtramo/NaTour/blob/main/images/trail_download_gpx.gif?raw=true" height="500"/>
+    <image src="https://github.com/vtramo/NaTour/blob/main/images/trail_download_pdf.gif?raw=true" height="500"/>
+  </li>
 </ul>
