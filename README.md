@@ -52,8 +52,16 @@ NaTour is a complex and distributed system aimed at offering a modern social net
   <br>
   
   <li>
-    A user can add or remove trails from their list of favorites
+    A user can add or remove trails from their list of favorites.
     <br><br>
     <image src="https://github.com/vtramo/NaTour/blob/main/images/trail_favorites.gif?raw=true" height="500"/>
+  </li>
+  
+  <br>
+  
+  <li>
+    A user can upload photos of a trail. If the photo has a geographic location saved in the metadata, a marker corresponding to the photo can be displayed on the map to show where it was taken on the trail. All photographs, before being uploaded, are examined to verify the presence or absence of illegal content (this feature was created using the <a href="https://docs.aws.amazon.com/rekognition/latest/dg/what-is.html">AWS Rekognition</a> cloud service).
+    <br><br>
+    <image src="https://github.com/vtramo/NaTour/blob/main/images/trail_photo_gps.gif?raw=true" height="500"/>
   </li>
 </ul>
