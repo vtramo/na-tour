@@ -9,9 +9,7 @@ import com.example.natour.data.model.TrailReview
 import com.example.natour.databinding.TrailReviewViewBinding
 import com.example.natour.ui.MainUserViewModel
 
-class TrailReviewListAdapter(
-    private val mainUserViewModel: MainUserViewModel
-):
+class TrailReviewListAdapter:
     ListAdapter<TrailReview, TrailReviewListAdapter.TrailReviewViewHolder>(TrailDiffCallback) {
 
     companion object {
@@ -31,7 +29,7 @@ class TrailReviewListAdapter(
         fun bindTrailReview(trailReview: TrailReview) = with(binding) {
             trailReviewStarsImageView.setImageDrawable(trailReview.getStarsImage())
             trailReviewDescriptionTextView.text = trailReview.description
-            trailReviewUsernameOwnerTextView.text = mainUserViewModel.mainUser.value!!.username
+            trailReviewUsernameOwnerTextView.text = trailReview.owner.username
             trailReviewDateTextView.text = trailReview.date
         }
     }

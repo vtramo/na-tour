@@ -2,6 +2,7 @@ package com.example.natour.data.repositories
 
 import com.example.natour.data.MainUser
 import com.example.natour.data.model.AuthenticatedUser
+import com.example.natour.data.model.UserDetails
 import kotlinx.coroutines.flow.Flow
 
 interface MainUserRepository {
@@ -9,6 +10,6 @@ interface MainUserRepository {
     suspend fun save(authenticatedUser: AuthenticatedUser): Boolean
     fun load(): Flow<MainUser?>
     suspend fun clear(): Boolean
-    fun getDetails(): MainUser.Details
+    fun getDetails(): UserDetails
     fun getAccessToken(): String
 }

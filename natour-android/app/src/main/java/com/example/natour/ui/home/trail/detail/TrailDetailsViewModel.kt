@@ -168,7 +168,7 @@ class TrailDetailsViewModel @Inject constructor(
 
         if (reviewSuccessfullyAdded) {
             val newTrailReview = TrailReview(
-                _thisTrail.owner,
+                mainUserRepository.getDetails(),
                 Stars.intToEnumValue(stars),
                 description,
                 date
