@@ -57,8 +57,6 @@ class TrailDetailsFragment : Fragment(), OnMapReadyCallback, OnInfoWindowClickLi
     private val mFavoriteTrailsViewModel: FavoriteTrailsViewModel
             by hiltNavGraphViewModels(R.id.home_nav_graph)
 
-    private val mMainUserViewModel: MainUserViewModel by activityViewModels()
-
     private var _binding: FragmentTrailDetailsBinding? = null
     private val binding get() = _binding!!
 
@@ -143,7 +141,7 @@ class TrailDetailsFragment : Fragment(), OnMapReadyCallback, OnInfoWindowClickLi
     }
 
     private fun setupListOfTrailReviews() {
-        val trailReviewListAdapter = TrailReviewListAdapter(mMainUserViewModel)
+        val trailReviewListAdapter = TrailReviewListAdapter()
         mTrailDetailsViewModel.listOfTrailReviews.observe(viewLifecycleOwner) { listOfTrailReview ->
             trailReviewListAdapter.submitList(listOfTrailReview)
         }
