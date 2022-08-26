@@ -1,4 +1,4 @@
-# NaTour
+<img src="https://raw.githubusercontent.com/vtramo/NaTour/d6215d352c46ddf4f336fa590e7546c44f8ffe17/images/natour_logo.svg"/>
 
 <H2>What is NaTour?</H2>
 NaTour is a complex and distributed system aimed at offering a modern social network to hiking lovers. The system consists of a secure, high-performance and scalable back-end (built with Spring Boot and cloud-based technologies) and a mobile client (Android) through which users can take advantage of the system's features in an intuitive, fast and pleasant way.
