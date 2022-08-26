@@ -1,5 +1,6 @@
 package com.example.natour.ui.signin
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,9 +11,15 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
+import com.bumptech.glide.Glide
+import com.example.natour.MainActivity
 import com.example.natour.R
 import com.example.natour.databinding.FragmentLoginBinding
 import com.example.natour.data.model.Credentials
+import com.example.natour.exceptions.ErrorMessages
+import com.example.natour.util.createProgressAlertDialog
+import com.example.natour.util.showSnackBar
+import com.example.natour.util.showSomethingWentWrongAlertDialog
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -21,10 +28,12 @@ class LoginFragment : Fragment() {
     private var _binding: FragmentLoginBinding? = null
     private val binding get() = _binding!!
 
-    private val loginViewModel: LoginViewModel by viewModels()
-    private val thirdPartyLoginViewModel: ThirdPartyLoginViewModel by activityViewModels()
+    private val mLoginViewModel: LoginViewModel by viewModels()
+    private val mThirdPartyLoginViewModel: ThirdPartyLoginViewModel by activityViewModels()
 
-    private val credentials = Credentials()
+    private val mCredentials = Credentials()
+
+    private lateinit var mLoginProgressDialog: AlertDialog
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -44,15 +53,20 @@ class LoginFragment : Fragment() {
 
         binding.loginFragment = this
         binding.lifecycleOwner = viewLifecycleOwner
+
+        Glide.with(requireContext())
+            .load(MainActivity.getDrawable(R.drawable.login_gif))
+            .into(binding.gifNatour)
     }
 
     private fun setupSignIn() {
-        loginViewModel.isAuthenticated.observe(viewLifecycleOwner) { isAuthenticated ->
+        mLoginViewModel.isAuthenticated.observe(viewLifecycleOwner) { isAuthenticated ->
             setErrorTextField(!isAuthenticated)
             if (isAuthenticated) {
-                Toast.makeText(context, "LOGIN SUCCESSFULLY", Toast.LENGTH_SHORT).show()
+                showSnackBar("Successfully logged in", requireView())
                 goToHomeFragment()
             }
+            mLoginProgressDialog.dismiss()
         }
     }
 
@@ -62,41 +76,73 @@ class LoginFragment : Fragment() {
     }
 
     private fun setupSignInWithGoogle() {
-        thirdPartyLoginViewModel
+        mThirdPartyLoginViewModel
             .isAuthenticatedWithGoogle.observe(viewLifecycleOwner) { isAuthenticatedWithGoogle ->
                 if (isAuthenticatedWithGoogle == AuthenticationThirdPartyResult.AUTHENTICATED) {
-                    loginViewModel.authcodeGoogle = thirdPartyLoginViewModel.googleAuthCode
-                    loginViewModel.loginWithGoogle()
+                    showLoginProgressDialog()
+                    with(mLoginViewModel) {
+                        observePossibleLoginErrors()
+                        authcodeGoogle = mThirdPartyLoginViewModel.googleAuthCode
+                        loginWithGoogle()
+                    }
                 }
         }
     }
 
     private fun setupSignInWithFacebook() {
-        thirdPartyLoginViewModel
+        mThirdPartyLoginViewModel
             .isAuthenticatedWithFacebook.observe(viewLifecycleOwner) { isAuthenticatedWithFacebook ->
                 if (isAuthenticatedWithFacebook == AuthenticationThirdPartyResult.AUTHENTICATED) {
-                    loginViewModel.accessTokenFacebook = thirdPartyLoginViewModel.fbAccessToken
-                    loginViewModel.loginWithFacebook()
+                    showLoginProgressDialog()
+                    with(mLoginViewModel) {
+                        observePossibleLoginErrors()
+                        accessTokenFacebook = mThirdPartyLoginViewModel.fbAccessToken
+                        loginWithFacebook()
+                    }
                 }
         }
     }
 
     fun onSignIn() {
-        credentials.username = binding.usernameTextInputEditText.text.toString()
-        credentials.password = binding.passwordTextInputEditText.text.toString()
+        mCredentials.username = binding.usernameTextInputEditText.text.toString()
+        mCredentials.password = binding.passwordTextInputEditText.text.toString()
 
         if (areCorrectCredentials()) {
-            loginViewModel.credentials = credentials
-            loginViewModel.login()
+            showLoginProgressDialog()
+            with(mLoginViewModel) {
+                observePossibleLoginErrors()
+                credentials = mCredentials
+                login()
+            }
         }
     }
 
+    private fun LoginViewModel.observePossibleLoginErrors() {
+        errorConnectionLiveData.observe(viewLifecycleOwner) { isErrorConnection ->
+            if (isErrorConnection) {
+                showSomethingWentWrongAlertDialog(
+                    ErrorMessages.CONNECTION_ERROR,
+                    ErrorMessages.CONNECTION_ERROR_SERVER,
+                    requireContext()
+                )
+                mLoginProgressDialog.dismiss()
+            }
+        }
+    }
+
+    private fun showLoginProgressDialog() {
+        mLoginProgressDialog = createProgressAlertDialog(
+            "Loading...",
+            requireContext()
+        ).also { it.show() }
+    }
+
     fun onSignInWithGoogle() {
-        thirdPartyLoginViewModel.googleLogin.launch()
+        mThirdPartyLoginViewModel.googleLogin.launch()
     }
 
     fun onSignInWithFacebook() {
-        thirdPartyLoginViewModel.facebookLogin.launch()
+        mThirdPartyLoginViewModel.facebookLogin.launch()
     }
 
     fun onSignUpGoToRegistrationFragment() {
@@ -106,7 +152,7 @@ class LoginFragment : Fragment() {
 
     private fun areCorrectCredentials(): Boolean {
         val areCorrectCredentials =
-            credentials.username.isNotBlank() && credentials.password.isNotBlank()
+            mCredentials.username.isNotBlank() && mCredentials.password.isNotBlank()
         setErrorTextField(!areCorrectCredentials)
         return areCorrectCredentials
     }

@@ -13,7 +13,7 @@ enum class TrailDifficulty(
     private val _nameDifficulty: String,
     private val _color: Int
 ) {
-    EASIEST("Easiest", getColor(R.color.green_difficulty)),
+    VERY_EASY("Very easy", getColor(R.color.green_difficulty)),
     EASY("Easy", getColor(android.R.color.holo_green_dark)),
     MORE_DIFFICULT("More difficult", getColor(R.color.orange_difficulty)),
     VERY_DIFFICULT("Very difficult", getColor(R.color.red_1_difficulty)),
@@ -26,12 +26,22 @@ enum class TrailDifficulty(
     companion object {
         fun toEnumValue(name: String): TrailDifficulty =
             when(name) {
-                EASIEST._nameDifficulty -> EASIEST
+                VERY_EASY._nameDifficulty -> VERY_EASY
                 EASY._nameDifficulty -> EASY
                 MORE_DIFFICULT._nameDifficulty -> MORE_DIFFICULT
                 VERY_DIFFICULT._nameDifficulty -> VERY_DIFFICULT
                 EXTREMELY_DIFFICULT._nameDifficulty -> EXTREMELY_DIFFICULT
                 else -> throw IllegalArgumentException("Unknown name: $name")
+            }
+
+        fun toEnumValue(int: Int): TrailDifficulty =
+            when(int) {
+                VERY_EASY.ordinal -> VERY_EASY
+                EASY.ordinal -> EASY
+                MORE_DIFFICULT.ordinal -> MORE_DIFFICULT
+                VERY_DIFFICULT.ordinal -> VERY_DIFFICULT
+                EXTREMELY_DIFFICULT.ordinal -> EXTREMELY_DIFFICULT
+                else -> throw IllegalArgumentException("Unknown int: $int")
             }
     }
 }

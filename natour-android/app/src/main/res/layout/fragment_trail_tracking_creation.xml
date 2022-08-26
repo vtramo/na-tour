@@ -14,17 +14,139 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/hint_text_view"
+        <!-- Toolbar -->
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/choose_a_starting_point"
-            android:textColor="@color/black"
-            android:gravity="center"
-            android:textSize="24sp"
-            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                >
+
+                <!-- Back button -->
+                <ImageButton
+                    android:onClick="@{() -> routeTrackingCreationFragment.onBackClick()}"
+                    android:id="@+id/back_image_button"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:layout_marginEnd="15dp"
+                    android:layout_gravity="start"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/arrow_left"
+                    style="@style/Widget.AppCompat.Button.Borderless"
+                    tools:ignore="ContentDescription" />
+
+                <!-- Confirm button -->
+                <Button
+                    android:id="@+id/confirm_button"
+                    android:onClick="@{() -> routeTrackingCreationFragment.onConfirmButtonClick()}"
+                    style="?android:attr/buttonBarButtonStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="34dp"
+                    android:text="@string/confirm"
+                    android:gravity="center"
+                    android:textSize="12sp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_marginEnd="15dp"
+                    />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.appcompat.widget.Toolbar>
+
+
+        <!-- Divider -->
+        <View style="@style/Divider"
+            android:id="@+id/divider"
+            app:layout_constraintTop_toBottomOf="@id/toolbar"
+            android:layout_height="1dp"
+            android:layout_width="match_parent"
             />
 
+        <LinearLayout
+            android:layout_margin="16dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            tools:ignore="UseCompoundDrawables">
+
+            <ImageView
+                android:layout_width="115dp"
+                android:layout_height="115dp"
+                android:src="@drawable/finding_location"
+                android:layout_gravity="center"
+                android:layout_marginBottom="12dp"
+                android:layout_marginTop="12dp"
+                tools:ignore="ContentDescription" />
+
+            <!-- Hint text view -->
+            <TextView
+                android:id="@+id/hint_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/choose_a_starting_point"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:layout_margin="16dp"
+                android:textSize="32sp"
+                android:textStyle="bold"
+                android:textColor="@color/black"/>
+        </LinearLayout>
+
+        <!-- Map tools -->
+        <LinearLayout
+            android:orientation="horizontal"
+            android:id="@+id/controls_linear_layout"
+            android:layout_width="match_parent"
+            android:gravity="center"
+            android:layout_height="wrap_content">
+
+            <!-- Start position button -->
+            <ImageButton
+                android:id="@+id/start_position_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="@{() -> routeTrackingCreationFragment.onStartPositionButtonClick()}"
+                android:src="@drawable/ic_baseline_room_24"
+                tools:ignore="ContentDescription,SpeakableTextPresentCheck" />
+
+            <!-- Delete button -->
+            <ImageButton
+                android:id="@+id/delete_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="@{() -> routeTrackingCreationFragment.onDeleteButtonClick()}"
+                android:src="@drawable/ic_baseline_delete_24"
+                tools:ignore="ContentDescription,SpeakableTextPresentCheck" />
+
+            <!-- Undo button -->
+            <ImageButton
+                android:id="@+id/undo_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="@{() -> routeTrackingCreationFragment.onUndoButtonClick()}"
+                android:src="@drawable/ic_baseline_undo_24"
+                tools:ignore="ContentDescription,SpeakableTextPresentCheck" />
+
+            <!-- Redo button -->
+            <ImageButton
+                android:id="@+id/redo_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="@{() -> routeTrackingCreationFragment.onRedoButtonClick()}"
+                android:src="@drawable/ic_baseline_redo_24"
+                tools:ignore="ContentDescription,SpeakableTextPresentCheck" />
+
+        </LinearLayout>
 
         <!-- Google Map -->
         <FrameLayout
@@ -41,54 +163,21 @@
                 android:name="com.google.android.gms.maps.SupportMapFragment"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginBottom="15dp"
                 app:cameraTilt="30"
                 app:uiRotateGestures="true"
                 app:uiZoomControls="true"
                 tools:ignore="FragmentTagUsage" />
 
-            <LinearLayout
-                android:orientation="horizontal"
-                android:id="@+id/controls_linear_layout"
-                android:layout_width="match_parent"
-                android:gravity="center"
-                android:layout_height="wrap_content">
-
-                    <ImageButton
-                        android:id="@+id/start_position_button"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:onClick="@{() -> routeTrackingCreationFragment.onStartPositionButtonClick()}"
-                        android:src="@drawable/ic_baseline_room_24"
-                        tools:ignore="ContentDescription,SpeakableTextPresentCheck" />
-
-                    <ImageButton
-                        android:id="@+id/delete_button"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:onClick="@{() -> routeTrackingCreationFragment.onDeleteButtonClick()}"
-                        android:src="@drawable/ic_baseline_delete_24"
-                        tools:ignore="ContentDescription,SpeakableTextPresentCheck" />
-
-                    <ImageButton
-                        android:id="@+id/undo_button"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:onClick="@{() -> routeTrackingCreationFragment.onUndoButtonClick()}"
-                        android:src="@drawable/ic_baseline_undo_24"
-                        tools:ignore="ContentDescription,SpeakableTextPresentCheck" />
-
-            </LinearLayout>
-
         </FrameLayout>
 
-        <Button
-            android:id="@+id/confirm_button"
-            android:layout_marginHorizontal="16dp"
-            android:onClick="@{() -> routeTrackingCreationFragment.onConfirmButtonClick()}"
+        <!-- Search google autocomplete -->
+        <fragment android:id="@+id/autocomplete_fragment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/confirm" />
-    </LinearLayout>
+            android:name="com.google.android.libraries.places.widget.AutocompleteSupportFragment"
+            tools:ignore="FragmentTagUsage" />
 
+    </LinearLayout>
 
 </layout>

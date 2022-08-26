@@ -9,6 +9,7 @@ import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,7 +19,9 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.exifinterface.media.ExifInterface
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import com.example.natour.MainActivity
 import com.example.natour.R
@@ -26,12 +29,12 @@ import com.example.natour.data.model.Position
 import com.example.natour.data.model.Trail
 import com.example.natour.data.model.TrailPhoto
 import com.example.natour.databinding.FragmentTrailDetailsBinding
-import com.example.natour.util.bitmapFromVector
+import com.example.natour.network.IllegalContentImageDetectorApiService
+import com.example.natour.ui.MainUserViewModel
 import com.example.natour.ui.home.trail.SupportMapFragmentWrapper
 import com.example.natour.ui.home.trail.favorites.FavoriteTrailChanger
 import com.example.natour.ui.home.trail.favorites.FavoriteTrailsViewModel
-import com.example.natour.util.showErrorAlertDialog
-import com.example.natour.util.showSnackBar
+import com.example.natour.util.*
 import com.github.dhaval2404.imagepicker.ImagePicker
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -39,7 +42,13 @@ import com.google.android.gms.maps.GoogleMap.*
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.model.*
 import com.google.maps.android.PolyUtil
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class TrailDetailsFragment : Fragment(), OnMapReadyCallback, OnInfoWindowClickListener {
 
     private val mTrailDetailsViewModel: TrailDetailsViewModel
@@ -54,6 +63,9 @@ class TrailDetailsFragment : Fragment(), OnMapReadyCallback, OnInfoWindowClickLi
     private lateinit var mMap: GoogleMap
     private lateinit var mStartPointMarker: Marker
     private var mTrailPhotoMarker: Marker? = null
+
+    @Inject
+    lateinit var mIllegalContentImageDetector: IllegalContentImageDetectorApiService
 
     private val mListOfRoutePoints: List<LatLng> by lazy {
         mTrailDetailsViewModel
@@ -252,13 +264,52 @@ class TrailDetailsFragment : Fragment(), OnMapReadyCallback, OnInfoWindowClickLi
     private val getImageLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == Activity.RESULT_OK) {
-                val trailImageUri = result.data!!.data!!
-                addPhoto(
-                    trailImageUri.toDrawable(),
-                    trailImageUri.getPosition()
+
+                val progressDialog = createProgressAlertDialog(
+                    "Uploading the photo...",
+                    requireContext()
                 )
+                progressDialog.show()
+
+                val trailImageUri = result.data!!.data!!
+
+                try {
+                    detectIllegalContentImage(trailImageUri) { isIllegalImage ->
+                        if (isIllegalImage) {
+                            showIllegalContentImageAlertDialog()
+                        } else {
+                            addPhoto(
+                                trailImageUri.toDrawable(),
+                                trailImageUri.getPosition()
+                            )
+                        }
+                        progressDialog.dismiss()
+                    }
+                } catch (exception: Exception) {
+                    Log.e("TRAIL DETAILS", "Error in adding a photo ${exception.message}")
+                    progressDialog.dismiss()
+                }
             }
         }
+
+    private fun detectIllegalContentImage(trailImageUri: Uri, reaction: (Boolean) -> (Unit)) =
+        lifecycleScope.launch(Dispatchers.IO) {
+            mIllegalContentImageDetector
+            .detectIllegalContent(trailImageUri.path!!).apply {
+                withContext(Dispatchers.Main) {
+                    observe(viewLifecycleOwner) { isIllegalImage -> reaction(isIllegalImage) }
+                }
+            }
+        }
+
+    private fun showIllegalContentImageAlertDialog() {
+        showCustomAlertDialog(
+            "Image with illegal content",
+            "The image contains explicit or suggestive adult content, " +
+                    "or violent content.",
+            requireContext()
+        )
+    }
 
     private fun Uri.toDrawable(): Drawable {
         val imageInputStream = requireContext().contentResolver.openInputStream(this)!!

@@ -11,6 +11,8 @@ import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
 import com.example.natour.R
 import com.example.natour.databinding.DialogFragmentAddTrailReviewBinding
 import com.example.natour.ui.MainUserViewModel
+import com.example.natour.util.createProgressAlertDialog
+import com.example.natour.util.showErrorAlertDialog
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -103,8 +105,17 @@ class AddTrailReviewDialogFragment: DialogFragment() {
         val date = getCurrentDate()
         val description = binding.reviewTextInputEditText.text!!.toString()
 
+        val progressDialog = createProgressAlertDialog("Creating a review...", requireContext())
+        progressDialog.show()
         with(mTrailDetailsViewModel) {
             reviewSuccessfullyAddedLiveData.observe(viewLifecycleOwner) { reviewSuccessfullyAdded ->
+                if (!reviewSuccessfullyAdded) {
+                    showErrorAlertDialog(
+                        "An error occurred in trying to save the review. Please try again.",
+                        requireContext()
+                    )
+                }
+                progressDialog.dismiss()
                 dismiss()
             }
             addReview(description, stars, date)

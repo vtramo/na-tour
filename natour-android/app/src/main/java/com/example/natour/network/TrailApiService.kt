@@ -17,11 +17,15 @@ interface TrailApiService {
         @Part("trailDuration")      trailDuration: RequestBody,
         @Part("trailDescription")   trailDescription: RequestBody,
         @Part("routePoints")        routePoints: RequestBody,
-        @Part                       image: MultipartBody.Part
+        @Part                       image: MultipartBody.Part,
+        @Header("Authorization")    authHeader: String
     ): Boolean
 
     @GET("/trail/{page}")
-    suspend fun getTrails(@Path("page") page: Int): List<TrailDto>
+    suspend fun getTrails(
+        @Path("page") page: Int,
+        @Header("Authorization") authHeader: String
+    ): List<TrailDto>
 
     @Multipart
     @POST("/trail/photo")
@@ -29,11 +33,13 @@ interface TrailApiService {
         @Part("idOwner")    idOwner: RequestBody,
         @Part("idTrail")    idTrail: RequestBody,
         @Part("position")   position: RequestBody,
-        @Part               image: MultipartBody.Part
+        @Part               image: MultipartBody.Part,
+        @Header("Authorization")    authHeader: String
     ): Boolean
 
     @POST("/trail/review")
     suspend fun addReview(
-        @Body trailReview: TrailReviewDto
+        @Body trailReview: TrailReviewDto,
+        @Header("Authorization") authHeader: String
     ): Boolean
 }

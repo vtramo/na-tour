@@ -14,17 +14,26 @@ class UserRemoteDataSource(
     override suspend fun existsByUsername(username: String): Boolean =
         userApiService.existsByUsername(username)
 
-    override suspend fun addFavoriteTrail(idTrail: Long, idUser: Long): Boolean =
-        userApiService.addFavoriteTrail(idTrail, idUser)
+    override suspend fun addFavoriteTrail(
+        idTrail: Long,
+        idUser: Long,
+        accessToken: String
+    ): Boolean = userApiService.addFavoriteTrail(idTrail, idUser, buildAuthHeader(accessToken))
 
-    override suspend fun removeFavoriteTrail(idTrail: Long, idUser: Long): Boolean =
-        userApiService.removeFavoriteTrail(idTrail, idUser)
+    override suspend fun removeFavoriteTrail(
+        idTrail: Long,
+        idUser: Long,
+        accessToken: String
+    ): Boolean = userApiService.removeFavoriteTrail(idTrail, idUser, buildAuthHeader(accessToken))
 
-    override suspend fun getFavoriteTrails(idUser: Long): Flow<List<Trail>> = flow {
-        val newTrails = userApiService
-            .getFavoriteTrails(idUser)
-            .map { trailDto -> trailDto.toTrailModel() }
-        emit(newTrails)
-    }
-
+    override suspend fun getFavoriteTrails(
+        idUser: Long,
+        accessToken: String
+    ): Flow<List<Trail>> =
+        flow {
+            val newTrails = userApiService
+                .getFavoriteTrails(idUser, buildAuthHeader(accessToken))
+                .map { trailDto -> trailDto.toTrailModel() }
+            emit(newTrails)
+        }
 }

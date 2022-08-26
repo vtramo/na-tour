@@ -1,19 +1,23 @@
 package com.example.natour.ui.home
 
-import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.natour.data.model.Trail
+import com.example.natour.data.repositories.MainUserRepository
 import com.example.natour.data.repositories.TrailRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
+import java.net.ConnectException
+import java.net.SocketTimeoutException
 import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val trailRepository: TrailRepository
+    private val trailRepository: TrailRepository,
+    private val mainUserRepository: MainUserRepository
 ) : ViewModel() {
 
     init {
@@ -36,25 +40,34 @@ class HomeViewModel @Inject constructor(
     private var _isLoadingTrails = false
     val isLoadingTrails get() = _isLoadingTrails
 
+    private val _firstLoadFinishedLiveData = MutableLiveData<Boolean>()
+    val firstLoadFinishedLiveData: LiveData<Boolean> get() = _firstLoadFinishedLiveData
+
     fun loadTrails() = viewModelScope.launch {
         _isLoadingTrails = true
-        trailRepository.load(currentPage).collect { listTrails ->
-            if (listTrails.isEmpty()) {
-                _pagesAreFinished = true
-                return@collect
+        trailRepository
+            .load(currentPage, mainUserRepository.getAccessToken())
+            .catch { handleErrors() }
+            .collect { listTrails ->
+                _pagesAreFinished = listTrails.size < 10
+                addMoreTrails(listTrails)
+                if (isFirstLoad()) _firstLoadFinishedLiveData.value = true
             }
-            addMoreTrails(listTrails)
-        }
         _isLoadingTrails = false
+        resetErrorsLiveData()
     }
 
     private fun addMoreTrails(otherTrails: List<Trail>) {
         val newTrailList = mutableListOf<Trail>()
-        newTrailList.addAll(_trails.value!!)
-        otherTrails.forEach { it.isFavorite = mapOfFavoriteTrails.containsKey(it.idTrail) }
-        newTrailList.addAll(otherTrails)
-        _trails.value = newTrailList
+        with(newTrailList) {
+            addAll(_trails.value!!)
+            addAll(otherTrails)
+            flagFavoriteTrails()
+            _trails.value = this
+        }
     }
+
+    private fun isFirstLoad() = _firstLoadFinishedLiveData.value == null
 
     private var _isRefreshingLiveData = MutableLiveData<Boolean>()
     val isRefreshingLiveData get() = _isRefreshingLiveData
@@ -65,13 +78,18 @@ class HomeViewModel @Inject constructor(
         _pagesAreFinished = false
         _isLoadingTrails = true
 
-        trailRepository.load(currentPage).collect { listTrails ->
-            _trails.value = listTrails.toMutableList()
-        }
+        trailRepository
+            .load(currentPage, mainUserRepository.getAccessToken())
+            .catch { handleErrors() }
+            .collect { listTrails ->
+                _trails.value = listTrails.toMutableList()
+                _pagesAreFinished = listTrails.size < 10
+            }
 
         _isLoadingTrails = false
         _isRefreshingLiveData.value = false
         _isRefreshingLiveData = MutableLiveData()
+        resetErrorsLiveData()
     }
 
     private var _isOnHome = true
@@ -82,10 +100,26 @@ class HomeViewModel @Inject constructor(
     fun updateFavoriteTrailsInTheList(mapFavoriteTrails: Map<Long, Trail>) {
         mapOfFavoriteTrails = mapFavoriteTrails
         val newTrailList = mutableListOf<Trail>()
-        newTrailList.addAll(_trails.value!!)
-        newTrailList.forEach {
-            it.isFavorite = mapFavoriteTrails.containsKey(it.idTrail)
+        with(newTrailList) {
+            addAll(_trails.value!!)
+            flagFavoriteTrails()
+            _trails.value = this
         }
-        _trails.value = newTrailList
+    }
+
+    private fun List<Trail>.flagFavoriteTrails() = forEach {
+        trail -> trail.isFavorite = mapOfFavoriteTrails.containsKey(trail.idTrail)
+    }
+
+    private var _connectionErrorLiveData = MutableLiveData<Boolean>()
+    val connectionErrorLiveData get() = _connectionErrorLiveData
+
+    private fun handleErrors() {
+        _connectionErrorLiveData.value = true
+        _connectionErrorLiveData = MutableLiveData()
+    }
+
+    private fun resetErrorsLiveData() {
+        _connectionErrorLiveData = MutableLiveData()
     }
 }

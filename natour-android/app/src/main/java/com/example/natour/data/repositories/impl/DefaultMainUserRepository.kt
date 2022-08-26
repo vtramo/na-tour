@@ -4,6 +4,7 @@ import com.example.natour.data.repositories.MainUserRepository
 import com.example.natour.data.sources.MainUserDataSource
 import com.example.natour.data.MainUser
 import com.example.natour.data.model.AuthenticatedUser
+import com.example.natour.data.model.UserDetails
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.flow
@@ -31,7 +32,13 @@ class DefaultMainUserRepository(
         mainUserDataSource.clear()
     }
 
-    override fun getDetails(): MainUser.Details = mainUserObject.details
+    override fun getDetails(): UserDetails = with(mainUserObject) {
+        UserDetails(
+            id, username, firstName, lastName, email
+        )
+    }
+
+    override fun getAccessToken(): String = mainUserObject.accessToken
 
     override fun load() = flow {
         if (mainUserDataSource.isAlreadyLoggedIn()) {

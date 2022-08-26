@@ -25,7 +25,7 @@ public enum KeyCloakTokenScope {
         "http://192.168.1.4:8180/realms/master/protocol/openid-connect/token");
 
     private final String clientId, grantType, clientSecret;
-    final String  urlTokenKey;
+    final String urlTokenKey;
 
     Map<String, List<String>> getParameters(Map<String, List<String>> addionalParameters) {
         Map<String, List<String>> map = new HashMap<>(addionalParameters);

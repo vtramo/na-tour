@@ -37,8 +37,9 @@
                 android:layout_height="wrap_content"
                 android:text="@string/add_a_review"
                 android:layout_gravity="center"
-                android:textSize="22sp"
-                android:fontFamily="@font/montserrat_bold"/>
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:textSize="22sp" />
 
             <!-- Username -->
             <LinearLayout
@@ -56,12 +57,14 @@
                     android:text="@{mainUserViewModel.mainUser.username}"
                     android:layout_gravity="center"
                     android:textSize="15sp"
-                    android:textStyle="bold"/>
+                    android:textStyle="normal"
+                    android:textColor="@color/black"
+                    />
 
                 <ImageView
                     android:layout_width="25dp"
                     android:layout_height="25dp"
-                    android:src="@drawable/user_image_card"
+                    android:src="@drawable/person"
                     android:layout_marginStart="5dp"
                     tools:ignore="ContentDescription" />
 
@@ -194,7 +197,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:backgroundTint="@color/white"
-                android:textColor="@color/purple_700"
+                android:textColor="#33691E"
                 android:layout_marginHorizontal="5dp"
                 android:text="@string/cancel"
                 tools:ignore="ButtonStyle" />

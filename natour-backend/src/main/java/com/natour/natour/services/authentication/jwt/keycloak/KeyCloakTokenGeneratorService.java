@@ -98,6 +98,7 @@ public class KeyCloakTokenGeneratorService implements TokenGeneratorService {
                 KeyCloakToken.class
             );
         } catch (RestClientException e) {
+            e.printStackTrace();
             log.warning("KeyCloakTokenRequest error. Scope: " + scope + " " + e.getLocalizedMessage());
             throw new RuntimeException();
         }

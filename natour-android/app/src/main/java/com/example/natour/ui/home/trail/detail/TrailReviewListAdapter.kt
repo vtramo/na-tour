@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.natour.data.model.TrailReview
 import com.example.natour.databinding.TrailReviewViewBinding
+import com.example.natour.ui.MainUserViewModel
 
 class TrailReviewListAdapter:
     ListAdapter<TrailReview, TrailReviewListAdapter.TrailReviewViewHolder>(TrailDiffCallback) {

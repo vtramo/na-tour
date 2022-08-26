@@ -103,6 +103,8 @@
                                 android:id="@+id/difficulty_text_view"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:gravity="center"
                                 tools:text="@string/very_difficult"
                                 tools:textColor="@color/red_2_difficulty"
                                 />

@@ -1,6 +1,7 @@
 package com.example.natour.ui.home.trail.detail
 
 import android.app.Activity
+import android.app.AlertDialog
 import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.pdf.PdfDocument
@@ -16,12 +17,15 @@ import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
 import com.example.natour.R
 import com.example.natour.databinding.DialogFragmentDownloadTrailBinding
 import com.example.natour.databinding.PdfTrailDetailsBinding
+import com.example.natour.util.createProgressAlertDialog
 import io.jenetics.jpx.GPX
 
 class DownloadTrailDialogFragment: DialogFragment() {
 
     private val mTrailDetailsViewModel: TrailDetailsViewModel
             by hiltNavGraphViewModels(R.id.home_nav_graph)
+
+    private lateinit var mDownloadingProgressDialog: AlertDialog
 
     private var _binding: DialogFragmentDownloadTrailBinding? = null
     val binding get() = _binding!!
@@ -62,6 +66,13 @@ class DownloadTrailDialogFragment: DialogFragment() {
     private val pdfLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == Activity.RESULT_OK) {
+
+                mDownloadingProgressDialog = createProgressAlertDialog(
+                    "Downloading the pdf file...",
+                    requireContext()
+                )
+                mDownloadingProgressDialog.show()
+
                 result?.data?.data?.also { uri ->
                     val pdfDocument = createTrailDetailsPdfDocument()
                     pdfDocument.writeToFile(uri)
@@ -72,6 +83,7 @@ class DownloadTrailDialogFragment: DialogFragment() {
             } else mTrailDetailsViewModel.trailDownloadedSuccessfullyLiveData.value =
                 TrailDownloadResult.FAIL
 
+            mDownloadingProgressDialog.dismiss()
             dismiss()
         }
 
@@ -127,6 +139,13 @@ class DownloadTrailDialogFragment: DialogFragment() {
     private val gpxLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == Activity.RESULT_OK) {
+
+                mDownloadingProgressDialog = createProgressAlertDialog(
+                    "Downloading the gpx file...",
+                    requireContext()
+                )
+                mDownloadingProgressDialog.show()
+
                 result?.data?.data?.also { uri ->
                     val gpx = GPX.builder()
                         .addTrack { track ->
@@ -144,6 +163,8 @@ class DownloadTrailDialogFragment: DialogFragment() {
                 }
             } else mTrailDetailsViewModel.trailDownloadedSuccessfullyLiveData.value =
                 TrailDownloadResult.FAIL
+
+            mDownloadingProgressDialog.dismiss()
             dismiss()
         }
 

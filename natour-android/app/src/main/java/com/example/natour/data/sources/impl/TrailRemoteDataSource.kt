@@ -21,8 +21,9 @@ class TrailRemoteDataSource(
         trailDuration: RequestBody,
         trailDescription: RequestBody,
         routePoints: RequestBody,
-        image: MultipartBody.Part
-    ): Boolean =
+        image: MultipartBody.Part,
+        accessToken: String
+    ): Boolean = try {
         trailApiService.save(
             idOwner,
             trailName,
@@ -30,12 +31,14 @@ class TrailRemoteDataSource(
             trailDuration,
             trailDescription,
             routePoints,
-            image
+            image,
+            buildAuthHeader(accessToken)
         )
+    } catch (exception: Exception) { false }
 
-    override suspend fun load(page: Int): Flow<List<Trail>> = flow {
+    override suspend fun load(page: Int, accessToken: String): Flow<List<Trail>> = flow {
         val newTrails = trailApiService
-            .getTrails(page)
+            .getTrails(page, buildAuthHeader(accessToken))
             .map { trailDto -> trailDto.toTrailModel() }
         emit(newTrails)
     }
@@ -44,15 +47,23 @@ class TrailRemoteDataSource(
         idOwner: RequestBody,
         idTrail: RequestBody,
         position: RequestBody,
-        image: MultipartBody.Part
-    ): Boolean =
+        image: MultipartBody.Part,
+        accessToken: String
+    ): Boolean = try {
         trailApiService.addPhoto(
             idOwner,
             idTrail,
             position,
-            image
+            image,
+            buildAuthHeader(accessToken)
         )
+    } catch (exception: Exception) { false }
 
-    override suspend fun addReview(trailReview: TrailReviewDto): Boolean =
-        trailApiService.addReview(trailReview)
+    override suspend fun addReview(
+        trailReview: TrailReviewDto,
+        accessToken: String
+    ): Boolean =
+    try {
+        trailApiService.addReview(trailReview, buildAuthHeader(accessToken))
+    } catch (exception: Exception) { false }
 }

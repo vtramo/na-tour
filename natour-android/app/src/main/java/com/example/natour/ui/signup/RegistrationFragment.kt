@@ -9,12 +9,13 @@ import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
-import androidx.navigation.fragment.findNavController
 
 import com.example.natour.MainActivity
 import com.example.natour.R
 import com.example.natour.databinding.FragmentRegistrationBinding
 import com.example.natour.util.ConstantRegex
+import com.example.natour.util.createProgressAlertDialog
+import com.example.natour.util.showSnackBar
 
 import com.google.android.material.textfield.TextInputLayout
 import dagger.hilt.android.AndroidEntryPoint
@@ -25,47 +26,54 @@ class RegistrationFragment : Fragment() {
     private var _binding: FragmentRegistrationBinding? = null
     private val binding get() = _binding!!
 
-    private val registrationViewModel: RegistrationViewModel by viewModels()
+    private val mRegistrationViewModel: RegistrationViewModel by viewModels()
+
+    private lateinit var mRegisterProgressDialog: AlertDialog
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentRegistrationBinding.inflate(inflater, container,false)
+
+        binding.lifecycleOwner = viewLifecycleOwner
+        binding.registrationFragment = this
+
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        changeRegisterButton(enabled = false)
         setupSignUp()
         setupTextVerifies()
         setConfirmPasswordVerifier()
         setupErrorHandlingUserAlreadyExists()
-        setupCustomToolbar()
         binding.registerButton.setOnClickListener { submitForm() }
     }
 
-    private fun setupCustomToolbar(){
-        val toolbar = binding.customToolbarRegistration
-        toolbar.setNavigationIcon(R.drawable.ic_back_40)
-        toolbar.setNavigationOnClickListener { findNavController().popBackStack() }
+    private fun changeRegisterButton(enabled: Boolean) {
+        with(binding.registerButton) {
+            isEnabled = enabled
+        }
     }
 
     private fun setupSignUp() {
-        registrationViewModel
+        mRegistrationViewModel
             .hasBeenRegistered.observe(viewLifecycleOwner) { hasBeenRegisteredCorrectly ->
                 if (!hasBeenRegisteredCorrectly) {
                     showInvalidFormAlertDialog()
                 } else {
-                    Toast.makeText(context, "SUCCESSFULLY REGISTERED", Toast.LENGTH_SHORT).show()
+                    showSnackBar("Successfully registered", requireView())
                     goBackToLoginFragment()
                 }
+                mRegisterProgressDialog.dismiss()
             }
     }
 
     private fun setupErrorHandlingUserAlreadyExists() {
-        registrationViewModel
+        mRegistrationViewModel
             .userExists.observe(viewLifecycleOwner) { userExists ->
                 if (userExists) {
                     binding.usernameTextInputLayout.isErrorEnabled = true
@@ -96,6 +104,7 @@ class RegistrationFragment : Fragment() {
         val inputEditText = editText!!
         inputEditText.addTextChangedListener {
             inputEditText.validateTextWithRegex(this, regex, errorMessage)
+            changeRegisterButton(enabled = isValidForm())
         }
     }
 
@@ -124,6 +133,7 @@ class RegistrationFragment : Fragment() {
             val confirmPassword = confirmPasswordEditable.toString()
 
             verifyIfPasswordAndConfirmPasswordAreTheSame(password, confirmPassword)
+            changeRegisterButton(enabled = isValidForm())
         }
 
         passwordTextInputEditText.addTextChangedListener { passwordEditable ->
@@ -131,6 +141,7 @@ class RegistrationFragment : Fragment() {
             val confirmPassword = confirmPasswordTextInputEditText.text!!.toString()
 
             verifyIfPasswordAndConfirmPasswordAreTheSame(password, confirmPassword)
+            changeRegisterButton(enabled = isValidForm())
         }
     }
 
@@ -149,7 +160,12 @@ class RegistrationFragment : Fragment() {
 
     private fun submitForm() {
         if (isValidForm()) {
-            registrationViewModel.submitForm(
+            mRegisterProgressDialog = createProgressAlertDialog(
+                "Creating a new profile...",
+                requireContext()
+            ).also { it.show() }
+
+            mRegistrationViewModel.submitForm(
                 binding.firstNameTextInputEditText.text!!.toString(),
                 binding.lastNameTextInputEditText.text!!.toString(),
                 binding.usernameTextInputEditText.text!!.toString(),
@@ -199,6 +215,10 @@ class RegistrationFragment : Fragment() {
             .setMessage(message)
             .setPositiveButton("Okay") { _, _ -> }
             .show()
+    }
+
+    fun onBackClick() {
+        view?.findNavController()?.popBackStack()
     }
 
     override fun onDestroyView() {
