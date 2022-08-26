@@ -77,3 +77,6 @@ NaTour is a complex and distributed system aimed at offering a modern social net
   
   <br>
 </ul>
+
+<H2>Swagger doc</H2>
+https://app.swaggerhub.com/apis/vtramo/NaTourAPI/v0
