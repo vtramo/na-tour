@@ -197,7 +197,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:backgroundTint="@color/white"
-                android:textColor="@color/com_facebook_blue"
+                android:textColor="#33691E"
                 android:layout_marginHorizontal="5dp"
                 android:text="@string/cancel"
                 tools:ignore="ButtonStyle" />
