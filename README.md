@@ -34,9 +34,10 @@ NaTour is a complex and distributed system aimed at offering a modern social net
   <br>
   
   <li>
-    It is possible to display a detail screen for each trail. This screen shows all known information about the trail and displays its route on an interactive map. In addition, the detail screen shows user reviews and uploaded photos.
+    It is possible to display a detail screen for each trail. This screen shows all known information about the trail and displays its route on an interactive map. In addition, the detail screen shows user reviews and uploaded photos. The user can also show their location (if the mobile device supports GPS location) on the map.
     <br><br>
     <image src="https://github.com/vtramo/NaTour/blob/main/images/trail_details.gif?raw=true" height="500"/>
+    <image src="https://github.com/vtramo/NaTour/blob/main/images/trail_details_gps.gif?raw=true" height="500"/>
   </li>
   
   <br>
