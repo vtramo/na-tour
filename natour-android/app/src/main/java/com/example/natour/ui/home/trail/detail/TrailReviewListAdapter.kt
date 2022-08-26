@@ -7,8 +7,11 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.natour.data.model.TrailReview
 import com.example.natour.databinding.TrailReviewViewBinding
+import com.example.natour.ui.MainUserViewModel
 
-class TrailReviewListAdapter:
+class TrailReviewListAdapter(
+    private val mainUserViewModel: MainUserViewModel
+):
     ListAdapter<TrailReview, TrailReviewListAdapter.TrailReviewViewHolder>(TrailDiffCallback) {
 
     companion object {
@@ -28,7 +31,7 @@ class TrailReviewListAdapter:
         fun bindTrailReview(trailReview: TrailReview) = with(binding) {
             trailReviewStarsImageView.setImageDrawable(trailReview.getStarsImage())
             trailReviewDescriptionTextView.text = trailReview.description
-            trailReviewUsernameOwnerTextView.text = trailReview.owner.username
+            trailReviewUsernameOwnerTextView.text = mainUserViewModel.mainUser.value!!.username
             trailReviewDateTextView.text = trailReview.date
         }
     }
