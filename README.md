@@ -64,4 +64,14 @@ NaTour is a complex and distributed system aimed at offering a modern social net
     <br><br>
     <image src="https://github.com/vtramo/NaTour/blob/main/images/trail_photo_gps.gif?raw=true" height="500"/>
   </li>
+  
+  <br>
+  
+  <li>
+    A user can add a review to a trail.
+    <br><br>
+    <image src="https://github.com/vtramo/NaTour/blob/main/images/trail_add_review.gif?raw=true" height="500"/>
+  </li>
+  
+  <br>
 </ul>
