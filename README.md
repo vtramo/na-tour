@@ -48,4 +48,12 @@ NaTour is a complex and distributed system aimed at offering a modern social net
     <image src="https://github.com/vtramo/NaTour/blob/main/images/trail_download_gpx.gif?raw=true" height="500"/>
     <image src="https://github.com/vtramo/NaTour/blob/main/images/trail_download_pdf.gif?raw=true" height="500"/>
   </li>
+  
+  <br>
+  
+  <li>
+    A user can add or remove trails from their list of favorites
+    <br><br>
+    <image src="https://github.com/vtramo/NaTour/blob/main/images/trail_favorites.gif?raw=true" height="500"/>
+  </li>
 </ul>
