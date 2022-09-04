@@ -19,20 +19,26 @@ import com.natour.natour.model.dto.UpdateUnreadMessagesDto;
 import com.natour.natour.services.chat.ChatService;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
-
 @RestController
 @RequestMapping("/chat")
+@Tag(
+    name = "Chat Controller", 
+    description = "This REST controller provides services to create/modify chats " +
+        "between users or to send messages to another user"
+)
 public class ChatController {
 
     @Autowired
     private ChatService chatService;
 
     @MessageMapping("/chat")
+    @Operation(summary = "Save and send a message to the specified username.")
     public void send(
         SimpMessageHeaderAccessor sha, 
         @Payload ChatMessageDto chatMessageDto
@@ -45,7 +51,7 @@ public class ChatController {
         produces = {MediaType.APPLICATION_JSON_VALUE}
     )
     @ResponseStatus(HttpStatus.CREATED)
-    @Operation(summary = "")
+    @Operation(summary = "Create a chat between two users.")
     public boolean createChat(@RequestBody ChatRequestDto chatDto) {
         return chatService.create(chatDto);
     }
@@ -55,7 +61,8 @@ public class ChatController {
         consumes = {MediaType.ALL_VALUE}
     )
     @ResponseStatus(HttpStatus.OK)
-    @Operation(summary = "")
+    @Operation(summary = "Updates the unread messages of the specified user" +
+        " in the specified chat.")
     public void updateUnreadMessages(
         @PathVariable Long chatId, 
         @RequestBody UpdateUnreadMessagesDto updateUnreadMessagesDto
@@ -72,7 +79,7 @@ public class ChatController {
         consumes = {MediaType.ALL_VALUE}
     )
     @ResponseStatus(HttpStatus.OK)
-    @Operation(summary = "")
+    @Operation(summary = "Returns the main image of the specified trail.")
     public ImageDto getTrailChatImage(@PathVariable long trailId) {
         return chatService.getTrailChatImage(trailId);
     }
@@ -82,7 +89,7 @@ public class ChatController {
         consumes = {MediaType.ALL_VALUE}
     )
     @ResponseStatus(HttpStatus.OK)
-    @Operation(summary = "")
+    @Operation(summary = "Associate the specified trail with the specified chat.")
     public void setTrailToChat(
         @PathVariable long chatId,
         @PathVariable long trailId    
@@ -90,3 +97,4 @@ public class ChatController {
         chatService.setTrailToChat(chatId, trailId);
     }
 }
+
