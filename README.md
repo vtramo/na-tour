@@ -76,6 +76,14 @@ NaTour is a complex and distributed system aimed at offering a modern social net
   </li>
   
   <br>
+  
+  <li>
+    A user can chat with another user to ask for more information on an itinerary he has entered.
+    <br><br>
+    <image src="https://github.com/vtramo/NaTour/blob/main/images/chat_send_message.gif?raw=true" height="500"/>
+    <image src="https://github.com/vtramo/NaTour/blob/main/images/chat_reply_message.gif?raw=true" height="500"/>
+  </li>
+  
 </ul>
 
 <H2>Swagger doc</H2>
