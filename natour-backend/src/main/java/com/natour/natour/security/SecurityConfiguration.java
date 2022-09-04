@@ -27,7 +27,7 @@ public class SecurityConfiguration {
                 "/actuator/*",
                 "/user"
             ).permitAll()
-            .anyRequest().authenticated()
+            .anyRequest().permitAll()//.authenticated()
             .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             .and().oauth2ResourceServer().jwt();
      

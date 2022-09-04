@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    >
+
+    <data>
+        <variable
+            name="sendMessageDialogFragment"
+            type="com.example.natour.ui.home.trail.detail.SendMessageDialogFragment" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <!-- Send a message linear layout -->
+        <LinearLayout
+            android:id="@+id/send_message_head_linear_layout"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="12dp"
+            tools:ignore="UseCompoundDrawables">
+
+            <!-- Icon -->
+            <ImageView
+                android:layout_width="76dp"
+                android:layout_height="35dp"
+                android:src="@drawable/hiking_info"
+                android:layout_gravity="center"
+                tools:ignore="ContentDescription" />
+
+            <!-- Send a message label -->
+            <TextView
+                android:id="@+id/send_a_message_label_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="Send a message to bonek"
+                android:layout_gravity="center"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:gravity="center"
+                android:layout_marginStart="12dp"
+                android:textSize="18sp" />
+
+        </LinearLayout>
+
+        <!-- Divider -->
+        <View style="@style/Divider"
+            android:id="@+id/divider_between_head_and_stars"
+            app:layout_constraintTop_toBottomOf="@id/send_message_head_linear_layout"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_margin="10dp"
+            />
+
+        <!-- Message Linear Layout -->
+        <LinearLayout
+            android:id="@+id/message_linear_layout"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="15dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/send_message_head_linear_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- Message -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/message_text_input_layout"
+                style="@style/Widget.Unscramble.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="12dp"
+                app:helperText="Message"
+                app:counterEnabled="true"
+                app:counterMaxLength="250"
+                app:errorIconDrawable="@drawable/ic_error"
+                app:helperTextTextAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/message_text_input_edit_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="144dp"
+                    android:layout_gravity="top|start"
+                    android:gravity="top|start"
+                    android:hint="@string/ask_about_the_trail"
+                    android:inputType="textMultiLine"
+                    android:lines="5"
+                    android:maxLines="10"
+                    tools:ignore="DuplicateClickableBoundsCheck" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- Buttons -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <!-- Send button -->
+                <Button
+                    android:onClick="@{() -> sendMessageDialogFragment.onSendMessage()}"
+                    android:id="@+id/send_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="12dp"
+                    android:enabled="false"
+                    android:text="@string/send"
+                    tools:ignore="ButtonStyle" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

@@ -4,7 +4,7 @@ import com.example.natour.data.dto.TrailReviewDto
 import com.example.natour.data.model.Trail
 import com.example.natour.data.sources.TrailDataSource
 import com.example.natour.network.TrailApiService
-import com.example.natour.data.util.toTrailModel
+import com.example.natour.data.dto.toTrailModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import okhttp3.MultipartBody

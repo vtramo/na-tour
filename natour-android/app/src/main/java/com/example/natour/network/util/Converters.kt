@@ -12,5 +12,5 @@ object Converters {
         .add(KotlinJsonAdapterFactory())
         .build()
 
-    fun createConverterFactory(): Converter.Factory = MoshiConverterFactory.create(moshi)
+    fun createConverterFactory(): Converter.Factory = MoshiConverterFactory.create(moshi).asLenient()
 }

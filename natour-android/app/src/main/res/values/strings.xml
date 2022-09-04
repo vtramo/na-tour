@@ -100,6 +100,10 @@
     <string name="forgot_your_password">Forgot Your Password?</string>
     <string name="sign_up">Sign up</string>
     <string name="retry">Retry</string>
+    <string name="inbox">Inbox</string>
+    <string name="ask_about_the_trail">Ask about the trail</string>
+    <string name="send">Send</string>
+    <string name="message">Message</string>
 
     <!-- Route Creation -->
     <string-array name="listDifficulties">

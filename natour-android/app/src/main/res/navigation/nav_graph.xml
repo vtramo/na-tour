@@ -80,6 +80,9 @@
             <action
                 android:id="@+id/action_homeFragment_to_userDetailsDialogFragment"
                 app:destination="@id/userDetailsDialogFragment" />
+            <action
+                android:id="@+id/action_homeFragment_to_inboxFragment"
+                app:destination="@id/inboxFragment" />
         </fragment>
         <fragment
             android:id="@+id/trailDetailFragment"
@@ -95,6 +98,12 @@
             <action
                 android:id="@+id/action_trailDetailFragment_to_downloadTrailDialogFragment"
                 app:destination="@id/downloadTrailDialogFragment" />
+            <action
+                android:id="@+id/action_trailDetailFragment_to_chatFragment"
+                app:destination="@id/chatFragment" />
+            <action
+                android:id="@+id/action_trailDetailFragment_to_sendMessageDialogFragment"
+                app:destination="@id/sendMessageDialogFragment" />
         </fragment>
         <fragment
             android:id="@+id/trailPhotoFragment"
@@ -116,5 +125,25 @@
         <action
             android:id="@+id/action_global_loginFragment"
             app:destination="@id/loginFragment" />
+        <fragment
+            android:id="@+id/inboxFragment"
+            android:name="com.example.natour.ui.home.chat.InboxFragment"
+            android:label="ChatFragment" >
+            <action
+                android:id="@+id/action_inboxFragment_to_chatFragment"
+                app:destination="@id/chatFragment" />
+        </fragment>
+        <fragment
+            android:id="@+id/chatFragment"
+            android:name="com.example.natour.ui.home.chat.ChatFragment"
+            android:label="ChatFragment" >
+            <action
+                android:id="@+id/action_chatFragment_to_inboxFragment"
+                app:destination="@id/inboxFragment" />
+        </fragment>
+        <dialog
+            android:id="@+id/sendMessageDialogFragment"
+            android:name="com.example.natour.ui.home.trail.detail.SendMessageDialogFragment"
+            android:label="SendMessageDialogFragment" />
     </navigation>
 </navigation>

@@ -2,6 +2,7 @@ package com.natour.natour.services.user;
 
 import java.util.List;
 
+import com.natour.natour.model.dto.ChatResponseDto;
 import com.natour.natour.model.dto.TrailResponseDto;
 import com.natour.natour.model.entity.ApplicationUser;
 
@@ -12,4 +13,5 @@ public interface ApplicationUserService {
     boolean addFavoriteTrail(long userId, long trailId);
     boolean deleteFavoriteTrail(long userId, long trailId);
     List<TrailResponseDto> getFavoriteTrails(long userId);
+    List<ChatResponseDto> getChats(long userId);
 }

@@ -59,6 +59,7 @@
 
                 <!-- Send message button -->
                 <ImageButton
+                    android:onClick="@{() -> trailDetailsFragment.onSendMessageClick()}"
                     android:id="@+id/toolbar_send_image_button"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintEnd_toStartOf="@id/toolbar_favorite_trail_image_button"

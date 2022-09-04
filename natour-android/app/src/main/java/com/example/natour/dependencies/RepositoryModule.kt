@@ -54,4 +54,10 @@ object RepositoryModule {
     fun provideTrailRepository(
         trailDataSource: TrailDataSource
     ): TrailRepository = DefaultTrailRepository(trailDataSource)
+
+    @Provides
+    @Singleton
+    fun provideChatRepository(
+        chatDataSource: ChatDataSource
+    ): ChatRepository = DefaultChatRepository(chatDataSource)
 }

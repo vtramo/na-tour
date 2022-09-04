@@ -12,6 +12,7 @@ import com.example.natour.R
 import com.example.natour.databinding.DialogFragmentAddTrailReviewBinding
 import com.example.natour.ui.MainUserViewModel
 import com.example.natour.util.createProgressAlertDialog
+import com.example.natour.util.getCurrentDate
 import com.example.natour.util.showErrorAlertDialog
 import java.text.SimpleDateFormat
 import java.util.*
@@ -37,7 +38,11 @@ class AddTrailReviewDialogFragment: DialogFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = DialogFragmentAddTrailReviewBinding.inflate(layoutInflater, container, false)
+        _binding = DialogFragmentAddTrailReviewBinding.inflate(
+            layoutInflater,
+            container,
+            false
+        )
 
         binding.lifecycleOwner = viewLifecycleOwner
         binding.mainUserViewModel = mMainUserViewModel
@@ -121,11 +126,6 @@ class AddTrailReviewDialogFragment: DialogFragment() {
             addReview(description, stars, date)
         }
     }
-
-    private fun getCurrentDate(): String = SimpleDateFormat(
-        "dd/MM/yyyy",
-        Locale.getDefault()
-    ).format(Calendar.getInstance().time)
 
     override fun onDestroy() {
         super.onDestroy()
