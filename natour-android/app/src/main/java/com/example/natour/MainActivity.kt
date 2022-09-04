@@ -5,6 +5,7 @@ import android.app.Application
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.viewModels
 import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
@@ -23,6 +24,10 @@ import com.example.natour.ui.signin.ThirdPartyLoginViewModel
 import com.example.natour.ui.signin.FacebookLogin
 import com.example.natour.ui.signin.GoogleLogin
 import dagger.hilt.android.AndroidEntryPoint
+import ua.naiksoftware.stomp.Stomp
+import ua.naiksoftware.stomp.dto.LifecycleEvent
+import ua.naiksoftware.stomp.dto.StompHeader
+import ua.naiksoftware.stomp.dto.StompMessage
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {

@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    >
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_margin="12dp"
+        android:id="@+id/chat_constraint_layout"
+        android:layout_width="match_parent"
+        android:layout_height="125dp">
+
+        <!-- Divider Top -->
+        <View style="@style/Divider"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            />
+
+        <!-- Content -->
+        <LinearLayout
+            android:layout_marginVertical="6dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:ignore="DisableBaselineAlignment">
+
+            <FrameLayout
+                android:layout_weight="5"
+                android:layout_width="0dp"
+                android:layout_marginStart="6dp"
+                android:layout_height="wrap_content">
+
+                <!-- Image -->
+                <ImageView
+                    android:id="@+id/chat_image"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:scaleType="centerCrop"
+                    tools:src="@drawable/sentiero_degli_dei_vista"
+                    tools:ignore="ContentDescription" />
+
+                <!-- Progress Bar chat Image -->
+                <ProgressBar
+                    android:id="@+id/progress_bar_chat_image"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"/>
+
+            </FrameLayout>
+
+            <!-- Text Content -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_weight="20"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="12dp"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="@+id/chat_image_view"
+                app:layout_constraintStart_toEndOf="@+id/chat_image_view"
+                app:layout_constraintTop_toTopOf="@id/chat_image_view">
+
+                <!-- Username -->
+                <TextView
+                    android:id="@+id/username_chat_text_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:textSize="22sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="bonek" />
+
+                <!-- Last Message -->
+                <TextView
+                    android:id="@+id/last_message_text_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:maxWidth="200dp"
+                    android:textColor="#424141"
+                    android:textSize="14sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/username_chat_text_view"
+                    tools:text="Hey, how are you? I would like to walk this trail. Could you tell me your experience?" />
+
+                <!-- Date and counter unread messages -->
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <!-- Date -->
+                    <TextView
+                        android:id="@+id/date_text_view"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:textColor="@color/gray"
+                        tools:text="11/03/99" />
+
+                    <!-- Counter unread messages -->
+                    <TextView
+                        android:visibility="gone"
+                        tools:visibility="visible"
+                        android:layout_marginTop="4dp"
+                        android:id="@+id/counter_unread_messages_text_view"
+                        android:layout_width="30dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="5dp"
+                        android:background="@drawable/shape_notification"
+                        android:foregroundGravity="center"
+                        android:gravity="center"
+                        android:textColor="@color/white"
+                        android:textStyle="bold"
+                        tools:text="3" />
+
+                </LinearLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </LinearLayout>
+
+        <!-- Divider Bottom -->
+        <View style="@style/Divider"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

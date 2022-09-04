@@ -59,6 +59,14 @@ public class ApplicationUser {
     @OneToMany(mappedBy="owner", cascade=CascadeType.ALL)
     private List<TrailPhoto> trailPhotos = new LinkedList<>();
 
+    @ManyToMany
+    @JoinTable(
+        name="NT_USERS_CHATS",
+        joinColumns={@JoinColumn(name="user_id")},
+        inverseJoinColumns={@JoinColumn(name="chat_id")}
+    )
+    private List<Chat> chats = new LinkedList<>();
+
     public ApplicationUser(
         Long id,
         String username,
@@ -85,5 +93,9 @@ public class ApplicationUser {
 
     public void addTrailPhoto(@NonNull TrailPhoto photo) {
         trailPhotos.add(photo);
+    }
+
+    public void addChat(@NonNull Chat chat) {
+        chats.add(chat);
     }
 }

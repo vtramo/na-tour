@@ -1,7 +1,6 @@
-package com.example.natour.data.util
+package com.example.natour.data.dto
 
-import com.example.natour.data.dto.TrailDto
-import com.example.natour.data.dto.TrailPhotoDto
+import com.example.natour.data.model.Chat
 import com.example.natour.data.model.Trail
 import com.example.natour.data.model.TrailPhoto
 import com.example.natour.util.toDrawable
@@ -31,3 +30,13 @@ fun TrailPhotoDto.toTrailPhotoModel(): TrailPhoto =
 fun List<TrailPhotoDto>.toMutableListOfTrailPhotoModel(): MutableList<TrailPhoto> =
     map { trailPhotoDto -> trailPhotoDto.toTrailPhotoModel() }
         .toMutableList()
+
+fun ChatResponseDto.toChatModel(): Chat =
+    Chat(
+        id,
+        idTrail,
+        messages,
+        totalUnreadMessages,
+        usernameUser1,
+        usernameUser2
+    )

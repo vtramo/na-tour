@@ -19,18 +19,18 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.exifinterface.media.ExifInterface
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
 import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import com.example.natour.MainActivity
 import com.example.natour.R
+import com.example.natour.data.MainUser
 import com.example.natour.data.model.Position
 import com.example.natour.data.model.Trail
 import com.example.natour.data.model.TrailPhoto
 import com.example.natour.databinding.FragmentTrailDetailsBinding
 import com.example.natour.network.IllegalContentImageDetectorApiService
-import com.example.natour.ui.MainUserViewModel
+import com.example.natour.ui.home.chat.ChatViewModel
 import com.example.natour.ui.home.trail.SupportMapFragmentWrapper
 import com.example.natour.ui.home.trail.favorites.FavoriteTrailChanger
 import com.example.natour.ui.home.trail.favorites.FavoriteTrailsViewModel
@@ -55,7 +55,10 @@ class TrailDetailsFragment : Fragment(), OnMapReadyCallback, OnInfoWindowClickLi
         by hiltNavGraphViewModels(R.id.home_nav_graph)
 
     private val mFavoriteTrailsViewModel: FavoriteTrailsViewModel
-            by hiltNavGraphViewModels(R.id.home_nav_graph)
+        by hiltNavGraphViewModels(R.id.home_nav_graph)
+
+    private val mChatViewModel: ChatViewModel
+        by hiltNavGraphViewModels(R.id.home_nav_graph)
 
     private var _binding: FragmentTrailDetailsBinding? = null
     private val binding get() = _binding!!
@@ -475,6 +478,42 @@ class TrailDetailsFragment : Fragment(), OnMapReadyCallback, OnInfoWindowClickLi
                 )
             }
         }
+    }
+
+    fun onSendMessageClick() {
+        val idTrail = mTrailDetailsViewModel.thisTrail.idTrail
+        val idOwnerTrail = mTrailDetailsViewModel.thisTrail.owner.id
+        val idMainUser = MainUser.id
+        val idChat = MainUser.id + idOwnerTrail
+
+        if (idMainUser == idOwnerTrail) {
+            showErrorAlertDialog(
+                "You can't send a message to yourself!",
+                requireContext()
+            )
+            return
+        }
+
+        with(mChatViewModel) {
+            if (existsChatById(idChat)) {
+                setTrailToChat(idChat, idTrail)
+                setFocussedChat(idChat)
+                goToChatFragment()
+            } else {
+                showSendMessageDialogFragment()
+            }
+        }
+    }
+
+    private fun showSendMessageDialogFragment() {
+        SendMessageDialogFragment().show(
+            childFragmentManager, SendMessageDialogFragment.TAG
+        )
+    }
+
+    private fun goToChatFragment() {
+        val action = TrailDetailsFragmentDirections.actionTrailDetailFragmentToChatFragment()
+        view?.findNavController()?.navigate(action)
     }
 
     fun onBackClick() {

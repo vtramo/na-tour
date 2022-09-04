@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
+
+    <data>
+        <variable
+            name="chatFragment"
+            type="com.example.natour.ui.home.chat.ChatFragment" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:background="#E3FADB"
+        android:layout_height="match_parent">
+
+        <!-- Chat Toolbar -->
+        <androidx.appcompat.widget.Toolbar
+            android:background="@color/white"
+            android:id="@+id/toolbar_chat"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                >
+
+                <!-- Back button -->
+                <ImageButton
+                    android:onClick="@{() -> chatFragment.onBackClick()}"
+                    android:id="@+id/back_button_toolbar"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:layout_marginEnd="15dp"
+                    android:layout_gravity="start"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/arrow_left"
+                    style="@style/Widget.AppCompat.Button.Borderless"
+                    tools:ignore="ContentDescription" />
+
+                <!-- User icon -->
+                <ImageView
+                    android:layout_marginStart="8dp"
+                    android:id="@+id/user_icon_toolbar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/person"
+                    app:layout_constraintStart_toEndOf="@id/back_button_toolbar"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/toolbar_title_username_text_view"
+                    tools:ignore="ContentDescription" />
+
+                <!-- Toolbar title username -->
+                <TextView
+                    android:layout_marginStart="5dp"
+                    android:id="@+id/toolbar_title_username_text_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="bonek"
+                    app:layout_constraintStart_toEndOf="@+id/user_icon_toolbar"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:gravity="center"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.appcompat.widget.Toolbar>
+
+        <!-- Divider -->
+        <View style="@style/Divider"
+            app:layout_constraintTop_toBottomOf="@id/toolbar_chat"
+            android:layout_height="1dp"
+            android:layout_width="match_parent"
+            android:background="#373535"
+            />
+
+        <!-- Messages -->
+        <LinearLayout
+            android:id="@+id/linear_layout_messages"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/toolbar_chat"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/liner_layout_chat_buttons"
+            android:background="#E3FADB"
+            android:layout_marginTop="1dp"
+            >
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_view_messages"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scrollbars="vertical"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                />
+
+        </LinearLayout>
+
+        <!-- Progress bar messages loading -->
+        <ProgressBar
+            android:id="@+id/progress_bar_recycler_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            />
+
+        <!-- Buttons -->
+        <LinearLayout
+            android:layout_margin="12dp"
+            android:background="@drawable/home_bottom_menu_shape"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:id="@+id/liner_layout_chat_buttons"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/edit_text_chat_message"
+                android:layout_weight="5"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="16dp"
+                android:hint="@string/message"
+                android:layout_gravity="center"
+                android:padding="16dp"
+                android:importantForAutofill="no"
+                tools:ignore="TextFields" />
+
+            <ImageButton
+                style="?android:attr/borderlessButtonStyle"
+                android:src="@drawable/send_chat_message"
+                android:onClick="@{() -> chatFragment.onSendClick()}"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:id="@+id/send_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:text="@string/send"
+                android:textColor="@android:color/white"
+                tools:ignore="ContentDescription" />
+
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

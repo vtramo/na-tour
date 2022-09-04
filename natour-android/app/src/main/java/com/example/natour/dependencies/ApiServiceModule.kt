@@ -33,4 +33,8 @@ object ApiServiceModule {
     @Singleton
     fun provideIllegalContentImageDetectorApiService() : IllegalContentImageDetectorApiService =
         RekognitionAwsService()
+
+    @Provides
+    @Singleton
+    fun provideChatApiService() : ChatApiService = ChatService.retrofitService
 }

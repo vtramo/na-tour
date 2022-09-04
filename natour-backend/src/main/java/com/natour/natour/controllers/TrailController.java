@@ -85,7 +85,7 @@ public class TrailController {
     public boolean addReview(@RequestBody TrailReviewRequestDto trailReview) {
         return trailService.addReview(trailReview);
     }
-
+    
     @PostMapping(
         path = "/photo",
         consumes = {MediaType.MULTIPART_FORM_DATA_VALUE},

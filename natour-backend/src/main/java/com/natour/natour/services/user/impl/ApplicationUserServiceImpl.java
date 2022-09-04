@@ -3,9 +3,12 @@ package com.natour.natour.services.user.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.natour.natour.model.dto.ChatResponseDto;
 import com.natour.natour.model.dto.TrailResponseDto;
+import com.natour.natour.model.dto.util.ChatDtoUtils;
 import com.natour.natour.model.dto.util.TrailDtoUtils;
 import com.natour.natour.model.entity.ApplicationUser;
+import com.natour.natour.model.entity.Chat;
 import com.natour.natour.model.entity.Trail;
 import com.natour.natour.repositories.ApplicationUserRepository;
 import com.natour.natour.repositories.TrailRepository;
@@ -116,8 +119,37 @@ public class ApplicationUserServiceImpl implements ApplicationUserService {
             .stream()
             .map(TrailDtoUtils::convertTrailEntityToTrailResponseDto)
             .collect(Collectors.toList());
+
         log.info("List of " + user.getUsername() + "'s favorite routes successfully" +
             "obtained: " + trails.size());
+
         return trails;
+    }
+
+    @Override
+    public List<ChatResponseDto> getChats(long userId) {
+        final ApplicationUser user = EntityUtils.findEntityById(
+            applicationUserRepository,
+            userId,
+            "Invalid user ID (chats)"
+        );
+
+        List<ChatResponseDto> chats = user.getChats()
+            .stream()
+            .map(chat -> convertChatEntityToChatResponseDto(chat, user))
+            .collect(Collectors.toList());
+
+        log.info("List of " + user.getUsername() + "'s chats successfully" +
+            "obtained: " + chats.size());
+
+        return chats;
+    }
+
+    private ChatResponseDto convertChatEntityToChatResponseDto(Chat chat, ApplicationUser user) {
+        ChatResponseDto chatDto = ChatDtoUtils.convertChatEntityToChatResponseDto(chat);
+        int totalUnreadMessages = 
+            chat.getTotUnreadMessageCounterByUsername(user.getUsername());
+        chatDto.setTotalUnreadMessages(totalUnreadMessages);
+        return chatDto;
     }
 }

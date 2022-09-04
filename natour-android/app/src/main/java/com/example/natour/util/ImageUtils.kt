@@ -51,3 +51,7 @@ fun bitmapFromVector(context: Context, vectorResId: Int) : BitmapDescriptor {
     )
     return BitmapDescriptorFactory.fromBitmap(result)
 }
+
+@SuppressLint("NewApi")
+fun Drawable.encodeToString() : String =
+    Base64.getEncoder().encodeToString(convertDrawableToByteArray())

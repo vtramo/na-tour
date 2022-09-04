@@ -9,6 +9,8 @@
         <entry key="..\:/NaTour/natour-android/app/src/main/res/drawable-v24/home_bottom_menu_shape.xml" value="0.257" />
         <entry key="..\:/NaTour/natour-android/app/src/main/res/drawable-v24/home_dark_gray.xml" value="0.2725" />
         <entry key="..\:/NaTour/natour-android/app/src/main/res/drawable/all_yellow_star_image.xml" value="0.2455" />
+        <entry key="..\:/NaTour/natour-android/app/src/main/res/drawable/bg_receive_message.xml" value="0.25" />
+        <entry key="..\:/NaTour/natour-android/app/src/main/res/drawable/bg_send_message.xml" value="0.3515" />
         <entry key="..\:/NaTour/natour-android/app/src/main/res/drawable/button_add_photo_bg.xml" value="0.3065" />
         <entry key="..\:/NaTour/natour-android/app/src/main/res/drawable/close.xml" value="0.277" />
         <entry key="..\:/NaTour/natour-android/app/src/main/res/drawable/close_alpha.xml" value="0.272" />
@@ -55,17 +57,25 @@
         <entry key="..\:/NaTour/natour-android/app/src/main/res/drawable/rectangle_dashed.xml" value="0.327" />
         <entry key="..\:/NaTour/natour-android/app/src/main/res/drawable/rectangle_mid.xml" value="0.279" />
         <entry key="..\:/NaTour/natour-android/app/src/main/res/drawable/rectangle_right.xml" value="0.3295" />
+        <entry key="..\:/NaTour/natour-android/app/src/main/res/drawable/send_chat_message.xml" value="0.3355" />
+        <entry key="..\:/NaTour/natour-android/app/src/main/res/drawable/shape_notification.xml" value="0.32" />
+        <entry key="..\:/NaTour/natour-android/app/src/main/res/drawable/shape_red.xml" value="0.3085" />
         <entry key="..\:/NaTour/natour-android/app/src/main/res/drawable/shape_round.xml" value="0.156" />
         <entry key="..\:/NaTour/natour-android/app/src/main/res/drawable/yellow_star_image.xml" value="0.2455" />
         <entry key="..\:/NaTour/natour-android/app/src/main/res/layout-v28/fragment_trail_start_creation.xml" value="0.33520950594121324" />
         <entry key="..\:/NaTour/natour-android/app/src/main/res/layout/activity_main.xml" value="0.38697916666666665" />
         <entry key="..\:/NaTour/natour-android/app/src/main/res/layout/card_view.xml" value="0.33" />
+        <entry key="..\:/NaTour/natour-android/app/src/main/res/layout/chat_message_view.xml" value="0.325" />
+        <entry key="..\:/NaTour/natour-android/app/src/main/res/layout/chat_view.xml" value="0.33" />
         <entry key="..\:/NaTour/natour-android/app/src/main/res/layout/custom_info_contents.xml" value="0.25" />
         <entry key="..\:/NaTour/natour-android/app/src/main/res/layout/dialog_fragment_add_trail_review.xml" value="0.33" />
         <entry key="..\:/NaTour/natour-android/app/src/main/res/layout/dialog_fragment_download_trail.xml" value="0.3333333333333333" />
+        <entry key="..\:/NaTour/natour-android/app/src/main/res/layout/dialog_fragment_send_message.xml" value="0.33" />
         <entry key="..\:/NaTour/natour-android/app/src/main/res/layout/dialog_fragment_user_details.xml" value="0.33" />
         <entry key="..\:/NaTour/natour-android/app/src/main/res/layout/dropdown_item_difficulty.xml" value="0.26721014492753625" />
-        <entry key="..\:/NaTour/natour-android/app/src/main/res/layout/fragment_home.xml" value="0.25" />
+        <entry key="..\:/NaTour/natour-android/app/src/main/res/layout/fragment_chat.xml" value="0.33" />
+        <entry key="..\:/NaTour/natour-android/app/src/main/res/layout/fragment_home.xml" value="0.5" />
+        <entry key="..\:/NaTour/natour-android/app/src/main/res/layout/fragment_inbox.xml" value="0.33" />
         <entry key="..\:/NaTour/natour-android/app/src/main/res/layout/fragment_login.xml" value="0.25" />
         <entry key="..\:/NaTour/natour-android/app/src/main/res/layout/fragment_registration.xml" value="0.33" />
         <entry key="..\:/NaTour/natour-android/app/src/main/res/layout/fragment_route_creation.xml" value="0.25" />

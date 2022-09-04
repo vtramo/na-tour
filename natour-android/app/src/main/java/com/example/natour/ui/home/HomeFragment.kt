@@ -16,6 +16,7 @@ import com.example.natour.data.model.Trail
 import com.example.natour.databinding.FragmentHomeBinding
 import com.example.natour.exceptions.ErrorMessages
 import com.example.natour.ui.MainUserViewModel
+import com.example.natour.ui.home.chat.ChatViewModel
 import com.example.natour.ui.home.trail.detail.TrailDetailsViewModel
 import com.example.natour.ui.home.trail.favorites.FavoriteTrailChanger
 import com.example.natour.ui.home.trail.favorites.FavoriteTrailsViewModel
@@ -44,12 +45,14 @@ class HomeFragment : Fragment() {
     private val mFavoriteTrailsViewModel: FavoriteTrailsViewModel
         by hiltNavGraphViewModels(R.id.home_nav_graph)
 
+    private val mChatViewModel: ChatViewModel
+        by hiltNavGraphViewModels(R.id.home_nav_graph)
+
     private lateinit var mRecyclerView: RecyclerView
     private lateinit var mTrailListAdapter: TrailListAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         requestLocationPermissions(
             requireActivity() as AppCompatActivity,
             LOCATION_PERMISSION_REQUEST_CODE
@@ -62,10 +65,35 @@ class HomeFragment : Fragment() {
     ): View {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
 
+        binding.chatViewModel = mChatViewModel
+        setupChatNotifications()
         setupMainUser()
         setupHome()
 
         return binding.root
+    }
+
+    private fun setupChatNotifications() {
+        with(mChatViewModel) {
+            totalUnreadMessagesLiveData.observe(viewLifecycleOwner) { totalUnreadMessages ->
+                with(binding.notificationsTextView) {
+                    if (totalUnreadMessages == 0) {
+                        visibility = View.GONE
+                    } else {
+                        visibility = View.VISIBLE
+                        text = if (totalUnreadMessages < 99)
+                                totalUnreadMessages.toString()
+                               else "99+"
+                    }
+                }
+            }
+        }
+    }
+
+    private fun setupMainUser() {
+        with(mMainUserViewModel) {
+            if (mainUser.value == null) loadMainUser()
+        }
     }
 
     private fun setupHome() {
@@ -77,12 +105,6 @@ class HomeFragment : Fragment() {
             }
         } else {
             loadFavoriteTrails()
-        }
-    }
-
-    private fun setupMainUser() {
-        with(mMainUserViewModel) {
-            if (mainUser.value == null) loadMainUser()
         }
     }
 
@@ -372,5 +394,10 @@ class HomeFragment : Fragment() {
         } else {
             loadFavoriteTrails()
         }
+    }
+
+    fun goToInboxFragment() {
+        val action = HomeFragmentDirections.actionHomeFragmentToInboxFragment()
+        view?.findNavController()?.navigate(action)
     }
 }

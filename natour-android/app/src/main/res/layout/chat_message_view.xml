@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_margin="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <View
+            android:visibility="invisible"
+            android:id="@+id/view_position_message"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="0dp"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+
+            <!-- Message linear layout -->
+            <LinearLayout
+                tools:background="@drawable/bg_send_message"
+                android:id="@+id/linear_layout_message"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <FrameLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    >
+
+                    <!-- Image View -->
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/card_message_image"
+                        tools:visibility="visible"
+                        android:visibility="gone"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:elevation="10dp">
+
+                        <ImageView
+                            android:id="@+id/message_image"
+                            android:layout_width="250dp"
+                            android:layout_height="150dp"
+                            android:scaleType="centerCrop"
+                            tools:src="@drawable/sentiero_degli_dei_vista"
+                            tools:ignore="ContentDescription" />
+
+                    </androidx.cardview.widget.CardView>
+
+                    <!-- Progress Bar Image -->
+                    <ProgressBar
+                        android:id="@+id/progress_bar_message_image"
+                        android:layout_width="250dp"
+                        android:layout_height="150dp"
+                        android:layout_gravity="center"
+                        android:visibility="gone"
+                        tools:visibility="visible" />
+
+                </FrameLayout>
+
+                <!-- Text message -->
+                <TextView
+                    android:id="@+id/message_text_view"
+                    android:layout_height="wrap_content"
+                    android:maxWidth="250dp"
+                    android:layout_width="wrap_content"
+                    android:padding="16dp"
+                    tools:text="hey guarda qui"
+                    tools:textColor="@android:color/white"
+                    android:layout_gravity="end"
+                    />
+
+            </LinearLayout>
+
+            <!-- Time message linear layout -->
+            <LinearLayout
+                android:minWidth="70dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <View
+                    android:id="@+id/view_time_position_message"
+                    tools:layout_weight="1"
+                    android:visibility="invisible"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"/>
+
+                <!-- Time message -->
+                <TextView
+                    android:layout_weight="0"
+                    android:id="@+id/time_message_text_view"
+                    android:layout_marginTop="4dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="11:03 PM"
+                    tools:ignore="InefficientWeight" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</layout>

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.natour.natour.model.dto.ChatResponseDto;
 import com.natour.natour.model.dto.TrailResponseDto;
 import com.natour.natour.services.user.ApplicationUserService;
 
@@ -84,5 +85,18 @@ public class UserController {
         @PathVariable("userId") long userId
     ) {
         return applicationUserService.getFavoriteTrails(userId);
+    }
+
+    @GetMapping(
+        path = "chat/{userId}",
+        consumes = {MediaType.ALL_VALUE},
+        produces = {MediaType.APPLICATION_JSON_VALUE}
+    )
+    @ResponseStatus(HttpStatus.OK)
+    @Operation(summary = "Returns the favorite trails of this user")
+    public List<ChatResponseDto> getChats(
+        @PathVariable("userId") long userId
+    ) {
+        return applicationUserService.getChats(userId);
     }
 }
