@@ -24,4 +24,10 @@ public class TrailResponseDto {
     private List<TrailPhotoResponseDto> photos;
     private List<TrailReviewResponseDto> reviews;
     private Stars stars;   
+
+    /* Only for testing */
+    public TrailResponseDto(long id, Stars stars) {
+        this.idTrail = id;
+        this.stars = stars;
+    }
 }

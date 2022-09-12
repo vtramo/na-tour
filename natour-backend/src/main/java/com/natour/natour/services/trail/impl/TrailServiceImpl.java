@@ -31,7 +31,7 @@ import com.natour.natour.repositories.TrailRepository;
 import com.natour.natour.repositories.ApplicationUserRepository;
 import com.natour.natour.services.trail.TrailService;
 import com.natour.natour.util.EntityUtils;
-import com.natour.natour.model.dto.util.TrailDtoUtils;
+import com.natour.natour.model.dto.util.TrailDtoConverter;
 
 import lombok.extern.java.Log;
 
@@ -43,6 +43,8 @@ public class TrailServiceImpl implements TrailService {
     private TrailRepository trailRepository;
     @Autowired
     private ApplicationUserRepository applicationUserRepository;
+    @Autowired
+    private TrailDtoConverter trailDtoConverter;
 
     @Override
     public boolean saveTrail(final TrailRequestDto trailDto) {
@@ -172,6 +174,8 @@ public class TrailServiceImpl implements TrailService {
         return trailPhoto;
     }
 
+    private static final int TRAILS_PER_REQUEST = 10;
+    
     @Override
     @Transactional
     public List<TrailResponseDto> getTrails(int page) {
@@ -180,13 +184,13 @@ public class TrailServiceImpl implements TrailService {
 
         Pageable pageable = PageRequest.of(
             page, 
-            10, 
+            TRAILS_PER_REQUEST, 
             Sort.by("stars").descending().and(Sort.by("id").ascending())
         );
         
         return trailRepository.findAll(pageable)
             .stream()
-            .map(TrailDtoUtils::convertTrailEntityToTrailResponseDto)
+            .map(trailDtoConverter::convertTrailEntityToTrailResponseDto)
             .collect(Collectors.toList());
     }
 }

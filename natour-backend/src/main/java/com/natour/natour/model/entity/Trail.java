@@ -74,6 +74,12 @@ public class Trail {
         this.owner = owner;
     }
 
+    /* ONLY FOR TESTING */
+    public Trail(long id, Stars stars) {
+        this.id = id;
+        this.stars = stars;
+    }
+
     public void addReview(TrailReview review) {
         trailReviews.add(review);
         calculateStars();
