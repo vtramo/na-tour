@@ -63,7 +63,21 @@ public class Chat {
         return unreadMessageCounter.getOrDefault(username, 0);
     }
 
-    public void setTotUnreadMessageCounterByUsername(String username, int tot) {
+    public boolean communicateWith(String username) {
+        return users.stream().anyMatch(user -> username.equals(user.getUsername()));
+    } 
+
+    public void setTotUnreadMessagesCounterByUsername(String username, int tot) {
+        if (!this.communicateWith(username)) {
+            throw new IllegalArgumentException(
+                "The user " + username + "does not belong to this chat!"
+            );
+        }
+        if (tot < 0) {
+            throw new IllegalArgumentException(
+                "The total unread message can't be negative!"
+            );
+        }
         unreadMessageCounter.put(username, tot);
     }
 }

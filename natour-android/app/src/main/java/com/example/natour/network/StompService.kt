@@ -7,6 +7,7 @@ import ua.naiksoftware.stomp.dto.StompMessage
 interface StompService {
     val lastMessage: LiveData<StompMessage>
 
+    fun setUsername(username: String)
     fun connect(
         onConnected: () -> Unit,
         onError: (Exception) -> Unit,

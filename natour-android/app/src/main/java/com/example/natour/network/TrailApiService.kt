@@ -2,6 +2,7 @@ package com.example.natour.network
 
 import com.example.natour.data.dto.TrailDto
 import com.example.natour.data.dto.TrailReviewDto
+import com.example.natour.network.util.URLs.AUTHORIZATION_HEADER
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.http.*
@@ -18,13 +19,13 @@ interface TrailApiService {
         @Part("trailDescription")   trailDescription: RequestBody,
         @Part("routePoints")        routePoints: RequestBody,
         @Part                       image: MultipartBody.Part,
-        @Header("Authorization")    authHeader: String
+        @Header(AUTHORIZATION_HEADER)    authHeader: String
     ): Boolean
 
     @GET("/trail/{page}")
     suspend fun getTrails(
         @Path("page") page: Int,
-        @Header("Authorization") authHeader: String
+        @Header(AUTHORIZATION_HEADER) authHeader: String
     ): List<TrailDto>
 
     @Multipart
@@ -34,12 +35,12 @@ interface TrailApiService {
         @Part("idTrail")    idTrail: RequestBody,
         @Part("position")   position: RequestBody,
         @Part               image: MultipartBody.Part,
-        @Header("Authorization")    authHeader: String
+        @Header(AUTHORIZATION_HEADER)    authHeader: String
     ): Boolean
 
     @POST("/trail/review")
     suspend fun addReview(
         @Body trailReview: TrailReviewDto,
-        @Header("Authorization") authHeader: String
+        @Header(AUTHORIZATION_HEADER) authHeader: String
     ): Boolean
 }

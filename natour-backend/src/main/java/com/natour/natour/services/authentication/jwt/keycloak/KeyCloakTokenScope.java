@@ -16,13 +16,13 @@ public enum KeyCloakTokenScope {
         "natour", 
         "password", 
         Strings.EMPTY,
-        "http://192.168.1.4:8180/realms/master/protocol/openid-connect/token"),
+        "http://localhost:8180/realms/master/protocol/openid-connect/token"),
 
     ADMIN(
         "admin-cli", 
         "client_credentials", 
-        "wO33sEWt4mjRBvQ6ZgUfzUbg7x80kGNG",
-        "http://192.168.1.4:8180/realms/master/protocol/openid-connect/token");
+        "kKiudKK2si1a6u98IxBtzmUV3gL5Zhmv",
+        "http://localhost:8180/realms/master/protocol/openid-connect/token");
 
     private final String clientId, grantType, clientSecret;
     final String urlTokenKey;

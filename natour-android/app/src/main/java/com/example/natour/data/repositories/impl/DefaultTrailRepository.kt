@@ -10,7 +10,6 @@ import com.example.natour.data.util.buildRequestBody
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.withContext
 
 class DefaultTrailRepository(

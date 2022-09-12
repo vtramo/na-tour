@@ -22,18 +22,14 @@ import ua.naiksoftware.stomp.dto.StompMessage
 class StompClientService() : Service(), StompService {
 
     companion object {
-        private const val WS_URL = "ws://192.168.1.4:8080/ws/websocket"
+        private const val WS_URL = "ws://natour-lb-1117664134.us-east-1.elb.amazonaws.com:80/ws/websocket"
         private const val DESTINATION = "/app/chat"
         private const val DESTINATION_PATH = "/users/queue/messages"
         const val STOMP_TAG = "StompClient"
     }
 
     private lateinit var username: String
-    constructor(username: String): this() {
-        this.username = username
-    }
-
-    private val usernameHeader = mutableListOf(StompHeader("username", username))
+    private lateinit var usernameHeader: List<StompHeader>
 
     private val mStompClient = Stomp.over(Stomp.ConnectionProvider.OKHTTP, WS_URL)
     private lateinit var mCompositeDisposable: CompositeDisposable
@@ -43,6 +39,11 @@ class StompClientService() : Service(), StompService {
 
     init {
         resetSubscriptions()
+    }
+
+    override fun setUsername(username: String) {
+        this.username = username
+        usernameHeader = mutableListOf(StompHeader("username", username))
     }
 
     override fun onBind(intent: Intent): IBinder? = null

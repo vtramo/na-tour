@@ -75,6 +75,8 @@ class ChatViewModel @Inject constructor(
         with(stompClientService) {
             lastMessage.observeForever(this@ChatViewModel::handleNewStompMessage)
 
+            setUsername(mainUserRepository.getDetails().username)
+
             connect(
                 onConnected = {
                     Log.i(STOMP_TAG, "Stomp client connected")

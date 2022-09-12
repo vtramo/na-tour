@@ -30,7 +30,7 @@ import lombok.extern.java.Log;
 @Service
 public class KeyCloakAdminServiceImpl implements KeyCloakAdminService {
 
-    private static final String URL_SAVE_USER = "http://192.168.1.4:8180/admin/realms/master/users";
+    private static final String URL_SAVE_USER = "http://localhost:8180/admin/realms/master/users";
     private static final String CREDENTIALS_TYPE = "password";
     
     @Data

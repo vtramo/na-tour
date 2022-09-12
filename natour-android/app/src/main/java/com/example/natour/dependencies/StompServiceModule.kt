@@ -15,5 +15,5 @@ object StompServiceModule {
 
     @Provides
     @ViewModelScoped
-    fun provideStompService() : StompService = StompClientService(MainUser.username)
+    fun provideStompService() : StompService = StompClientService()
 }

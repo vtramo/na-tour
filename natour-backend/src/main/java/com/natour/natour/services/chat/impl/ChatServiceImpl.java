@@ -21,6 +21,8 @@ import lombok.extern.java.Log;
 
 import static com.natour.natour.util.EntityUtils.findEntityById;
 
+import java.util.Objects;
+
 @Service
 @Log
 public class ChatServiceImpl implements ChatService {
@@ -100,7 +102,7 @@ public class ChatServiceImpl implements ChatService {
             )
         );
 
-        chat.setTotUnreadMessageCounterByUsername(
+        chat.setTotUnreadMessagesCounterByUsername(
             usernameRecipient,
             chat.getTotUnreadMessageCounterByUsername(usernameRecipient) + 1
         );
@@ -121,22 +123,40 @@ public class ChatServiceImpl implements ChatService {
     }
 
     @Override
-    public void updateUnreadMessages(
-        Long chatId, 
+    public Chat updateUnreadMessages(
+        long chatId, 
         String usernameOwner, 
         int totalUnreadMessages
     ) {
+        Objects.requireNonNull(usernameOwner);
+
+        if (totalUnreadMessages < 0) {
+            throw new IllegalArgumentException(
+                "The total unread message can't be negative!"
+            );
+        }
+
         final Chat chat = findEntityById(
             chatRepository, 
             chatId, 
             "Invalid chat id (unread messages)"
         );
 
-        chat.setTotUnreadMessageCounterByUsername(usernameOwner, totalUnreadMessages);
+        if (!chat.communicateWith(usernameOwner)) {
+            throw new IllegalArgumentException(
+                "The user " + usernameOwner + "does not belong to this chat!"
+            );
+        }
+
+        chat.setTotUnreadMessagesCounterByUsername(
+            usernameOwner, 
+            totalUnreadMessages
+        );
         chatRepository.save(chat);
         
         log.info("Total unread messages counter username " + usernameOwner 
                     + " set to " + totalUnreadMessages);
+        return chat;
     }
 
     @Override

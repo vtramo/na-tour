@@ -1,5 +1,6 @@
 package com.example.natour.ui.home
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -19,6 +20,10 @@ class HomeViewModel @Inject constructor(
     private val trailRepository: TrailRepository,
     private val mainUserRepository: MainUserRepository
 ) : ViewModel() {
+
+    companion object {
+        const val TAG = "HOME VIEW MODEL"
+    }
 
     init {
         loadTrails()
@@ -47,7 +52,7 @@ class HomeViewModel @Inject constructor(
         _isLoadingTrails = true
         trailRepository
             .load(currentPage, mainUserRepository.getAccessToken())
-            .catch { handleErrors() }
+            .catch { handleErrors(it) }
             .collect { listTrails ->
                 _pagesAreFinished = listTrails.size < 10
                 addMoreTrails(listTrails)
@@ -80,7 +85,7 @@ class HomeViewModel @Inject constructor(
 
         trailRepository
             .load(currentPage, mainUserRepository.getAccessToken())
-            .catch { handleErrors() }
+            .catch { handleErrors(it) }
             .collect { listTrails ->
                 _trails.value = listTrails.toMutableList()
                 _pagesAreFinished = listTrails.size < 10
@@ -114,7 +119,8 @@ class HomeViewModel @Inject constructor(
     private var _connectionErrorLiveData = MutableLiveData<Boolean>()
     val connectionErrorLiveData get() = _connectionErrorLiveData
 
-    private fun handleErrors() {
+    private fun handleErrors(throwable: Throwable) {
+        Log.e(TAG, "Error load trails", throwable)
         _connectionErrorLiveData.value = true
         _connectionErrorLiveData = MutableLiveData()
     }
